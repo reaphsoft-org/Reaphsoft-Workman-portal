@@ -21,10 +21,10 @@ function NavScrollExample() {
           >
             <NavDropdown title="Home" id="home-dropdown">
               <NavDropdown.Item href="#home1">Home 1</NavDropdown.Item>
-              <NavDropdown.Item href="#home2">Home 2</NavDropdown.Item>
+              {/* <NavDropdown.Item href="#home2">Home 2</NavDropdown.Item> */}
             </NavDropdown>
 
-            <NavDropdown title="For Candidate" id="link-dropdown">
+            <NavDropdown title="For Employee" id="link-dropdown">
               <NavDropdown.Item href="#link1">My Profile</NavDropdown.Item>
               <NavDropdown.Item href="#link2">My Resume</NavDropdown.Item>
               <NavDropdown.Item href="#link3">Applied Job</NavDropdown.Item>
@@ -33,15 +33,15 @@ function NavScrollExample() {
               <NavDropdown.Item href="#link3">CV Manager </NavDropdown.Item>
             </NavDropdown>
 
-            <NavDropdown title="For Employers" id="another-link-dropdown">
+            {/* <NavDropdown title="For Employers" id="another-link-dropdown">
               <NavDropdown.Item href="#another-link1">Company's Profile</NavDropdown.Item>
               <NavDropdown.Item href="#another-link2">Employers Resume</NavDropdown.Item>
               <NavDropdown.Item href="#another-link3">Post A Job</NavDropdown.Item>
               <NavDropdown.Item href="#another-link3">Manage A Job</NavDropdown.Item>
               <NavDropdown.Item href="#another-link3">Transcation</NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
 
-            <NavDropdown title="Pages" id="action-dropdown">
+            {/* <NavDropdown title="Pages" id="action-dropdown">
               <NavDropdown.Item href="#action1">About Us </NavDropdown.Item>
               <NavDropdown.Item href="#action2">Job Details</NavDropdown.Item>
               <NavDropdown.Item href="#action2">Compaines</NavDropdown.Item>
@@ -50,9 +50,9 @@ function NavScrollExample() {
               <NavDropdown.Item href="#action2">Portfolio</NavDropdown.Item>
               <NavDropdown.Item href="#action2">Register</NavDropdown.Item>
               <NavDropdown.Item href="#action2">error</NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
 
-            <NavDropdown title="Blogs" id="action-dropdown">
+            {/* <NavDropdown title="Blogs" id="action-dropdown">
               <NavDropdown.Item href="#action1">About Us </NavDropdown.Item>
               <NavDropdown.Item href="#action2">Job Details</NavDropdown.Item>
               <NavDropdown.Item href="#action2">Compaines</NavDropdown.Item>
@@ -61,7 +61,7 @@ function NavScrollExample() {
               <NavDropdown.Item href="#action2">Portfolio</NavDropdown.Item>
               <NavDropdown.Item href="#action2">Register</NavDropdown.Item>
               <NavDropdown.Item href="#action2">error</NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
           </Nav>
             <div className="btn-nav">
                 <Button variant="outline-primary">  <IoLockOpen /> Sign up</Button>

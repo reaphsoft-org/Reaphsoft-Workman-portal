@@ -141,7 +141,7 @@ link {
 .bg-white{
   background-color: #fff;
   height: auto;
-  width: 35%;
+  width: 100%;
   padding: 3rem;
   color: #000;
 }
@@ -303,4 +303,138 @@ link {
   justify-content: space-between;
   align-items: center;
   gap: 30px;
+}
+
+.sect-1-1{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: #fff;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #000;
+  padding-top: 10rem;
+  padding-bottom: 2rem;
+}
+ .all{
+  padding-top: 2rem;
+  width: 100%;
+ }
+ .sm-box{
+  background-color: #2e55fa;
+  padding: 5px 10px;
+  font-size: 12px;
+  width: 25%;
+  color: #fff;
+ }
+ .all h4{
+  font-size: 45px;
+  line-height: 60px;
+  font-weight: 600;
+ }
+ .all h4 span{
+  color: #2e55fa;
+ }
+ .all-white{
+  background: #fff;
+  padding: 2rem;
+  margin-top: 2rem;
+ }
+ .grid-new{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  place-content: center;
+  align-items: center;
+  gap: 60px;
+  width: 100%;
+ }
+ .wave-group {
+  position: relative;
+}
+
+.wave-group .input {
+  font-size: 16px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 250px;
+  border: none;
+  border-bottom: 1px solid #2e55fa;
+  background: transparent;
+}
+
+.wave-group .input:focus {
+  outline: none;
+}
+
+.wave-group .label {
+  color: #999;
+  font-size: 18px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  display: flex;
+}
+
+.wave-group .label-char {
+  transition: 0.2s ease all;
+  transition-delay: calc(var(--index) * .05s);
+}
+
+.wave-group .input:focus ~ label .label-char,
+.wave-group .input:valid ~ label .label-char {
+  transform: translateY(-20px);
+  font-size: 14px;
+  color: #2e55fa;
+}
+
+.wave-group .bar {
+  position: relative;
+  display: block;
+  width: 250px;
+}
+
+.wave-group .bar:before,.wave-group .bar:after {
+  content: '';
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: #5264AE;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+.wave-group .bar:before {
+  left: 50%;
+}
+
+.wave-group .bar:after {
+  right: 50%;
+}
+.wave-group .input:focus ~ .bar:before,
+.wave-group .input:focus ~ .bar:after {
+  width: 50%;
+}
+
+.select select{
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-bottom: 1px solid #2e55fa;
+  outline: none;
+}
+
+.btn-new-grid{
+  padding: 10px 10px;
+  color: #fff;
+  background-color: #2e55fa;
+  outline: none;
+  border: none;
 }
