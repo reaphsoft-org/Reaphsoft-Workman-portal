@@ -16,7 +16,6 @@ function Login() {
         <div className="section-2">
           <div className="section-3">
               <div className="main">
-
                 <div className="main-1">
                 <img src={logo} alt="" />
                   <h1>Login</h1>
