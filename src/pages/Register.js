@@ -84,8 +84,6 @@ function Register() {
           <div className="btn-2">
             <button>Sign me up</button>
           </div>
-        
-        
         </div>
       </div>
     </div>

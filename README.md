@@ -1,3 +1,8 @@
+# Reaphsoft Workman
+## Database Setup
+1. Download and install [PostgreSQL](https://www.postgresql.org/download/windows/) on your machine (or server)
+2. 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
