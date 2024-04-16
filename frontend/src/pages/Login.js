@@ -31,8 +31,9 @@ function Login() {
 
       const data = await response.json();
       // Handle the response data
+      console.log(data);
       if (data.status === true) {
-        window.location.href = "/Login";
+        window.location.href = "/";
       }
     }catch (e) {
       console.error('Error posting form data:', e);
