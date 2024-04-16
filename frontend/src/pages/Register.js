@@ -31,7 +31,6 @@ function Register() {
       }
       const data = await response.json();
       // Handle the response data
-      console.log(data);
       if (data.status === true) {
         window.location.href = "/Login";
       }
