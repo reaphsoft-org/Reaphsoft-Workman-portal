@@ -14,8 +14,23 @@ function Register() {
     event.preventDefault();
     // Here you can perform actions with the selected image, such as uploading it to a server
     console.log('Selected image:', selectedImage);
+    console.log(formData);
   };
 
+  const [formData, setFormData] = useState(
+      {
+        accountType: "1",
+        email: '',
+        password: '',
+        fullname: '',
+        apartment: '',
+        address: '',
+        serviceType: "0",
+      }
+  );
+  const handleInputChange = (e) => {
+    setFormData({...formData, [e.target.name]: e.target.value});
+  }
   return (
     <div className="App">
       <div className="section-1">
@@ -35,32 +50,39 @@ function Register() {
           <div className="mt-5">
             <h4 className="text-secondary">Personal Information</h4>
             <form onSubmit={handleSubmit}>
-              <input type="hidden" name="accountType" value="1"/>
+              <input type="hidden" name="accountType" value={formData.accountType} onChange={handleInputChange}/>
               {/* Above would be dynamically set subsequently */}
               <div className="my-5">
                 <div className="col-12">
                   <label className="form-label">Email</label>
-                  <input type="email" className="form-control" name="email" autoComplete="email"/>
+                  <input type="email" className="form-control" name="email" autoComplete="email"
+                         value={formData.email} onChange={handleInputChange} required/>
                 </div>
                 <div className="col-12">
                   <label className="form-label">Password</label>
-                  <input type="password" className="form-control" name="password" autoComplete="new-password" />
+                  <input type="password" className="form-control" name="password" autoComplete="new-password" required
+                         value={formData.password} onChange={handleInputChange}
+                  />
                 </div>
                 <div className="col-12">
                   <label className="form-label">Full Name</label>
-                  <input type="text" className="form-control" name="name" autoComplete="name" />
+                  <input type="text" className="form-control" name="fullname" autoComplete="name" value={formData.fullname}
+                         onChange={handleInputChange} required />
                 </div>
                 <div className="col-12">
                   <label className="form-label">Apartment</label>
-                  <input type="text" className="form-control" name="apartment" />
+                  <input type="text" className="form-control" name="apartment" required value={formData.apartment}
+                         onChange={handleInputChange} />
                 </div>
                 <div className="col-12">
                   <label className="form-label">Address</label>
-                  <input type="text" className="form-control" name="address" autoComplete="address-level1"/>
+                  <input type="text" className="form-control" name="address" autoComplete="address-line1" required
+                         value={formData.address} onChange={handleInputChange} />
                 </div>
                 <div className="col-12">
                   <label className="form-label">Service Type</label>
-                  <select className="form-select" defaultValue="0" aria-label="Default select example" name="service">
+                  <select className="form-select" aria-label="Select service type" name="service" required
+                          value={formData.serviceType} onChange={handleInputChange}>
                     <option>Select your Service Type</option>
                     <option value="1">Priority</option>
                     <option value="2">Priority Plus</option>
