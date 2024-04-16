@@ -32,13 +32,17 @@ Run
 npm install --save @nestjs/typeorm typeorm pg
 ```
 
-### Creating Codes
+### Creating controllers and services
 ```
 nest generate controller users
 ```
 ```
 nest generate service users
 ```
+
+1. Create a `dto` dir in the created folder (`users`) in the above case.
+2. Define a DTO name the file `user.dto.ts` for example. See samples.
+3. Implement endpoint in `user.controller.ts`.
 
 # NestJS
 
