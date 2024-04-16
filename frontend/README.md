@@ -1,10 +1,4 @@
 # Reaphsoft Workman
-## Database Setup
-1. Download and install [PostgreSQL](https://www.postgresql.org/download/windows/) on your machine (or server)
-2. Start `pg_ctl`
-3. Create User via `createuser -s -P -e --username=postgres reaphsoft`
-4. Password is `reaphsoft`
-5. Type `psql` with the admin username and password, then `\du` to confirm that the account was successfully created.
 
 # Getting Started with Create React App
 

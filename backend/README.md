@@ -1,3 +1,39 @@
+# Reaphsoft Workmen Backend
+## Database
+### Setup
+1. Download and install [PostgreSQL](https://www.postgresql.org/download/windows/) on your machine (or server)
+2. While installing, you would be prompted to input a password for a default `postgres` superuser.
+3. After installing, start `pg_ctl` by running
+    ```
+    pg_ctl start -l logfile -D "C:\<FullPathTo>\PostgreSQL\15\data"   
+    ```
+4. The above command needs to be run whenever you restart your machine. Or when you notice the database is not connecting. 
+5. Create a user via the command below. When prompted, enter `reaphsoft` as password.
+    ```
+    createuser -s -P -e --username=postgres reaphsoft
+    ```
+6. Type `psql --username=postgres` and enter your `postgres` password. Then input `\du` to confirm that the account was successfully created.
+7. Create database using the command below
+    ```
+    createdb -e -U reaphsoft reaphsoft_workmen.db "an optional comment"
+    ```
+8. You can see the list of created databases using
+    ```
+    psql --username=postgres
+    ```
+    Then enter the command below and confirm `reaphsoft_workmen.db` is amongst the databases.
+    ```
+    \l
+    ```
+
+### Packages
+Run 
+```
+npm install --save @nestjs/typeorm typeorm pg
+```
+
+# NestJS
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -71,3 +107,12 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+## GIT
+To remove a file you had previously committed, use
+```
+git rm --cached backend
+```
+
+Then commit this change. 
