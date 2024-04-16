@@ -9,7 +9,7 @@ function Login() {
         <div className="">
             <div className="">
                 <div className="">
-                    <OffcanvasExample />
+                    {/* <OffcanvasExample /> */}
                     <Body/>
                 </div>
             </div>

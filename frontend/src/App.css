@@ -33,6 +33,10 @@
   align-items: center;
 }
 
+.come {
+  text-align: center;
+}
+
 /* The flex of the login and form */
 .main {
   display: flex;

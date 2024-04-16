@@ -29,41 +29,41 @@ const UserProfile = () => {
                       <div className="candidate-title">
                         <div>
                           <h4 className="m-b5">
-                            <a href="/react/demo/jobs-profile">David Matin</a>
+                            <a href="#">Peter JOhn</a>
                           </h4>
                           <p className="m-b0">
-                            <a href="/react/demo/jobs-profile">Web developer</a>
+                            <a href="#">Web developer</a>
                           </p>
                         </div>
                       </div>
                     </div>
                     <ul>
                       <li>
-                        <a className="active" href="/react/demo/jobs-profile">
+                        <a className="active" href="#">
                           <i className="fa fa-user-o" aria-hidden="true"></i>
                           <span>Profile</span>
                         </a>
                       </li>
                       <li>
-                        <a href="/react/demo/jobs-my-resume">
+                        <a href="#">
                           <i className="fa fa-file-text-o" aria-hidden="true"></i>
                           <span>My Resume</span>
                         </a>
                       </li>
                       <li>
-                        <a href="/react/demo/jobs-saved-jobs">
+                        <a href="">
                           <i className="fa fa-heart-o" aria-hidden="true"></i>
                           <span>Saved Jobs</span>
                         </a>
                       </li>
                       <li>
-                        <a href="/react/demo/jobs-applied-job">
+                        <a href="#">
                           <i className="fa fa-briefcase" aria-hidden="true"></i>
                           <span>Applied Jobs</span>
                         </a>
                       </li>
                       <li>
-                        <a href="/react/demo/jobs-alerts">
+                        <a href="#">
                           <i className="fa fa-bell-o" aria-hidden="true"></i>
                           <span>Job Alerts</span>
                         </a>
