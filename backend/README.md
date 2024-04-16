@@ -8,6 +8,11 @@
 5. Create a user via `createuser -s -P -e --username=postgres reaphsoft`. When prompted, enter `reaphsoft` as password. 
 6. Type `psql --username=postgres` and enter your `postgres` password. Then input `\du` to confirm that the account was successfully created.
 
+### Packages
+Run 
+```
+npm install --save @nestjs/typeorm typeorm pg
+```
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
