@@ -11,13 +11,19 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background: linear-gradient(rgba(7, 7, 7, 0.73),rgba(7, 7, 7, 0.73)), url(./pages/plumber.jpg);
+  /* background: linear-gradient(rgba(7, 7, 7, 0.73),rgba(7, 7, 7, 0.73)), url(./pages/plumber.jpg); */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   height: 100vh;
   color: #fff;
   padding-top: 10rem;
+}
+
+.yes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .section-2 {
   width: 70%;

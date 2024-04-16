@@ -8,7 +8,7 @@ export default function Body() {
         <main>
             <div className="hero_area">
                 <header className="header_section">
-                    
+
                     <div className="header_bottom">
                         <div className="container-fluid header-p">
                             <nav className="navbar navbar-expand-lg custom_nav-container">
@@ -17,9 +17,9 @@ export default function Body() {
                                         Inance
                                     </span> */}
                                     <div className="img-box">
-                                        <img src="assets/images/001-removebg-preview.png" alt="" style={{ width: '12%' }}/>
+                                        <img src="assets/images/001-removebg-preview.png" alt="" style={{ width: '12%' }} />
                                     </div>
-                                    
+
                                 </a>
 
                                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@ export default function Body() {
                                             <a className="nav-link" href="">Home <span className="sr-only">(current)</span></a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link" href="">Services</a>
+                                            <a className="nav-link" href="#services">Services</a>
                                         </li>
                                         <li className="nav-item">
                                             {/* <link className="nav-link" to="../pages/Login.js">Login</a> */}
@@ -65,7 +65,7 @@ export default function Body() {
                             </div>
                             <div className="col-md-6">
                                 <div className="img-box">
-                                    <img src="assets/images/slider-img.png" alt="" />
+                                    <img src="assets/images/labour-removebg-preview.png" alt="" />
                                 </div>
                             </div>
                         </div>
@@ -129,29 +129,27 @@ export default function Body() {
             </section>
 
 
-            
+
 
             <section className="about_section layout_padding-bottom">
                 <div className="container">
                     <div className="row">
+                        <div className="col-lg-7 col-md-6">
+                            <div className="img-box">
+                                <img src="assets/images/about-img.jpg" alt="" />
+                            </div>
+                        </div>
                         <div className="col-lg-5 col-md-6">
                             <div className="detail-box">
                                 <h2>
                                     About us
                                 </h2>
                                 <p>
-                                    There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomisedThere are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised
+                                    Our team comprises skilled professionals who excel in various home tasks, including cleaning, repairs, installations, gardening, and more. Each member is vetted, ensuring reliability and proficiency in their respective fields.
                                 </p>
-                                <a href="">
-                                    Read More
-                                </a>
                             </div>
                         </div>
-                        <div className="col-lg-7 col-md-6">
-                            <div className="img-box">
-                                <img src="assets/images/about-img.jpg" alt="" />
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </section>
@@ -159,14 +157,9 @@ export default function Body() {
 
 
 
-            <section className="professional_section layout_padding">
+            <section id="services" className="professional_section layout_padding">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-6">
-                            <div className="img-box">
-                                <img src="assets/images/professional-img.png" alt="" />
-                            </div>
-                        </div>
                         <div className="col-md-6 ">
                             <div className="detail-box">
                                 <h2>
@@ -174,11 +167,14 @@ export default function Body() {
                                     Home Services.
                                 </h2>
                                 <p>
-                                    randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All randomised words which don't look even slightly
+                                    Whether you need a one-time deep clean, regular maintenance, or emergency repairs, we've got you covered. Our flexible service options cater to your unique needs and schedule, ensuring convenience and peace of mind.
                                 </p>
-                                <a href="">
-                                    Read More
-                                </a>
+
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="img-box">
+                                <img src="assets/images/imag4-removebg-preview.png" alt="" />
                             </div>
                         </div>
                     </div>
@@ -190,7 +186,7 @@ export default function Body() {
 
             {/* <!-- client section --> */}
 
-            <section className="client_section ">
+            {/* <section className="client_section ">
                 <div className="container">
                     <div className="heading_container heading_center">
                         <h2>
@@ -198,119 +194,127 @@ export default function Body() {
                         </h2>
                     </div>
                     <div className="carousel-wrap layout_padding2-top ">
-                        <div className="owl-carousel">
-                            <div className="item">
-                                <div className="box">
-                                    <div className="client_id">
-                                        <div className="img-box">
-                                            <img src="assets/images/client-1.jpg" alt="" />
-                                        </div>
-                                        <div className="client_detail">
-                                            <div className="client_info">
-                                                <h6>
-                                                    Jorch morik
-                                                </h6>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
+                        <div className="owl-carousel owl-loaded owl-drag">
+                            <div className="owl-stage-outer">
+                                <div className="owl-stage">
+                                    <div className="owl-item cloned">
+                                        <div className="item">
+                                            <div className="box">
+                                                <div className="client_id">
+                                                    <div className="img-box">
+                                                        <img src="images/client-1.jpg" alt="" />
+                                                    </div>
+                                                    <div className="client_detail">
+                                                        <div className="client_info">
+                                                            <h6>
+                                                                Jorch morik
+                                                            </h6>
+                                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                                        </div>
+                                                        <i className="fa fa-quote-left" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                                <div className="client_text">
+                                                    <p>
+                                                        chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <i className="fa fa-quote-left" aria-hidden="true"></i>
                                         </div>
                                     </div>
-                                    <div className="client_text">
-                                        <p>
-                                            chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum
-                                        </p>
+                                    <div className="item">
+                                        <div className="box">
+                                            <div class="client_id">
+                                                <div className="img-box">
+                                                    <img src="images/client-2.jpg" alt="" />
+                                                </div>
+                                                <div className="client_detail">
+                                                    <div className="client_info">
+                                                        <h6>
+                                                            Jorch morik
+                                                        </h6>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                    </div>
+                                                    <i className="fa fa-quote-left" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            <div className="client_text">
+                                                <p>
+                                                    chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="item">
+                                        <div className="box">
+                                            <div className="client_id">
+                                                <div className="img-box">
+                                                    <img src="images/client-1.jpg" alt="" />
+                                                </div>
+                                                <div className="client_detail">
+                                                    <div className="client_info">
+                                                        <h6>
+                                                            Jorch morik
+                                                        </h6>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                    </div>
+                                                    <i className="fa fa-quote-left" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            <div className="client_text">
+                                                <p>
+                                                    chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="item">
+                                        <div className="box">
+                                            <div className="client_id">
+                                                <div className="img-box">
+                                                    <img src="images/client-2.jpg" alt="" />
+                                                </div>
+                                                <div className="client_detail">
+                                                    <div className="client_info">
+                                                        <h6>
+                                                            Jorch morik
+                                                        </h6>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                        <i className="fa fa-star" aria-hidden="true"></i>
+                                                    </div>
+                                                    <i className="fa fa-quote-left" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            <div className="client_text">
+                                                <p>
+                                                    chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
-                            <div className="item">
-                                <div className="box">
-                                    <div className="client_id">
-                                        <div className="img-box">
-                                            <img src="assets/images/client-2.jpg" alt="" />
-                                        </div>
-                                        <div className="client_detail">
-                                            <div className="client_info">
-                                                <h6>
-                                                    Jorch morik
-                                                </h6>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                            </div>
-                                            <i className="fa fa-quote-left" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                    <div className="client_text">
-                                        <p>
-                                            chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="box">
-                                    <div className="client_id">
-                                        <div className="img-box">
-                                            <img src="images/client-1.jpg" alt="" />
-                                        </div>
-                                        <div className="client_detail">
-                                            <div className="client_info">
-                                                <h6>
-                                                    Jorch morik
-                                                </h6>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                            </div>
-                                            <i className="fa fa-quote-left" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                    <div className="client_text">
-                                        <p>
-                                            chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="item">
-                                <div className="box">
-                                    <div className="client_id">
-                                        <div className="img-box">
-                                            <img src="images/client-2.jpg" alt="" />
-                                        </div>
-                                        <div className="client_detail">
-                                            <div className="client_info">
-                                                <h6>
-                                                    Jorch morik
-                                                </h6>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                                <i className="fa fa-star" aria-hidden="true"></i>
-                                            </div>
-                                            <i className="fa fa-quote-left" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                    <div className="client_text">
-                                        <p>
-                                            chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* <!-- end client section --> */}
 
@@ -351,7 +355,13 @@ export default function Body() {
                                     <div id="googleMap" style={{ width: "100%", height: "100%" }}></div>
                                 </div>
                             </div>
+                            
                         </div>
+                        {/* <div className="col-md-6">
+                            <div className="img-box">
+                                <img src="assets/images/imag4-removebg-preview.png" alt="" />
+                            </div>
+                        </div> */}
                     </div>
                 </div>
             </section>
@@ -376,7 +386,7 @@ export default function Body() {
                                                     <i className="fa fa-map-marker" aria-hidden="true"></i>
                                                 </div>
                                                 <p>
-                                                    Lorem Ipsum is simply dummy text
+                                                    N0 4, WEs Street Colombo
                                                 </p>
                                             </div>
                                         </a>
@@ -410,25 +420,7 @@ export default function Body() {
                         </div>
                     </div>
                 </div>
-                <div className="social-box">
-                    <h4>
-                        Follow Us
-                    </h4>
-                    <div className="box">
-                        <a href="">
-                            <i className="fa fa-facebook" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i className="fa fa-twitter" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i className="fa fa-youtube" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i className="fa fa-instagram" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
+
             </section>
         </main >
 

@@ -12,21 +12,17 @@ import logo from './logo.jpeg';
 function Login() {
   return (
     <div className="App">
-      <div className="section">
+      <div className="hero_area yes" style={{ width: '100%', height: '100vh' }}>
         <div className="section-2">
           <div className="section-3">
-              <div className="main">
+              <div className="main align-item-center">
                 <div className="main-1">
-                <img src={logo} alt="" />
-                  <h1>Login</h1>
-                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry has been the industry.</p>
-                  <div className="icons">
-                  <FaFacebookF />
-                  <FiMail/>
-                  <FiLinkedin/>
-                  <FiInstagram/>
-                  <FiX/>
-                  </div>
+                <div className="img-box">
+                  <img src="assets/images/001-removebg-preview.png" alt="" style={{ width: '20%' }} />
+                </div>
+                  <h1>Reaphsoft Workman Portal Login</h1>
+                  <p>Welcome to the Reaphsoft Workman Portal Login</p>
+                  
                 </div>
 
                 <div className="main-2">
