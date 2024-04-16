@@ -15,7 +15,7 @@
 6. Type `psql --username=postgres` and enter your `postgres` password. Then input `\du` to confirm that the account was successfully created.
 7. Create database using the command below
     ```
-    createdb -e -U reaphsoft reaphsoft_workmen.db
+    createdb -e -U reaphsoft reaphsoft_workmen.db "an optional comment"
     ```
 8. You can see the list of created databases using
     ```
@@ -31,6 +31,8 @@ Run
 ```
 npm install --save @nestjs/typeorm typeorm pg
 ```
+
+# NestJS
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
