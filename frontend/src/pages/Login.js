@@ -27,23 +27,25 @@ function Login() {
 
                 <div className="main-2">
 
-                  <div className="bg">
-                    <p>if you have an account with us, please log in.</p>
-                    <label htmlFor="email">
-                      Email Address*
-                    </label>
-                    <input type="email" required placeholder='johndoe123@gmail.com' />
-                    <label htmlFor="password">
-                      Password*
-                    </label>
-                    <input type="password" required placeholder='******' />
-
-                    <div className="btn">
-                      <button>Login</button>
-                      <Link to="/register" className="sign">
-                        <IoLockOpen /> Sign up
-                      </Link>
-                    </div>
+                  <div className="bg mb-5">
+                    <form>
+                      <h5 className="mb-4">Please log in if you have an account with us</h5>
+                      <label htmlFor="email" className="form-label">Email Address</label>
+                      <input type="email" required placeholder='johndoe123@gmail.com' className="form-control" autoComplete="email"/>
+                      <label htmlFor="password" className="form-label">Password</label>
+                      <input type="password" required placeholder='*********' className="form-control" autoComplete="current-password"/>
+                      <div className="row">
+                        <div className="col-6">
+                          <div className="d-grid">
+                            <button className="btn btn-primary">Login</button>
+                          </div>
+                        </div>
+                        <div className="col-6">
+                          <Link to="/register" className="btn btn-outline-primary">
+                          <IoLockOpen/> Sign up
+                        </Link></div>
+                      </div>
+                    </form>
                   </div>
 
                 </div>
