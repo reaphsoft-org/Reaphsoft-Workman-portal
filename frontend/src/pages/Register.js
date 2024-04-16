@@ -56,9 +56,11 @@ function Register() {
   }
   return (
     <div className="App">
-      <div className="section-1">
+      <div className="hero_area section-1">
         <div className="bg-white">
-          <img src={logo} alt="" />
+          <div className="img-box">
+            <img src="assets/images/001-removebg-preview.png" alt="" style={{ width: '12%' }} />
+          </div>
           <div className="my-3">
             <h3 className="text-center text-secondary my-3">Account Type</h3>
             <div className="row gap-0">
