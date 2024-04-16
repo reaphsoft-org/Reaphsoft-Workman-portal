@@ -1,3 +1,14 @@
+# Reaphsoft Workmen Backend
+## Database
+### Setup
+1. Download and install [PostgreSQL](https://www.postgresql.org/download/windows/) on your machine (or server)
+2. While installing, you would be prompted to input a password for a default `postgres` superuser.
+3. After installing, start `pg_ctl` by running `pg_ctl start -l logfile -D "C:\<FullPathTo>\PostgreSQL\15\data"`.
+4. The above command needs to be run whenever you restart your machine. Or when you notice the database is not connecting. 
+5. Create a user via `createuser -s -P -e --username=postgres reaphsoft`. When prompted, enter `reaphsoft` as password. 
+6. Type `psql --username=postgres` and enter your `postgres` password. Then input `\du` to confirm that the account was successfully created.
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
