@@ -24,15 +24,11 @@ function Register() {
           <div className="my-3">
             <h3 className="text-center text-secondary my-3">Account Type</h3>
             <div className="row gap-0">
-              <div className="col-6 p-0 pe-1">
-                <div className="d-grid">
-                  <button className="btn btn-outline-secondary" type="button" disabled>Estate</button>
-                </div>
+              <div className="col-6 p-0 pe-1 d-grid">
+                <button className="btn btn-outline-secondary" type="button" disabled>Estate</button>
               </div>
-              <div className="col-6 p-0 ps-1">
-                <div className="d-grid gap-0">
-                  <button className="btn btn-secondary" type="button">Individual</button>
-                </div>
+              <div className="col-6 p-0 ps-1 d-grid">
+                <button className="btn btn-secondary" type="button">Individual</button>
               </div>
             </div>
           </div>
@@ -85,10 +81,8 @@ function Register() {
                     onChange={handleImageChange}
                   />
                 </div>
-                <div className="col-8 offset-2">
-                  <div className="d-grid">
-                    <button className="btn-primary btn" type="submit">Sign Me</button>
-                  </div>
+                <div className="col-8 offset-2 d-grid justify-content">
+                  <button className="btn btn-primary" type="submit">Sign Me</button>
                 </div>
               </div>
             </form>
