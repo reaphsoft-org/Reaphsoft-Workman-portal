@@ -10,16 +10,34 @@ function Register() {
   };
 
   // Function to handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const postData = new FormData();
     Object.keys(formData).forEach(key => {
       postData.append(key, formData[key]);
     });
-    if (selectedImage != null){
-      postData.append("phot", selectedImage);
+    if (selectedImage != null) {
+      postData.append("photo", selectedImage);
     }
-
+    try {
+      const response = await fetch('http://localhost:3001/account/sign/up/', {
+        method: 'POST',
+        body: postData,
+      });
+      if (!response.ok){
+        console.log("error");
+        // show toast
+        return;
+      }
+      const data = await response.json();
+      // Handle the response data
+      console.log(data);
+      if (data.status === true) {
+        window.location.href = "/Login";
+      }
+    } catch (error) {
+      console.error('Error posting form data:', error);
+    }
   };
 
   const [formData, setFormData] = useState(
@@ -86,7 +104,7 @@ function Register() {
                 </div>
                 <div className="col-12">
                   <label className="form-label">Service Type</label>
-                  <select className="form-select" aria-label="Select service type" name="service" required
+                  <select className="form-select" aria-label="Select service type" name="serviceType" required
                           value={formData.serviceType} onChange={handleInputChange}>
                     <option>Select your Service Type</option>
                     <option value="1">Priority</option>
