@@ -37,8 +37,10 @@ function Register() {
             </div>
           </div>
           <div className="mt-5">
-            <h3 className="text-center">Personal Information</h3>
+            <h4 className="text-center">Personal Information</h4>
             <form onSubmit={handleSubmit}>
+              <input type="hidden" name="accountType" value="1"/>
+              {/* Above would be dynamically set subsequently */}
               <div className="my-5">
                 <div className="col-12">
                   <label className="form-label">Email</label>
