@@ -9,6 +9,7 @@ function Login() {
     email: "",
     password: "",
   });
+  const [errorText, setErrorText] = useState("");
   const handleInputChange = (e) => {
     setData({...data, [e.target.name]: e.target.value});
   }
@@ -30,10 +31,10 @@ function Login() {
       }
 
       const data = await response.json();
-      // Handle the response data
-      console.log(data);
       if (data.status === true) {
-        window.location.href = "/";
+        window.location.href = "/user/";
+      }else {
+        setErrorText("Invalid email/password");
       }
     }catch (e) {
       console.error('Error posting form data:', e);
@@ -64,7 +65,8 @@ function Login() {
                       <input type="password" required placeholder='*********' className="form-control"
                              autoComplete="current-password" name="password" value={data.password}
                              onChange={handleInputChange} />
-                      <div className="row">
+                      <div className="form-text text-danger">{errorText}</div>
+                      <div className="row mt-5">
                         <div className="col-6">
                           <div className="d-grid">
                             <button className="btn btn-primary" type="submit">Login</button>
