@@ -442,3 +442,8 @@ link {
   outline: none;
   border: none;
 }
+
+.header-p{
+  max-width: 1400px;
+  margin: 0 auto;
+}
