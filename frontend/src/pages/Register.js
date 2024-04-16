@@ -22,7 +22,7 @@ function Register() {
         <div className="bg-white">
           <img src={logo} alt="" />
           <div className="my-3">
-            <h3 className="text-center my-3">Account Type</h3>
+            <h3 className="text-center text-secondary my-3">Account Type</h3>
             <div className="row gap-0">
               <div className="col-6 p-0 pe-1">
                 <div className="d-grid">
@@ -31,28 +31,28 @@ function Register() {
               </div>
               <div className="col-6 p-0 ps-1">
                 <div className="d-grid gap-0">
-                  <button className="btn btn-primary" type="button">Individual</button>
+                  <button className="btn btn-secondary" type="button">Individual</button>
                 </div>
               </div>
             </div>
           </div>
           <div className="mt-5">
-            <h4 className="text-center">Personal Information</h4>
+            <h4 className="text-secondary">Personal Information</h4>
             <form onSubmit={handleSubmit}>
               <input type="hidden" name="accountType" value="1"/>
               {/* Above would be dynamically set subsequently */}
               <div className="my-5">
                 <div className="col-12">
                   <label className="form-label">Email</label>
-                  <input type="email" className="form-control" name="email" />
+                  <input type="email" className="form-control" name="email" autoComplete="email"/>
                 </div>
                 <div className="col-12">
                   <label className="form-label">Password</label>
-                  <input type="password" className="form-control" name="password" />
+                  <input type="password" className="form-control" name="password" autoComplete="new-password" />
                 </div>
                 <div className="col-12">
                   <label className="form-label">Full Name</label>
-                  <input type="text" className="form-control" name="name" />
+                  <input type="text" className="form-control" name="name" autoComplete="name" />
                 </div>
                 <div className="col-12">
                   <label className="form-label">Apartment</label>
@@ -60,12 +60,12 @@ function Register() {
                 </div>
                 <div className="col-12">
                   <label className="form-label">Address</label>
-                  <input type="text" className="form-control" name="address" />
+                  <input type="text" className="form-control" name="address" autoComplete="address-level1"/>
                 </div>
                 <div className="col-12">
                   <label className="form-label">Service Type</label>
-                  <select className="form-select" aria-label="Default select example" name="service">
-                    <option selected>Select your Service Type</option>
+                  <select className="form-select" defaultValue="0" aria-label="Default select example" name="service">
+                    <option>Select your Service Type</option>
                     <option value="1">Priority</option>
                     <option value="2">Priority Plus</option>
                   </select>
