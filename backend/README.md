@@ -32,6 +32,14 @@ Run
 npm install --save @nestjs/typeorm typeorm pg
 ```
 
+### Creating Codes
+```
+nest generate controller users
+```
+```
+nest generate service users
+```
+
 # NestJS
 
 <p align="center">
