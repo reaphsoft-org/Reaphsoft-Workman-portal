@@ -12,9 +12,14 @@ function Register() {
   // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Here you can perform actions with the selected image, such as uploading it to a server
-    console.log('Selected image:', selectedImage);
-    console.log(formData);
+    const postData = new FormData();
+    Object.keys(formData).forEach(key => {
+      postData.append(key, formData[key]);
+    });
+    if (selectedImage != null){
+      postData.append("phot", selectedImage);
+    }
+
   };
 
   const [formData, setFormData] = useState(
