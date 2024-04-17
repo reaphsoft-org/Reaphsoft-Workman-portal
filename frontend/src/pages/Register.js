@@ -57,7 +57,7 @@ function Register() {
   const logoSize = 80;
   return (
     <div className="row">
-    <div className="col-md-6">
+    <div className="col-md-6 col-lg-4">
       <div className="bg-white container">
         <div className="mx-1 my-1">
           <a href="/">
@@ -145,7 +145,7 @@ function Register() {
         </div>
       </div>
     </div>
-      <div className="col-md-6">
+      <div className="col-md-6 col-lg-8">
         <div className="my-md-5 d-none d-md-block">
           <div style={{height: 20}}></div>
         </div>

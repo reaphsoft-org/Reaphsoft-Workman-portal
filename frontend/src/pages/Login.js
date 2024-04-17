@@ -48,7 +48,7 @@ function Login() {
       <>
       { user.user !== null ? <Navigate to="/user/" /> :
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-6 col-lg-4">
               <div className="container">
                 <a href="/"><Image
                     src="/assets/images/001-removebg-preview.png" alt=""
@@ -59,7 +59,7 @@ function Login() {
                   <h3>Reaphsoft Workmen Login</h3>
                   <h6>Welcome to the Reaphsoft Workman Portal Login</h6>
                 </div>
-                <div className="my-5">
+                <div className="my-5 ms-lg-3">
                   <form onSubmit={handleSubmit}>
                     <p className="mb-3">Please log into your account</p>
                     <div className="mb-3"><label htmlFor="email" className="form-label">Email</label>
@@ -79,7 +79,7 @@ function Login() {
                       <div className="col-6">
                         <div className="d-grid">
                           <Link to="/register" className="btn btn-outline-primary">
-                            <IoLockOpen/> Sign up
+                            <IoLockOpen className="me-3"/> Sign up
                           </Link></div>
                       </div>
                     </div>
@@ -87,8 +87,8 @@ function Login() {
                 </div>
               </div>
             </div>
-            <div className="col-md-6">
-        <div className="my-md-5 d-none d-md-block">
+            <div className="col-md-6 col-lg-8">
+        <div className="my-md-5 my-lg-3 d-none d-md-block">
           <div style={{height: 10}}></div>
         </div>
         <Image
