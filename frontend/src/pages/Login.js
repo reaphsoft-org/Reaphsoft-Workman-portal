@@ -1,8 +1,8 @@
-import { IoLockOpen } from "react-icons/io5";
+import {IoAnalyticsSharp, IoLockOpen} from "react-icons/io5";
 import {Link, Navigate} from 'react-router-dom';
 import React, {useState} from "react";
 import {useAuth} from "../components/AuthContext";
-import {Image} from "react-bootstrap";
+import {Image, Toast, ToastContainer} from "react-bootstrap";
 
 
 function Login() {
@@ -11,12 +11,20 @@ function Login() {
     email: "",
     password: "",
   });
+
+  const [showToast, setShowToast] = useState({ message: "", show: false });
+  const [disableButton, setDisableButton] = useState('');
+
   const [errorText, setErrorText] = useState("");
   const handleInputChange = (e) => {
     setData({...data, [e.target.name]: e.target.value});
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (disableButton !== ""){
+      return;
+    }
+    setDisableButton(" disabled");
     const formData = JSON.stringify(data);
     try {
       const response = await fetch('http://localhost:3001/auth/login', {
@@ -28,8 +36,8 @@ function Login() {
       });
 
       if (!response.ok){
-        // show toast
-        console.log("error");
+        setShowToast({ message: "Received a bad response from the server.", show: true });
+        setDisableButton("");
         return;
       }
       const responseData = await response.json();
@@ -40,7 +48,8 @@ function Login() {
         setErrorText("Invalid email/password");
       }
     }catch (e) {
-      console.error('Error posting form data:', e);
+      setShowToast({ message: "Encountered server error while posting the form data.", show: true });
+      setDisableButton("");
     }
   }
   return (
@@ -72,7 +81,7 @@ function Login() {
                     <div className="row mt-5">
                       <div className="col-6">
                         <div className="d-grid">
-                          <button className="btn btn-primary" type="submit">Login</button>
+                          <button className={"btn btn-primary"+disableButton} type="submit">Login</button>
                         </div>
                       </div>
                       <div className="col-6">
@@ -87,14 +96,23 @@ function Login() {
               </div>
             </div>
             <div className="col-md-6 col-lg-8">
-        <div className="my-md-5 my-lg-3 d-none d-md-block">
-          <div style={{height: 10}}></div>
-        </div>
-        <Image
-            className="img-fluid mx-auto d-block"
-          src="/assets/images/labour-removebg-preview.png"
-        />
-      </div>
+              <div className="my-md-5 my-lg-3 d-none d-md-block">
+                <div style={{height: 10}}></div>
+              </div>
+              <Image
+                  className="img-fluid mx-auto d-block"
+                src="/assets/images/labour-removebg-preview.png"
+              />
+            </div>
+            <ToastContainer className="p-3" position="bottom-center" style={{ zIndex: 1 }}>
+              <Toast show={ showToast.show } onClose={()=>{setShowToast({ message: "", show: false })}}>
+                <Toast.Header>
+                  <IoAnalyticsSharp />
+                  <strong className="ms-3 me-auto">Server Response</strong>
+                </Toast.Header>
+                <Toast.Body>{ showToast.message }</Toast.Body>
+              </Toast>
+            </ToastContainer>
           </div>
       }
       </>
