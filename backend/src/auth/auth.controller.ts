@@ -6,11 +6,9 @@ import { LoginDto } from './dto/login.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Post('login')
-  async login(
-    @Body() loginDto: LoginDto,
-  ): Promise<{ success: { status: boolean } }> {
+  async login(@Body() loginDto: LoginDto): Promise<{ status: boolean }> {
     const { email, password } = loginDto;
-    const success = await this.authService.validateUser(email, password);
-    return { success };
+    const status = await this.authService.validateUser(email, password);
+    return { status };
   }
 }

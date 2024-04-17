@@ -1,7 +1,13 @@
 import React from 'react';
 import { Col, Form, Button, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import {useAuth} from "../components/AuthContext";
 
 const UserProfile = () => {
+  const user = useAuth();
+  const logout = (e) => {
+    user.logout();
+    window.location.href = "/login/";
+  }
   return (
     <div className="page-content bg-white">
       <div className="content-block">
@@ -81,10 +87,7 @@ const UserProfile = () => {
                         </a>
                       </li>
                       <li>
-                        <a href="/react/demo/">
-                          <i className="fa fa-sign-out" aria-hidden="true"></i>
-                          <span>Log Out</span>
-                        </a>
+                        <Button className="link-offset-2 link-underline-secondary" variant="link" onClick={logout}>Log Out</Button>
                       </li>
                     </ul>
                   </div>
