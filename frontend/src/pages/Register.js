@@ -30,14 +30,18 @@ function Register() {
         body: postData,
       });
       if (!response.ok){
-        console.log("error");
-        // show toast
+        setShowToast({ message: "Got a bad response from the server. Please contact the administrators.",
+          show: true });
+        setDisableButton("");
         return;
       }
       const data = await response.json();
       // Handle the response data
       if (data.status === true) {
-        window.location.href = "/Login";
+        window.location.href = "/login/";
+      }else {
+        setShowToast({ message: data.resp, show: true });
+        setDisableButton("");
       }
     } catch (error) {
       setShowToast({ message: "Encountered server error while posting the form data.", show: true });
