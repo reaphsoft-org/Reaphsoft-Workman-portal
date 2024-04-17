@@ -1,46 +1,37 @@
 import React from "react";
-import { IoSearchSharp } from "react-icons/io5";
+// import { IoSearchSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 export default function Body() {
-
     return (
         <main>
             <div className="hero_area">
                 <header className="header_section">
-
                     <div className="header_bottom">
                         <div className="container-fluid header-p">
                             <nav className="navbar navbar-expand-lg custom_nav-container">
-                                <a className="navbar-brand" href="index.html">
-                                    {/* <span>
-                                        Inance
-                                    </span> */}
+                                <a className="navbar-brand" href="/">
                                     <div className="img-box">
                                         <img src="assets/images/001-removebg-preview.png" alt="" style={{ width: '12%' }} />
                                     </div>
-
                                 </a>
-
                                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                     <span className=""></span>
                                 </button>
-
                                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul className="navbar-nav">
                                         <li className="nav-item active">
-                                            <a className="nav-link" href="">Home <span className="sr-only">(current)</span></a>
+                                            <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
                                         </li>
                                         <li className="nav-item">
                                             <a className="nav-link" href="#services">Services</a>
                                         </li>
                                         <li className="nav-item">
                                             {/* <link className="nav-link" to="../pages/Login.js">Login</a> */}
-                                            <Link className="nav-link" to="/login">Login</Link>
+                                            <Link className="nav-link" to="/login/">Login</Link>
                                         </li>
                                         <li className="nav-item">
-                                            {/* <a className="nav-link" href="../pages/Register.js">Sign in</a> */}
-                                            <Link className="nav-link" to="/Register">Register</Link>
+                                            <Link className="nav-link" to="/register/">Register</Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -72,7 +63,6 @@ export default function Body() {
                     </div>
                 </section>
             </div>
-
             <section className="feature_section">
                 <div className="container">
                     <div className="feature_container">
@@ -127,10 +117,6 @@ export default function Body() {
                     </div>
                 </div>
             </section>
-
-
-
-
             <section className="about_section layout_padding-bottom">
                 <div className="container">
                     <div className="row">
@@ -380,7 +366,7 @@ export default function Body() {
                             <div className="info_items">
                                 <div className="row">
                                     <div className="col-md-4">
-                                        <a href="">
+                                        <a href="#">
                                             <div className="item ">
                                                 <div className="img-box ">
                                                     <i className="fa fa-map-marker" aria-hidden="true"></i>
@@ -392,7 +378,7 @@ export default function Body() {
                                         </a>
                                     </div>
                                     <div className="col-md-4">
-                                        <a href="">
+                                        <a href="#call:+021234567890">
                                             <div className="item ">
                                                 <div className="img-box ">
                                                     <i className="fa fa-phone" aria-hidden="true"></i>
@@ -404,7 +390,7 @@ export default function Body() {
                                         </a>
                                     </div>
                                     <div className="col-md-4">
-                                        <a href="">
+                                        <a href="mailto:demo@gmail">
                                             <div className="item ">
                                                 <div className="img-box">
                                                     <i className="fa fa-envelope" aria-hidden="true"></i>
@@ -423,8 +409,6 @@ export default function Body() {
 
             </section>
         </main >
-
-
     )
 
 }
