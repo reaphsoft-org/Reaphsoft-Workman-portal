@@ -71,7 +71,7 @@ function Register() {
           </a>
         </div>
         <div className="my-3 mx-2">
-          <h3 className="text-cent1er text-secondary my-3">Account Type</h3>
+          <h3 className="text-secondary my-3">Account Type</h3>
           <div className="row gap-0">
             <div className="col-6 p-0 pe-1 d-grid">
               <button className="btn btn-outline-secondary" type="button" disabled>Estate</button>
