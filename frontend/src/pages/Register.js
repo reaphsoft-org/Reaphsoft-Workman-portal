@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import logo from './logo.jpeg';
-import {Image} from "react-bootstrap";
+import { Image } from "react-bootstrap";
 
 function Register() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -56,20 +56,23 @@ function Register() {
   }
   const logoSize = 80;
   return (
+    <div className="row">
     <div className="col-md-6">
       <div className="bg-white container">
         <div className="mx-1 my-1">
-          <Image
+          <a href="/">
+            <Image
             src={logo}
             width={logoSize}
             height={logoSize}
             alt="Logo"
             className="rounded"
           />
+          </a>
         </div>
         <div className="my-3 mx-2">
           <h3 className="text-cent1er text-secondary my-3">Account Type</h3>
-          <div className="row gap-0">
+          <div className="row gap-0 mx-0">
             <div className="col-6 p-0 pe-1 d-grid">
               <button className="btn btn-outline-secondary" type="button" disabled>Estate</button>
             </div>
@@ -140,6 +143,13 @@ function Register() {
             </div>
           </form>
         </div>
+      </div>
+    </div>
+      <div className="col-md-6">
+        <div className="my-md-5"></div>
+        <Image
+          src="/assets/images/labour-removebg-preview.png"
+        />
       </div>
     </div>
   );
