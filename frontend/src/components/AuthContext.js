@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     // Perform logout action (clear user data from storage, etc.)
     setUser(null);
+    localStorage.removeItem('user');
   };
 
   return (
