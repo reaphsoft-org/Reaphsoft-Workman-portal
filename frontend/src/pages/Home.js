@@ -1,4 +1,4 @@
-import '../style.css';
+// import '../style.css';
 import Body from '../components/Body.jsx'
 
 function Login() {
