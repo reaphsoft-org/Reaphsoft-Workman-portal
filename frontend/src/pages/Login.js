@@ -1,6 +1,6 @@
 import '../App.css';
 import { IoLockOpen } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import {useState} from "react";
 import {useAuth} from "../components/AuthContext";
 
@@ -45,7 +45,8 @@ function Login() {
     }
   }
   return (
-    <div className="App">
+      <>
+      { user.user !== null ? <Navigate to="/user/" /> : <div className="App">
       <div className="hero_area yes" style={{ width: '100%', height: '100vh' }}>
         <div className="section-2">
           <div className="section-3">
@@ -56,7 +57,7 @@ function Login() {
                 </div>
                   <h1>Reaphsoft Workman Portal Login</h1>
                   <p>Welcome to the Reaphsoft Workman Portal Login</p>
-                  
+
                 </div>
                 <div className="main-2">
                   <div className="bg mb-5">
@@ -90,7 +91,8 @@ function Login() {
           </div>
         </div>
       </div>
-    </div>
+    </div>}
+      </>
   );
 }
 
