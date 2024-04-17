@@ -72,7 +72,7 @@ function Register() {
         </div>
         <div className="my-3 mx-2">
           <h3 className="text-cent1er text-secondary my-3">Account Type</h3>
-          <div className="row gap-0 mx-0">
+          <div className="row gap-0">
             <div className="col-6 p-0 pe-1 d-grid">
               <button className="btn btn-outline-secondary" type="button" disabled>Estate</button>
             </div>
@@ -146,8 +146,11 @@ function Register() {
       </div>
     </div>
       <div className="col-md-6">
-        <div className="my-md-5"></div>
+        <div className="my-md-5 d-none d-md-block">
+          <div style={{height: 20}}></div>
+        </div>
         <Image
+            className="img-fluid mx-auto d-block"
           src="/assets/images/labour-removebg-preview.png"
         />
       </div>
