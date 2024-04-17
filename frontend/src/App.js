@@ -4,18 +4,19 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
-import UserProfile from './pages/UserProfile';
+import {AuthProvider} from "./components/AuthContext";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
-    <div>
+    <AuthProvider>
       <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login/" element={<Login />} />
           <Route path="/register/" element={<Register />} />
-          <Route path="/user/" element={<UserProfile />} />
+          <Route path="/user/" element={<PrivateRoute />} />
       </Routes>
-    </div>
+    </AuthProvider>
   );
 }
 
