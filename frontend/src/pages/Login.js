@@ -2,9 +2,11 @@ import '../App.css';
 import { IoLockOpen } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import {useState} from "react";
+import {useAuth} from "../components/AuthContext";
 
 
 function Login() {
+  const user = useAuth();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -24,14 +26,16 @@ function Login() {
           'Content-Type': 'application/json',
         },
       });
+
       if (!response.ok){
         // show toast
         console.log("error");
         return;
       }
 
-      const data = await response.json();
-      if (data.status === true) {
+      const responseData = await response.json();
+      if (responseData.status === true) {
+        user.login(data.email);
         window.location.href = "/user/";
       }else {
         setErrorText("Invalid email/password");

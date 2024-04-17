@@ -5,11 +5,11 @@ import { useAuth } from './AuthContext';
 import UserProfile from "../pages/UserProfile";
 
 const PrivateRoute = () => {
-  const { user } = useAuth();
+  const user = useAuth();
 
   return (
     <>
-        user ? <UserProfile /> : <Navigate to="/login/" />
+      {user.user !== null ? <UserProfile/> : <Navigate to="/login/"/>}
     </>
   );
 };
