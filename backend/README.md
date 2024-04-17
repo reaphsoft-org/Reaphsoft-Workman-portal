@@ -7,10 +7,14 @@
     ```
     pg_ctl start -l logfile -D "C:\<FullPathTo>\PostgreSQL\15\data"   
     ```
+   or
+   ```
+    pg_ctl start -l logfile -D "C:\Program Files\PostgreSQL\16\data"    
+   ```
 4. The above command needs to be run whenever you restart your machine. Or when you notice the database is not connecting. 
 5. Create a user via the command below. When prompted, enter `reaphsoft` as password.
     ```
-    createuser -s -P -e --username=postgres reaphsoftx``
+    createuser -s -P -e --username=postgres reaphsoft
     ```
 6. Type `psql --username=postgres` and enter your `postgres` password. Then input `\du` to confirm that the account was successfully created.
 7. Create database using the command below
