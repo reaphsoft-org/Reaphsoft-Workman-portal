@@ -32,7 +32,6 @@ function Login() {
         console.log("error");
         return;
       }
-
       const responseData = await response.json();
       if (responseData.status === true) {
         user.login(data.email);
@@ -69,7 +68,7 @@ function Login() {
                     <input type="password" required placeholder='*********' className="form-control"
                            autoComplete="current-password" name="password" value={data.password}
                            onChange={handleInputChange} />
-                    <div className="form-text text-danger">{errorText}</div>
+                    <div className="form-text text-danger mt-2 px-1">{errorText}</div>
                     <div className="row mt-5">
                       <div className="col-6">
                         <div className="d-grid">
