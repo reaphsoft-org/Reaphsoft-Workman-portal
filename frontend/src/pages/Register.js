@@ -65,7 +65,7 @@ function Register() {
   }
   const logoSize = 80;
   return (
-    <div className="row">
+    <div className="row ">
       <div className="col-md-6 col-lg-4">
         <div className="bg-white container">
           <div className="mx-1 my-1">

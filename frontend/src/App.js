@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import {AuthProvider} from "./components/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
+import Job from './pages/Job';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login/" element={<Login />} />
           <Route path="/register/" element={<Register />} />
-          <Route path="/user/" element={<PrivateRoute />} />
+        <Route path="/user/" element={<PrivateRoute />} />
+        <Route path="/job/" element={<Job />} />
       </Routes>
     </AuthProvider>
   );
