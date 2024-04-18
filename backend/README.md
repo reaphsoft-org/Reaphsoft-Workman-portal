@@ -54,6 +54,12 @@ Install Multer Types, and see sample codes.
 npm install --save-dev @types/multer
 ```
 
+### Testing
+```
+npm install --save-dev @nestjs/testing jest @types/jest ts-jest
+npm install --save-dev supertest @types/supertest
+```
+
 # NestJS
 
 <p align="center">
