@@ -48,6 +48,12 @@ nest generate service users
 2. Define a DTO name the file `user.dto.ts` for example. See samples.
 3. Implement endpoint in `user.controller.ts`.
 
+### Saving Images
+Install Multer Types, and see sample codes.
+```
+npm install --save-dev @types/multer
+```
+
 # NestJS
 
 <p align="center">
