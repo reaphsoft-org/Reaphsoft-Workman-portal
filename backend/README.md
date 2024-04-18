@@ -54,6 +54,11 @@ Install Multer Types, and see sample codes.
 npm install --save-dev @types/multer
 ```
 
+Add test cases in `app.e2e-spec.ts` and run the command below from the CMD (backend)
+```
+npm run test:e2e
+```
+
 ### Testing
 ```
 npm install --save-dev @nestjs/testing jest @types/jest ts-jest
