@@ -17,7 +17,7 @@
     createuser -s -P -e --username=postgres reaphsoft
     ```
 6. Type `psql --username=postgres` and enter your `postgres` password. Then input `\du` to confirm that the account was successfully created.
-7. Create database using the command below
+7. Create database using the command below, also create `reaphsoft_workmen_test.db` if you will be running automated tests.
     ```
     createdb -e -U reaphsoft reaphsoft_workmen.db "an optional comment"
     ```
@@ -29,6 +29,10 @@
     ```
     \l
     ```
+9. To delete database, 
+   ```
+   dropdb -e -U reaphsoft reaphsoft_workmen.db
+   ```
 
 ### Packages
 Run 
@@ -47,6 +51,27 @@ nest generate service users
 1. Create a `dto` dir in the created folder (`users`) in the above case.
 2. Define a DTO name the file `user.dto.ts` for example. See samples.
 3. Implement endpoint in `user.controller.ts`.
+
+### Saving Images
+Install Multer Types, and see sample codes.
+```
+npm install --save-dev @types/multer
+```
+
+Add test cases in `app.e2e-spec.ts` and run the command below from the CMD (backend)
+```
+npm run test:e2e
+```
+
+### Testing
+```
+npm install --save-dev @nestjs/testing jest @types/jest ts-jest
+npm install --save-dev supertest @types/supertest
+```
+Install `cross-env` for setting environment variables
+```
+npm install --save-dev cross-env
+```
 
 # NestJS
 
