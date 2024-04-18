@@ -6,8 +6,5 @@
     "start:frontend": "cd frontend && npm start",
     "start:backend": "cd backend && npm run start:dev",
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
-  },
-  "dependencies": {
-    "bootstrap": "^5.3.3"
   }
 }

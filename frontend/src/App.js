@@ -15,8 +15,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login/" element={<Login />} />
           <Route path="/register/" element={<Register />} />
-        <Route path="/user/" element={<PrivateRoute />} />
-        <Route path="/job/" element={<Job />} />
+          <Route path="/user/" element={<PrivateRoute />} />
+          <Route path="/job/" element={<Job />} />
       </Routes>
     </AuthProvider>
   );
