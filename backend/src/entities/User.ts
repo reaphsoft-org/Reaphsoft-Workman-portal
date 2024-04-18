@@ -8,7 +8,7 @@ export class User {
   @Column({ type: 'integer' })
   accountType: number;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: 100, unique: true })
   email: string;
 
   @Column({ type: 'varchar', length: 255 })
@@ -20,7 +20,7 @@ export class User {
   @Column({ type: 'varchar', length: 20 })
   apartment: string;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 100 })
   address: string;
 
   @Column({ type: 'integer' })
