@@ -72,6 +72,10 @@ Install `cross-env` for setting environment variables
 ```
 npm install --save-dev cross-env
 ```
+#### References
+1. [Jest](https://jestjs.io/)
+2. [Super Test](https://github.com/ladjs/supertest)
+3. [Super Agent](https://ladjs.github.io/superagent/#test-documentation)
 
 # NestJS
 
