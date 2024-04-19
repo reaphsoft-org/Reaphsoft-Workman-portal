@@ -9,6 +9,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Job from './pages/Job';
 import Request from './pages/Request';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 function App() {
   return (

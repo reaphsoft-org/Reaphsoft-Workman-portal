@@ -37,17 +37,17 @@ const Sidebar = () => {
                     </div>
                     <ul>
                         <li>
-                            <a className="active" href="#">
+                            <Link to="/UserProfile">
                                 <i className="fa fa-user-o" aria-hidden="true"></i>
-                                <span>Profile</span>
-                            </a>
+                                <span>Request</span>
+                            </Link>
                         </li>
                         
                         <li>
-                            <a href="">
+                            <Link to="/request">
                                 <i className="fa fa-heart-o" aria-hidden="true"></i>
                                 <span>Request</span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
 
