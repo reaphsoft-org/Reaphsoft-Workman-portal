@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import {AuthProvider} from "./components/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import Job from './pages/Job';
+import Request from './pages/Request';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/register/" element={<Register />} />
           <Route path="/user/" element={<PrivateRoute />} />
           <Route path="/job/" element={<Job />} />
+          <Route path="/request/" element={<Request />} />
       </Routes>
     </AuthProvider>
   );
