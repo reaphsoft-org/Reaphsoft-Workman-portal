@@ -7,6 +7,9 @@ function Register() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showToast, setShowToast] = useState({ message: "", show: false });
   const [disableButton, setDisableButton] = useState('');
+  const [accountTypeValues, setAccountTypeValues] = useState({
+    individual: true, description: 'Personal', accountType: 1
+  });
 
   // Function to handle when a new image is selected
   const handleImageChange = (event) => {
@@ -83,18 +86,23 @@ function Register() {
             <h3 className="text-secondary my-3">Account Type</h3>
             <div className="row gap-0">
               <div className="col-6 p-0 pe-1 d-grid">
-                <button  className="btn btn-outline-secondary" type="button" disabled>Estate</button>
+                <button className={accountTypeValues.individual ? "btn btn-secondary disabled" : "btn btn-outline-secondary"} type="button" onClick={() => {
+                  setAccountTypeValues({individual: true, description: 'Personal', accountType: 1});
+                }}>Individual</button>
               </div>
               <div className="col-6 p-0 ps-1 d-grid">
-                <button className="btn btn-secondary" type="button">Individual</button>
+                <button  className={accountTypeValues.individual ? "btn btn-outline-secondary" : "btn btn-secondary disabled"} type="button" onClick={() => {
+                  setAccountTypeValues({individual: false, description: 'Estate', accountType: 2});
+                }}>Estate</button>
               </div>
             </div>
           </div>
           <div className="mt-4">
             {/* Personal Information */}
-            <h4 className="text-secondary">Estate Information</h4>
-            <form onSubmit={handleSubmit}>
-              <input type="hidden" name="accountType" value={formData.accountType} onChange={handleInputChange}/>
+            <h4 className="text-secondary">{accountTypeValues.description} Information</h4>
+            { accountTypeValues.individual ?
+                <form onSubmit={handleSubmit}>
+              <input type="hidden" name="accountType" value={accountTypeValues.accountType} onChange={handleInputChange}/>
               {/* Above would be dynamically set subsequently */}
               <div className="my-5">
                 <div className="col-12 mb-3">
@@ -151,11 +159,9 @@ function Register() {
                   <button className={"btn btn-primary"+disableButton} type="submit">Sign Me</button>
                 </div>
               </div>
-            </form>
-            {/* Estate Information */}
-            <form  style={{ display: "none" }} onSubmit={handleSubmit}>
-              <input type="hidden" name="accountType" value={formData.accountType} onChange={handleInputChange} />
-              {/* Above would be dynamically set subsequently */}
+            </form> :
+                <form onSubmit={handleSubmit}>
+              <input type="hidden" name="accountType" value={accountTypeValues.accountType} onChange={handleInputChange} />
               <div className="my-5">
                 <div className="col-12 mb-3">
                   <label className="form-label">Estate Email</label>
@@ -173,7 +179,7 @@ function Register() {
                   <input type="text" className="form-control" name="fullname" autoComplete="name" value={formData.fullname}
                     onChange={handleInputChange} required />
                 </div>
-                
+
                 <div className="col-12 mb-3">
                   <label className="form-label">Address</label>
                   <input type="text" className="form-control" name="address" autoComplete="address-line1" required
@@ -208,6 +214,7 @@ function Register() {
                 </div>
               </div>
             </form>
+            }
           </div>
         </div>
       </div>
