@@ -26,6 +26,6 @@ export class User {
   @Column({ type: 'integer' })
   serviceType: number;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 150 })
   photoURL: string;
 }
