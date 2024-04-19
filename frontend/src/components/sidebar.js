@@ -37,9 +37,9 @@ const Sidebar = () => {
                     </div>
                     <ul>
                         <li>
-                            <Link to="/UserProfile">
+                            <Link to="/profile">
                                 <i className="fa fa-user-o" aria-hidden="true"></i>
-                                <span>Request</span>
+                                <span>Profile</span>
                             </Link>
                         </li>
                         
@@ -65,7 +65,7 @@ const Sidebar = () => {
                             </a>
                         </li>
                         <li>
-                            <Button className="link-offset-2 link-underline-secondary" variant="link" onClick={() => logout(user)}>Log Out</Button>
+                            <Button className="link-offset-2 link-underline-secondary" variant="link" onClick={() => logout(user)}> <i className="fa fa-out" aria-hidden="true"></i>Log Out</Button>
                         </li>
                     </ul>
                 </div>
