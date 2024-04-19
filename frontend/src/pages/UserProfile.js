@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { logout } from '../utils/auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from '../components/sidebar';
+import 'bootstrap/dist/css/bootstrap.min.css';
 const UserProfile = () => {
   const user = useAuth();
   // logout(user);

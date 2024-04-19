@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import {AuthProvider} from "./components/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import Job from './pages/Job';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

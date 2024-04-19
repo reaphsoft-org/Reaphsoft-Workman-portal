@@ -30,7 +30,7 @@ const Sidebar = () => {
                                     <a href="#">Peter JOhn</a>
                                 </h4>
                                 <p className="m-b0">
-                                    <a href="#">Mechainan Engineer</a>
+                                    <a href="#"></a>
                                 </p>
                             </div>
                         </div>
@@ -42,16 +42,11 @@ const Sidebar = () => {
                                 <span>Profile</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <i className="fa fa-file-text-o" aria-hidden="true"></i>
-                                <span>My Resume</span>
-                            </a>
-                        </li>
+                        
                         <li>
                             <a href="">
                                 <i className="fa fa-heart-o" aria-hidden="true"></i>
-                                <span>Saved Jobs</span>
+                                <span>Request</span>
                             </a>
                         </li>
                         <li>
@@ -64,7 +59,7 @@ const Sidebar = () => {
                         </li>
 
                         <li>
-                            <a href="/react/demo/jobs-change-password">
+                            <a href="#">
                                 <i className="fa fa-key" aria-hidden="true"></i>
                                 <span>Change Password</span>
                             </a>
