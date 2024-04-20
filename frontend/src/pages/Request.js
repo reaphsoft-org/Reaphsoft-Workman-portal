@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { logout } from "../utils/auth";
 import { useAuth } from "../components/AuthContext";
 import Sidebar from "../components/sidebar";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Request = () => {
     return ( 
@@ -71,7 +72,7 @@ const Request = () => {
                                                         className="form-control" placeholder="London" spellcheck="false"
                                                         data-ms-editor="true"/></div>
                                                 </div>
-                                            </div><button type="button" className="site-button m-b30">Request Worker</button>
+                                            </div><button type="button" className="site-button m-b30 mt-4">Request Worker</button>
                                         </form>
                                     </div>
                                 </div>

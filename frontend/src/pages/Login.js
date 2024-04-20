@@ -57,7 +57,8 @@ function Login() {
       { user.user !== null ? <Navigate to="/user/" /> :
           <div className="row">
             <div className="col-md-6 col-lg-4">
-              <div className="container">
+            <div className="container">
+              <div className="d-flex flex-column">
                 <a href="/"><Image
                     src="/assets/images/001-removebg-preview.png" alt=""
                     width={90}
@@ -67,6 +68,7 @@ function Login() {
                   <h3>Reaphsoft Workmen Login</h3>
                   <h6>Welcome to the Reaphsoft Workman Portal Login</h6>
                 </div>
+              </div>
                 <div className="my-5 ms-lg-3">
                   <form onSubmit={handleSubmit}>
                     <p className="mb-3">Please log into your account</p>

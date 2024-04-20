@@ -189,7 +189,6 @@
 }
 
 .job-categories .icon-bx-wraper:after {
-    /* background-image: url(../images/categories-bg.png); */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
@@ -1022,7 +1021,6 @@
 /* Quote Box */
 
 .quote-bx {
-    /* background-image: url(../images/our-work/pic4.jpg); */
     background-size: cover;
     position: relative;
     border-radius: 4px;
@@ -1835,7 +1833,6 @@
 
 .login-form-bx .box-skew1:after {
     content: "";
-    /* background-image: url(../images/background/bg6.jpg); */
     height: 100%;
     position: absolute;
     width: 120%;
@@ -2064,7 +2061,6 @@
 }
 
 .right-arrow {
-    /* background-image: url(../images/sap.png); */
     background-size: cover;
     background-position: left;
     background-repeat: no-repeat;

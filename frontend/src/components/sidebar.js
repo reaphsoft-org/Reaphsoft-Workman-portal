@@ -62,10 +62,11 @@ const Sidebar = () => {
                         </li>
 
                         <li>
-                            <a href="#">
-                                <i className="fa fa-key" aria-hidden="true"></i>
+                            <Link to="/user/changePassword/">
+                                <i className="fa fa-lock" aria-hidden="true"></i>
                                 <span>Change Password</span>
-                            </a>
+                            </Link>
+                            
                         </li>
                         <li>
                             <Button className="link-offset-2 link-underline-secondary" variant="link" onClick={() => logout(user)}> <i className="fa fa-out" aria-hidden="true"></i>Log Out</Button>

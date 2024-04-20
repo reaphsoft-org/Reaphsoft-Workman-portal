@@ -11,6 +11,7 @@ import Request from './pages/Request';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import UserDetails from './pages/userDetails';
+import ChangePassword from './pages/ChangePassword';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/job/" element={<Job />} />
         <Route path="/request/" element={<Request />} />
         <Route path="/user/update/" element={<UserDetails />} />
+        <Route path="/user/changePassword/" element={<ChangePassword />} />
       </Routes>
     </AuthProvider>
   );
