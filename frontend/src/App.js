@@ -22,7 +22,7 @@ function App() {
         <Route path="/user/" element={<PrivateRoute />} />
         <Route path="/job/" element={<Job />} />
         <Route path="/request/" element={<Request />} />
-        <Route path="/details/" element={<UserDetails />} />
+        <Route path="/user/update/" element={<UserDetails />} />
       </Routes>
     </AuthProvider>
   );
