@@ -11,8 +11,7 @@ import Request from './pages/Request';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import UserProfile from './pages/UserProfile';
-import UserDetails from './pages/userDetails';
-
+import UserDetails from './pages/UserDetails';
 
 function App() {
   return (
