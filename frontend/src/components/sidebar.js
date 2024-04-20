@@ -36,27 +36,26 @@ const Sidebar = () => {
                         </div>
                     </div>
                     <ul>
-                        <li>
+                        {/*<li>
                             <Link to="/details">
                                 <i className="fa fa-user-o" aria-hidden="true"></i>
                                 <span>Profile</span>
                             </Link>
-                        </li>
-                        
+                        </li>*/}
                         <li>
-                            <Link to="/request">
+                            <Link to="/request/">
                                 <i className="fa fa-heart-o" aria-hidden="true"></i>
                                 <span>Post a Request</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/job">
+                            <Link to="/job/">
                                 <i className="fa fa-briefcase" aria-hidden="true"></i>
                                 <span>All labour Request</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/profile">
+                            <Link to="/user/update/">
                                 <i className="fa fa-briefcase" aria-hidden="true"></i>
                                 <span>Edit Profile</span>
                             </Link>
