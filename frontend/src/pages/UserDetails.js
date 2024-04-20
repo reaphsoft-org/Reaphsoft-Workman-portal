@@ -10,7 +10,9 @@ const UserDetails = () => {
     const user = useAuth();
     return ( 
 
-        <div></div>
+        <div>
+            
+        </div>
     );
 }
  

@@ -25,7 +25,7 @@ function App() {
         <Route path="/job/" element={<Job />} />
         <Route path="/request/" element={<Request />} />
         <Route path="/profile/" element={<UserProfile />} />
-        <Route path='/details/' element={<UserDetails />} />
+        <Route path="/details/" element={<UserDetails />} />
       </Routes>
     </AuthProvider>
   );
