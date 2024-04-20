@@ -10,7 +10,7 @@ import Job from './pages/Job';
 import Request from './pages/Request';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import UserDetails from './pages/userDetails';
+import UserDetails from './pages/UserDetails';
 
 function App() {
   return (
