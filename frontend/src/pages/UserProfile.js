@@ -27,7 +27,7 @@ const UserProfile = () => {
                     <div className="row m-b30">
                       <Col lg={6} md={6}>
                         <Form.Group>
-                          <Form.Label>Your Name:</Form.Label>
+                          <Form.Label>Your Name/ Estate Name</Form.Label>
                           <Form.Control type="text" placeholder="Alexander Weir" spellCheck={false} />
                         </Form.Group>
                       </Col>
@@ -47,18 +47,6 @@ const UserProfile = () => {
                         <Form.Group>
                           <Form.Label>Age:</Form.Label>
                           <Form.Control type="text" placeholder="32 Year" spellCheck={false} />
-                        </Form.Group>
-                      </Col>
-                      <Col lg={6} md={6}>
-                        <Form.Group>
-                          <Form.Label>Current Salary($):</Form.Label>
-                          <Form.Control type="text" placeholder="2000$" spellCheck={false} />
-                        </Form.Group>
-                      </Col>
-                      <Col lg={6} md={6}>
-                        <Form.Group>
-                          <Form.Label>Expected Salary:</Form.Label>
-                          <Form.Control type="text" placeholder="2500$" spellCheck={false} />
                         </Form.Group>
                       </Col>
                       <Col lg={12} md={12}>

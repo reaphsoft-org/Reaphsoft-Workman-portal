@@ -11,6 +11,8 @@ import Request from './pages/Request';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import UserProfile from './pages/UserProfile';
+import UserDetails from './pages/userDetails';
+
 
 function App() {
   return (
@@ -22,7 +24,8 @@ function App() {
         <Route path="/user/" element={<PrivateRoute />} />
         <Route path="/job/" element={<Job />} />
         <Route path="/request/" element={<Request />} />
-        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/profile/" element={<UserProfile />} />
+        <Route path='/details/' element={<UserDetails />} />
       </Routes>
     </AuthProvider>
   );
