@@ -164,7 +164,7 @@ function Register() {
               <input type="hidden" name="accountType" value={accountTypeValues.accountType} onChange={handleInputChange} />
               <div className="my-5">
                 <div className="col-12 mb-3">
-                  <label className="form-label">Estate Email</label>
+                  <label className="form-label">Email Address</label>
                   <input type="email" className="form-control" name="email" autoComplete="email"
                     value={formData.email} onChange={handleInputChange} required />
                 </div>
@@ -181,7 +181,7 @@ function Register() {
                 </div>
 
                 <div className="col-12 mb-3">
-                  <label className="form-label">Address</label>
+                  <label className="form-label">Estate Address</label>
                   <input type="text" className="form-control" name="address" autoComplete="address-line1" required
                     value={formData.address} onChange={handleInputChange} />
                 </div>
@@ -210,7 +210,7 @@ function Register() {
                   />
                 </div>
                 <div className="col-8 offset-2 d-grid my-5">
-                  <button className={"btn btn-primary" + disableButton} type="submit">Create Estate Account</button>
+                  <button className={"btn btn-primary" + disableButton} type="submit">Create Account</button>
                 </div>
               </div>
             </form>
