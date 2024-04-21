@@ -77,6 +77,14 @@ npm install --save-dev cross-env
 2. [Super Test](https://github.com/ladjs/supertest)
 3. [Super Agent](https://ladjs.github.io/superagent/#test-documentation)
 
+### [Mail Gun](https://www.npmjs.com/package/mailgun.js)
+```
+npm install mailgun.js
+```
+Set the environment variable
+`MAILGUN_USERNAME` to your mailgun username and `MAILGUN_USERNAME` to the API key if you want to send live emails.
+
+
 # NestJS
 
 <p align="center">

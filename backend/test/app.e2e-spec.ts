@@ -4,8 +4,8 @@ import * as request from 'supertest';
 import { AppModule, MEDIA_DIR } from '../src/app.module';
 import * as fs from 'fs';
 import * as path from 'path';
-import {AppDataSource} from "../src/data-source";
-import {User} from "../src/entities/User";
+import { AppDataSource } from '../src/data-source';
+import { User } from '../src/entities/User';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -86,6 +86,48 @@ describe('Accounts Test', () => {
         );
         fs.rmSync(imgPath);
         expect(fs.existsSync(imgPath)).toBe(false);
+      });
+  });
+
+  it('lowercase name', async () => {
+    const email: string = 'test1@reaphsoft.com';
+    return request(app.getHttpServer())
+      .post('/account/sign/up/') // replace with your actual endpoint
+      .set('Content-Type', 'multipart/form-data')
+      .field('accountType', '1') // include any other form fields
+      .field('email', email)
+      .field('password', 'password')
+      .field('fullname', 'reaph soft')
+      .field('apartment', '15B')
+      .field('address', 'NA')
+      .field('serviceType', '0')
+      .expect(201)
+      .then(async () => {
+        const repo = AppDataSource.getRepository(User);
+        const user = await repo.findOne({ where: { email } });
+        expect(user !== null);
+        expect(user?.fullname == 'reaph soft');
+      });
+  });
+
+  it('test email', async () => {
+    const email: string = 'felixsigit@gmail.com';
+    return request(app.getHttpServer())
+      .post('/account/sign/up/') // replace with your actual endpoint
+      .set('Content-Type', 'multipart/form-data')
+      .field('accountType', '1') // include any other form fields
+      .field('email', email)
+      .field('password', 'password')
+      .field('fullname', 'dalang felix sihitshuwam')
+      .field('apartment', '15B')
+      .field('address', 'NA')
+      .field('serviceType', '0')
+      .expect(201)
+      .then(async () => {
+        const repo = AppDataSource.getRepository(User);
+        const user = await repo.findOne({ where: { email } });
+        expect(user !== null);
+        expect(user?.fullname == 'Dalang Felix Sihitshuwam');
       });
   });
 

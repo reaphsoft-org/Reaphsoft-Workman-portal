@@ -6,6 +6,7 @@ import { User } from '../entities/User';
 import * as fs from 'fs';
 import * as path from 'path';
 import { MEDIA_DIR } from '../app.module';
+import { Email } from '../mailman';
 
 @Injectable()
 export class AccountsService {
@@ -23,7 +24,7 @@ export class AccountsService {
     user.accountType = createAccountDto.accountType;
     user.email = createAccountDto.email;
     user.password = createAccountDto.password;
-    user.fullname = createAccountDto.fullname;
+    user.fullname = this.toTitleCase(createAccountDto.fullname.trim());
     user.apartment = createAccountDto.apartment;
     user.address = createAccountDto.address;
     user.serviceType = createAccountDto.serviceType;
@@ -37,6 +38,7 @@ export class AccountsService {
       user.photoURL = await this.savePhoto(file, filename);
     }
     await accountRepository.save(user);
+    await this.sendAgreement(user);
     return { resp: 'Account created successfully', status: true };
   }
 
@@ -52,5 +54,22 @@ export class AccountsService {
       }
     });
     return imgPath;
+  }
+
+  async sendAgreement(user: User) {
+    const email = new Email();
+    const resp = await email.sendTextMail(
+      user.email,
+      'Reaphsoft Workmen Contractual Agreement',
+      `Dear ${user.fullname},\n\nThank you for creating an account with us. Here is an official contractual agreement between us which is binding whenever you use our services.\n\nWarm Regards\nReaphsoft Workmen`,
+      '',
+    );
+    return { status: resp };
+  }
+
+  toTitleCase(str: string): string {
+    return str.replace(/\w\S*/g, function (txt: string) {
+      return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
+    });
   }
 }
