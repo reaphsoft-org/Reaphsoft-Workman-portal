@@ -1,40 +1,40 @@
-import React from 'react';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import logo from './logo.jpeg';
-import { IoLockOpen } from "react-icons/io5";
+import React from "react";
+import { Link } from "react-router-dom";
+import { logout } from '../utils/auth';
+import { useAuth } from './AuthContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function NavScrollExample() {
+const Navbar = () => {
+  const user = useAuth();
   return (
-    <Navbar expand="lg" className="bg-body-white" style={{ width: '100%' }}>
-      <Container fluid style={{ padding: '0px 6rem' }}>
-        <Navbar.Brand href="#" className='nav'> <img src={logo} alt="" style={{ width: '10%' }} /></Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
-        <Nav
-            className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: '100px' }}
-            navbarScroll
-          >
-            
-          </Nav>
-          <div className="btn-nav">
-              <Button >Services</Button>
-                <Button variant="outline-primary">  <IoLockOpen /> Sign in</Button>
-                <Button variant="outline-primary"> <IoLockOpen /> Log In </Button>
+    <header classNameName="site-header mo-left header border-bottom fullwidth" style={{ backgroundColor: '#d1e3ff' }}>
+      <div classNameName="sticky-header main-bar-wraper navbar-expand-lg">
+        <div classNameName="main-bar clearfix">
+          <div className="container clearfix">
+            <div className="logo-header mostion"><a href=""><img src="./assets/images/001-removebg-preview.png" className="logo" alt="" />
+            </a></div><button
+                className="navbar-toggler collapsed navicon justify-content-end" type="button" data-toggle="collapse"
+                data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+            <div className="extra-nav">
+              <div className="extra-cell"> <a title="READ MORE" className="site-button"
+                href=""><i className="fa fa-lock"></i> </a></div>
             </div>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+            <div className="header-nav navbar-collapse collapse myNavbar justify-content-start" id="navbarNavDropdown">
+              <ul className="nav navbar-nav">
+                <li className="active"><a href="/react/demo/jobs-change-password">Home <i
+                  className="fa fa-chevron-down"></i></a>
+                  <ul className="sub-menu">
+
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 }
 
-export default NavScrollExample;
-
-
-
-
-      
+export default Navbar;

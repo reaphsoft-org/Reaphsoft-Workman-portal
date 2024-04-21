@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import UserDetails from './pages/userDetails';
 import ChangePassword from './pages/ChangePassword';
+import UserProfile from './pages/UserProfile';
 
 function App() {
   return (
@@ -21,9 +22,10 @@ function App() {
         <Route path="/login/" element={<Login />} />
         <Route path="/register/" element={<Register />} />
         <Route path="/user/" element={<PrivateRoute />} />
-        <Route path="/job/" element={<Job />} />
-        <Route path="/request/" element={<Request />} />
-        <Route path="/user/update/" element={<UserDetails />} />
+        <Route path="/user/job/" element={<Job />} />
+        <Route path="/user/request/" element={<Request />} />
+        <Route path="/user/profile/" element={<UserDetails />} />
+        <Route path="/user/update/" element={<UserProfile />} />
         <Route path="/user/changePassword/" element={<ChangePassword />} />
       </Routes>
     </AuthProvider>
