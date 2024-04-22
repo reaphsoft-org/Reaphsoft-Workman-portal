@@ -1,12 +1,13 @@
 import { User } from '../entities/User';
 import * as fs from 'fs';
 import * as path from 'path';
+import { ASSETS_DIR } from '../app.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const pdfmaster = require('pdf-master');
+import pdfmaster from 'pdf-master';
 
 export async function createPDF(user: User) {
   const currentDate = new Date();
-  const imgBuffer = fs.readFileSync(path.join(__dirname, 'img', 'logo.jpeg'));
+  const imgBuffer = fs.readFileSync(path.join(ASSETS_DIR, 'i', 'logo.jpeg'));
   const base64Image = imgBuffer.toString('base64');
   const imgSrcString = 'data:image/jpeg;base64,' + base64Image;
   const data = {
@@ -19,7 +20,7 @@ export async function createPDF(user: User) {
     format: 'A4',
     margin: { top: '80px', bottom: '100px' },
   };
-  const template = path.join(__dirname, 'pdf_template.html');
+  const template = path.join(ASSETS_DIR, 'pdf_template.html');
   const output: {
     success: boolean;
     filePath: string | null;

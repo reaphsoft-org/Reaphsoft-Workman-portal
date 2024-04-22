@@ -88,6 +88,8 @@ See also
 2. [pdf-master generatePDF](https://github.com/chaitanyamogal/pdf-master/blob/main/src/index.js)
 3. [Loading static assets to setContent](https://stackoverflow.com/a/69035580)
 
+Added a `pdf-master.d.ts`, remember to remove it when uninstalling `pdf-master`.
+
 ### [Mail Gun](https://www.npmjs.com/package/mailgun.js)
 ```
 npm install mailgun.js

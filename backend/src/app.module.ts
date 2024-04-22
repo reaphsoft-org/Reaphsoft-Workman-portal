@@ -9,6 +9,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 export const MEDIA_DIR = path.join(__dirname, '..', 'media/u');
+export const ASSETS_DIR = path.join(__dirname, '..', 'assets');
 if (!fs.existsSync(MEDIA_DIR)) {
   fs.mkdirSync(MEDIA_DIR, { recursive: true });
 }
