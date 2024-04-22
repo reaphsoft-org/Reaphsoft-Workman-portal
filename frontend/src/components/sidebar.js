@@ -26,6 +26,12 @@ const Sidebar = () => {
                     <ul>
                         <li>
                             <Link to="/user/"> {/*todo disable when current route is /user/ */}
+                                <i className="fa fa-user-o" aria-hidden="true"></i>
+                                <span>Dashboard</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/user/"> {/*todo disable when current route is /user/ */}
                                     <i className="fa fa-user-o" aria-hidden="true"></i>
                                 <span>Profile</span>
                             </Link>
@@ -56,7 +62,7 @@ const Sidebar = () => {
                         </li>
                         <li>
                             <Link variant="link" onClick={() => logout(user)}>
-                                <i className="fa fa-out" aria-hidden="true"></i>Log Out
+                                <i className="fa fa-right-from-bracket" aria-hidden="true"></i>Log Out
                             </Link>
                         </li>
                     </ul>

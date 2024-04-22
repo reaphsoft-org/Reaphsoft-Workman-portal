@@ -14,18 +14,8 @@ const Footer = () => {
                             <div className="widget"><img
                                 src=""
                                 width="180" className="m-b15" alt=""/>
-                                <p className="text-capitalize m-b20">Lorem Ipsum is simply dummy text of the printing and
-                                    typesetting industry has been the industry's standard dummy text ever since the.</p>
-                                <div className="subscribe-form m-b20">
-                                    <form className="dzSubscribe" action="script/mailchamp.php" method="post">
-                                        <div className="dzSubscribeMsg"></div>
-                                        <div className="input-group"><input name="dzEmail" required="" className="form-control"
-                                            placeholder="Your Email Address" type="email"/><span
-                                                className="input-group-btn"><button name="submit" value="Submit"
-                                                    type="submit"
-                                                    className="site-button radius-xl">Subscribe</button></span></div>
-                                    </form>
-                                </div>
+                                <p className="text-capitalize m-b20">Welcome to Reaphsoft Workman Portal, where your home tasks become our mission! We understand the everyday challenges of managing household chores, maintenance, and repairs. That's why we're here to offer you a hassle-free solution. Say goodbye to the stress of finding reliable help for your home tasks; our trusted team of professionals is just a click away.</p>
+                                
                                 <ul className="list-inline m-a0">
                                     <li><a className="site-button white facebook circle " href=""><i
                                         className="fa fa-facebook"></i></a></li>

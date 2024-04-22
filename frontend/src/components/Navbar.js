@@ -21,10 +21,10 @@ const Navbar = () => {
                 aria-expanded="false"
               aria-label="Toggle navigation"><span></span><span></span><span></span>
             </button>
-            <div className="header-nav navbar-collapse collapse myNavbar justify-content-start"
+            <div className="header-nav navbar-collapse collapse myNavbar justify-content-end"
               id="navbarNavDropdown">
               <ul className="nav navbar-nav">
-                <li className="active"><a href="">Home <i
+                <li className="active"><a href="#">Home <i
                   className="fa fa-chevron-down"></i></a>
                 </li>
               </ul>
