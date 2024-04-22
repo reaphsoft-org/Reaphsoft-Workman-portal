@@ -6,7 +6,7 @@ import { User } from '../entities/User';
 import * as fs from 'fs';
 import * as path from 'path';
 import { MEDIA_DIR } from '../app.module';
-import { Email } from '../mailman';
+import { Email } from '../utilities/mailman';
 
 @Injectable()
 export class AccountsService {
