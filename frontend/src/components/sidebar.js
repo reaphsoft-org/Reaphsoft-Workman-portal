@@ -27,7 +27,7 @@ const Sidebar = () => {
                         <div className="candidate-title">
                             <div>
                                 <h4 className="m-b5">
-                                    <a href="#">Peter JOhn</a>
+                                    <a href="#">Peter John</a>
                                 </h4>
                                 <p className="m-b0">
                                     <a href="#"></a>
@@ -37,7 +37,7 @@ const Sidebar = () => {
                     </div>
                     <ul>
                         <li>
-                            <Link to="/user/details">
+                            <Link to="/user/"> {/*todo disable when current route is /user/ */}
                                 <i className="fa fa-user-o" aria-hidden="true"></i>
                                 <span>Profile</span>
                             </Link>
@@ -60,7 +60,6 @@ const Sidebar = () => {
                                 <span>Edit Profile</span>
                             </Link>
                         </li>
-
                         <li>
                             <Link to="/user/changePassword/">
                                 <i className="fa fa-lock" aria-hidden="true"></i>
