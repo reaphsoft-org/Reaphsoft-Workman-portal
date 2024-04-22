@@ -1,12 +1,10 @@
 import React from 'react';
-import { Col, Form, Button, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { logout } from '../utils/auth';
 import { useAuth } from './AuthContext';
-const Sidebar = () => {
-    const user = useAuth();
-    return ( 
-        
+const Sidebar = ({user}) => {
+    const useAuth1 = useAuth();
+    return (
         <div className="col-xl-3 col-lg-4 m-b30">
             <div className="sticky-top">
                 <div className="candidate-info">
@@ -16,9 +14,9 @@ const Sidebar = () => {
                         </div>
                         <div className="candidate-title">
                             <div className="">
-                                <h4 className="m-b5"><a href="">Name or Estate Name</a>
-                                </h4>
-                                <p className="m-b0"><a href="">Address</a>
+                                <h5 className="m-b5"><a className="link-offset-2 link-underline-primary" href="">{user.fullname}</a>
+                                </h5>
+                                <p className="m-b0"><a className="link-offset-2 link-underline-secondary" href="">{user.address}</a>
                                 </p>
                             </div>
                         </div>
@@ -45,7 +43,7 @@ const Sidebar = () => {
                         <li>
                             <Link to="/user/job/">
                                 <i className="fa fa-briefcase" aria-hidden="true"></i>
-                                <span>labour Request</span>
+                                <span>Request Labour</span>
                             </Link>
                         </li>
                         <li>
@@ -61,8 +59,9 @@ const Sidebar = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link variant="link" onClick={() => logout(user)}>
-                                <i className="fa fa-right-from-bracket" aria-hidden="true"></i>Log Out
+                            <Link variant="link" className="link-offset-3" onClick={() => logout(useAuth1)}>
+                                <i className="fa fa-sign-out" aria-hidden="true"></i>
+                                <span>Log Out</span>
                             </Link>
                         </li>
                     </ul>

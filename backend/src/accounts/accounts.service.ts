@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { AppDataSource } from '../data-source';
-import { Express } from 'express';
 import { User } from '../entities/User';
 import * as fs from 'fs';
 import * as path from 'path';
 import { MEDIA_DIR } from '../app.module';
 import { Email } from '../utilities/mailman';
 import { createPDF } from '../utilities/createpdf';
+import { UserDto } from "./dto/user.dto";
 
 @Injectable()
 export class AccountsService {
   private readonly uploadPath = 'media/u';
+  private readonly accountRepository = AppDataSource.getRepository(User);
   async createAccount(createAccountDto: CreateAccountDto, file: any) {
     // Implement account creation logic here
     if (Object.keys(createAccountDto).length === 0) {
@@ -21,7 +22,6 @@ export class AccountsService {
     if (!check.status) {
       return check;
     }
-    const accountRepository = AppDataSource.getRepository(User);
     const user = new User();
     user.accountType = createAccountDto.accountType;
     user.email = createAccountDto.email;
@@ -40,7 +40,7 @@ export class AccountsService {
       user.photoURL = await this.savePhoto(file, filename);
     }
     try {
-      await accountRepository.save(user);
+      await this.accountRepository.save(user);
     } catch (e) {
       if (
         e.name === 'QueryFailedError' &&
@@ -152,5 +152,21 @@ export class AccountsService {
       return { status: false, resp: 'Invalid service type' };
     }
     return { status: true, resp: null };
+  }
+
+  async getUser(email: string): Promise<UserDto | null> {
+    const user = await this.accountRepository.findOne({ where: { email } });
+    if (!user) {
+      return null;
+    }
+    const userDto = new UserDto();
+    userDto.apartment = user.apartment;
+    userDto.accountType = user.accountType;
+    userDto.address = user.address;
+    userDto.email = user.email;
+    userDto.fullname = user.fullname;
+    userDto.photoURL = user.photoURL;
+    userDto.serviceType = user.serviceType;
+    return userDto;
   }
 }

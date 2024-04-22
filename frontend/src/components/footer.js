@@ -36,8 +36,7 @@ const Footer = () => {
             <div className="footer-bottom">
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-12 text-center"><span> © Copyright by <a href="">ReaphSoft Limited </a>
-                            All rights reserved.</span></div>
+                        <div className="col-lg-12 text-center"><span> © <a href="">ReaphSoft</a> All rights reserved.</span></div>
                     </div>
                 </div>
             </div>
