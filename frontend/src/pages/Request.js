@@ -31,14 +31,9 @@ const Request = () => {
                                                     <div className="form-group"><label>Your email</label><input type="email"
                                                         className="form-control" placeholder="info@gmail.com"/></div>
                                                 </div>
-                                                <div className="col-lg-12 col-md-12">
-                                                    <div className="form-group"><label>Work Tags</label><input type="text"
-                                                        className="form-control tags_input" spellcheck="false"
-                                                        data-ms-editor="true"/></div>
-                                                </div>
                                                 <div className="col-lg-6 col-md-6">
                                                     <div className="form-group"><label>Services</label><select
-                                                        className="custom-select custom-select">
+                                                        className="custom-select custom-select" >
                                                         <option>IKEA Assembly</option>
                                                         <option>TV Mounting</option>
                                                         <option>Furniture Assembly</option>
@@ -63,7 +58,7 @@ const Request = () => {
                                                 </div>
                                                 <div className="col-lg-6 col-md-6">
                                                     <div className="form-group"><label>Date Needed:</label><input
-                                                        type="text" className="form-control" placeholder="e.g. 20000"
+                                                        type="text" className="form-control" placeholder=" 2020-01-01"
                                                         spellcheck="false" data-ms-editor="true" /></div>
                                                 </div>
                                                 

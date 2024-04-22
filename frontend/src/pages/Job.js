@@ -29,23 +29,18 @@ const Job = () => {
                                     <li>
                                         <div className="post-bx">
                                             <div className="job-post-info m-a0">
-                                                <h4><a href="">Painter</a></h4>
+                                                <h4><a href="">Furniture Assembly</a></h4>
                                                 <ul>
-                                                    <li><a href="">@company-name</a></li>
+                                                    <li><a href="">Solar System</a></li>
                                                     <li><i className="fa fa-map-marker"></i> Number 5, New Estate, Poly Road</li>
                                                     <li><i className="fa fa-money"></i> 25,000</li>
                                                 </ul>
                                                 <div className="job-time m-t15 m-b10"><a className="mr-1"
-                                                    href=""><span>PHP</span></a><a className="mr-1"
-                                                        href=""><span>Angular</span></a><a className="mr-1"
-                                                            href=""><span>Bootstrap</span></a><a className="mr-1"
-                                                        href=""><span>Wordpress</span></a>
+                                                    href=""><span>Furniture Assembly</span></a>
                                                 </div>
                                                 <div className="posted-info clearfix">
                                                     <p className="m-tb0 text-primary float-left"><span
-                                                        className="text-black m-r10">Date Request:</span> 2 day ago</p><a
-                                                            className="site-button button-sm float-right"
-                                                            href="">Apply Job</a>
+                                                        className="text-black m-r10">Date Request:</span> 2 day ago</p>
                                                 </div>
                                             </div>
                                         </div>

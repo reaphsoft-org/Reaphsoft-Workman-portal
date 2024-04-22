@@ -36,12 +36,12 @@ const Sidebar = () => {
                         </div>
                     </div>
                     <ul>
-                        <li>
+                        {/* <li>
                             <Link to="/user/details">
                                 <i className="fa fa-user-o" aria-hidden="true"></i>
                                 <span>Profile</span>
                             </Link>
-                        </li>
+                        </li> */}
                         <li>
                             <Link to="/user/request/">
                                 <i className="fa fa-heart-o" aria-hidden="true"></i>
