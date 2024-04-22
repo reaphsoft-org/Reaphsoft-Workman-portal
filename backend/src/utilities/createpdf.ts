@@ -2,8 +2,7 @@ import { User } from '../entities/User';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ASSETS_DIR } from '../app.module';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-import pdfmaster from 'pdf-master';
+import { generatePdf } from 'pdf-master';
 
 export async function createPDF(user: User) {
   const currentDate = new Date();
@@ -31,7 +30,7 @@ export async function createPDF(user: User) {
     err: null,
   };
   try {
-    const pdf = await pdfmaster.generatePdf(template, data, options);
+    const pdf = await generatePdf(template, data, options);
     const filename = user.email.replace('@', '').replace('.', '-') + '.pdf';
     const filePath = path.join(__dirname, filename);
     try {

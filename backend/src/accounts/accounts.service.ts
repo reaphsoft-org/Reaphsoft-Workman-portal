@@ -45,6 +45,8 @@ export class AccountsService {
       if (mailResponse.status === 'Queued') {
         fs.rmSync(resp.filePath!);
       }
+    } else {
+      console.log(resp);
     }
     return { resp: 'Account created successfully', status: true };
   }
