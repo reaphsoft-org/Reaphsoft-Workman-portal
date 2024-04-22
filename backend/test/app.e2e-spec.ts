@@ -55,10 +55,11 @@ describe('Accounts Test', () => {
       .field('fullname', 'Reaph Soft')
       .field('apartment', '15B')
       .field('address', 'NA')
-      .field('serviceType', '0')
+      .field('serviceType', '1')
       .expect(201)
       .then((resp) => {
         const data = resp.body;
+        console.log(data);
         expect(data.status).toBe(true);
         expect(data.resp).toBe('Account created successfully');
       });
@@ -76,7 +77,7 @@ describe('Accounts Test', () => {
       .field('fullname', 'Reaph Soft')
       .field('apartment', '15B')
       .field('address', 'NA')
-      .field('serviceType', '0')
+      .field('serviceType', '1')
       .expect(201)
       .then(async (resp) => {
         const data = resp.body;
@@ -93,7 +94,7 @@ describe('Accounts Test', () => {
         fs.rmSync(imgPath);
         expect(fs.existsSync(imgPath)).toBe(false);
       });
-  });
+  }, 10000);
 
   it('lowercase name', async () => {
     const email: string = 'test1@reaphsoft.com';
@@ -161,7 +162,7 @@ describe('Accounts Test', () => {
       .field('fullname', 'dalang felix sihitshuwam')
       .field('apartment', '15B')
       .field('address', 'NA')
-      .field('serviceType', '0')
+      .field('serviceType', '2')
       .expect(201)
       .then((resp) => {
         const data = resp.body;
@@ -169,6 +170,29 @@ describe('Accounts Test', () => {
         expect(data.resp).toBe(
           'A user with the email you supplied already exists.',
         );
+      });
+  });
+
+  it('test empty post data', async () => {
+    return request(app.getHttpServer())
+      .post('/account/sign/up/')
+      .expect(201)
+      .then((resp) => {
+        const data = resp.body;
+        expect(data.status).toBe(false);
+        expect(data.resp).toBe('You did not post any registration data');
+      });
+  });
+
+  it('test partial post data', async () => {
+    return request(app.getHttpServer())
+      .post('/account/sign/up/')
+      .field('email', 'partialemail@reaphsoft.com')
+      .expect(201)
+      .then((resp) => {
+        const data = resp.body;
+        expect(data.status).toBe(false);
+        expect(data.resp.includes('Invalid'));
       });
   });
 

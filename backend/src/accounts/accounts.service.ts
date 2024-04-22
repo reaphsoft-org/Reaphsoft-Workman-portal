@@ -14,6 +14,13 @@ export class AccountsService {
   private readonly uploadPath = 'media/u';
   async createAccount(createAccountDto: CreateAccountDto, file: any) {
     // Implement account creation logic here
+    if (Object.keys(createAccountDto).length === 0) {
+      return { resp: 'You did not post any registration data', status: false };
+    }
+    const check = this.runValidation(createAccountDto);
+    if (!check.status) {
+      return check;
+    }
     const accountRepository = AppDataSource.getRepository(User);
     const user = new User();
     user.accountType = createAccountDto.accountType;
@@ -44,7 +51,11 @@ export class AccountsService {
           status: false,
         };
       }
-      return { resp: e.message, status: false };
+      // log e.message
+      return {
+        resp: 'An error was encountered while trying to save the user. Please refresh the page and try again.',
+        status: false,
+      };
     }
     const resp = await createPDF(user);
     if (resp.success) {
@@ -88,5 +99,58 @@ export class AccountsService {
     return str.replace(/\w\S*/g, function (txt: string) {
       return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
     });
+  }
+
+  runValidation(createAccountDto: CreateAccountDto): {
+    resp: string | null;
+    status: boolean;
+  } {
+    if (
+      createAccountDto.accountType === undefined ||
+      createAccountDto.accountType < 1 ||
+      createAccountDto.accountType > 2
+    ) {
+      return { status: false, resp: 'Invalid account type' };
+    }
+    if (
+      createAccountDto.email === undefined ||
+      createAccountDto.email === '' ||
+      !createAccountDto.email.includes('@')
+    ) {
+      return { status: false, resp: 'Invalid email address' };
+    }
+    if (
+      createAccountDto.password === undefined ||
+      createAccountDto.password === ''
+    ) {
+      // add other password validation
+      return { status: false, resp: 'Invalid password' };
+    }
+    if (
+      createAccountDto.fullname === undefined ||
+      createAccountDto.fullname === ''
+    ) {
+      return { status: false, resp: 'Invalid Fullname' };
+    }
+    if (
+      createAccountDto.apartment === undefined ||
+      createAccountDto.apartment === ''
+    ) {
+      return { status: false, resp: 'Invalid apartment number' };
+    }
+    if (
+      createAccountDto.address === undefined ||
+      createAccountDto.address === ''
+    ) {
+      return { status: false, resp: 'Invalid address' };
+    }
+    if (
+      createAccountDto.serviceType === undefined ||
+      createAccountDto.serviceType < 1 ||
+      createAccountDto.serviceType > 2
+    ) {
+      return { status: false, resp: 'Invalid service type' };
+    }
+    return { status: true, resp: null };
   }
 }
