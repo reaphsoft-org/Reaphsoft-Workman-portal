@@ -1,15 +1,12 @@
 import React from 'react';
 import { Col, Form, Button, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useAuth } from "../components/AuthContext";
-import { Link } from 'react-router-dom';
-import { logout } from '../utils/auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from '../components/sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../components/Navbar';
 const UserProfile = () => {
   const user = useAuth();
-  // logout(user);
 
   return (
     <div className="page-wrapper">
@@ -24,19 +21,18 @@ const UserProfile = () => {
                   <div className="job-bx job-profile">
                     <div className="job-bx-title clearfix">
                       <h5 className="font-weight-700 pull-left text-uppercase">Basic Information</h5>
-
                     </div>
                     <Form>
                       <div className="row m-b30">
                         <Col lg={6} md={6}>
                           <Form.Group>
-                            <Form.Label>Your Name/ Estate Name</Form.Label>
+                            <Form.Label>Name</Form.Label>
                             <Form.Control type="text" placeholder="Alexander Weir" spellCheck={false} />
                           </Form.Group>
                         </Col>
                         <Col lg={6} md={6}>
                           <Form.Group>
-                            <Form.Label>Professional title:</Form.Label>
+                            <Form.Label>Professional Title:</Form.Label>
                             <Form.Control type="text" placeholder="Web Designer" spellCheck={false} />
                           </Form.Group>
                         </Col>

@@ -77,6 +77,27 @@ npm install --save-dev cross-env
 2. [Super Test](https://github.com/ladjs/supertest)
 3. [Super Agent](https://ladjs.github.io/superagent/#test-documentation)
 
+### Create PDFs
+[Details](https://github.com/chaitanyamogal/pdf-master)
+Install package
+```
+npm install pdf-master --save
+```
+See also
+1. [Puppeteer](https://pptr.dev/guides/pdf-generation)
+2. [pdf-master generatePDF](https://github.com/chaitanyamogal/pdf-master/blob/main/src/index.js)
+3. [Loading static assets to setContent](https://stackoverflow.com/a/69035580)
+
+Added a `pdf-master.d.ts`, remember to remove it when uninstalling `pdf-master`.
+
+### [Mail Gun](https://www.npmjs.com/package/mailgun.js)
+```
+npm install mailgun.js
+```
+Set the environment variable
+`MAILGUN_USERNAME` to your mailgun username and `MAILGUN_USERNAME` to the API key if you want to send live emails.
+
+
 # NestJS
 
 <p align="center">

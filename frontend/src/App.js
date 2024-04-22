@@ -10,7 +10,7 @@ import Job from './pages/Job';
 import Request from './pages/Request';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import UserDetails from './pages/userDetails';
+import UserDetails from './pages/UserDetails'
 import ChangePassword from './pages/ChangePassword';
 import UserProfile from './pages/UserProfile';
 
@@ -24,7 +24,6 @@ function App() {
         <Route path="/user/" element={<PrivateRoute />} />
         <Route path="/user/job/" element={<Job />} />
         <Route path="/user/request/" element={<Request />} />
-        <Route path="/user/profile/" element={<UserDetails />} />
         <Route path="/user/update/" element={<UserProfile />} />
         <Route path="/user/changePassword/" element={<ChangePassword />} />
       </Routes>
