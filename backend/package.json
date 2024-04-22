@@ -25,6 +25,7 @@
     "@nestjs/platform-express": "^10.3.7",
     "@nestjs/typeorm": "^10.0.2",
     "mailgun.js": "^10.2.1",
+    "pdf-master": "^1.1.0",
     "pg": "^8.11.5",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",

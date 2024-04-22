@@ -77,6 +77,13 @@ npm install --save-dev cross-env
 2. [Super Test](https://github.com/ladjs/supertest)
 3. [Super Agent](https://ladjs.github.io/superagent/#test-documentation)
 
+### Create PDFs
+[Details](https://github.com/chaitanyamogal/pdf-master)
+Install package
+```
+npm install pdf-master --save
+```
+
 ### [Mail Gun](https://www.npmjs.com/package/mailgun.js)
 ```
 npm install mailgun.js
