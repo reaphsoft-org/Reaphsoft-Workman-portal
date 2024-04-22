@@ -5,8 +5,7 @@ function Login() {
   return (
     <div className="App">
         <div>
-            {/* <OffcanvasExample /> */}
-            <Body/>
+            <Body />
         </div>
     </div>
 

@@ -71,7 +71,6 @@ const Job = () => {
             </div>
             <Footer />
         </div>
-        
     );
 }
  

@@ -12,7 +12,7 @@ const Navbar = () => {
         <div className="main-bar clearfix">
           <div className="container clearfix">
             <div className="logo-header mostion"><a href=""><img
-              src="../../public/assets/images/labour-removebg-preview.png"
+              src="%PUBLIC_URL%/assets/images/labour-removebg-preview.png"
               className="logo" alt="" /></a>
             </div>
             <button

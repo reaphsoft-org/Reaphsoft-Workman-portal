@@ -27,7 +27,7 @@ export default function Body() {
                                             <a className="nav-link" href="#services">Services</a>
                                         </li>
                                         <li className="nav-item">
-                                            {/* <link className="nav-link" to="../pages/Login.js">Login</a> */}
+                                            
                                             <Link className="nav-link" to="/login/">Login</Link>
                                         </li>
                                         <li className="nav-item">
