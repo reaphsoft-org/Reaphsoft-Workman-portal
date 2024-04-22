@@ -37,6 +37,12 @@ describe('Accounts Test', () => {
 
     app = moduleRef.createNestApplication();
     await app.init();
+
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize().catch((e) => {
+        console.log(e);
+      });
+    }
   });
 
   it('no image', async () => {
@@ -130,6 +136,41 @@ describe('Accounts Test', () => {
         expect(user?.fullname == 'Dalang Felix Sihitshuwam');
       });
   }, 15000);
+
+  it('test duplicate email', async () => {
+    const email: string = 'testemailexists@reaphsoft-workmen.org';
+    const repo = AppDataSource.getRepository(User);
+    const user0 = new User();
+    user0.accountType = 1;
+    user0.email = email;
+    user0.password = '1234';
+    user0.fullname = 'Full Name';
+    user0.apartment = '15B';
+    user0.address = '39 Ok Street';
+    user0.serviceType = 0;
+    user0.photoURL = '';
+    await repo.save(user0);
+    const users = await repo.count();
+    expect(users > 0);
+    return request(app.getHttpServer())
+      .post('/account/sign/up/') // replace with your actual endpoint
+      .set('Content-Type', 'multipart/form-data')
+      .field('accountType', '1') // include any other form fields
+      .field('email', email)
+      .field('password', 'password')
+      .field('fullname', 'dalang felix sihitshuwam')
+      .field('apartment', '15B')
+      .field('address', 'NA')
+      .field('serviceType', '0')
+      .expect(201)
+      .then((resp) => {
+        const data = resp.body;
+        expect(data.status).toBe(false);
+        expect(data.resp).toBe(
+          'A user with the email you supplied already exists.',
+        );
+      });
+  });
 
   afterAll(async () => {
     await app.close();

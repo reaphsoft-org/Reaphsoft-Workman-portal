@@ -14,12 +14,6 @@ export class AccountsService {
   private readonly uploadPath = 'media/u';
   async createAccount(createAccountDto: CreateAccountDto, file: any) {
     // Implement account creation logic here
-    if (!AppDataSource.isInitialized) {
-      await AppDataSource.initialize().catch((e) => {
-        // todo on error, returned a status failed and not called .getRepository below
-        console.log(e);
-      });
-    }
     const accountRepository = AppDataSource.getRepository(User);
     const user = new User();
     user.accountType = createAccountDto.accountType;
@@ -38,13 +32,27 @@ export class AccountsService {
         user.email.replace('@', '').replace('.', '-') + `.${extension}`;
       user.photoURL = await this.savePhoto(file, filename);
     }
-    await accountRepository.save(user);
+    try {
+      await accountRepository.save(user);
+    } catch (e) {
+      if (
+        e.name === 'QueryFailedError' &&
+        e.message.includes('duplicate key value violates unique constraint')
+      ) {
+        return {
+          resp: 'A user with the email you supplied already exists.',
+          status: false,
+        };
+      }
+      return { resp: e.message, status: false };
+    }
     const resp = await createPDF(user);
     if (resp.success) {
       const mailResponse = await this.sendAgreement(user, resp.filePath!);
-      if (mailResponse.status === 'Queued') {
-        fs.rmSync(resp.filePath!);
+      if (mailResponse.status !== 'Queued') {
+        // log something
       }
+      fs.rmSync(resp.filePath!);
     } else {
       console.log(resp);
     }
