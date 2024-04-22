@@ -54,6 +54,7 @@ export class Email {
       };
     } catch (e) {
       // todo log failure
+      console.log(e);
     }
     return await this.sendMail(data);
   }

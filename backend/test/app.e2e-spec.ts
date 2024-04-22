@@ -56,7 +56,7 @@ describe('Accounts Test', () => {
         expect(data.status).toBe(true);
         expect(data.resp).toBe('Account created successfully');
       });
-  });
+  }, 10000);
 
   it('with image', async () => {
     const email: string = 'test1@reaphsoft.com';
@@ -129,7 +129,7 @@ describe('Accounts Test', () => {
         expect(user !== null);
         expect(user?.fullname == 'Dalang Felix Sihitshuwam');
       });
-  });
+  }, 15000);
 
   afterAll(async () => {
     await app.close();

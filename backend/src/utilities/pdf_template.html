@@ -10,20 +10,24 @@
             .container {
                 width: 90%;
             }
+            .text-justify{
+                text-align: justify;
+            }
         </style>
     </head>
     <body>
-        <div class="container">
+        <div class="container" style="margin: 0 40px">
             <h2 class="text-center">Reaphsoft Workmen Agreement</h2>
-            <img src="./img/logo.jpeg" alt="company logo" width="200px">
-            <div style="margin: 0 18px">
-                <p>Wed Apr 24 2024</p>
-                <p>Dear <b>Felix Sihitshuwam</b>,</p>
+            <img src="{{ image }}" width="200px" alt="logo"/>
+            <div class="text-justify">
+                <p>{{ date }}</p>
+                <p style="margin-top: 30px;">Dear <b>{{ name }}</b>,</p>
                 <p>Sequel to your signing up to use our services, note that the following conditions listed below are binding on you whenever you use our services.</p>
                 <ol>
                     <li>A condition to be added.</li>
                     <li>Another condition or explanation to be added subsequently.</li>
                 </ol>
+                <p>Thank you for using our services.</p>
                 <div style="margin-top: 50px">
                     <p><b>Warm Regards</b></p>
                     <p><i>Reaphsoft Workmen</i></p>

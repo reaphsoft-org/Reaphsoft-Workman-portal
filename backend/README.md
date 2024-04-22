@@ -83,6 +83,10 @@ Install package
 ```
 npm install pdf-master --save
 ```
+See also
+1. [Puppeteer](https://pptr.dev/guides/pdf-generation)
+2. [pdf-master generatePDF](https://github.com/chaitanyamogal/pdf-master/blob/main/src/index.js)
+3. [Loading static assets to setContent](https://stackoverflow.com/a/69035580)
 
 ### [Mail Gun](https://www.npmjs.com/package/mailgun.js)
 ```
