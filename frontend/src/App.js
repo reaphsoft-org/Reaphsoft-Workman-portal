@@ -13,6 +13,7 @@ import ChangePassword from './pages/ChangePassword';
 import Dashboard from './pages/Dashboard';
 import User from "./components/User";
 import {RegistrationSuccess} from "./pages/registrationsuccess";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   return (
@@ -24,10 +25,10 @@ function App() {
         <Route path="/register/success/" element={<RegistrationSuccess />} />
         <Route path="/user/" element={<PrivateRoute />} />
         <Route path="/user/profile/" element={<PrivateRoute />} />
-        <Route path="/user/job/" element={<Job />} />
-        <Route path="/user/request/" element={<User content={Request} />} />
-        {/*<Route path="/user/update/" element={<UserProfile />} />*/}
-        <Route path="/user/change/password/" element={<ChangePassword />} />
+        <Route path="/user/job/" element={<User content={Job }/>} />
+        <Route path="/user/request/" element={<User content={Request } />} />
+        <Route path="/user/update/" element={<User content={UserProfile } />} />
+        <Route path="/user/change/password/" element={<User content={ChangePassword} />} />
         <Route path="/user/dashboard/" element= {<User content={Dashboard} />} />
       </Routes>
     </AuthProvider>

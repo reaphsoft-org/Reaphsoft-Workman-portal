@@ -49,11 +49,11 @@ const Sidebar = ({user}) => {
                         <li>
                             <Link to="/user/update/">
                                 <i className="fa fa-briefcase" aria-hidden="true"></i>
-                                <span>Edit Profile</span>
+                                <span>Update Profile</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/user/changePassword/">
+                            <Link to="/user/change/password/">
                                 <i className="fa fa-lock" aria-hidden="true"></i>
                                 <span>Change Password</span>
                             </Link>
