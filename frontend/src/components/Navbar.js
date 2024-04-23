@@ -12,8 +12,8 @@ const Navbar = () => {
         <div className="main-bar clearfix">
           <div className="container clearfix">
             <div className="logo-header mostion"><a href=""><img
-              src="%PUBLIC_URL%/assets/images/labour-removebg-preview.png"
-              className="logo" alt="" /></a>
+              src="../assets/images/001.png"
+              alt="" /></a>
             </div>
             <button
                 className="navbar-toggler collapsed navicon justify-content-end" type="button"

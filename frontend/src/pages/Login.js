@@ -54,70 +54,79 @@ function Login() {
   }
   return (
       <>
-      { user.user !== null ? <Navigate to="/user/" /> :
-          <div className="row">
-            <div className="col-md-6 col-lg-4">
-            <div className="container">
-              <div className="d-flex flex-column">
-                <a href="/"><Image
-                    src="/assets/images/001-removebg-preview.png" alt=""
-                    width={90}
-                    className="mt-3"
-                /></a>
-                <div className="my-3 text-center">
-                  <h3>Reaphsoft Workmen Login</h3>
-                  <h6>Welcome to the Reaphsoft Workman Portal Login</h6>
-                </div>
-              </div>
-                <div className="my-5 ms-lg-3">
-                  <form onSubmit={handleSubmit}>
-                    <p className="mb-3">Please log into your account</p>
-                    <div className="mb-3"><label htmlFor="email" className="form-label">Email</label>
-                      <input type="email" required placeholder='johndoe123@gmail.com' className="form-control"
-                             autoComplete="email" name="email" value={data.email} onChange={handleInputChange}/></div>
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" required placeholder='*********' className="form-control"
-                           autoComplete="current-password" name="password" value={data.password}
-                           onChange={handleInputChange} />
-                    <div className="form-text text-danger mt-2 px-1">{errorText}</div>
-                    <div className="row mt-5">
-                      <div className="col-6">
-                        <div className="d-grid">
-                          <button className={"btn btn-primary"+disableButton} type="submit">Login</button>
+      {user.user !== null ? <Navigate to="/user/" /> :
+        <div className="vh-100">
+          <div className="page-wraper">
+            <div className="page-content bg-white login-style2 yes" >
+              <div className="section-full">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-lg-6 col-md-6 d-flex">
+                      <div className="text-white max-w400 align-self-center">
+                        <div className="logo reaphlogo">
+                          <a href="" style={{ height: "20px", width: "20px" }} className="text-decoration-none"><img
+                          src="../assets/images/001-removebg-preview.png" 
+                            alt="" /></a>
                         </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="d-grid">
-                          <Link to="/register" className="btn btn-outline-primary">
-                            <IoLockOpen className="me-3"/> Sign up
-                          </Link></div>
+                        <h2 className="m-b10 text-black">Login To You Now</h2>
+                        <p className="text-black">Reaphsoft Workmen Login</p>
+                        <p className="text-black">Welcome to the Reaphsoft Workman Portal Login</p>
+
                       </div>
                     </div>
-                  </form>
+                    <div className="col-lg-6 col-md-6">
+                      <div className="login-2 submit-resume p-a30 seth">
+                        <div className="nav">
+                          <form className="col-12 p-a0 " onSubmit={handleSubmit}>
+                            <p className="font-weight-600">If you have an account with us, please log in.</p>
+                            <div className="form-group "><label>E-Mail Address*</label>
+                              <div className="input-group">
+                                <input type="email" required placeholder='johndoe123@gmail.com' className="form-control"
+                                  autoComplete="email" name="email" value={data.email} onChange={handleInputChange} />
+                              </div>
+                            </div>
+                            <div className="form-group"><label>Password *</label>
+                              <div className="input-group">
+                                <input type="password" required placeholder='*********' className="form-control"
+                                  autoComplete="current-password" name="password" value={data.password}
+                                  onChange={handleInputChange} />
+                                </div>
+                            </div>
+                            <div className="form-text text-danger mt-2 px-1">{errorText}</div>
+                            <div className="text-center"><button className={"site-button float-left" + disableButton}>login</button><a
+                              className="site-button-link forget-pass m-t15 float-right"
+                              href=""><i className="fa fa-unlock-alt"></i> Sign
+                              up</a></div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <footer className="login-footer">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-lg-12 text-center"><span className="float-left">© Copyright by<a href="" className="text-decoration-none"> Reaphsoft Limited
+                      </a> </span></div>
+                  </div>
+                </div>
+              </footer>
             </div>
-            <div className="col-md-6 col-lg-8">
-              <div className="my-md-5 my-lg-3 d-none d-md-block">
-                <div style={{height: 10}}></div>
-              </div>
-              <Image
-                  className="img-fluid mx-auto d-block"
-                src="/assets/images/labour-removebg-preview.png"
-              />
-            </div>
-            <ToastContainer className="p-3" position="bottom-center" style={{ zIndex: 1 }}>
-              <Toast show={ showToast.show } onClose={()=>{setShowToast({ message: "", show: false })}}>
-                <Toast.Header>
-                  <IoAnalyticsSharp />
-                  <strong className="ms-3 me-auto">Server Response</strong>
-                </Toast.Header>
-                <Toast.Body>{ showToast.message }</Toast.Body>
-              </Toast>
-            </ToastContainer>
           </div>
+          <ToastContainer className="p-3" position="bottom-center" style={{ zIndex: 1 }}>
+            <Toast show={showToast.show} onClose={() => { setShowToast({ message: "", show: false }) }}>
+              <Toast.Header>
+                <IoAnalyticsSharp />
+                <strong className="ms-3 me-auto">Server Response</strong>
+              </Toast.Header>
+              <Toast.Body>{showToast.message}</Toast.Body>
+            </Toast>
+          </ToastContainer>
+        </div>
+         
       }
-      </>
+    </>
   );
 }
 
