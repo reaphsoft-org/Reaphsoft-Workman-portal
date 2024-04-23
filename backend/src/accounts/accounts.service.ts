@@ -7,7 +7,7 @@ import * as path from 'path';
 import { MEDIA_DIR } from '../app.module';
 import { Email } from '../utilities/mailman';
 import { createPDF } from '../utilities/createpdf';
-import { UserDto } from "./dto/user.dto";
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class AccountsService {
@@ -95,6 +95,7 @@ export class AccountsService {
     );
     return { status: resp };
   }
+
   toTitleCase(str: string): string {
     return str.replace(/\w\S*/g, function (txt: string) {
       return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
@@ -133,8 +134,9 @@ export class AccountsService {
       return { status: false, resp: 'Invalid Fullname' };
     }
     if (
-      createAccountDto.apartment === undefined ||
-      createAccountDto.apartment === ''
+      createAccountDto.accountType === 1 &&
+      (createAccountDto.apartment === undefined ||
+        createAccountDto.apartment === '')
     ) {
       return { status: false, resp: 'Invalid apartment number' };
     }

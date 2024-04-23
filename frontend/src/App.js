@@ -12,6 +12,7 @@ import './App.css';
 import ChangePassword from './pages/ChangePassword';
 import Dashboard from './pages/Dashboard';
 import User from "./components/User";
+import {RegistrationSuccess} from "./pages/registrationsuccess";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login/" element={<Login />} />
         <Route path="/register/" element={<Register />} />
+        <Route path="/register/success/" element={<RegistrationSuccess />} />
         <Route path="/user/" element={<PrivateRoute />} />
         <Route path="/user/profile/" element={<PrivateRoute />} />
         <Route path="/user/job/" element={<Job />} />

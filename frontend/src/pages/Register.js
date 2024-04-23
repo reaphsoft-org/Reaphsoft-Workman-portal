@@ -2,6 +2,15 @@ import { IoAnalyticsSharp } from "react-icons/io5";
 import React, { useState } from 'react';
 import logo from './logo.jpeg';
 import {Image, Toast, ToastContainer} from "react-bootstrap";
+export function generateRandomString() {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  for (let i = 0; i < 10; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
 
 function Register() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -41,7 +50,9 @@ function Register() {
       const data = await response.json();
       // Handle the response data
       if (data.status === true) {
-        window.location.href = "/login/";
+        const code = generateRandomString();
+        localStorage.setItem('register', code+`;;${formData.email}`);
+        window.location.href = `/register/success/?code=${code}`;
       }else {
         setShowToast({ message: data.resp, show: true });
         setDisableButton("");
