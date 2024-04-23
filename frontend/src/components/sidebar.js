@@ -10,7 +10,7 @@ const Sidebar = ({user}) => {
                 <div className="candidate-info">
                     <div className="candidate-detail text-center">
                         <div className="canditate-des">
-                            <img alt={user.fullname} className="img-fluid" src={ user.photoURL !== '' ? "http://localhost:3001/" + user.photoURL : null}/>
+                            <img alt={user.fullname} className="img-fluid" src={ user.photoURL !== '' ? "http://localhost:3001/" + user.photoURL : null} style={{width: '150px', height: '150px'}}/>
                         </div>
                         <div className="candidate-title">
                             <div className="">
