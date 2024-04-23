@@ -3,7 +3,6 @@ import { useAuth } from "./AuthContext";
 import Sidebar from '../components/sidebar';
 import Navbar from '../components/Navbar';
 import Footer from '../components/footer';
-import UserProfile from "../pages/UserProfile";
 import {Navigate} from "react-router-dom";
 
 const User = ({content}) => {

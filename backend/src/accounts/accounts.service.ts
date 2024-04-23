@@ -8,6 +8,7 @@ import { MEDIA_DIR } from '../app.module';
 import { Email } from '../utilities/mailman';
 import { createPDF } from '../utilities/createpdf';
 import { UserDto } from './dto/user.dto';
+import {PasswordDto} from "./dto/password.dto";
 
 @Injectable()
 export class AccountsService {
@@ -170,5 +171,104 @@ export class AccountsService {
     userDto.photoURL = user.photoURL;
     userDto.serviceType = user.serviceType;
     return userDto;
+  }
+
+  async updateUser(userDto: UserDto): Promise<{
+    resp: string;
+    status: boolean;
+  }> {
+    const check = this.validateUserUpdateDto(userDto);
+    if (!check.status) {
+      return check;
+    }
+    const user = await this.accountRepository.findOneBy({
+      email: userDto.email,
+    });
+    if (!user) {
+      return {
+        resp: `No user was found with the email ${userDto.email}`,
+        status: false,
+      };
+    }
+    user.apartment = userDto.apartment;
+    user.accountType = userDto.accountType;
+    user.address = userDto.address;
+    user.fullname = userDto.fullname;
+    user.serviceType = userDto.serviceType;
+    await this.accountRepository.save(user);
+    return { resp: '', status: true };
+  }
+
+  validateUserUpdateDto(userDto: UserDto): {
+    resp: string;
+    status: boolean;
+  } {
+    if (
+      userDto.accountType === undefined ||
+      userDto.accountType < 1 ||
+      userDto.accountType > 2
+    ) {
+      return { status: false, resp: 'Invalid account type' };
+    }
+    if (userDto.email === undefined || userDto.email === '') {
+      return { status: false, resp: 'Invalid email address' };
+    }
+    if (userDto.fullname === undefined || userDto.fullname === '') {
+      return { status: false, resp: 'Invalid Fullname' };
+    }
+    if (
+      userDto.accountType === 1 &&
+      (userDto.apartment === undefined || userDto.apartment === '')
+    ) {
+      return { status: false, resp: 'Invalid apartment number' };
+    }
+    if (userDto.address === undefined || userDto.address === '') {
+      return { status: false, resp: 'Invalid address' };
+    }
+    if (
+      userDto.serviceType === undefined ||
+      userDto.serviceType < 1 ||
+      userDto.serviceType > 2
+    ) {
+      return { status: false, resp: 'Invalid service type' };
+    }
+    return { status: true, resp: '' };
+  }
+
+  async changePassword(passwordDto: PasswordDto) {
+    if (passwordDto.email === undefined || passwordDto.email === '') {
+      return { status: false, resp: 'Invalid email address' };
+    }
+    const user = await this.accountRepository.findOneBy({
+      email: passwordDto.email,
+    });
+    if (!user) {
+      return {
+        resp: `No user was found with the email ${passwordDto.email}`,
+        status: false,
+      };
+    }
+    if (user.password != passwordDto.old_password) {
+      return {
+        resp: `Incorrect Old Password`,
+        status: false,
+      };
+    }
+    if (user.password == passwordDto.new_password) {
+      return {
+        resp: `Your new password must be different to your old password`,
+        status: false,
+      };
+    }
+    if (
+      passwordDto.new_password === undefined ||
+      passwordDto.new_password === ''
+      // add other password validation
+    ) {
+      return { status: false, resp: 'Invalid new password' };
+    }
+    user.password = passwordDto.new_password;
+    await this.accountRepository.save(user);
+    return { resp: '', status: true };
   }
 }
