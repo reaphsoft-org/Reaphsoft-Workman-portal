@@ -8,10 +8,8 @@ import { AuthProvider } from "./components/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import Job from './pages/Job';
 import Request from './pages/Request';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import ChangePassword from './pages/ChangePassword';
-import UserProfile from './pages/UserProfile';
 import Dashboard from './pages/Dashboard';
 import User from "./components/User";
 
@@ -23,10 +21,11 @@ function App() {
         <Route path="/login/" element={<Login />} />
         <Route path="/register/" element={<Register />} />
         <Route path="/user/" element={<PrivateRoute />} />
+        <Route path="/user/profile/" element={<PrivateRoute />} />
         <Route path="/user/job/" element={<Job />} />
         <Route path="/user/request/" element={<User content={Request} />} />
-        <Route path="/user/update/" element={<UserProfile />} />
-        <Route path="/user/changePassword/" element={<ChangePassword />} />
+        {/*<Route path="/user/update/" element={<UserProfile />} />*/}
+        <Route path="/user/change/password/" element={<ChangePassword />} />
         <Route path="/user/dashboard/" element= {<User content={Dashboard} />} />
       </Routes>
     </AuthProvider>

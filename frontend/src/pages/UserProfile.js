@@ -1,6 +1,4 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 const UserProfile = ({user}) => {
   return (
       <div className="col-xl-9 col-lg-8 m-b30">

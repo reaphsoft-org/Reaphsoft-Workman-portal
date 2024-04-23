@@ -1,16 +1,14 @@
-// ProtectedRoute.js
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
-import Dashboard from "../pages/Dashboard";
 import User from "./User";
+import UserProfile from "../pages/UserProfile";
 
 const PrivateRoute = () => {
-  const user = useAuth();
-
+  const userAuth = useAuth();
   return (
     <>
-      {user.user !== null ? <User content={Dashboard} /> : <Navigate to="/login/"/>}
+      {userAuth.user !== null ? <User content={UserProfile} /> : <Navigate to="/login/"/>}
     </>
   );
 };

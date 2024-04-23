@@ -62,5 +62,4 @@ const Request = ({user}) => {
         </div>
     );
 }
- 
 export default Request;

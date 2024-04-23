@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import { useAuth } from "./AuthContext";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from '../components/sidebar';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../components/Navbar';
 import Footer from '../components/footer';
+
 const User = ({content}) => {
   const userAuth = useAuth();
   const [user, setUser] = useState({
@@ -17,8 +16,12 @@ const User = ({content}) => {
     serviceType: '',
   });
   useEffect(() => {
-    fetch(`http://localhost:3001/account/user/?email=${userAuth.user}`).then(resp => resp.json()).then( data => {setUser(data);
-      console.log(data)})
+    fetch(`http://localhost:3001/account/user/${userAuth.user}`)
+        .then(resp => resp.json())
+        .then( data => {setUser(data);
+          console.log(data);
+          console.log(userAuth.user);
+        })
         .catch( err => console.error('Error: ', err));
   }, [userAuth.user]);
 
@@ -31,7 +34,7 @@ const User = ({content}) => {
             <div className="container">
               <div className="d-flex">
                 <Sidebar user={user} />
-                  { content(user) }
+                  { content({user: user}) }
               </div>
             </div>
           </div>
