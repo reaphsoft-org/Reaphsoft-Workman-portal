@@ -29,7 +29,7 @@ const User = ({content}) => {
         <div className="content-block">
           <div className="section-full bg-white browse-job p-t50 p-b20">
             <div className="container">
-              <div className="row">
+              <div className="d-flex">
                 <Sidebar user={user} />
                   { content(user) }
               </div>

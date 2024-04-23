@@ -24,16 +24,16 @@ const Sidebar = ({user}) => {
                     <ul>
                         <li>
                             <Link to="/user/dashboard">
-                                <i className="fa fa-admin-o" aria-hidden="true"></i>
+                                <i className="fa fa-user-o" aria-hidden="true"></i>
                                 <span>Dashboard</span>
                             </Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link to="/user/"> 
                                     <i className="fa fa-user-o" aria-hidden="true"></i>
                                 <span>Profile</span>
                             </Link>
-                        </li>
+                        </li> */}
                         <li>
                             <Link to="/user/request/">
                                 <i className="fa fa-heart-o" aria-hidden="true"></i>

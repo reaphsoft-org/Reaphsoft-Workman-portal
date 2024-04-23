@@ -35,12 +35,12 @@ const Request = ({user}) => {
                                 </select></div>
                             </div>
                             <div className="col-lg-6 col-md-6">
-                                <div className="form-group"><label>Minimum Salary ($):</label><input
+                                <div className="form-group"><label>Minimum Salary (&#8358;):</label><input
                                     type="email" className="form-control" placeholder="e.g. 10000" />
                                 </div>
                             </div>
                             <div className="col-lg-6 col-md-6">
-                                <div className="form-group"><label>Maximum Salary ($):</label><input
+                                <div className="form-group"><label>Maximum Salary (&#8358;):</label><input
                                     type="text" className="form-control" placeholder="e.g. 20000"
                                     spellCheck="false" data-ms-editor="true" /></div>
                             </div>
