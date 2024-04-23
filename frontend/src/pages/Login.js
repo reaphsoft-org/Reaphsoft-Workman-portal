@@ -43,9 +43,10 @@ function Login() {
       const responseData = await response.json();
       if (responseData.status === true) {
         user.login(data.email);
-        window.location.href = "/user/";
+        window.location.href = "/user/dashboard/";
       }else {
         setErrorText("Invalid email/password");
+        setDisableButton("");
       }
     }catch (e) {
       setShowToast({ message: "Encountered server error while posting the form data.", show: true });
