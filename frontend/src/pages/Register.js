@@ -93,7 +93,7 @@ function Register() {
                 className="col-xl-4 col-lg-5 col-md-6 col-sm-12 bg-white z-index2 relative p-a0 content-scroll skew-section left-bottom">
                 <div className="login-form style-2">
                   <div className="logo-header text-center p-tb30"><Link to="/"><img
-                    src="../assets/images/001-removebg-preview.png"
+                    src="../asset/image/001-removebg-preview.png"
                     alt="" style={{ width: logoSize, height: logoSize }} /></Link></div>
                   <div className="clearfix"></div>
                   <div className="tab-content nav p-b30 tab">

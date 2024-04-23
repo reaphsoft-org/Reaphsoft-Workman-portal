@@ -68,7 +68,7 @@ function Login() {
                       <div className="text-white max-w400 align-self-center">
                         <div className="logo reaphlogo">
                           <Link to="/" style={{ height: "20px", width: "20px" }} className="text-decoration-none"><img
-                            src="../assets/images/001-removebg-preview.png"
+                            src="../asset/image/001-removebg-preview.png"
                             alt="" /></Link>
                         </div>
                         <h3 className="text-black">Reaphsoft Workmen Portal Login</h3>
