@@ -19,28 +19,12 @@ const Dashboard = () => {
                 </div>
                 <div className="row">
                     <div className="col-lg-9 col-md-9 col-sm-9">
-                        <div className="clearfix m-b20"><label className="m-b0">Service</label><span className="clearfix font-13"></span></div>
-                        <div className="clearfix m-b20"><label className="m-b0">Gender</label><span className="clearfix font-13">male</span>
-                        </div>
-                        <div className="clearfix m-b20"><label className="m-b0">Marital Status</label><span
-                            className="clearfix font-13">Single / unmarried</span></div>
-                        <div className="clearfix m-b20"><label className="m-b0">Passport Number</label><span className="clearfix font-13">+
-                            123 456 7890</span></div>
-                        <div className="clearfix m-b20"><label className="m-b0">Differently Abled</label><span
-                            className="clearfix font-13">None</span></div>
-                        <div className="clearfix m-b20"><label className="m-b0">Languages</label><span
-                            className="clearfix font-13">English</span></div>
+                        <div className="clearfix m-b20"><label className="m-b0">Apartment</label><span className="clearfix font-13">Apartment</span></div>
+                        <div className="clearfix m-b20"><label className="m-b0">Email</label><span className="clearfix font-13">gmail@gmail.com</span></div>
+                        <div className="clearfix m-b20"><label className="m-b0">Full Name</label><span className="clearfix font-13">Osamudia Saver</span></div>
+                        <div className="clearfix m-b20"><label className="m-b0">Phone Number</label><span className="clearfix font-13">080 1234 5678</span></div>
                     </div>
-                    <div className="col-lg-6 col-md-6 col-sm-6">
-                        <div className="clearfix m-b20"><label className="m-b0">Permanent Address</label><span
-                            className="clearfix font-13">Add Permanent Address</span></div>
-                        <div className="clearfix m-b20"><label className="m-b0">Area Pin Code</label><span
-                            className="clearfix font-13">302010</span></div>
-                        <div className="clearfix m-b20"><label className="m-b0">Hometown</label><span
-                            className="clearfix font-13">Delhi</span></div>
-                        <div className="clearfix m-b20"><label className="m-b0">Work permit of other country</label><span
-                            className="clearfix font-13">USA</span></div>
-                    </div>
+                    
                 </div>
             </div>
             
