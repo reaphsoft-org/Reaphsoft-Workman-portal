@@ -108,8 +108,7 @@ function Login() {
               <footer className="login-footer">
                 <div className="container">
                   <div className="row">
-                    <div className="col-lg-12 text-center"><span className="float-left">© Copyright by<a href="" className="text-decoration-none"> Reaphsoft Limited
-                    </a> </span></div>
+                    <div className="col-lg-12 text-center"><span className="float-left">© <a href="/" className="text-decoration-none"> Reaphsoft</a></span></div>
                   </div>
                 </div>
               </footer>
