@@ -69,10 +69,8 @@ function Login() {
                           src="../assets/images/001-removebg-preview.png" 
                             alt="" /></a>
                         </div>
-                        <h2 className="m-b10 text-black">Login To You Now</h2>
-                        <p className="text-black">Reaphsoft Workmen Login</p>
-                        <p className="text-black">Welcome to the Reaphsoft Workman Portal Login</p>
-
+                        <h3 className="text-black">Reaphsoft Workmen Portal Login</h3>
+                        <h6 className="text-black">Welcome to the Reaphsoft Workman Portal Login</h6>
                       </div>
                     </div>
                     <div className="col-lg-6 col-md-6">

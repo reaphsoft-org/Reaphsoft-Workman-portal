@@ -13,8 +13,7 @@ const Request = ({user}) => {
                         <div className="row">
                             <div className="col-lg-6 col-md-6">
                                 <div className="form-group"><label>Work Title</label><input type="text"
-                                                                                            className="form-control" placeholder="Enter Job Title"
-                                                                                            spellCheck="false" data-ms-editor="true" /></div>
+                                    className="form-control" placeholder="Enter Job Title" spellCheck="false" data-ms-editor="true" /></div>
                             </div>
                             <div className="col-lg-6 col-md-6">
                                 <div className="form-group"><label>Your email</label><input type="email"
