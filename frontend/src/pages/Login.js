@@ -1,8 +1,8 @@
-import {IoAnalyticsSharp} from "react-icons/io5";
-import {Link, Navigate} from 'react-router-dom';
-import React, {useState} from "react";
-import {useAuth} from "../components/AuthContext";
-import {Toast, ToastContainer} from "react-bootstrap";
+import { IoAnalyticsSharp } from "react-icons/io5";
+import { Link, Navigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useAuth } from "../components/AuthContext";
+import { Toast, ToastContainer } from "react-bootstrap";
 
 function Login() {
   const user = useAuth();
@@ -16,11 +16,11 @@ function Login() {
 
   const [errorText, setErrorText] = useState("");
   const handleInputChange = (e) => {
-    setData({...data, [e.target.name]: e.target.value});
+    setData({ ...data, [e.target.name]: e.target.value });
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (disableButton !== ""){
+    if (disableButton !== "") {
       return;
     }
     setDisableButton(" disabled");
@@ -34,7 +34,7 @@ function Login() {
         },
       });
 
-      if (!response.ok){
+      if (!response.ok) {
         setShowToast({ message: "Received a bad response from the server.", show: true });
         setDisableButton("");
         return;
@@ -44,21 +44,23 @@ function Login() {
         console.log(data.email);
         user.login(data.email);
         window.location.href = "/user/dashboard/";
-      }else {
+      } else {
         setErrorText("Invalid email/password");
         setDisableButton("");
       }
-    }catch (e) {
+    } catch (e) {
       setShowToast({ message: "Encountered server error while posting the form data.", show: true });
       setDisableButton("");
     }
   }
   return (
-      <>
+    <>
       {user.user !== null ? <Navigate to="/user/" /> :
         <div className="vh-100">
           <div className="page-wraper">
-            <div className="page-content bg-white login-style2 yes" >
+              
+            <div className="page-content bg-white login-style2 yes" style={{ position: "relative" }}>
+              <div style={{ backgroundColor: "#fafafa", width: "100vw", height: "120vh", position: "absolute", opacity: "0.5" }}></div>
               <div className="section-full">
                 <div className="container">
                   <div className="row">
@@ -66,7 +68,7 @@ function Login() {
                       <div className="text-white max-w400 align-self-center">
                         <div className="logo reaphlogo">
                           <a href="" style={{ height: "20px", width: "20px" }} className="text-decoration-none"><img
-                          src="../assets/images/001-removebg-preview.png" 
+                            src="../assets/images/001-removebg-preview.png"
                             alt="" /></a>
                         </div>
                         <h3 className="text-black">Reaphsoft Workmen Portal Login</h3>
@@ -89,7 +91,7 @@ function Login() {
                                 <input type="password" required placeholder='*********' className="form-control"
                                   autoComplete="current-password" name="password" value={data.password}
                                   onChange={handleInputChange} />
-                                </div>
+                              </div>
                             </div>
                             <div className="form-text text-danger mt-2 px-1">{errorText}</div>
                             <div className="text-center"><button className={"site-button float-left" + disableButton}>login</button><Link
@@ -107,7 +109,7 @@ function Login() {
                 <div className="container">
                   <div className="row">
                     <div className="col-lg-12 text-center"><span className="float-left">© Copyright by<a href="" className="text-decoration-none"> Reaphsoft Limited
-                      </a> </span></div>
+                    </a> </span></div>
                   </div>
                 </div>
               </footer>
@@ -123,7 +125,7 @@ function Login() {
             </Toast>
           </ToastContainer>
         </div>
-         
+
       }
     </>
   );

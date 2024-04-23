@@ -3,8 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Request = ({user}) => {
     return (
-        <div className="col-xl-9 col-lg-8 m-b30 browse-job">
-            <div className="col-xl-9 col-lg-8 m-b30">
+        <div className="col-xl-10 col-lg-10 m-b30 browse-job">
+            <div className="col-xl-10 col-lg-10 m-b30">
                 <div className="job-bx submit-resume">
                     <div className="job-bx-title clearfix">
                         <h5 className="font-weight-700 pull-left text-uppercase">Post A Job</h5>
@@ -46,7 +46,7 @@ const Request = ({user}) => {
                             </div>
                             <div className="col-lg-6 col-md-6">
                                 <div className="form-group"><label>Date Needed:</label><input
-                                    type="text" className="form-control" placeholder=" 2020-01-01"
+                                    type="date" className="form-control" placeholder=" 2020-01-01"
                                     spellCheck="false" data-ms-editor="true" /></div>
                             </div>
 

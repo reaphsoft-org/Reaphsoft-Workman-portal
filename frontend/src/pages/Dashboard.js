@@ -2,7 +2,7 @@ import React from "react";
 
 const Dashboard = () => {
     return ( 
-        <div classNameName="col-xl-9 col-lg-8 col-md-8 col-sm-12">
+        <div classNameName="col-xl-12 col-lg-12 m-b30 browse-job">
             <div id="key_skills_bx" class="job-bx bg-white m-b30">
                 <div class="d-flex">
                     <h5 class="m-b15">Key Services</h5>
