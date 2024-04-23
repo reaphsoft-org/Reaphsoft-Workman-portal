@@ -35,6 +35,7 @@
    ```
 
 ### Packages
+[TypeORM](https://github.com/typeorm/typeorm?tab=readme-ov-file#step-by-step-guide)
 Run 
 ```
 npm install --save @nestjs/typeorm typeorm pg

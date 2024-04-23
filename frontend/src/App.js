@@ -13,6 +13,7 @@ import Dashboard from './pages/Dashboard';
 import User from "./components/User";
 import {RegistrationSuccess} from "./pages/registrationsuccess";
 import UserProfile from "./pages/UserProfile";
+import UpdateUser from "./pages/update_user";
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
         <Route path="/user/profile/" element={<User content={UserProfile} />} />
         <Route path="/user/job/" element={<User content={Job }/>} />
         <Route path="/user/request/" element={<User content={Request } />} />
-        <Route path="/user/update/" element={<User content={UserProfile } />} />
+        <Route path="/user/update/" element={<User content={UpdateUser } />} />
         <Route path="/user/change/password/" element={<User content={ChangePassword} />} />
       </Routes>
     </AuthProvider>
