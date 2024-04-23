@@ -18,9 +18,8 @@ const User = ({content}) => {
   useEffect(() => {
     fetch(`http://localhost:3001/account/user/${userAuth.user}`)
         .then(resp => resp.json())
-        .then( data => {setUser(data);
-          console.log(data);
-          console.log(userAuth.user);
+        .then( data => {
+            setUser(data);
         })
         .catch( err => console.error('Error: ', err));
   }, [userAuth.user]);
