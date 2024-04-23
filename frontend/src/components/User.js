@@ -3,6 +3,8 @@ import { useAuth } from "./AuthContext";
 import Sidebar from '../components/sidebar';
 import Navbar from '../components/Navbar';
 import Footer from '../components/footer';
+import UserProfile from "../pages/UserProfile";
+import {Navigate} from "react-router-dom";
 
 const User = ({content}) => {
   const userAuth = useAuth();
@@ -16,6 +18,7 @@ const User = ({content}) => {
     serviceType: '',
   });
   useEffect(() => {
+    if (userAuth.user)
     fetch(`http://localhost:3001/account/user/${userAuth.user}`)
         .then(resp => resp.json())
         .then( data => {
@@ -25,7 +28,15 @@ const User = ({content}) => {
   }, [userAuth.user]);
 
   return (
-    <div className="page-wrapper">
+      <>
+      {userAuth.user !== null ? <AuthenticatedUser user={user} content={content} /> : <Navigate to="/login/"/>}
+      </>
+  );
+};
+
+function AuthenticatedUser({user, content}) {
+  return (
+      <div className="page-wrapper">
       <Navbar />
       <div className="page-content bg-white">
         <div className="content-block">
@@ -41,7 +52,7 @@ const User = ({content}) => {
       </div>
       <Footer />
     </div>
-    );
-};
+  );
+}
 
 export default User;
