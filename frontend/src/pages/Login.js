@@ -60,16 +60,16 @@ function Login() {
           <div className="page-wraper">
               
             <div className="page-content bg-white login-style2 yes" style={{ position: "relative" }}>
-              <div style={{ backgroundColor: "#fafafa", width: "100vw", height: "120vh", position: "absolute", opacity: "0.5" }}></div>
+              <div style={{ backgroundColor: "#fafafa", width: "100vw", minHeight: "114vh", position: "absolute", opacity: "0.5" }}></div>
               <div className="section-full">
                 <div className="container">
                   <div className="row">
                     <div className="col-lg-6 col-md-6 d-flex">
                       <div className="text-white max-w400 align-self-center">
                         <div className="logo reaphlogo">
-                          <a href="" style={{ height: "20px", width: "20px" }} className="text-decoration-none"><img
+                          <Link to="/" style={{ height: "20px", width: "20px" }} className="text-decoration-none"><img
                             src="../assets/images/001-removebg-preview.png"
-                            alt="" /></a>
+                            alt="" /></Link>
                         </div>
                         <h3 className="text-black">Reaphsoft Workmen Portal Login</h3>
                         <h6 className="text-black">Welcome to the Reaphsoft Workman Portal Login</h6>
@@ -108,7 +108,7 @@ function Login() {
               <footer className="login-footer">
                 <div className="container">
                   <div className="row">
-                    <div className="col-lg-12 text-center"><span className="float-left">© <a href="/" className="text-decoration-none"> Reaphsoft</a></span></div>
+                    <div className="col-lg-12 text-center"><span className="float-left">© <a href="#" className="text-decoration-none"> Reaphsoft</a></span></div>
                   </div>
                 </div>
               </footer>

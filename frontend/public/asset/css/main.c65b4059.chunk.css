@@ -31810,7 +31810,7 @@ ol.commentlist li .star-rating {
 
 .login-style3 .skew-section {
     padding-left: 0;
-    height: 100vh;
+    /* height: 100vh; */
     display: flex;
     align-items: center
 }
