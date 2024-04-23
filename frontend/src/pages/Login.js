@@ -93,10 +93,10 @@ function Login() {
                                 </div>
                             </div>
                             <div className="form-text text-danger mt-2 px-1">{errorText}</div>
-                            <div className="text-center"><button className={"site-button float-left" + disableButton}>login</button><a
+                            <div className="text-center"><button className={"site-button float-left" + disableButton}>login</button><Link
                               className="site-button-link forget-pass m-t15 float-right"
-                              href=""><i className="fa fa-unlock-alt"></i> Sign
-                              up</a></div>
+                              to="/register/"><i className="fa fa-unlock-alt"></i> Sign
+                              up</Link></div>
                           </form>
                         </div>
                       </div>
