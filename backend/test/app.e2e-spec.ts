@@ -29,6 +29,7 @@ describe('AppController (e2e)', () => {
 
 describe('Accounts Test', () => {
   let app: INestApplication;
+  let classBasedUser: User;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -43,6 +44,17 @@ describe('Accounts Test', () => {
         console.log(e);
       });
     }
+    const repo = AppDataSource.getRepository(User);
+    classBasedUser = new User();
+    classBasedUser.accountType = 2;
+    classBasedUser.email = 'classBasedUser@reaphsoft-test.com';
+    classBasedUser.password = '1234';
+    classBasedUser.fullname = 'Full Initial Name';
+    classBasedUser.apartment = '16C';
+    classBasedUser.address = '39 Ok Street';
+    classBasedUser.serviceType = 1;
+    classBasedUser.photoURL = '';
+    classBasedUser = await repo.save(classBasedUser);
   });
 
   it('no image', async () => {
@@ -234,6 +246,26 @@ describe('Accounts Test', () => {
         expect(user1!.fullname == user0.fullname);
         expect(user1!.apartment == user0.apartment);
         expect(user1!.serviceType == user0.serviceType);
+      });
+  });
+
+  it('should change password', async () => {
+    const newPassword = '606060';
+    const repo = AppDataSource.getRepository(User);
+    return request(app.getHttpServer())
+      .post('/account/change/password/')
+      .field('email', classBasedUser.email)
+      .field('new_password', newPassword)
+      .field('old_password', classBasedUser.password)
+      .expect(201)
+      .then(async (resp) => {
+        const data = resp.body;
+        expect(data.status);
+        expect(data.resp).toBe('');
+        const user1 = await repo.findOneBy({ email: classBasedUser.email });
+        expect(user1!.id == classBasedUser.id);
+        expect(user1!.password != classBasedUser.password);
+        expect(user1!.password == newPassword);
       });
   });
 

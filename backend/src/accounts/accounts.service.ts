@@ -8,6 +8,7 @@ import { MEDIA_DIR } from '../app.module';
 import { Email } from '../utilities/mailman';
 import { createPDF } from '../utilities/createpdf';
 import { UserDto } from './dto/user.dto';
+import {PasswordDto} from "./dto/password.dto";
 
 @Injectable()
 export class AccountsService {
@@ -186,7 +187,7 @@ export class AccountsService {
     if (!user) {
       return {
         resp: `No user was found with the email ${userDto.email}`,
-        status: true,
+        status: false,
       };
     }
     user.apartment = userDto.apartment;
@@ -209,11 +210,7 @@ export class AccountsService {
     ) {
       return { status: false, resp: 'Invalid account type' };
     }
-    if (
-      userDto.email === undefined ||
-      userDto.email === '' ||
-      !userDto.email.includes('@')
-    ) {
+    if (userDto.email === undefined || userDto.email === '') {
       return { status: false, resp: 'Invalid email address' };
     }
     if (userDto.fullname === undefined || userDto.fullname === '') {
@@ -236,5 +233,42 @@ export class AccountsService {
       return { status: false, resp: 'Invalid service type' };
     }
     return { status: true, resp: '' };
+  }
+
+  async changePassword(passwordDto: PasswordDto) {
+    if (passwordDto.email === undefined || passwordDto.email === '') {
+      return { status: false, resp: 'Invalid email address' };
+    }
+    const user = await this.accountRepository.findOneBy({
+      email: passwordDto.email,
+    });
+    if (!user) {
+      return {
+        resp: `No user was found with the email ${passwordDto.email}`,
+        status: false,
+      };
+    }
+    if (user.password != passwordDto.old_password) {
+      return {
+        resp: `Incorrect Old Password`,
+        status: false,
+      };
+    }
+    if (user.password == passwordDto.new_password) {
+      return {
+        resp: `Your new password must be different to your old password`,
+        status: false,
+      };
+    }
+    if (
+      passwordDto.new_password === undefined ||
+      passwordDto.new_password === ''
+      // add other password validation
+    ) {
+      return { status: false, resp: 'Invalid new password' };
+    }
+    user.password = passwordDto.new_password;
+    await this.accountRepository.save(user);
+    return { resp: '', status: true };
   }
 }

@@ -12,6 +12,7 @@ import { CreateAccountDto } from './dto/create-account.dto';
 import { AccountsService } from './accounts.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserDto } from './dto/user.dto';
+import {PasswordDto} from "./dto/password.dto";
 
 @Controller('account/')
 @UseInterceptors(FileInterceptor('photo'))
@@ -36,5 +37,12 @@ export class AccountsController {
     @Body() userDto: UserDto,
   ): Promise<{ resp: string; status: boolean }> {
     return this.accountsService.updateUser(userDto);
+  }
+
+  @Post('change/password/')
+  async changePassword(
+    @Body() passwordDto: PasswordDto,
+  ): Promise<{ resp: string; status: boolean }> {
+    return this.accountsService.changePassword(passwordDto);
   }
 }
