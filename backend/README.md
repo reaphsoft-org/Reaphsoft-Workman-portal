@@ -97,10 +97,11 @@ npm install mailgun.js
 Set the environment variable
 `MAILGUN_USERNAME` to your mailgun username and `MAILGUN_USERNAME` to the API key if you want to send live emails.
 
-### Serve Static[https://docs.nestjs.com/recipes/serve-static]
+### [Serve Static](https://docs.nestjs.com/recipes/serve-static)
 ```
 npm install --save @nestjs/serve-static
 ```
+[StackTip for junior devs](https://stackoverflow.com/questions/77173918/how-to-serve-static-files-on-nestjs), read the docs above preferably.
 
 # NestJS
 
