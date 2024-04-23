@@ -13,6 +13,7 @@ import './App.css';
 import UserDetails from './pages/UserDetails'
 import ChangePassword from './pages/ChangePassword';
 import UserProfile from './pages/UserProfile';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/user/request/" element={<Request />} />
         <Route path="/user/update/" element={<UserProfile />} />
         <Route path="/user/changePassword/" element={<ChangePassword />} />
+        <Route path="/user/dashboard" element= {<Dashboard />} />
       </Routes>
     </AuthProvider>
   );
