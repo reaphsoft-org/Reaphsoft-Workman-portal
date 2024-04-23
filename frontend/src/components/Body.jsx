@@ -1,5 +1,4 @@
 import React from "react";
-// import { IoSearchSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 export default function Body() {

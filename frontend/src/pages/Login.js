@@ -1,9 +1,8 @@
-import {IoAnalyticsSharp, IoLockOpen} from "react-icons/io5";
+import {IoAnalyticsSharp} from "react-icons/io5";
 import {Link, Navigate} from 'react-router-dom';
 import React, {useState} from "react";
 import {useAuth} from "../components/AuthContext";
-import {Image, Toast, ToastContainer} from "react-bootstrap";
-
+import {Toast, ToastContainer} from "react-bootstrap";
 
 function Login() {
   const user = useAuth();
@@ -42,6 +41,7 @@ function Login() {
       }
       const responseData = await response.json();
       if (responseData.status === true) {
+        console.log(data.email);
         user.login(data.email);
         window.location.href = "/user/dashboard/";
       }else {

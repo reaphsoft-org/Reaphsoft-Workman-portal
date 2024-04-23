@@ -1,8 +1,7 @@
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Dashboard = () => {
-    return ( 
+const Dashboard = ({user}) => {
+    return (
         <></>
     );
 }

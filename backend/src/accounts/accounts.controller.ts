@@ -25,7 +25,7 @@ export class AccountsController {
     return this.accountsService.createAccount(createAccountDto, file);
   }
 
-  @Get('user/')
+  @Get('user/:email')
   async getUser(@Param('email') email: string): Promise<UserDto | null> {
     return this.accountsService.getUser(email);
   }

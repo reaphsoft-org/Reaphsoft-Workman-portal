@@ -29,7 +29,7 @@ const Sidebar = ({user}) => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/user/"> 
+                            <Link to="/user/profile/">
                                     <i className="fa fa-user-o" aria-hidden="true"></i>
                                 <span>Profile</span>
                             </Link>
