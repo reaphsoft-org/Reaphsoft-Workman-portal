@@ -27,9 +27,10 @@ describe('AppController (e2e)', () => {
   });
 });
 
-describe('Accounts Test', () => {
+describe('Accounts Individual User Tests', () => {
   let app: INestApplication;
   let classBasedUser: User;
+  const api = '/account/sign/up/i/';
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -46,7 +47,6 @@ describe('Accounts Test', () => {
     }
     const repo = AppDataSource.getRepository(User);
     classBasedUser = new User();
-    classBasedUser.accountType = 2;
     classBasedUser.email = 'classBasedUser@reaphsoft-test.com';
     classBasedUser.password = '1234';
     classBasedUser.fullname = 'Full Initial Name';
@@ -59,9 +59,8 @@ describe('Accounts Test', () => {
 
   it('no image', async () => {
     return request(app.getHttpServer())
-      .post('/account/sign/up/')
+      .post(api)
       .set('Content-Type', 'multipart/form-data')
-      .field('accountType', '1') // include any other form fields
       .field('email', 'test0@reaphsoft.com')
       .field('password', 'password')
       .field('fullname', 'Reaph Soft')
@@ -79,10 +78,9 @@ describe('Accounts Test', () => {
   it('with image', async () => {
     const email: string = 'test1@reaphsoft.com';
     return request(app.getHttpServer())
-      .post('/account/sign/up/') // replace with your actual endpoint
+      .post(api) // replace with your actual endpoint
       .set('Content-Type', 'multipart/form-data')
       .attach('photo', 'test/icons8-iris-scan-48.png') // attach the image file
-      .field('accountType', '1') // include any other form fields
       .field('email', email)
       .field('password', 'password')
       .field('fullname', 'Reaph Soft')
@@ -110,9 +108,8 @@ describe('Accounts Test', () => {
   it('lowercase name', async () => {
     const email: string = 'test1@reaphsoft.com';
     return request(app.getHttpServer())
-      .post('/account/sign/up/') // replace with your actual endpoint
+      .post(api) // replace with your actual endpoint
       .set('Content-Type', 'multipart/form-data')
-      .field('accountType', '1') // include any other form fields
       .field('email', email)
       .field('password', 'password')
       .field('fullname', 'reaph soft')
@@ -131,9 +128,8 @@ describe('Accounts Test', () => {
   it('test email', async () => {
     const email: string = 'felixsigit@gmail.com';
     return request(app.getHttpServer())
-      .post('/account/sign/up/') // replace with your actual endpoint
+      .post(api) // replace with your actual endpoint
       .set('Content-Type', 'multipart/form-data')
-      .field('accountType', '1') // include any other form fields
       .field('email', email)
       .field('password', 'password')
       .field('fullname', 'dalang felix sihitshuwam')
@@ -153,7 +149,6 @@ describe('Accounts Test', () => {
     const email: string = 'testemailexists@reaphsoft-workmen.org';
     const repo = AppDataSource.getRepository(User);
     const user0 = new User();
-    user0.accountType = 1;
     user0.email = email;
     user0.password = '1234';
     user0.fullname = 'Full Name';
@@ -165,9 +160,8 @@ describe('Accounts Test', () => {
     const users = await repo.count();
     expect(users > 0);
     return request(app.getHttpServer())
-      .post('/account/sign/up/') // replace with your actual endpoint
+      .post(api) // replace with your actual endpoint
       .set('Content-Type', 'multipart/form-data')
-      .field('accountType', '1') // include any other form fields
       .field('email', email)
       .field('password', 'password')
       .field('fullname', 'dalang felix sihitshuwam')
@@ -186,7 +180,7 @@ describe('Accounts Test', () => {
 
   it('test empty post data', async () => {
     return request(app.getHttpServer())
-      .post('/account/sign/up/')
+      .post(api)
       .expect(201)
       .then((resp) => {
         const data = resp.body;
@@ -197,7 +191,7 @@ describe('Accounts Test', () => {
 
   it('test partial post data', async () => {
     return request(app.getHttpServer())
-      .post('/account/sign/up/')
+      .post(api)
       .field('email', 'partialemail@reaphsoft.com')
       .expect(201)
       .then((resp) => {
@@ -211,7 +205,6 @@ describe('Accounts Test', () => {
     const email: string = 'update.user@reaphsoft-workmen.org';
     const repo = AppDataSource.getRepository(User);
     const user0 = new User();
-    user0.accountType = 2;
     user0.email = email;
     user0.password = '1234';
     user0.fullname = 'Full Initial Name';
@@ -225,7 +218,6 @@ describe('Accounts Test', () => {
     const address = '606 Hilltop Avenue, Jos, Plateau State';
     return request(app.getHttpServer())
       .post('/account/update/user/')
-      .field('accountType', user0.accountType)
       .field('email', user0.email)
       .field('fullname', user0.fullname)
       .field('apartment', user0.apartment)
@@ -241,7 +233,6 @@ describe('Accounts Test', () => {
         expect(user0.address != address);
         // only change
         expect(user1!.address == address);
-        expect(user1!.accountType == user0.accountType);
         expect(user1!.email == user0.email);
         expect(user1!.fullname == user0.fullname);
         expect(user1!.apartment == user0.apartment);

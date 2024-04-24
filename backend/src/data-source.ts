@@ -1,6 +1,9 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { User } from './entities/User';
+import { EstateManager } from './entities/EstateManager';
+import { House } from './entities/House';
+import { SuperUser } from './entities/SuperUser';
 
 let dbName: string;
 let dropOption: boolean;
@@ -22,7 +25,7 @@ export const AppDataSource = new DataSource({
   synchronize: true,
   dropSchema: dropOption,
   logging: false,
-  entities: [User],
+  entities: [SuperUser, User, EstateManager, House],
   migrations: ['src/migrations/*.ts'],
   subscribers: ['src/subscribers/*.ts'],
 });

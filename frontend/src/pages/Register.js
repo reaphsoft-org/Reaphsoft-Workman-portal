@@ -195,7 +195,6 @@ function Register() {
                                 <input type="text" className="form-control" name="fullname" autoComplete="name" value={formData.fullname}
                                   onChange={handleInputChange} required />
                               </div>
-
                               <div className="col-12 mb-2">
                                 <label className="form-label">Estate Address</label>
                                 <input type="text" className="form-control" name="address" autoComplete="address-line1" required

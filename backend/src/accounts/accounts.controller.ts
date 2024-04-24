@@ -6,25 +6,24 @@ import {
   UploadedFile,
   Get,
   Param,
-  Req,
 } from '@nestjs/common';
-import { CreateAccountDto } from './dto/create-account.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { AccountsService } from './accounts.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserDto } from './dto/user.dto';
-import {PasswordDto} from "./dto/password.dto";
+import { PasswordDto } from './dto/password.dto';
 
 @Controller('account/')
 @UseInterceptors(FileInterceptor('photo'))
 export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
-  @Post('sign/up/')
+  @Post('sign/up/i/')
   async createAccount(
     @UploadedFile() file: any,
-    @Body() createAccountDto: CreateAccountDto,
+    @Body() createUserDto: CreateUserDto,
   ) {
-    return this.accountsService.createAccount(createAccountDto, file);
+    return this.accountsService.createIndividualAccount(createUserDto, file);
   }
 
   @Get('user/:email')
@@ -36,6 +35,7 @@ export class AccountsController {
   async updateUser(
     @Body() userDto: UserDto,
   ): Promise<{ resp: string; status: boolean }> {
+    // todo set account type on login
     return this.accountsService.updateUser(userDto);
   }
 

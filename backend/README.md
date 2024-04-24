@@ -40,6 +40,21 @@ Run
 ```
 npm install --save @nestjs/typeorm typeorm pg
 ```
+To use the typeorm tools, run from the _backend_ folder
+```
+npx typeorm-ts-node-commonjs schema:log -d ./src/data-source.ts
+```
+This works for **Nest.js** apps.
+
+Use `npx typeorm-ts-node-commonjs -h` to see available commands. 
+
+Migration Command
+```
+npx typeorm-ts-node-commonjs migration:create src\migrations\migration
+```
+```
+npx typeorm-ts-node-commonjs migration:generate src\migrations\migration -d src/data-source.ts -p true 
+```
 
 ### Creating controllers and services
 ```

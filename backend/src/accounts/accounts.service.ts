@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAccountDto } from './dto/create-account.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { AppDataSource } from '../data-source';
 import { User } from '../entities/User';
 import * as fs from 'fs';
@@ -8,29 +8,28 @@ import { MEDIA_DIR } from '../app.module';
 import { Email } from '../utilities/mailman';
 import { createPDF } from '../utilities/createpdf';
 import { UserDto } from './dto/user.dto';
-import {PasswordDto} from "./dto/password.dto";
+import { PasswordDto } from './dto/password.dto';
 
 @Injectable()
 export class AccountsService {
   private readonly uploadPath = 'media/u';
   private readonly accountRepository = AppDataSource.getRepository(User);
-  async createAccount(createAccountDto: CreateAccountDto, file: any) {
+  async createIndividualAccount(createUserDto: CreateUserDto, file: any) {
     // Implement account creation logic here
-    if (Object.keys(createAccountDto).length === 0) {
+    if (Object.keys(createUserDto).length === 0) {
       return { resp: 'You did not post any registration data', status: false };
     }
-    const check = this.runValidation(createAccountDto);
+    const check = this.runValidation(createUserDto);
     if (!check.status) {
       return check;
     }
     const user = new User();
-    user.accountType = createAccountDto.accountType;
-    user.email = createAccountDto.email;
-    user.password = createAccountDto.password;
-    user.fullname = this.toTitleCase(createAccountDto.fullname.trim());
-    user.apartment = createAccountDto.apartment;
-    user.address = createAccountDto.address;
-    user.serviceType = createAccountDto.serviceType;
+    user.email = createUserDto.email;
+    user.password = createUserDto.password;
+    user.fullname = this.toTitleCase(createUserDto.fullname.trim());
+    user.apartment = createUserDto.apartment;
+    user.address = createUserDto.address;
+    user.serviceType = createUserDto.serviceType;
     user.photoURL = '';
     if (file != null && file.mimetype.startsWith('image/')) {
       // todo add test case for when a user posts a file which doesn't have an image mime type
@@ -103,54 +102,37 @@ export class AccountsService {
     });
   }
 
-  runValidation(createAccountDto: CreateAccountDto): {
+  runValidation(createUserDto: CreateUserDto): {
     resp: string | null;
     status: boolean;
   } {
     if (
-      createAccountDto.accountType === undefined ||
-      createAccountDto.accountType < 1 ||
-      createAccountDto.accountType > 2
-    ) {
-      return { status: false, resp: 'Invalid account type' };
-    }
-    if (
-      createAccountDto.email === undefined ||
-      createAccountDto.email === '' ||
-      !createAccountDto.email.includes('@')
+      createUserDto.email === undefined ||
+      createUserDto.email === '' ||
+      !createUserDto.email.includes('@')
     ) {
       return { status: false, resp: 'Invalid email address' };
     }
-    if (
-      createAccountDto.password === undefined ||
-      createAccountDto.password === ''
-    ) {
+    if (createUserDto.password === undefined || createUserDto.password === '') {
       // add other password validation
       return { status: false, resp: 'Invalid password' };
     }
-    if (
-      createAccountDto.fullname === undefined ||
-      createAccountDto.fullname === ''
-    ) {
+    if (createUserDto.fullname === undefined || createUserDto.fullname === '') {
       return { status: false, resp: 'Invalid Fullname' };
     }
     if (
-      createAccountDto.accountType === 1 &&
-      (createAccountDto.apartment === undefined ||
-        createAccountDto.apartment === '')
+      createUserDto.apartment === undefined ||
+      createUserDto.apartment === ''
     ) {
       return { status: false, resp: 'Invalid apartment number' };
     }
-    if (
-      createAccountDto.address === undefined ||
-      createAccountDto.address === ''
-    ) {
+    if (createUserDto.address === undefined || createUserDto.address === '') {
       return { status: false, resp: 'Invalid address' };
     }
     if (
-      createAccountDto.serviceType === undefined ||
-      createAccountDto.serviceType < 1 ||
-      createAccountDto.serviceType > 2
+      createUserDto.serviceType === undefined ||
+      createUserDto.serviceType < 1 ||
+      createUserDto.serviceType > 2
     ) {
       return { status: false, resp: 'Invalid service type' };
     }
@@ -191,7 +173,6 @@ export class AccountsService {
       };
     }
     user.apartment = userDto.apartment;
-    user.accountType = userDto.accountType;
     user.address = userDto.address;
     user.fullname = userDto.fullname;
     user.serviceType = userDto.serviceType;
@@ -203,23 +184,13 @@ export class AccountsService {
     resp: string;
     status: boolean;
   } {
-    if (
-      userDto.accountType === undefined ||
-      userDto.accountType < 1 ||
-      userDto.accountType > 2
-    ) {
-      return { status: false, resp: 'Invalid account type' };
-    }
     if (userDto.email === undefined || userDto.email === '') {
       return { status: false, resp: 'Invalid email address' };
     }
     if (userDto.fullname === undefined || userDto.fullname === '') {
       return { status: false, resp: 'Invalid Fullname' };
     }
-    if (
-      userDto.accountType === 1 &&
-      (userDto.apartment === undefined || userDto.apartment === '')
-    ) {
+    if (userDto.apartment === undefined || userDto.apartment === '') {
       return { status: false, resp: 'Invalid apartment number' };
     }
     if (userDto.address === undefined || userDto.address === '') {
