@@ -14,12 +14,14 @@ import User from "./components/User";
 import {RegistrationSuccess} from "./pages/registrationsuccess";
 import UserProfile from "./pages/UserProfile";
 import UpdateUser from "./pages/update_user";
+import Services from './components/Service';
 
 function App() {
   return (
     <AuthProvider>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/service/" element={<Services />} />
         <Route path="/login/" element={<Login />} />
         <Route path="/register/" element={<Register />} />
         <Route path="/register/success/" element={<RegistrationSuccess />} />
