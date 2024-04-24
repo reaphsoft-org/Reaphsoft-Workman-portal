@@ -16,16 +16,16 @@ export default function Body() {
                             
                             <div className="extra-nav">
                                 <div className="extra-cell">
-                                    <a className="site-button text-decoration-none" href=""><i className="fa fa-user"></i> Sign Up</a>
-                                    <a className="site-button text-decoration-none" href=""><i className="fa fa-lock"></i> Log In</a>
+                                    <Link className="site-button text-decoration-none" to="/login/"><i className="fa fa-user"></i>Log In</Link>
+                                    <Link className="site-button text-decoration-none" to="/register/"><i className="fa fa-lock"></i>Register</Link>
                                 </div>
                             </div>
                             <div className="header-nav navbar-collapse collapse myNavbar justify-content-end" id="navbarNavDropdown">
                                 <ul className="nav navbar-nav">
                                     <li><Link className="text-decoration-none" to="/">Home </Link></li>
                                     <li><Link className="text-decoration-none" to="/service/">Services </Link></li>
-                                    <li><Link className="text-decoration-none" to="">About us </Link></li>
-                                    <li><Link className="text-decoration-none" to="">Contact Us </Link></li>
+                                    <li><Link className="text-decoration-none" to="/about/">About us </Link></li>
+                                    <li><Link className="text-decoration-none" to="/contact/">Contact Us </Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -113,7 +113,7 @@ export default function Body() {
                             </div>
                         </div>
                     </div>
-                <div className="section-full content-inner-2 call-to-action overlay-black-dark text-white text-center bg-img-fix" style={{ backgroundImage: "url(../asset/image/Blackman.png)"}}>
+                    <div className="section-full content-inner-2 call-to-action overlay-black-dark text-white text-center bg-img-fix" style={{ backgroundImage: "url(../asset/image/Blackman.png)"}}>
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12">

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Register from '../pages/Register';
 const Services = () => {
-    return ( 
+    return (
         <div className="page-wraper">
             <header className="site-header mo-left header fullwidth">
                 <div className="sticky-header main-bar-wraper navbar-expand-lg">
@@ -14,16 +13,16 @@ const Services = () => {
 
                             <div className="extra-nav">
                                 <div className="extra-cell">
-                                    <a className="site-button text-decoration-none" href=""><i className="fa fa-user"></i> Sign Up</a>
-                                    <a className="site-button text-decoration-none" href=""><i className="fa fa-lock"></i> Log In</a>
+                                    <Link className="site-button text-decoration-none" to="/login/"><i className="fa fa-user"></i> Log In</Link>
+                                    <Link className="site-button text-decoration-none" to="/register/"><i className="fa fa-lock"></i> Register</Link>
                                 </div>
                             </div>
                             <div className="header-nav navbar-collapse collapse myNavbar justify-content-end" id="navbarNavDropdown">
                                 <ul className="nav navbar-nav">
                                     <li><Link className="text-decoration-none" to="/">Home </Link></li>
                                     <li><Link className="text-decoration-none" to="/service/">Services </Link></li>
-                                    <li><Link className="text-decoration-none" to="">About us </Link></li>
-                                    <li><Link className="text-decoration-none" to="">Contact Us </Link></li>
+                                    <li><Link className="text-decoration-none" to="/about/">About us </Link></li>
+                                    <li><Link className="text-decoration-none" to="/contact/">Contact Us </Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -147,5 +146,5 @@ const Services = () => {
         </div>
     );
 }
- 
+
 export default Services;
