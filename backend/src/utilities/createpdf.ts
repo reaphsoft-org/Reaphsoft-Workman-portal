@@ -3,8 +3,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { ASSETS_DIR } from '../app.module';
 import { generatePdf } from 'pdf-master';
+import { EstateManager } from '../entities/EstateManager';
 
-export async function createPDF(user: User) {
+export async function createPDF(user: User | EstateManager) {
   const currentDate = new Date();
   const imgBuffer = fs.readFileSync(path.join(ASSETS_DIR, 'i', 'logo.jpeg'));
   const base64Image = imgBuffer.toString('base64');

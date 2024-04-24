@@ -5,6 +5,8 @@ import { House } from './House';
 
 @Entity()
 export class EstateManager extends NonStaff {
+  static accountType: number = 2;
+
   @Column({ type: 'varchar', length: 40 })
   estate: string;
 

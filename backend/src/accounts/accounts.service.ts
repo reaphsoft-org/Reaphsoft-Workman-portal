@@ -9,65 +9,17 @@ import { Email } from '../utilities/mailman';
 import { createPDF } from '../utilities/createpdf';
 import { UserDto } from './dto/user.dto';
 import { PasswordDto } from './dto/password.dto';
+import { CreateEstateDto } from './dto/create-estate.dto';
+import { EstateManager } from '../entities/EstateManager';
 
 @Injectable()
 export class AccountsService {
   private readonly uploadPath = 'media/u';
-  private readonly accountRepository = AppDataSource.getRepository(User);
+  private readonly userRepository = AppDataSource.getRepository(User);
+  private readonly estateRepository =
+    AppDataSource.getRepository(EstateManager);
   async createIndividualAccount(createUserDto: CreateUserDto, file: any) {
-    // Implement account creation logic here
-    if (Object.keys(createUserDto).length === 0) {
-      return { resp: 'You did not post any registration data', status: false };
-    }
-    const check = this.runValidation(createUserDto);
-    if (!check.status) {
-      return check;
-    }
-    const user = new User();
-    user.email = createUserDto.email;
-    user.password = createUserDto.password;
-    user.fullname = this.toTitleCase(createUserDto.fullname.trim());
-    user.apartment = createUserDto.apartment;
-    user.address = createUserDto.address;
-    user.serviceType = createUserDto.serviceType;
-    user.photoURL = '';
-    if (file != null && file.mimetype.startsWith('image/')) {
-      // todo add test case for when a user posts a file which doesn't have an image mime type
-      // todo test for jpegs, currently tests for png
-      const extension: string = file.originalname.split('.').pop();
-      const filename =
-        user.email.replace('@', '').replace('.', '-') + `.${extension}`;
-      user.photoURL = await this.savePhoto(file, filename);
-    }
-    try {
-      await this.accountRepository.save(user);
-    } catch (e) {
-      if (
-        e.name === 'QueryFailedError' &&
-        e.message.includes('duplicate key value violates unique constraint')
-      ) {
-        return {
-          resp: 'A user with the email you supplied already exists.',
-          status: false,
-        };
-      }
-      // log e.message
-      return {
-        resp: 'An error was encountered while trying to save the user. Please refresh the page and try again.',
-        status: false,
-      };
-    }
-    const resp = await createPDF(user);
-    if (resp.success) {
-      const mailResponse = await this.sendAgreement(user, resp.filePath!);
-      if (mailResponse.status !== 'Queued') {
-        // log something
-      }
-      fs.rmSync(resp.filePath!);
-    } else {
-      console.log(resp);
-    }
-    return { resp: 'Account created successfully', status: true };
+    return this.createAccount(createUserDto, file, User.accountType);
   }
 
   async savePhoto(
@@ -84,7 +36,7 @@ export class AccountsService {
     return imgPath;
   }
 
-  async sendAgreement(user: User, filePath: string) {
+  async sendAgreement(user: User | EstateManager, filePath: string) {
     const email = new Email();
     const resp = await email.sendTextMailWithAttachment(
       user.email,
@@ -102,51 +54,68 @@ export class AccountsService {
     });
   }
 
-  runValidation(createUserDto: CreateUserDto): {
-    resp: string | null;
-    status: boolean;
-  } {
+  generalValidation(dto: CreateUserDto | CreateEstateDto) {
     if (
-      createUserDto.email === undefined ||
-      createUserDto.email === '' ||
-      !createUserDto.email.includes('@')
+      dto.email === undefined ||
+      dto.email === '' ||
+      !dto.email.includes('@')
     ) {
       return { status: false, resp: 'Invalid email address' };
     }
-    if (createUserDto.password === undefined || createUserDto.password === '') {
+    if (dto.password === undefined || dto.password === '') {
       // add other password validation
       return { status: false, resp: 'Invalid password' };
     }
-    if (createUserDto.fullname === undefined || createUserDto.fullname === '') {
+    if (dto.fullname === undefined || dto.fullname === '') {
       return { status: false, resp: 'Invalid Fullname' };
     }
+    if (dto.address === undefined || dto.address === '') {
+      return { status: false, resp: 'Invalid address' };
+    }
+    if (
+      dto.serviceType === undefined ||
+      dto.serviceType < 1 ||
+      dto.serviceType > 2
+    ) {
+      return { status: false, resp: 'Invalid service type' };
+    }
+    return { status: true, resp: '' };
+  }
+  validateUser(createUserDto: CreateUserDto): {
+    resp: string;
+    status: boolean;
+  } {
+    const check = this.generalValidation(createUserDto);
+    if (!check.status) return check;
     if (
       createUserDto.apartment === undefined ||
       createUserDto.apartment === ''
     ) {
       return { status: false, resp: 'Invalid apartment number' };
     }
-    if (createUserDto.address === undefined || createUserDto.address === '') {
-      return { status: false, resp: 'Invalid address' };
+    return { status: true, resp: '' };
+  }
+
+  validateEstateAccount(createEstateDto: CreateEstateDto): {
+    resp: string;
+    status: boolean;
+  } {
+    const check = this.generalValidation(createEstateDto);
+    if (!check.status) return check;
+    if (createEstateDto.estate === undefined || createEstateDto.estate === '') {
+      return { status: false, resp: 'Invalid estate name' };
     }
-    if (
-      createUserDto.serviceType === undefined ||
-      createUserDto.serviceType < 1 ||
-      createUserDto.serviceType > 2
-    ) {
-      return { status: false, resp: 'Invalid service type' };
-    }
-    return { status: true, resp: null };
+    return { status: true, resp: '' };
   }
 
   async getUser(email: string): Promise<UserDto | null> {
-    const user = await this.accountRepository.findOne({ where: { email } });
+    const user = await this.userRepository.findOne({ where: { email } });
     if (!user) {
       return null;
     }
     const userDto = new UserDto();
     userDto.apartment = user.apartment;
-    userDto.accountType = user.accountType;
+    userDto.accountType = User.accountType;
     userDto.address = user.address;
     userDto.email = user.email;
     userDto.fullname = user.fullname;
@@ -163,7 +132,7 @@ export class AccountsService {
     if (!check.status) {
       return check;
     }
-    const user = await this.accountRepository.findOneBy({
+    const user = await this.userRepository.findOneBy({
       email: userDto.email,
     });
     if (!user) {
@@ -176,7 +145,7 @@ export class AccountsService {
     user.address = userDto.address;
     user.fullname = userDto.fullname;
     user.serviceType = userDto.serviceType;
-    await this.accountRepository.save(user);
+    await this.userRepository.save(user);
     return { resp: '', status: true };
   }
 
@@ -210,7 +179,7 @@ export class AccountsService {
     if (passwordDto.email === undefined || passwordDto.email === '') {
       return { status: false, resp: 'Invalid email address' };
     }
-    const user = await this.accountRepository.findOneBy({
+    const user = await this.userRepository.findOneBy({
       email: passwordDto.email,
     });
     if (!user) {
@@ -239,7 +208,87 @@ export class AccountsService {
       return { status: false, resp: 'Invalid new password' };
     }
     user.password = passwordDto.new_password;
-    await this.accountRepository.save(user);
+    await this.userRepository.save(user);
     return { resp: '', status: true };
+  }
+  async createEstateAccount(createEstateDto: CreateEstateDto, file: any) {
+    return this.createAccount(createEstateDto, file, EstateManager.accountType);
+  }
+
+  async createAccount(
+    dto: CreateEstateDto | CreateUserDto,
+    file: any,
+    type: number,
+  ) {
+    if (Object.keys(dto).length === 0) {
+      return {
+        resp: 'You did not post any registration data',
+        status: false,
+      };
+    }
+    const check =
+      type == User.accountType
+        ? this.validateUser(<CreateUserDto>dto)
+        : this.validateEstateAccount(<CreateEstateDto>dto);
+    if (!check.status) {
+      return check;
+    }
+    const object: User | EstateManager =
+      type == User.accountType ? new User() : new EstateManager();
+    object.email = dto.email;
+    object.password = dto.password;
+    object.fullname = this.toTitleCase(dto.fullname.trim());
+    object.address = dto.address;
+    object.serviceType = dto.serviceType;
+    object.photoURL = '';
+    if (type == User.accountType) {
+      const f = (obj: User, data: CreateUserDto) => {
+        obj.apartment = data.apartment;
+      };
+      f(<User>object, <CreateUserDto>dto);
+    } else {
+      const f = (obj: EstateManager, data: CreateEstateDto) => {
+        obj.estate = data.estate;
+      };
+      f(<EstateManager>object, <CreateEstateDto>dto);
+    }
+    if (file != null && file.mimetype.startsWith('image/')) {
+      // todo add test case for when a object posts a file which doesn't have an image mime type
+      // todo test for jpegs, currently tests for png
+      const extension: string = file.originalname.split('.').pop();
+      const filename =
+        object.email.replace('@', '').replace('.', '-') + `.${extension}`;
+      object.photoURL = await this.savePhoto(file, filename);
+    }
+    try {
+      if (type == User.accountType) await this.userRepository.save(object);
+      else await this.estateRepository.save(object);
+    } catch (e) {
+      if (
+        e.name === 'QueryFailedError' &&
+        e.message.includes('duplicate key value violates unique constraint')
+      ) {
+        return {
+          resp: 'A user with the email you supplied already exists.',
+          status: false,
+        };
+      }
+      // log e.message
+      return {
+        resp: 'An error was encountered while trying to save the object. Please refresh the page and try again.',
+        status: false,
+      };
+    }
+    const resp = await createPDF(object);
+    if (resp.success) {
+      const mailResponse = await this.sendAgreement(object, resp.filePath!);
+      if (mailResponse.status !== 'Queued') {
+        // log something
+      }
+      fs.rmSync(resp.filePath!);
+    } else {
+      console.log(resp);
+    }
+    return { resp: 'Account created successfully', status: true };
   }
 }
