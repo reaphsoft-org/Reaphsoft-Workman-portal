@@ -18,6 +18,9 @@ import Services from './components/Service';
 import AboutS from './components/about';
 import Contact from './components/contact';
 import AdminLogin from './admin/pages/login';
+import Index from './admin/pages/index';
+import Layout from './admin/components/Layout';
+import Skill from './admin/pages/skill';
 
 function App() {
   return (
@@ -37,6 +40,10 @@ function App() {
         <Route path="/user/update/" element={<User content={UpdateUser} />} />
         <Route path="/user/change/password/" element={<User content={ChangePassword} />} />
         <Route path="/admin/" element={<AdminLogin />} />
+        <Route path="/dashboard" element={<Layout />} >
+          <Route index element={<Index />} />
+          <Route path="skill" element={<Skill />} />
+        </Route>
       </Routes>
     </AuthProvider>
   );
