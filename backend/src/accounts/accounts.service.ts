@@ -14,6 +14,7 @@ import { EstateManager } from '../entities/EstateManager';
 import { PasswordManager } from '../utilities/passwordmanager';
 import { UpdateEstateManagerDto, UpdateUserDto } from './dto/update.dto';
 import { EstateDto } from './dto/estate.dto';
+import { House } from '../entities/House';
 
 @Injectable()
 export class AccountsService {
@@ -120,7 +121,7 @@ export class AccountsService {
         email: string,
         type: 1 | 2,
     ): Promise<UserDto | EstateDto | null> {
-        if (type === 1) {
+        if (type === User.accountType) {
             const user = await this.userRepository.findOne({
                 where: { email },
             });
@@ -137,8 +138,8 @@ export class AccountsService {
             userDto.serviceType = user.serviceType;
             return userDto;
         } else {
-            const user = await this.estateRepository.findOne({
-                where: { email },
+            const user = await this.estateRepository.findOneBy({
+                email: email,
             });
             if (!user) {
                 return null;
@@ -151,6 +152,7 @@ export class AccountsService {
             userDto.fullname = user.fullname;
             userDto.photoURL = user.photoURL;
             userDto.serviceType = user.serviceType;
+            userDto.houses = await this.getRecentHouses(user);
             return userDto;
         }
     }
@@ -385,5 +387,26 @@ export class AccountsService {
             return { status: false, resp: 'Invalid apartment number' };
         }
         return { status: true, resp: '' };
+    }
+
+    async getRecentHouses(estateManager: EstateManager) {
+        const repo = AppDataSource.getRepository(House);
+        const houses = await repo.find({
+            where: {
+                manager: {
+                    id: estateManager.id,
+                },
+            },
+            skip: 0,
+            take: 10,
+            order: {
+                name: 'ASC',
+            },
+        });
+        return houses.map((house) => ({
+            id: house.id,
+            number: house.number,
+            name: house.name,
+        }));
     }
 }

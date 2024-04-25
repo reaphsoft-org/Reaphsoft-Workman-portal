@@ -92,6 +92,7 @@ npm install --save-dev cross-env
 1. [Jest](https://jestjs.io/)
 2. [Super Test](https://github.com/ladjs/supertest)
 3. [Super Agent](https://ladjs.github.io/superagent/#test-documentation)
+4. [Authentication in Tests](https://ladjs.github.io/superagent/#authentication)
 
 ## Create PDFs
 [Details](https://github.com/chaitanyamogal/pdf-master)
@@ -137,6 +138,7 @@ Set the `JWT_SECRET` environment variable in production
 
 ### References
 1. [SignOptions](https://github.com/auth0/node-jsonwebtoken#usage)
+2. [See Also Supertest Authentication](https://ladjs.github.io/superagent/#authentication)
 
 # NestJS
 

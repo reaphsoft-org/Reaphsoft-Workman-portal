@@ -6,5 +6,5 @@ import { BaseUserDto } from './user.dto';
 
 export class EstateDto extends BaseUserDto {
     estate: string;
-    houses: [];
+    houses: { number: string; name: string; id: number }[];
 }
