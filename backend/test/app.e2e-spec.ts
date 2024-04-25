@@ -266,6 +266,8 @@ describe('Accounts Individual User Tests', () => {
             });
     });
 
+    // todo confirm in tests that password when creating and updating accounts aren't stored in plaintext
+
     afterAll(async () => {
         await app.close();
     });

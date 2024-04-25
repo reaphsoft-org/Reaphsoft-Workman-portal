@@ -193,13 +193,18 @@ export class AccountsService {
                 status: false,
             };
         }
-        if (user.password != passwordDto.old_password) {
+        if (
+            !this.passwordManager.comparePassword(
+                passwordDto.old_password,
+                user.password,
+            )
+        ) {
             return {
                 resp: `Incorrect Old Password`,
                 status: false,
             };
         }
-        if (user.password == passwordDto.new_password) {
+        if (passwordDto.old_password == passwordDto.new_password) {
             return {
                 resp: `Your new password must be different to your old password`,
                 status: false,
@@ -212,6 +217,7 @@ export class AccountsService {
         ) {
             return { status: false, resp: 'Invalid new password' };
         }
+        this.setPassword(user, passwordDto.new_password);
         user.password = passwordDto.new_password;
         await this.userRepository.save(user);
         return { resp: '', status: true };
@@ -245,7 +251,7 @@ export class AccountsService {
         const object: User | EstateManager =
             type == User.accountType ? new User() : new EstateManager();
         object.email = dto.email;
-        object.password = this.passwordManager.getHashedKey(dto.password);
+        this.setPassword(object, dto.password);
         object.fullname = this.toTitleCase(dto.fullname.trim());
         object.address = dto.address;
         object.serviceType = dto.serviceType;
@@ -306,5 +312,9 @@ export class AccountsService {
             console.log(resp);
         }
         return { resp: 'Account created successfully', status: true };
+    }
+
+    setPassword(obj: User | EstateManager, password: string) {
+        obj.password = this.passwordManager.getHashedKey(password);
     }
 }

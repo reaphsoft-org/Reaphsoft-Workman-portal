@@ -131,6 +131,12 @@ Install `jwt`
 ```
 npm install --save @nestjs/jwt
 ```
+**Important**
+
+Set the `JWT_SECRET` environment variable in production
+
+### References
+1. [SignOptions](https://github.com/auth0/node-jsonwebtoken#usage)
 
 # NestJS
 

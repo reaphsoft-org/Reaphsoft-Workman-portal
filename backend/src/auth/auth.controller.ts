@@ -9,8 +9,7 @@ export class AuthController {
     @Post('login')
     async login(@Body() loginDto: LoginDto): Promise<{ status: boolean }> {
         const { email, password } = loginDto;
-        const status = await this.authService.validateUser(email, password);
-        return { status };
+        return this.authService.validateUser(email, password);
     }
     @Get('email/test/')
     async email(): Promise<{ status: string }> {
