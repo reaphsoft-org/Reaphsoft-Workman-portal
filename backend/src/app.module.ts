@@ -23,7 +23,7 @@ if (!fs.existsSync(MEDIA_DIR)) {
         }),
         JwtModule.register({
             global: true,
-            secret: process.env.JWT_SECRET || '',
+            secret: process.env.JWT_SECRET,
             signOptions: { expiresIn: '1d' }, // expire in 1 day see docs for details
         }),
     ],

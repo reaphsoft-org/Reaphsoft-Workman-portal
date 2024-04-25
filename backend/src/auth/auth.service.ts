@@ -4,20 +4,24 @@ import { User } from '../entities/User';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { PasswordManager } from '../utilities/passwordmanager';
+import { EstateManager } from '../entities/EstateManager';
 
 @Injectable()
 export class AuthService {
     private readonly userRepository: Repository<User> =
         AppDataSource.getRepository(User);
+    private readonly estateRepo: Repository<EstateManager> =
+        AppDataSource.getRepository(EstateManager);
     private readonly passwordManager = new PasswordManager();
     constructor(private jwtService: JwtService) {}
 
     async validateUser(
         email: string,
         password: string,
+        account: 1 | 2,
     ): Promise<{ status: boolean; access_token: string; resp: string }> {
         try {
-            const user = await this.findUserByEmail(email);
+            const user = await this.findUserByEmail(email, account);
             // Compare the password from the request with the password stored in the database
             if (
                 !this.passwordManager.comparePassword(password, user.password)
@@ -28,10 +32,12 @@ export class AuthService {
                     resp: 'invalid password',
                 };
             }
-            const payload = { sub: user.id, username: user.email };
+            const payload = { sub: user.id, email: user.email, type: account };
             const date = new Date();
             user.last_visited = date.toISOString();
-            await this.userRepository.save(user, { reload: true });
+            if (account == User.accountType)
+                await this.userRepository.save(user, { reload: true });
+            else await this.estateRepo.save(user, { reload: true });
             return {
                 status: true,
                 access_token: await this.jwtService.signAsync(payload),
@@ -39,6 +45,7 @@ export class AuthService {
             };
         } catch (error) {
             // Handle errors
+            console.log(error);
             return {
                 status: false,
                 access_token: '',
@@ -46,8 +53,12 @@ export class AuthService {
             };
         }
     }
-    async findUserByEmail(email: string): Promise<User> {
-        const user = await this.userRepository.findOneBy({ email: email });
+    async findUserByEmail(
+        email: string,
+        account: number,
+    ): Promise<User | EstateManager> {
+        const repo = account == 1 ? this.userRepository : this.estateRepo;
+        const user = await repo.findOneBy({ email: email });
         if (!user) {
             throw new NotFoundException('User not found');
         }

@@ -1,57 +1,93 @@
 import {
-  Controller,
-  Post,
-  Body,
-  UseInterceptors,
-  UploadedFile,
-  Get,
-  Param,
+    Controller,
+    Post,
+    Body,
+    UseInterceptors,
+    UploadedFile,
+    Get,
+    Request as RequestDecorator,
+    UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AccountsService } from './accounts.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserDto } from './dto/user.dto';
 import { PasswordDto } from './dto/password.dto';
-import {CreateEstateDto} from "./dto/create-estate.dto";
+import { CreateEstateDto } from './dto/create-estate.dto';
+import { AuthGuard } from '../auth/auth.guard';
+import { UpdateEstateManagerDto, UpdateUserDto } from './dto/update.dto';
+import { User } from '../entities/User';
 
 @Controller('account/')
-@UseInterceptors(FileInterceptor('photo'))
 export class AccountsController {
-  constructor(private readonly accountsService: AccountsService) {}
+    constructor(private readonly accountsService: AccountsService) {}
 
-  @Post('sign/up/i/')
-  async createIndividualAccount(
-    @UploadedFile() file: any,
-    @Body() createUserDto: CreateUserDto,
-  ) {
-    return this.accountsService.createIndividualAccount(createUserDto, file);
-  }
+    @Post('sign/up/i/')
+    @UseInterceptors(FileInterceptor('photo'))
+    async createIndividualAccount(
+        @UploadedFile() file: any,
+        @Body() createUserDto: CreateUserDto,
+    ) {
+        return this.accountsService.createIndividualAccount(
+            createUserDto,
+            file,
+        );
+    }
 
-  @Get('user/:email')
-  async getUser(@Param('email') email: string): Promise<UserDto | null> {
-    return this.accountsService.getUser(email);
-  }
+    @UseGuards(AuthGuard)
+    @Get('user/')
+    async getUser(@RequestDecorator() req: Request): Promise<UserDto | null> {
+        // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
+        const email = req.user.email;
+        // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
+        const type = req.user.type;
+        return this.accountsService.getUser(email, type);
+    }
 
-  @Post('update/user/')
-  async updateUser(
-    @Body() userDto: UserDto,
-  ): Promise<{ resp: string; status: boolean }> {
-    // todo set account type on login
-    return this.accountsService.updateUser(userDto);
-  }
+    @UseGuards(AuthGuard)
+    @Post('update/user/i/')
+    async updateUser(
+        @RequestDecorator() req: Request,
+        @Body() updateUserDto: UpdateUserDto,
+    ): Promise<{ resp: string; status: boolean }> {
+        // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
+        const email = req.user.email;
+        return this.accountsService.updateUser(email, updateUserDto);
+    }
 
-  @Post('change/password/')
-  async changePassword(
-    @Body() passwordDto: PasswordDto,
-  ): Promise<{ resp: string; status: boolean }> {
-    return this.accountsService.changePassword(passwordDto);
-  }
+    @UseGuards(AuthGuard)
+    @Post('update/user/e/')
+    async updateEstateManager(
+        @RequestDecorator() req: Request,
+        @Body() updateEstateManagerDto: UpdateEstateManagerDto,
+    ): Promise<{ resp: string; status: boolean }> {
+        // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
+        const email = req.user.email;
+        return this.accountsService.updateEstateManager(
+            email,
+            updateEstateManagerDto,
+        );
+    }
 
-  @Post('sign/up/e/')
-  async createEstateAccount(
-    @UploadedFile() file: any,
-    @Body() createEstateDto: CreateEstateDto,
-  ) {
-    return this.accountsService.createEstateAccount(createEstateDto, file);
-  }
+    @UseGuards(AuthGuard)
+    @Post('change/password/')
+    async changePassword(
+        @RequestDecorator() req: Request,
+        @Body() passwordDto: PasswordDto,
+    ): Promise<{ resp: string; status: boolean }> {
+        // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
+        const email = req.user.email;
+        // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
+        const type = req.user.type;
+        return this.accountsService.changePassword(email, type, passwordDto);
+    }
+
+    @UseInterceptors(FileInterceptor('photo'))
+    @Post('sign/up/e/')
+    async createEstateAccount(
+        @UploadedFile() file: any,
+        @Body() createEstateDto: CreateEstateDto,
+    ) {
+        return this.accountsService.createEstateAccount(createEstateDto, file);
+    }
 }

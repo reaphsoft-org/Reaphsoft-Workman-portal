@@ -12,6 +12,7 @@ import { PasswordDto } from './dto/password.dto';
 import { CreateEstateDto } from './dto/create-estate.dto';
 import { EstateManager } from '../entities/EstateManager';
 import { PasswordManager } from '../utilities/passwordmanager';
+import { UpdateEstateManagerDto, UpdateUserDto } from './dto/update.dto';
 
 @Injectable()
 export class AccountsService {
@@ -83,6 +84,7 @@ export class AccountsService {
         }
         return { status: true, resp: '' };
     }
+
     validateUser(createUserDto: CreateUserDto): {
         resp: string;
         status: boolean;
@@ -113,83 +115,99 @@ export class AccountsService {
         return { status: true, resp: '' };
     }
 
-    async getUser(email: string): Promise<UserDto | null> {
-        const user = await this.userRepository.findOne({ where: { email } });
-        if (!user) {
-            return null;
+    async getUser(email: string, type: 1 | 2): Promise<UserDto | null> {
+        if (type === 1) {
+            const user = await this.userRepository.findOne({
+                where: { email },
+            });
+            if (!user) {
+                return null;
+            }
+            const userDto = new UserDto();
+            userDto.apartment = user.apartment;
+            userDto.accountType = User.accountType;
+            userDto.address = user.address;
+            userDto.email = user.email;
+            userDto.fullname = user.fullname;
+            userDto.photoURL = user.photoURL;
+            userDto.serviceType = user.serviceType;
+            return userDto;
+        } else {
+            // todo implement for an estate manager
         }
-        const userDto = new UserDto();
-        userDto.apartment = user.apartment;
-        userDto.accountType = User.accountType;
-        userDto.address = user.address;
-        userDto.email = user.email;
-        userDto.fullname = user.fullname;
-        userDto.photoURL = user.photoURL;
-        userDto.serviceType = user.serviceType;
-        return userDto;
+        return null;
     }
 
-    async updateUser(userDto: UserDto): Promise<{
+    async updateUser(
+        email: string,
+        updateUserDto: UpdateUserDto,
+    ): Promise<{
         resp: string;
         status: boolean;
     }> {
-        const check = this.validateUserUpdateDto(userDto);
+        const check = this.validateUserUpdateDto(updateUserDto);
         if (!check.status) {
             return check;
         }
         const user = await this.userRepository.findOneBy({
-            email: userDto.email,
+            email: email,
         });
         if (!user) {
             return {
-                resp: `No user was found with the email ${userDto.email}`,
+                resp: `No user was found with the email ${email}`,
                 status: false,
             };
         }
-        user.apartment = userDto.apartment;
-        user.address = userDto.address;
-        user.fullname = userDto.fullname;
-        user.serviceType = userDto.serviceType;
+        user.apartment = updateUserDto.apartment;
+        user.address = updateUserDto.address;
+        user.fullname = this.toTitleCase(updateUserDto.fullname);
+        user.serviceType = updateUserDto.serviceType;
         await this.userRepository.save(user);
         return { resp: '', status: true };
     }
 
-    validateUserUpdateDto(userDto: UserDto): {
-        resp: string;
-        status: boolean;
-    } {
-        if (userDto.email === undefined || userDto.email === '') {
-            return { status: false, resp: 'Invalid email address' };
-        }
-        if (userDto.fullname === undefined || userDto.fullname === '') {
-            return { status: false, resp: 'Invalid Fullname' };
-        }
-        if (userDto.apartment === undefined || userDto.apartment === '') {
-            return { status: false, resp: 'Invalid apartment number' };
-        }
-        if (userDto.address === undefined || userDto.address === '') {
+    generalUpdateValidation(dto: UpdateEstateManagerDto | UpdateUserDto) {
+        if (dto.address === undefined || dto.address === '') {
             return { status: false, resp: 'Invalid address' };
         }
+        if (dto.fullname === undefined || dto.fullname === '') {
+            return { status: false, resp: 'Invalid Fullname' };
+        }
         if (
-            userDto.serviceType === undefined ||
-            userDto.serviceType < 1 ||
-            userDto.serviceType > 2
+            dto.serviceType === undefined ||
+            dto.serviceType < 1 ||
+            dto.serviceType > 2
         ) {
             return { status: false, resp: 'Invalid service type' };
         }
         return { status: true, resp: '' };
     }
-
-    async changePassword(passwordDto: PasswordDto) {
-        if (passwordDto.email === undefined || passwordDto.email === '') {
-            return { status: false, resp: 'Invalid email address' };
+    validateUserUpdateDto(userDto: UpdateUserDto): {
+        resp: string;
+        status: boolean;
+    } {
+        const check = this.generalUpdateValidation(userDto);
+        if (!check.status) return check;
+        if (userDto.apartment === undefined || userDto.apartment === '') {
+            return { status: false, resp: 'Invalid apartment number' };
         }
-        const user = await this.userRepository.findOneBy({
-            email: passwordDto.email,
-        });
+        return { status: true, resp: '' };
+    }
+
+    async changePassword(email: string, type: 1 | 2, passwordDto: PasswordDto) {
+        let user: User | EstateManager | null;
+        if (type == 1) {
+            user = await this.userRepository.findOneBy({
+                email: email,
+            });
+        } else {
+            user = await this.estateRepository.findOneBy({
+                email: email,
+            });
+        }
         if (!user) {
             return {
-                resp: `No user was found with the email ${passwordDto.email}`,
+                resp: `No user was found with the email ${email}`,
                 status: false,
             };
         }
@@ -219,9 +237,11 @@ export class AccountsService {
         }
         this.setPassword(user, passwordDto.new_password);
         user.password = passwordDto.new_password;
-        await this.userRepository.save(user);
+        if (type == User.accountType) await this.userRepository.save(user);
+        else await this.estateRepository.save(user);
         return { resp: '', status: true };
     }
+
     async createEstateAccount(createEstateDto: CreateEstateDto, file: any) {
         return this.createAccount(
             createEstateDto,
@@ -316,5 +336,37 @@ export class AccountsService {
 
     setPassword(obj: User | EstateManager, password: string) {
         obj.password = this.passwordManager.getHashedKey(password);
+    }
+
+    async updateEstateManager(
+        email: string,
+        updateEstateManagerDto: UpdateEstateManagerDto,
+    ) {
+        const check = this.validateEstateUpdateDto(updateEstateManagerDto);
+        if (!check.status) return check;
+        const user = await this.estateRepository.findOneBy({
+            email: email,
+        });
+        if (!user) {
+            return {
+                resp: `No estate manager was found with the email ${email}`,
+                status: false,
+            };
+        }
+        user.estate = updateEstateManagerDto.estate;
+        user.address = updateEstateManagerDto.address;
+        user.fullname = this.toTitleCase(updateEstateManagerDto.fullname);
+        user.serviceType = updateEstateManagerDto.serviceType;
+        await this.estateRepository.save(user);
+        return { resp: '', status: true };
+    }
+
+    private validateEstateUpdateDto(dto: UpdateEstateManagerDto) {
+        const check = this.generalUpdateValidation(dto);
+        if (!check.status) return check;
+        if (dto.estate === undefined || dto.estate === '') {
+            return { status: false, resp: 'Invalid apartment number' };
+        }
+        return { status: true, resp: '' };
     }
 }

@@ -7,9 +7,23 @@ import { Email } from '../utilities/mailman';
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
     @Post('login')
-    async login(@Body() loginDto: LoginDto): Promise<{ status: boolean }> {
-        const { email, password } = loginDto;
-        return this.authService.validateUser(email, password);
+    async login(
+        @Body() loginDto: LoginDto,
+    ): Promise<{ access_token: string; resp: string; status: boolean }> {
+        const { email, password, account } = loginDto;
+        if (email == undefined || password == undefined)
+            return {
+                status: false,
+                access_token: '',
+                resp: 'invalid request',
+            };
+        if (account == undefined || account < 1 || account > 2)
+            return {
+                status: false,
+                access_token: '',
+                resp: 'invalid account type',
+            };
+        return this.authService.validateUser(email, password, account);
     }
     @Get('email/test/')
     async email(): Promise<{ status: string }> {

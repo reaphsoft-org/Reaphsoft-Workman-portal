@@ -7,6 +7,9 @@ import * as path from 'path';
 import { AppDataSource } from '../src/data-source';
 import { User } from '../src/entities/User';
 import { EstateManager } from '../src/entities/EstateManager';
+import { PasswordManager } from '../src/utilities/passwordmanager';
+
+const passwordManager = new PasswordManager();
 
 describe('AppController (e2e)', () => {
     let app: INestApplication;
@@ -32,24 +35,16 @@ describe('Accounts Individual User Tests', () => {
     let app: INestApplication;
     let classBasedUser: User;
     const api = '/account/sign/up/i/';
+    const updateAPI = '/account/update/user/i/';
+    const password = '1234';
 
     beforeAll(async () => {
-        const moduleRef = await Test.createTestingModule({
-            imports: [AppModule],
-        }).compile();
+        app = await initializeTesting(app);
 
-        app = moduleRef.createNestApplication();
-        await app.init();
-
-        if (!AppDataSource.isInitialized) {
-            await AppDataSource.initialize().catch((e) => {
-                console.log(e);
-            });
-        }
         const repo = AppDataSource.getRepository(User);
         classBasedUser = new User();
         classBasedUser.email = 'classBasedUser@reaphsoft-test.com';
-        classBasedUser.password = '1234';
+        classBasedUser.password = passwordManager.getHashedKey(password);
         classBasedUser.fullname = 'Full Initial Name';
         classBasedUser.apartment = '16C';
         classBasedUser.address = '39 Ok Street';
@@ -98,6 +93,7 @@ describe('Accounts Individual User Tests', () => {
                 const repo = AppDataSource.getRepository(User);
                 const user = await repo.findOne({ where: { email } });
                 expect(user !== null);
+                expect(user?.password !== 'password');
                 expect(
                     user?.photoURL ===
                         path.join('media/u', 'test1reaphsoft-com.png'),
@@ -117,15 +113,16 @@ describe('Accounts Individual User Tests', () => {
             .field('fullname', 'reaph soft')
             .field('apartment', '15B')
             .field('address', 'NA')
-            .field('serviceType', '0')
+            .field('serviceType', '1')
             .expect(201)
-            .then(async () => {
+            .then(async (resp) => {
+                expect(resp.body.status);
                 const repo = AppDataSource.getRepository(User);
                 const user = await repo.findOne({ where: { email } });
                 expect(user !== null);
-                expect(user?.fullname == 'reaph soft');
+                expect(user?.fullname == 'Reaph Soft');
             });
-    });
+    }, 10000);
 
     it('test email', async () => {
         const email: string = 'felixsigit@gmail.com';
@@ -152,11 +149,11 @@ describe('Accounts Individual User Tests', () => {
         const repo = AppDataSource.getRepository(User);
         const user0 = new User();
         user0.email = email;
-        user0.password = '1234';
+        user0.password = password;
         user0.fullname = 'Full Name';
         user0.apartment = '15B';
         user0.address = '39 Ok Street';
-        user0.serviceType = 0;
+        user0.serviceType = 1;
         user0.photoURL = '';
         await repo.save(user0);
         const users = await repo.count();
@@ -181,28 +178,24 @@ describe('Accounts Individual User Tests', () => {
     });
 
     it('test empty post data', async () => {
-        return request(app.getHttpServer())
-            .post(api)
-            .expect(201)
-            .then((resp) => {
-                const data = resp.body;
-                expect(data.status).toBe(false);
-                expect(data.resp).toBe(
-                    'You did not post any registration data',
-                );
-            });
+        return emptyPostDataTest(app, api);
     });
 
     it('test partial post data', async () => {
+        return partialPostDataTest(app, api);
+    });
+
+    it('login required to update user', () => {
+        const data = {
+            fullname: classBasedUser.fullname,
+            apartment: classBasedUser.apartment,
+            address: classBasedUser.address,
+            serviceType: classBasedUser.serviceType,
+        };
         return request(app.getHttpServer())
-            .post(api)
-            .field('email', 'partialemail@reaphsoft.com')
-            .expect(201)
-            .then((resp) => {
-                const data = resp.body;
-                expect(data.status).toBe(false);
-                expect(data.resp.includes('Invalid'));
-            });
+            .post(updateAPI)
+            .send(data)
+            .expect(401);
     });
 
     it('should update user', async () => {
@@ -210,7 +203,7 @@ describe('Accounts Individual User Tests', () => {
         const repo = AppDataSource.getRepository(User);
         const user0 = new User();
         user0.email = email;
-        user0.password = '1234';
+        user0.password = passwordManager.getHashedKey(password);
         user0.fullname = 'Full Initial Name';
         user0.apartment = '16C';
         user0.address = '39 Ok Street';
@@ -220,13 +213,18 @@ describe('Accounts Individual User Tests', () => {
         const users = await repo.count();
         expect(users > 0);
         const address = '606 Hilltop Avenue, Jos, Plateau State';
+        const token = await login(user0, password, app, User.accountType);
+        const data = {
+            email: user0.email,
+            fullname: user0.fullname,
+            apartment: user0.apartment,
+            address: address,
+            serviceType: user0.serviceType,
+        };
         return request(app.getHttpServer())
-            .post('/account/update/user/')
-            .field('email', user0.email)
-            .field('fullname', user0.fullname)
-            .field('apartment', user0.apartment)
-            .field('address', address)
-            .field('serviceType', user0.serviceType)
+            .post(updateAPI)
+            .auth(token, { type: 'bearer' })
+            .send(data)
             .expect(201)
             .then(async (response) => {
                 const data = response.body;
@@ -244,14 +242,27 @@ describe('Accounts Individual User Tests', () => {
             });
     });
 
+    const changePasswordAPI = '/account/change/password/';
+    it('login required for changing password', () => {
+        return request(app.getHttpServer()).post(changePasswordAPI).expect(401);
+    });
+
     it('should change password', async () => {
         const newPassword = '606060';
         const repo = AppDataSource.getRepository(User);
+        const token = await login(
+            classBasedUser,
+            password,
+            app,
+            User.accountType,
+        );
         return request(app.getHttpServer())
-            .post('/account/change/password/')
-            .field('email', classBasedUser.email)
-            .field('new_password', newPassword)
-            .field('old_password', classBasedUser.password)
+            .post(changePasswordAPI)
+            .auth(token, { type: 'bearer' })
+            .send({
+                new_password: newPassword,
+                old_password: password,
+            })
             .expect(201)
             .then(async (resp) => {
                 const data = resp.body;
@@ -262,46 +273,99 @@ describe('Accounts Individual User Tests', () => {
                 });
                 expect(user1!.id == classBasedUser.id);
                 expect(user1!.password != classBasedUser.password);
-                expect(user1!.password == newPassword);
+                expect(user1!.password != newPassword);
+                expect(
+                    passwordManager.comparePassword(
+                        newPassword,
+                        user1!.password,
+                    ),
+                );
             });
     });
-
-    // todo confirm in tests that password when creating and updating accounts aren't stored in plaintext
 
     afterAll(async () => {
         await app.close();
     });
 });
 
+async function initializeTesting(app: INestApplication<any>) {
+    const moduleRef = await Test.createTestingModule({
+        imports: [AppModule],
+    }).compile();
+
+    app = moduleRef.createNestApplication();
+    await app.init();
+
+    if (!AppDataSource.isInitialized) {
+        await AppDataSource.initialize().catch((e) => {
+            console.log(e);
+        });
+    }
+    return app;
+}
+
+function emptyPostDataTest(app: INestApplication<any>, api: string) {
+    return request(app.getHttpServer())
+        .post(api)
+        .expect(201)
+        .then((resp) => {
+            const data = resp.body;
+            expect(data.status).toBe(false);
+            expect(data.resp).toBe('You did not post any registration data');
+        });
+}
+
+function partialPostDataTest(app: INestApplication<any>, api: string) {
+    return request(app.getHttpServer())
+        .post(api)
+        .field('email', 'partialemail@reaphsoft.com')
+        .expect(201)
+        .then((resp) => {
+            const data = resp.body;
+            expect(data.status).toBe(false);
+            expect(data.resp.includes('Invalid'));
+        });
+}
+
+async function login(
+    user: User | EstateManager,
+    password: string,
+    app: INestApplication,
+    account: number,
+) {
+    let token: string = '';
+    await request(app.getHttpServer())
+        .post('/auth/login/')
+        .send({ email: user.email, password: password, account: account })
+        .expect(201)
+        .then((resp) => {
+            const data = resp.body;
+            expect(data.status).toBe(true);
+            expect(data.access_token).toBeTruthy();
+            token = data.access_token;
+        });
+    return token;
+}
+
 describe('Accounts Estate Manager Tests', () => {
     let app: INestApplication;
-    let classBasedUser: EstateManager;
+    let estateManager: EstateManager;
+    const password = '12345';
     const api = '/account/sign/up/e/';
+    const repo = AppDataSource.getRepository(EstateManager);
 
     beforeAll(async () => {
-        const moduleRef = await Test.createTestingModule({
-            imports: [AppModule],
-        }).compile();
-
-        app = moduleRef.createNestApplication();
-        await app.init();
-
-        if (!AppDataSource.isInitialized) {
-            await AppDataSource.initialize().catch((e) => {
-                console.log(e);
-            });
-        }
-        const repo = AppDataSource.getRepository(EstateManager);
-        classBasedUser = new EstateManager();
-        classBasedUser.email = 'classBasedEstateManager@reaphsoft-test.com';
-        classBasedUser.password = '12345';
-        classBasedUser.fullname = 'Full Name';
-        classBasedUser.estate = 'North Pole Estate';
-        classBasedUser.address =
+        app = await initializeTesting(app);
+        estateManager = new EstateManager();
+        estateManager.email = 'classUser@reaphsoft-test.com';
+        estateManager.password = passwordManager.getHashedKey(password);
+        estateManager.fullname = 'Estate Manager';
+        estateManager.estate = 'North Pole Estate';
+        estateManager.address =
             '50 Kahlflekzy Street, Jos North, Plateau State, Nigeria.';
-        classBasedUser.serviceType = 1;
-        classBasedUser.photoURL = '';
-        classBasedUser = await repo.save(classBasedUser);
+        estateManager.serviceType = 1;
+        estateManager.photoURL = '';
+        estateManager = await repo.save(estateManager);
     });
 
     it('no image', async () => {
@@ -331,7 +395,7 @@ describe('Accounts Estate Manager Tests', () => {
             .field('email', email)
             .field('password', 'password')
             .field('fullname', 'Reaph Soft')
-            .field('apartment', '15B')
+            .field('estate', 'Fly High Estate')
             .field('address', 'NA')
             .field('serviceType', '1')
             .expect(201)
@@ -341,7 +405,6 @@ describe('Accounts Estate Manager Tests', () => {
                 expect(data.resp).toBe('Account created successfully');
                 const imgPath = path.join(MEDIA_DIR, 'test1reaphsoft-com.png');
                 expect(fs.existsSync(imgPath)).toBe(true);
-                const repo = AppDataSource.getRepository(User);
                 const user = await repo.findOne({ where: { email } });
                 expect(user !== null);
                 expect(
@@ -349,11 +412,12 @@ describe('Accounts Estate Manager Tests', () => {
                         path.join('media/u', 'test1reaphsoft-com.png'),
                 );
                 fs.rmSync(imgPath);
+                expect(user?.password !== 'password'); // should be hashed
                 expect(fs.existsSync(imgPath)).toBe(false);
             });
     }, 10000);
 
-    it('lowercase name', async () => {
+    it('lowercase name should be upper', async () => {
         const email: string = 'test1@reaphsoft.com';
         return request(app.getHttpServer())
             .post(api) // replace with your actual endpoint
@@ -361,17 +425,17 @@ describe('Accounts Estate Manager Tests', () => {
             .field('email', email)
             .field('password', 'password')
             .field('fullname', 'reaph soft')
-            .field('apartment', '15B')
+            .field('estate', 'naf estate')
             .field('address', 'NA')
-            .field('serviceType', '0')
+            .field('serviceType', 2)
             .expect(201)
-            .then(async () => {
-                const repo = AppDataSource.getRepository(User);
-                const user = await repo.findOne({ where: { email } });
+            .then(async (resp) => {
+                expect(resp.body.status);
+                const user = await repo.findOneBy({ email: email });
                 expect(user !== null);
-                expect(user?.fullname == 'reaph soft');
+                expect(user?.fullname === 'Reaph Soft');
             });
-    });
+    }, 10000);
 
     it('test email', async () => {
         const email: string = 'felixsigit@gmail.com';
@@ -381,13 +445,12 @@ describe('Accounts Estate Manager Tests', () => {
             .field('email', email)
             .field('password', 'password')
             .field('fullname', 'dalang felix sihitshuwam')
-            .field('apartment', '15B')
+            .field('estate', 'Flower Estate')
             .field('address', 'NA')
-            .field('serviceType', '0')
+            .field('serviceType', '1')
             .expect(201)
             .then(async () => {
-                const repo = AppDataSource.getRepository(User);
-                const user = await repo.findOne({ where: { email } });
+                const user = await repo.findOneBy({ email: email });
                 expect(user !== null);
                 expect(user?.fullname == 'Dalang Felix Sihitshuwam');
             });
@@ -395,14 +458,13 @@ describe('Accounts Estate Manager Tests', () => {
 
     it('test duplicate email', async () => {
         const email: string = 'testemailexists@reaphsoft-workmen.org';
-        const repo = AppDataSource.getRepository(User);
-        const user0 = new User();
+        const user0 = new EstateManager();
         user0.email = email;
         user0.password = '1234';
-        user0.fullname = 'Full Name';
-        user0.apartment = '15B';
+        user0.fullname = 'Estate Manager';
+        user0.estate = 'PureView Estate';
         user0.address = '39 Ok Street';
-        user0.serviceType = 0;
+        user0.serviceType = 2;
         user0.photoURL = '';
         await repo.save(user0);
         const users = await repo.count();
@@ -412,9 +474,9 @@ describe('Accounts Estate Manager Tests', () => {
             .set('Content-Type', 'multipart/form-data')
             .field('email', email)
             .field('password', 'password')
-            .field('fullname', 'dalang felix sihitshuwam')
-            .field('apartment', '15B')
-            .field('address', 'NA')
+            .field('fullname', 'felix sihitshuwam')
+            .field('estate', 'PureView Estate')
+            .field('address', '42, NAF')
             .field('serviceType', '2')
             .expect(201)
             .then((resp) => {
@@ -427,88 +489,83 @@ describe('Accounts Estate Manager Tests', () => {
     });
 
     it('test empty post data', async () => {
-        return request(app.getHttpServer())
-            .post(api)
-            .expect(201)
-            .then((resp) => {
-                const data = resp.body;
-                expect(data.status).toBe(false);
-                expect(data.resp).toBe(
-                    'You did not post any registration data',
-                );
-            });
+        return emptyPostDataTest(app, api);
     });
 
     it('test partial post data', async () => {
-        return request(app.getHttpServer())
-            .post(api)
-            .field('email', 'partialemail@reaphsoft.com')
-            .expect(201)
-            .then((resp) => {
-                const data = resp.body;
-                expect(data.status).toBe(false);
-                expect(data.resp.includes('Invalid'));
-            });
+        return partialPostDataTest(app, api);
     });
 
     it('should update user', async () => {
-        const email: string = 'update.user@reaphsoft-workmen.org';
-        const repo = AppDataSource.getRepository(User);
-        const user0 = new User();
-        user0.email = email;
-        user0.password = '1234';
-        user0.fullname = 'Full Initial Name';
-        user0.apartment = '16C';
-        user0.address = '39 Ok Street';
-        user0.serviceType = 1;
-        user0.photoURL = '';
-        await repo.save(user0);
         const users = await repo.count();
         expect(users > 0);
+        const token = await login(
+            estateManager,
+            password,
+            app,
+            EstateManager.accountType,
+        );
         const address = '606 Hilltop Avenue, Jos, Plateau State';
+        const data = {
+            fullname: estateManager.fullname,
+            estate: `${estateManager.estate} 2`,
+            address: address,
+            serviceType: estateManager.serviceType,
+        };
         return request(app.getHttpServer())
-            .post('/account/update/user/')
-            .field('email', user0.email)
-            .field('fullname', user0.fullname)
-            .field('apartment', user0.apartment)
-            .field('address', address)
-            .field('serviceType', user0.serviceType)
+            .post('/account/update/user/e/')
+            .auth(token, { type: 'bearer' })
+            .send(data)
             .expect(201)
             .then(async (response) => {
                 const data = response.body;
                 expect(data.status);
                 expect(data.resp).toBe('');
-                const user1 = await repo.findOneBy({ email: user0.email });
-                expect(user1!.id == user0.id);
-                expect(user0.address != address);
+                const user1 = await repo.findOneBy({
+                    email: estateManager.email,
+                });
+                expect(user1!.id == estateManager.id);
+                expect(estateManager.address != address);
+                expect(user1!.estate == `${estateManager.estate} 2`);
                 // only change
                 expect(user1!.address == address);
-                expect(user1!.email == user0.email);
-                expect(user1!.fullname == user0.fullname);
-                expect(user1!.apartment == user0.apartment);
-                expect(user1!.serviceType == user0.serviceType);
+                expect(user1!.email == estateManager.email);
+                expect(user1!.fullname == estateManager.fullname);
+                expect(user1!.serviceType == estateManager.serviceType);
             });
     });
 
     it('should change password', async () => {
         const newPassword = '606060';
-        const repo = AppDataSource.getRepository(User);
+        const token = await login(
+            estateManager,
+            password,
+            app,
+            EstateManager.accountType,
+        );
         return request(app.getHttpServer())
             .post('/account/change/password/')
-            .field('email', classBasedUser.email)
-            .field('new_password', newPassword)
-            .field('old_password', classBasedUser.password)
+            .auth(token, { type: 'bearer' })
+            .send({
+                new_password: newPassword,
+                old_password: password,
+            })
             .expect(201)
             .then(async (resp) => {
                 const data = resp.body;
                 expect(data.status);
                 expect(data.resp).toBe('');
                 const user1 = await repo.findOneBy({
-                    email: classBasedUser.email,
+                    email: estateManager.email,
                 });
-                expect(user1!.id == classBasedUser.id);
-                expect(user1!.password != classBasedUser.password);
-                expect(user1!.password == newPassword);
+                expect(user1!.id == estateManager.id);
+                expect(user1!.password != estateManager.password);
+                expect(
+                    passwordManager.comparePassword(
+                        newPassword,
+                        user1!.password,
+                    ),
+                );
             });
     });
 

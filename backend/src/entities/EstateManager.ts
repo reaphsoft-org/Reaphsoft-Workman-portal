@@ -5,11 +5,11 @@ import { House } from './House';
 
 @Entity()
 export class EstateManager extends NonStaff {
-  static accountType: number = 2;
+    static accountType: number = 2;
 
-  @Column({ type: 'varchar', length: 40 })
-  estate: string;
+    @Column({ type: 'varchar', length: 40 })
+    estate: string;
 
-  @OneToMany(() => House, (house) => house.manager)
-  houses: Relation<House>[];
+    @OneToMany(() => House, (house) => house.manager)
+    houses: Relation<House>[];
 }
