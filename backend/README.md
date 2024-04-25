@@ -56,7 +56,7 @@ npx typeorm-ts-node-commonjs migration:create src\migrations\migration
 npx typeorm-ts-node-commonjs migration:generate src\migrations\migration -d src/data-source.ts -p true 
 ```
 
-### Creating controllers and services
+## Creating controllers and services
 ```
 nest generate controller users
 ```
@@ -68,7 +68,7 @@ nest generate service users
 2. Define a DTO name the file `user.dto.ts` for example. See samples.
 3. Implement endpoint in `user.controller.ts`.
 
-### Saving Images
+## Saving Images
 Install Multer Types, and see sample codes.
 ```
 npm install --save-dev @types/multer
@@ -79,7 +79,7 @@ Add test cases in `app.e2e-spec.ts` and run the command below from the CMD (back
 npm run test:e2e
 ```
 
-### Testing
+## Testing
 ```
 npm install --save-dev @nestjs/testing jest @types/jest ts-jest
 npm install --save-dev supertest @types/supertest
@@ -88,12 +88,12 @@ Install `cross-env` for setting environment variables
 ```
 npm install --save-dev cross-env
 ```
-#### References
+### References
 1. [Jest](https://jestjs.io/)
 2. [Super Test](https://github.com/ladjs/supertest)
 3. [Super Agent](https://ladjs.github.io/superagent/#test-documentation)
 
-### Create PDFs
+## Create PDFs
 [Details](https://github.com/chaitanyamogal/pdf-master)
 Install package
 ```
@@ -106,18 +106,31 @@ See also
 
 Added a `pdf-master.d.ts`, remember to remove it when uninstalling `pdf-master`.
 
-### [Mail Gun](https://www.npmjs.com/package/mailgun.js)
+## [Mail Gun](https://www.npmjs.com/package/mailgun.js)
 ```
 npm install mailgun.js
 ```
 Set the environment variable
 `MAILGUN_USERNAME` to your mailgun username and `MAILGUN_USERNAME` to the API key if you want to send live emails.
 
-### [Serve Static](https://docs.nestjs.com/recipes/serve-static)
+## [Serve Static](https://docs.nestjs.com/recipes/serve-static)
 ```
 npm install --save @nestjs/serve-static
 ```
 [StackTip for junior devs](https://stackoverflow.com/questions/77173918/how-to-serve-static-files-on-nestjs), read the docs above preferably.
+
+## Password Hashing
+### References
+1. [Encryption and Hashing](https://docs.nestjs.com/security/encryption-and-hashing)
+2. [Stackoverflow bcrypt alternatives](https://stackoverflow.com/a/28572710)
+3. [Reddit Hashing Algorithms](https://www.reddit.com/r/node/comments/17m8b4p/best_node_hashing_algorithm_option/)
+4. [Node:Crypto Scrypt](https://nodejs.org/api/crypto.html#cryptoscryptpassword-salt-keylen-options-callback)
+
+## [NestJS Authentication](https://docs.nestjs.com/security/authentication)
+Install `jwt`
+```
+npm install --save @nestjs/jwt
+```
 
 # NestJS
 
