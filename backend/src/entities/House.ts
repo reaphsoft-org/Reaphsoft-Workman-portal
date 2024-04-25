@@ -14,7 +14,7 @@ import { EstateManager } from './EstateManager';
 @Entity()
 export class House {
     @PrimaryGeneratedColumn('uuid')
-    id: number;
+    id: string;
 
     @Column({ type: 'varchar' })
     number: string;
