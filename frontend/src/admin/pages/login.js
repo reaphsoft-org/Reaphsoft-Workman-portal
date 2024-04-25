@@ -22,13 +22,11 @@ const AdminLogin = () => {
                                 <div className="input-group mb-3">
                                     <input type="text" className="form-control" placeholder="Admin Password"/>
                                         <div className="input-group-append">
-                                        <span className="input-group-text">
-                                            <Link to="/index/" className="forgot" title="Forgot Password">
-                                                <i className="zmdi zmdi-lock"></i></Link></span>
+                                        
                                         </div>
                                 </div>
                                 
-                                <Link to="" className="btn btn-primary btn-block waves-effect waves-light">SIGN IN</Link>
+                                <Link to="/dashboard" className="btn btn-primary btn-block waves-effect waves-light">SIGN IN</Link>
                             </div>
                         </form>
                     </div>
