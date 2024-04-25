@@ -72,4 +72,19 @@ export class EstateController {
             return { status: false, resp: 'invalid request' };
         return this.estateService.deleteHouse(email, id);
     }
+
+    @UseGuards(AuthGuard)
+    @Get('houses/:page/')
+    async getHouses(
+        @RequestDecorator() req: Request,
+        @Param('page') page: number,
+    ) {
+        // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
+        const email = req.user.email;
+        // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
+        const type = req.user.type;
+        if (type != EstateManager.accountType)
+            return { status: false, resp: 'invalid request' };
+        return this.estateService.getHouses(email, page);
+    }
 }

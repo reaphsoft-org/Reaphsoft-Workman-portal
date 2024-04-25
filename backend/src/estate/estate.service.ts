@@ -64,4 +64,9 @@ export class EstateService {
         await this.houseRepo.remove(house);
         return { status: true, resp: '' };
     }
+
+    // return paginated houses, 50 in each page, sorted by name
+    getHouses(email: string, page: number) {
+        return Promise.resolve(undefined);
+    }
 }
