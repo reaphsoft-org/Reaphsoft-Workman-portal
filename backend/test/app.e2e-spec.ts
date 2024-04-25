@@ -280,6 +280,32 @@ describe('Accounts Individual User Tests', () => {
                         user1!.password,
                     ),
                 );
+                // reset to default password for the sake of other tests
+                classBasedUser.password =
+                    passwordManager.getHashedKey(password);
+                await repo.save(classBasedUser);
+            });
+    });
+
+    it('get user (auth required)', () => {
+        return request(app.getHttpServer()).get('/account/user/').expect(401);
+    });
+
+    it('get user (auth)', async () => {
+        const token = await login(
+            classBasedUser,
+            password,
+            app,
+            User.accountType,
+        );
+        return request(app.getHttpServer())
+            .get('/account/user/')
+            .auth(token, { type: 'bearer' })
+            .expect(200)
+            .then((resp) => {
+                expect(resp.body).toBeTruthy();
+                expect(resp.body.accountType).toBe(User.accountType);
+                expect(resp.body.email).toBe(classBasedUser.email);
             });
     });
 
@@ -304,27 +330,21 @@ async function initializeTesting(app: INestApplication<any>) {
     return app;
 }
 
-function emptyPostDataTest(app: INestApplication<any>, api: string) {
-    return request(app.getHttpServer())
-        .post(api)
-        .expect(201)
-        .then((resp) => {
-            const data = resp.body;
-            expect(data.status).toBe(false);
-            expect(data.resp).toBe('You did not post any registration data');
-        });
+async function emptyPostDataTest(app: INestApplication<any>, api: string) {
+    const resp = await request(app.getHttpServer()).post(api).expect(201);
+    const data = resp.body;
+    expect(data.status).toBe(false);
+    expect(data.resp).toBe('You did not post any registration data');
 }
 
-function partialPostDataTest(app: INestApplication<any>, api: string) {
-    return request(app.getHttpServer())
+async function partialPostDataTest(app: INestApplication<any>, api: string) {
+    const resp = await request(app.getHttpServer())
         .post(api)
         .field('email', 'partialemail@reaphsoft.com')
-        .expect(201)
-        .then((resp) => {
-            const data = resp.body;
-            expect(data.status).toBe(false);
-            expect(data.resp.includes('Invalid'));
-        });
+        .expect(201);
+    const data = resp.body;
+    expect(data.status).toBe(false);
+    expect(data.resp.includes('Invalid'));
 }
 
 async function login(
@@ -566,6 +586,27 @@ describe('Accounts Estate Manager Tests', () => {
                         user1!.password,
                     ),
                 );
+                // reset to default password for the sake of other tests
+                estateManager.password = passwordManager.getHashedKey(password);
+                await repo.save(estateManager);
+            });
+    });
+
+    it('get user (auth)', async () => {
+        const token = await login(
+            estateManager,
+            password,
+            app,
+            EstateManager.accountType,
+        );
+        return request(app.getHttpServer())
+            .get('/account/user/')
+            .auth(token, { type: 'bearer' })
+            .expect(200)
+            .then((resp) => {
+                expect(resp.body).toBeTruthy();
+                expect(resp.body.accountType).toBe(EstateManager.accountType);
+                expect(resp.body.email).toBe(estateManager.email);
             });
     });
 

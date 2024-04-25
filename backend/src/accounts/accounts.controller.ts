@@ -16,7 +16,7 @@ import { PasswordDto } from './dto/password.dto';
 import { CreateEstateDto } from './dto/create-estate.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { UpdateEstateManagerDto, UpdateUserDto } from './dto/update.dto';
-import { User } from '../entities/User';
+import { EstateDto } from './dto/estate.dto';
 
 @Controller('account/')
 export class AccountsController {
@@ -36,7 +36,9 @@ export class AccountsController {
 
     @UseGuards(AuthGuard)
     @Get('user/')
-    async getUser(@RequestDecorator() req: Request): Promise<UserDto | null> {
+    async getUser(
+        @RequestDecorator() req: Request,
+    ): Promise<UserDto | EstateDto | null> {
         // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
         const email = req.user.email;
         // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.

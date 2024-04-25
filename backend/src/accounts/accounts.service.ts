@@ -13,6 +13,7 @@ import { CreateEstateDto } from './dto/create-estate.dto';
 import { EstateManager } from '../entities/EstateManager';
 import { PasswordManager } from '../utilities/passwordmanager';
 import { UpdateEstateManagerDto, UpdateUserDto } from './dto/update.dto';
+import { EstateDto } from './dto/estate.dto';
 
 @Injectable()
 export class AccountsService {
@@ -115,7 +116,10 @@ export class AccountsService {
         return { status: true, resp: '' };
     }
 
-    async getUser(email: string, type: 1 | 2): Promise<UserDto | null> {
+    async getUser(
+        email: string,
+        type: 1 | 2,
+    ): Promise<UserDto | EstateDto | null> {
         if (type === 1) {
             const user = await this.userRepository.findOne({
                 where: { email },
@@ -133,9 +137,22 @@ export class AccountsService {
             userDto.serviceType = user.serviceType;
             return userDto;
         } else {
-            // todo implement for an estate manager
+            const user = await this.estateRepository.findOne({
+                where: { email },
+            });
+            if (!user) {
+                return null;
+            }
+            const userDto = new EstateDto();
+            userDto.estate = user.estate;
+            userDto.accountType = EstateManager.accountType;
+            userDto.address = user.address;
+            userDto.email = user.email;
+            userDto.fullname = user.fullname;
+            userDto.photoURL = user.photoURL;
+            userDto.serviceType = user.serviceType;
+            return userDto;
         }
-        return null;
     }
 
     async updateUser(
