@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Dashboard = ({user}) => {
     return ( 
-        <div className="col-xl-12 col-lg-12 m-b30 browse-job">
+        <div className="col-xl-9 col-lg-8 m-b30">
             <div id="key_skills_bx" className="job-bx bg-white m-b30">
                 <div className="d-flex">
                     <h5 className="m-b15">Key Services</h5>
@@ -14,8 +15,10 @@ const Dashboard = ({user}) => {
             <div id="personal_details_bx" className="job-bx bg-white m-b30">
                 
                 <div className="d-flex">
-                    <h5 className="m-b30">Personal Details</h5><a className="site-button add-btn button-sm"
-                        href="/react/demo/jobs-my-resume"><i className="fa fa-pencil m-r5"></i> Edit</a>
+                    <h5 className="m-b30">Personal Details</h5>
+                    <Link className="site-button add-btn button-sm text-decoration-none"
+                        to="/user/update/"><i className="fa fa-pencil m-r5"></i> lorem30
+                        Edit Account</Link>
                 </div>
                 <div className="row">
                     <div className="col-lg-9 col-md-9 col-sm-9">
@@ -26,6 +29,47 @@ const Dashboard = ({user}) => {
                     </div>
                     
                 </div>
+            </div>
+            <div className="job-bx table-job-bx browse-job clearfix">
+                <div className="job-bx-title clearfix">
+                    <h5 className="font-weight-700 pull-left text-uppercase">Recent Request</h5>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Skills</th>
+                            <th>Comment</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td className="job-name"><a href="">Electrician</a></td>
+                            <td className="criterias">Lorem Ipsum is simply dummy text.</td>
+                            <td className="date">December 15,2018</td>
+                        </tr>
+                        <tr>
+                            <td className="job-name"><a href="">Painter</a></td>
+                            <td className="criterias">Lorem Ipsum is simply dummy text.</td>
+                            <td className="date">November 10,2018</td>
+                        </tr>
+                        <tr>
+                            <td className="job-name"><a href="">Plumber</a></td>
+                            <td className="criterias">Lorem Ipsum is simply dummy text.</td>
+                            <td className="date">October 5,2018</td>
+                        </tr>
+                        <tr>
+                            <td className="job-name"><a href="">Carpenter</a></td>
+                            <td className="criterias">Lorem Ipsum is simply dummy text.</td>
+                            <td className="date">December 15,2018</td>
+                        </tr>
+                        <tr>
+                            <td className="job-name"><a href="">Cleaner</a></td>
+                            <td className="criterias">Lorem Ipsum is simply dummy text.</td>
+                            <td className="date">November 10,2018</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             
         </div>

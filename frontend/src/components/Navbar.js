@@ -11,9 +11,9 @@ const Navbar = () => {
       <div className="sticky-header main-bar-wraper navbar-expand-lg">
         <div className="main-bar clearfix">
           <div className="container clearfix">
-            <div className="logo-header mostion"><a href=""><img
-              src="../assets/images/001.png"
-              alt="" /></a>
+            <div className="logo-header mostion"><Link to="/user/"><img
+              src="../../public/asset/image/001-removebg-preview.png"
+              alt="" /></Link>
             </div>
             <button
                 className="navbar-toggler collapsed navicon justify-content-end" type="button"
@@ -24,8 +24,7 @@ const Navbar = () => {
             <div className="header-nav navbar-collapse collapse myNavbar justify-content-end"
               id="navbarNavDropdown">
               <ul className="nav navbar-nav">
-                <li className="active"><a href="#">Home <i
-                  className="fa fa-chevron-down"></i></a>
+                <li className="active"><Link to="/">Home </Link>
                 </li>
               </ul>
             </div>
