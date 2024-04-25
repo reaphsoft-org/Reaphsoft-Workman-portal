@@ -33,7 +33,7 @@ export default function Body() {
                 </div>
             </header>
             <div className="page-content">
-                <div className="dez-bnr-inr dez-bnr-inr-md overlay-black-light" style={{ backgroundImage: "url(../asset/image/labour.jpg)", backgroundPosition: "center"}}>
+                <div className="dez-bnr-inr dez-bnr-inr-md overlay-black-light" style={{ backgroundImage: "url(../asset/image/labour.jpg)"}}>
                     <div className="container">
                         <div className="dez-bnr-inr-entry align-m text-dark">
                             <div className=" job-search-form">
@@ -210,7 +210,7 @@ export default function Body() {
                                             <div className="item p-3" tabindex="-1" style={{ width: "100%", display: "inline-block"}}>
                                                     <div className="testimonial-5">
                                                         <div className="testimonial-text">
-                                                        <p>The workmanship delivered by the team was exceptional! From start to finish, they displayed professionalism, expertise, and attention to detail. They transformed our space into something truly remarkable, exceeding our expectations. Highly recommended!.</p>
+                                                        <p> They transformed our space into something truly remarkable, exceeding our expectations. Highly recommended!.</p>
                                                         </div>
                                                         <div className="testimonial-detail clearfix">
                                                         <div className="testimonial-pic radius shadow">
@@ -226,7 +226,7 @@ export default function Body() {
                                             <div className="item p-3" tabindex="-1" style={{ width: "100%", display: "inline-block;"}}>
                                                     <div className="testimonial-5">
                                                         <div className="testimonial-text">
-                                                        <p>The workman team not only delivered excellent results but also made the entire process smooth and stress-free. Their communication was clear, they adhered to the timeline, and they were always respectful of our space. We're thrilled with the transformation they achieved and would gladly work with them again in the future.</p>
+                                                        <p>The workman team not only delivered excellent results but also made the entire process smooth and stress-free.</p>
                                                         </div>
                                                         <div className="testimonial-detail clearfix">
                                                         <div className="testimonial-pic radius shadow">
@@ -242,7 +242,7 @@ export default function Body() {
                                                 <div className="item p-3" tabindex="-1" style={{ width: "100%", display: "inline-block;"}}>
                                                     <div className="testimonial-5">
                                                         <div className="testimonial-text">
-                                                        <p>I was impressed by the work ethic and skill demonstrated by the workman assigned to our project. They tackled each task with precision and efficiency, ensuring that everything was completed to the highest standard. It's clear that they take pride in their work, and it shows in the final outcome.</p>
+                                                        <p>I was impressed by the work ethic and skill demonstrated by the workman assigned to our project. They tackled each task with precision and efficiency.</p>
                                                         </div>
                                                         <div className="testimonial-detail clearfix">
                                                         <div className="testimonial-pic radius shadow">
@@ -259,7 +259,7 @@ export default function Body() {
                                                 <div className="item p-3" tabindex="-1" style={{ width: "100%", display: "inline-block;"}}>
                                                     <div className="testimonial-5">
                                                         <div className="testimonial-text">
-                                                        <p>Working with this team was an absolute pleasure. Their dedication to quality and craftsmanship is evident in every aspect of their work. They listened attentively to our needs and preferences, offering valuable insights along the way. We couldn't be happier with the results.</p>
+                                                        <p>Working with this team was an absolute pleasure. Their dedication to quality and craftsmanship is evident in every aspect of their work. </p>
                                                         </div>
                                                         <div className="testimonial-detail clearfix">
                                                         <div className="testimonial-pic radius shadow">

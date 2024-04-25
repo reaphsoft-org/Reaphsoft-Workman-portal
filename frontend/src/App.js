@@ -17,6 +17,7 @@ import UpdateUser from "./pages/update_user";
 import Services from './components/Service';
 import AboutS from './components/about';
 import Contact from './components/contact';
+import AdminLogin from './admin/pages/login';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/user/request/" element={<User content={Request} />} />
         <Route path="/user/update/" element={<User content={UpdateUser} />} />
         <Route path="/user/change/password/" element={<User content={ChangePassword} />} />
+        <Route path="/admin/" element={<AdminLogin />} />
       </Routes>
     </AuthProvider>
   );
