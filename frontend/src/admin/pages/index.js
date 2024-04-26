@@ -12,7 +12,9 @@ const Index = () => {
                             <h2>Dashboard</h2>
                             <ul className="breadcrumb">
                                 <li className="breadcrumb-item">
-                                    <a href="index.html" className="text-decoration-none"><i className="zmdi zmdi-home"></i> Reaphsoft Workman Portal</a></li>
+                                    <Link to="dashboard" className="text-decoration-none">
+                                        <i className="zmdi zmdi-home"></i> Reaphsoft Workman Portal</Link>
+                                </li>
                                 <li className="breadcrumb-item active">Reaphsoft Workman Portal DashBoard</li>
                             </ul>
                         </div>

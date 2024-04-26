@@ -1,22 +1,22 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Skill = () => {
-    return (  
+const Estate = () => {
+    return ( 
         <section className="content">
             <div className="body_scroll">
                 <div className="block-header">
                     <div className="row">
                         <div className="col-lg-7 col-md-6 col-sm-12">
-                            <h2>Worker List</h2>
+                            <h2>Estate List</h2>
                             <ul className="breadcrumb">
                                 <li className="breadcrumb-item"><a href="">
                                     <i className="zmdi zmdi-home"></i> Reaphsoft Workman Portal</a>
                                 </li>
-                                <li className="breadcrumb-item">Registered Worker</li>
-                                <li className="breadcrumb-item active">Worker List</li>
+                                <li className="breadcrumb-item">Registered Estate</li>
+                                <li className="breadcrumb-item active">Estate List</li>
                             </ul>
                         </div>
-                        
                     </div>
                 </div>
                 <div className="container-fluid">
@@ -27,21 +27,21 @@ const Skill = () => {
                                     <table className="table table-hover product_item_list c_table theme-color mb-0">
                                         <thead>
                                             <tr>
-                                                <th>Image</th>
-                                                <th>Workman Name</th>
+                                                <th>Estate Image</th>
+                                                <th>Estate Name</th>
                                                 <th data-breakpoints="sm xs">Address</th>
-                                                <th data-breakpoints="xs">Skilled</th>
+                                                <th data-breakpoints="xs">Email</th>
                                                 <th data-breakpoints="xs">Service Type</th>
                                                 <th data-breakpoints="sm xs md">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><img src="../adminAssets/images/ecommerce/1.png" width="48" alt="Product img"/></td>
-                                                <td><h5>Foluke Foluke</h5></td>
+                                                <td><img src="../adminAssets/images/ecommerce/1.png" width="48" alt="Product img" /></td>
+                                                <td><h5>Divine Estate</h5></td>
                                                 <td><span className="text-muted">No 17, Estate Street, Poly Road</span></td>
                                                 <td>Painter</td>
-                                                <td>Priority</td>
+                                                <td>DivineEstate@gmail.com</td>
                                                 <td>
                                                     <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
                                                     <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
@@ -49,10 +49,10 @@ const Skill = () => {
                                             </tr>
                                             <tr>
                                                 <td><img src="../adminAssets/images/ecommerce/1.png" width="48" alt="Product img" /></td>
-                                                <td><h5>Foluke Foluke</h5></td>
+                                                <td><h5>Divine Estate</h5></td>
                                                 <td><span className="text-muted">No 17, Estate Street, Poly Road</span></td>
                                                 <td>Painter</td>
-                                                <td>Priority</td>
+                                                <td>DivineEstate@gmail.com</td>
                                                 <td>
                                                     <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
                                                     <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
@@ -60,10 +60,10 @@ const Skill = () => {
                                             </tr>
                                             <tr>
                                                 <td><img src="../adminAssets/images/ecommerce/1.png" width="48" alt="Product img" /></td>
-                                                <td><h5>Foluke Foluke</h5></td>
+                                                <td><h5>Divine Estate</h5></td>
                                                 <td><span className="text-muted">No 17, Estate Street, Poly Road</span></td>
                                                 <td>Painter</td>
-                                                <td>Priority</td>
+                                                <td>DivineEstate@gmail.com</td>
                                                 <td>
                                                     <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
                                                     <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
@@ -71,16 +71,16 @@ const Skill = () => {
                                             </tr>
                                             <tr>
                                                 <td><img src="../adminAssets/images/ecommerce/1.png" width="48" alt="Product img" /></td>
-                                                <td><h5>Foluke Foluke</h5></td>
+                                                <td><h5>Divine Estate</h5></td>
                                                 <td><span className="text-muted">No 17, Estate Street, Poly Road</span></td>
                                                 <td>Painter</td>
-                                                <td>Priority</td>
+                                                <td>DivineEstate@gmail.com</td>
                                                 <td>
                                                     <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
                                                     <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
                                                 </td>
                                             </tr>
-                                            
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -103,4 +103,4 @@ const Skill = () => {
     );
 }
  
-export default Skill;
+export default Estate;

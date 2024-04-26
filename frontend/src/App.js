@@ -21,6 +21,8 @@ import AdminLogin from './admin/pages/login';
 import Index from './admin/pages/index';
 import Layout from './admin/components/Layout';
 import Skill from './admin/pages/skill';
+import Estate from './admin/pages/estate';
+import Client from './admin/pages/client';
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function App() {
         <Route path="/dashboard" element={<Layout />} >
           <Route index element={<Index />} />
           <Route path="skill" element={<Skill />} />
+          <Route path="estate" element={<Estate />} />
+          <Route path="client" element={<Client />} />
         </Route>
       </Routes>
     </AuthProvider>

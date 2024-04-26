@@ -79,7 +79,7 @@ function Login() {
                       <div className="login-2 submit-resume p-a30 seth">
                         <div className="nav">
                           <form className="col-12 p-a0 " onSubmit={handleSubmit}>
-                            <p className="font-weight-600">If you have an account with us, please log in.</p>
+                            <p className="font-weight-600 text-black">If you have an account with us, please log in.</p>
                             <div className="form-group "><label>E-Mail Address*</label>
                               <div className="input-group">
                                 <input type="email" required placeholder='johndoe123@gmail.com' className="form-control"

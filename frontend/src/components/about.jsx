@@ -36,14 +36,15 @@ const AboutS = () => {
                     </div>
                 </header>
                 <div className="page-content bg-white">
-                    <div className="dez-bnr-inr overlay-black-middle" style={{ backgroundImage: "url(../asset/image/about-img.jpg)" }}>
+                    <div className="dez-bnr-inr overlay-black-light" style={{
+                        backgroundImage: "url(../asset/image/labour.jpg)" }}>
                         <div className="container">
                             <div className="dez-bnr-inr-entry">
-                                <h1 className="text-white">Servies</h1>
+                                <h1 className="text-white">About Us</h1>
                                 <div className="breadcrumb-row">
                                     <ul className="list-inline">
                                         <li><Link to="/">Home</Link></li>
-                                        <li>Service</li>
+                                        <li>About Us</li>
                                     </ul>
                                 </div>
                             </div>
@@ -53,7 +54,7 @@ const AboutS = () => {
                         <div className="section-full content-inner overlay-white-middle">
                             <div className="container">
                                 <div className="row align-items-center m-b50">
-                                    <div className="col-md-12 col-lg-6 m-b20">
+                                    <div className="col-md-12 col-lg-6 m-b20 text-black">
                                         <h2 className="m-b5">About Us</h2>
                                         <h3 className="fw4">We create unique experiences</h3>
                                         <p className="m-b15">At Workman, we understand the importance of connecting skilled workers with the right opportunities. Our platform serves as a central hub where employers can find reliable professionals, and workers can discover fulfilling jobs that match their expertise.</p>
@@ -62,7 +63,7 @@ const AboutS = () => {
                                     </div>
                                     <div className="col-md-12 col-lg-6"><img src="../asset/image/ikea.jpg" alt=""/></div>
                                 </div>
-                                <div className="row">
+                                <div className="row text-black">
                                     <div className="col-lg-4 col-md-4 col-sm-12 m-b30">
                                         <div className="icon-bx-wraper p-a30 center bg-gray radius-sm">
                                             <div className="icon-md text-primary m-b20"> <a className="icon-cell text-primary" href=""><i className="ti-desktop"></i></a> </div>

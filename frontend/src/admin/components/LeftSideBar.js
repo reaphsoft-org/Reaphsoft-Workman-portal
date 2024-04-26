@@ -13,18 +13,20 @@ const LeftSideBar = () => {
             <div className="menu">
                 <ul className="list">
                     <li>
-                        <div className="user-info">
+                        <div className="user-info pt-3">
                             <a className="image" href="profile.html">
-                                <img src="../asset/image/bha.jpg" alt="User" />
+                                {/* <img src="../asset/image/bha.jpg" alt="User" /> */}
                             </a>
                             <div className="detail">
                                 <h4>Michael Akorede</h4>
-                                <small>Workman Admin</small>
+                                <small>Workman Portal Admin</small>
                             </div>
                         </div>
                     </li>
                     <li className="active open">
-                        <a href="index.html"><i className="zmdi zmdi-home"></i><span>Dashboard</span></a>
+                        <Link to="">
+                            <i className="zmdi zmdi-home"></i><span>Dashboard</span>
+                        </Link>
                     </li>
                     <li className="active open">
                         <Link to="skill">
@@ -32,14 +34,17 @@ const LeftSideBar = () => {
                         </Link>
                     </li>
                     <li className="active open">
-                        <a href=""><i className="zmdi zmdi-folder"></i><span>Clients</span></a>
+                        <Link to="estate"><i className="zmdi zmdi-flower"></i><span>Estate</span></Link>
                     </li>
                     <li className="active open">
+                        <Link to="client"><i className="zmdi zmdi-folder"></i><span>Clients</span></Link>
+                    </li>
+                    {/* <li className="active open">
                         <a href=""><i className="zmdi zmdi-blogger"></i><span>Request</span></a>
                     </li>
                     <li className="active open">
                         <a href=""><i className="zmdi zmdi-swap-alt"></i><span>Complients</span></a>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
         </aside>

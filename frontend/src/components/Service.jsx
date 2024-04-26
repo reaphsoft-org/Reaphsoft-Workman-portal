@@ -30,7 +30,7 @@ const Services = () => {
                 </div>
             </header>
             <div className="page-content bg-white">
-                <div className="dez-bnr-inr overlay-black-middle" style={{ backgroundImage: "url(../asset/image/about-img.jpg)" }}>
+                <div className="dez-bnr-inr overlay-black-light" style={{ backgroundImage: "url(../asset/image/labour.jpg)" }}>
                     <div className="container">
                         <div className="dez-bnr-inr-entry">
                             <h1 className="text-white">Servies</h1>

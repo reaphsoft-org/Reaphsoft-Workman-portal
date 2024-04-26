@@ -32,7 +32,7 @@ const Contact = () => {
                     </div>
                 </header>
                 <div className="page-content bg-white">
-                    <div className="dez-bnr-inr overlay-black-middle" style={{ backgroundImage: "url(../asset/image/about-img.jpg)" }}>
+                    <div className="dez-bnr-inr overlay-black-light" style={{ backgroundImage: "url(../asset/image/labour.jpg)" }}>
                         <div className="container">
                             <div className="dez-bnr-inr-entry">
                                 <h1 className="text-white">Contact Us</h1>
@@ -47,7 +47,7 @@ const Contact = () => {
                     </div>
                     <div className="section-full content-inner bg-white contact-style-1">
                         <div className="container">
-                            <div className="row">
+                            <div className="row text-black">
                                 <div className="col-lg-6 col-md-6 d-lg-flex d-md-flex">
                                     <div className="p-a30 border m-b30 contact-area border-1 align-self-stretch radius-sm">
                                         <h4 className="m-b10">Quick Contact</h4>
