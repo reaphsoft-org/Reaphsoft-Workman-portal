@@ -11,6 +11,8 @@ import * as fs from 'fs';
 import { JwtModule } from '@nestjs/jwt';
 import { EstateController } from './estate/estate.controller';
 import { EstateService } from './estate/estate.service';
+import { AdminController } from './admin/admin.controller';
+import { AdminService } from './admin/admin.service';
 
 export const MEDIA_DIR = path.join(__dirname, '..', 'media/u');
 export const ASSETS_DIR = path.join(__dirname, '..', 'assets');
@@ -29,7 +31,7 @@ if (!fs.existsSync(MEDIA_DIR)) {
             signOptions: { expiresIn: '1d' }, // expire in 1 day see docs for details
         }),
     ],
-    controllers: [AppController, AccountsController, AuthController, EstateController],
-    providers: [AppService, AccountsService, AuthService, EstateService],
+    controllers: [AppController, AccountsController, AuthController, EstateController, AdminController],
+    providers: [AppService, AccountsService, AuthService, EstateService, AdminService],
 })
 export class AppModule {}
