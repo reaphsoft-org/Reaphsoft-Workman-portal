@@ -37,7 +37,7 @@ export class EstateService {
         });
         if (!house) return { status: false, resp: 'house not found' };
         const check = this.validateCreateDto(dto);
-        if (!check) return check;
+        if (!check.status) return check;
         house.number = dto.number;
         house.name = dto.occupant_name;
         await this.houseRepo.save(house);
@@ -68,9 +68,11 @@ export class EstateService {
         return { status: true, resp: '' };
     }
 
-    // return paginated houses, 50 in each page, sorted by name. page should start from 1.
+    // Return number of pages and the houses in the required page
+    // Houses are paginated with 50 in each page and sorted by name.
+    // Page should start from 1.
     async getHouses(email: string, page: number) {
-        if (page <= 0) return [];
+        if (page <= 0) return { pages: 0, data: [] };
         const start = 50 * (page - 1);
         const end = 50 * page;
         const houses = await this.houseRepo.find({
@@ -85,10 +87,21 @@ export class EstateService {
                 name: 'ASC',
             },
         });
-        return houses.map((house) => ({
-            id: house.id,
-            number: house.number,
-            name: house.name,
-        }));
+        if (houses.length == 0) return { pages: 0, data: [] };
+        // in the future, maybe consider using entityManager.query to run
+        // import { getManager } from 'typeorm';
+        // const entityManager = getManager();
+        // a single query than two (1 for objects another for count)
+        const count = await this.houseRepo.count();
+        let pages = Math.floor(count / 50);
+        pages += count % 50 > 0 ? 1 : 0;
+        return {
+            pages: pages,
+            data: houses.map((house) => ({
+                id: house.id,
+                number: house.number,
+                name: house.name,
+            })),
+        };
     }
 }
