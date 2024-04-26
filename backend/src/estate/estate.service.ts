@@ -10,6 +10,8 @@ export class EstateService {
     async addHouse(email: string, dto: HouseDto) {
         const userRepo = AppDataSource.getRepository(EstateManager);
         const manager = await userRepo.findOneBy({ email: email });
+        if (!manager)
+            return { status: false, resp: `manager '${email}' not found` };
         const check = this.validateCreateDto(dto);
         if (!check.status) return check;
         const house = new House();
@@ -19,6 +21,7 @@ export class EstateService {
         await this.houseRepo.save(house);
         return { status: true, resp: house.id };
     }
+
     validateCreateDto(dto: HouseDto) {
         if (dto.occupant_name == undefined || dto.occupant_name == '')
             return { status: false, resp: 'invalid occupant name' };
