@@ -43,7 +43,9 @@ export class AccountsController {
         const email = req.user.email;
         // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
         const type = req.user.type;
-        return this.accountsService.getUser(email, type);
+        const resp = await this.accountsService.getUser(email, type);
+        console.log(resp);
+        return resp;
     }
 
     @UseGuards(AuthGuard)

@@ -9,6 +9,7 @@ function Login() {
   const [data, setData] = useState({
     email: "",
     password: "",
+    account: ""
   });
 
   const [showToast, setShowToast] = useState({ message: "", show: false });
@@ -20,6 +21,7 @@ function Login() {
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log('hit');
     if (disableButton !== "") {
       return;
     }
@@ -33,7 +35,6 @@ function Login() {
           'Content-Type': 'application/json',
         },
       });
-
       if (!response.ok) {
         setShowToast({ message: "Received a bad response from the server.", show: true });
         setDisableButton("");
@@ -41,11 +42,10 @@ function Login() {
       }
       const responseData = await response.json();
       if (responseData.status === true) {
-        console.log(data.email);
-        user.login(email, password);
+        user.login(responseData.access_token);
         window.location.href = "/user/dashboard/";
       } else {
-        setErrorText("Invalid email/password");
+        setErrorText(responseData.resp);
         setDisableButton("");
       }
     } catch (e) {
@@ -53,12 +53,14 @@ function Login() {
       setDisableButton("");
     }
   }
+
+  const [accountType, setAccountType] = useState({type: 1});
+  const customBtnClass = "site-button float-left";
   return (
     <>
       {user.user !== null ? <Navigate to="/user/" /> :
         <div className="vh-100">
           <div className="page-wraper">
-              
             <div className="page-content bg-white login-style2 yes" style={{ position: "relative" }}>
               <div style={{ backgroundColor: "#fafafa", width: "100vw", minHeight: "114vh", position: "absolute", opacity: "0.5" }}></div>
               <div className="section-full">
@@ -78,26 +80,49 @@ function Login() {
                     <div className="col-lg-6 col-md-6">
                       <div className="login-2 submit-resume p-a30 seth">
                         <div className="nav">
+                            <p className="text-body">Please log in if you have an account with us.</p>
+                            <div className="my-2">
+                              <p className="text-black form-label">Account Type</p>
+                              <div className="col-12 p-a0">
+                                <div className="row">
+                                  <div className="col-6 p-0 pe-1 d-grid">
+                                    <button
+                                        className={accountType.type === 1 ? "btn btn-warning disabled" : "btn btn-outline-secondary"}
+                                        onClick={() => setAccountType({type: 1})} type="button">
+                                      Individual
+                                    </button>
+                                  </div>
+                                  <div className="col-6 p-0 ps-1 d-grid">
+                                    <button
+                                        className={accountType.type === 2 ? "btn btn-warning disabled" : "btn btn-outline-secondary"}
+                                        onClick={() => setAccountType({type: 2})} type="button">
+                                      Estate
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           <form className="col-12 p-a0 " onSubmit={handleSubmit}>
-                            <p className="font-weight-600 text-black">If you have an account with us, please log in.</p>
-                            <div className="form-group "><label>E-Mail Address*</label>
+                            <input name="account" type="hidden" value={accountType.type} onChange={handleInputChange}/>
+                            <div className="form-group "><label>Email Address</label>
                               <div className="input-group">
                                 <input type="email" required placeholder='johndoe123@gmail.com' className="form-control"
                                   autoComplete="email" name="email" value={data.email} onChange={handleInputChange} />
                               </div>
                             </div>
-                            <div className="form-group"><label>Password *</label>
+                            <div className="form-group"><label>Password</label>
                               <div className="input-group">
                                 <input type="password" required placeholder='*********' className="form-control"
                                   autoComplete="current-password" name="password" value={data.password}
                                   onChange={handleInputChange} />
                               </div>
                             </div>
-                            <div className="form-text text-danger mt-2 px-1">{errorText}</div>
-                            <div className="text-center"><button className={"site-button float-left" + disableButton}>login</button><Link
+                            <div className="form-text text-danger my-3 px-1">{errorText}</div>
+                            <div className="text-center">
+                              <button type="submit" className={customBtnClass + disableButton}>Login</button>
+                              <Link
                               className="site-button-link forget-pass m-t15 float-right"
-                              to="/register/"><i className="fa fa-unlock-alt"></i> Sign
-                              up</Link></div>
+                              to="/register/"><i className="fa fa-unlock-alt"></i> Sign up</Link></div>
                           </form>
                         </div>
                       </div>

@@ -11,14 +11,21 @@ const User = ({content}) => {
     apartment: '',
     accountType: '',
     address: '',
-    email: userAuth.user,
+    email: '',
     fullname: '',
     photoURL: '',
     serviceType: '',
   });
   useEffect(() => {
     if (userAuth.user)
-    fetch(`http://localhost:3001/account/user/${userAuth.user}`)
+    fetch(`http://localhost:3001/account/user/`, {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + userAuth.user,
+            'Content-Type': 'application/json'
+          }
+        }
+        )
         .then(resp => resp.json())
         .then( data => {
             setUser(data);

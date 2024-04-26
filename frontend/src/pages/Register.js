@@ -1,8 +1,8 @@
 import { IoAnalyticsSharp } from "react-icons/io5";
 import React, { useState } from 'react';
-import logo from './logo.jpeg';
-import { Image, Toast, ToastContainer } from "react-bootstrap";
+import { Toast, ToastContainer } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
 export function generateRandomString() {
   let result = '';
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

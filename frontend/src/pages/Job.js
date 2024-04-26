@@ -1,12 +1,11 @@
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Job = ({user}) => {
     return (
         <div className="col-xl-9 col-lg-8 m-b30 browse-job">
             <div className="job-bx-title  clearfix">
                 <h5 className="font-weight-700 pull-left text-uppercase">All Worker Request</h5>
-                <div className="float-right"><span className="select-title">Sort by Lastest</span><select
+                <div className="float-right"><span className="select-title">Sort by Latest</span><select
                     className="custom-btn">
                     <option>Last 2 Months</option>
                     <option>Last Months</option>

@@ -45,11 +45,11 @@ export class AuthService {
             };
         } catch (error) {
             // Handle errors
-            console.log(error);
+            const acc = account == User.accountType ? 'Individual' : 'Estate';
             return {
                 status: false,
                 access_token: '',
-                resp: 'user not found',
+                resp: `${acc} user not found`,
             };
         }
     }

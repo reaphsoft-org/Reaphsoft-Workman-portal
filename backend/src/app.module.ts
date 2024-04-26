@@ -31,7 +31,19 @@ if (!fs.existsSync(MEDIA_DIR)) {
             signOptions: { expiresIn: '1d' }, // expire in 1 day see docs for details
         }),
     ],
-    controllers: [AppController, AccountsController, AuthController, EstateController, AdminController],
-    providers: [AppService, AccountsService, AuthService, EstateService, AdminService],
+    controllers: [
+        AppController,
+        AccountsController,
+        AuthController,
+        EstateController,
+        AdminController,
+    ],
+    providers: [
+        AppService,
+        AccountsService,
+        AuthService,
+        EstateService,
+        AdminService,
+    ],
 })
 export class AppModule {}

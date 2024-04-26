@@ -121,6 +121,7 @@ export class AccountsService {
         email: string,
         type: 1 | 2,
     ): Promise<UserDto | EstateDto | null> {
+        console.log(email, type);
         if (type === User.accountType) {
             const user = await this.userRepository.findOne({
                 where: { email },

@@ -9,7 +9,6 @@ export function RegistrationSuccess() {
     const codeEmail = register.split(';;');
     const code = codeEmail[0];
     const email = codeEmail[1];
-    console.log(code);
     if (code){
         localStorage.removeItem('register');
     }

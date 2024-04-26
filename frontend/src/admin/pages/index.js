@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
-    return (  
-        
+    return (
         <section className="content">
             <div className="">
                 <div className="block-header">

@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Register from "../pages/Register";
 
 export default function Body() {
     return (
@@ -204,10 +202,10 @@ export default function Body() {
                             </div>
                             <div className="slick-slider blog-carousel-center owl-carousel owl-none  slick-initialized" dir="ltr">
                                 <div className="slick-list">
-                                <div className="slick-track" style={{ width: "3410px", opacity: "1", transform: "translate3d(-1550px, 0px, 0px);"}}>
-                                    <div data-index="-3" tabindex="-1" className="slick-slide slick-cloned" aria-hidden="true" style={{ width: "310px"}}>
+                                <div className="slick-track" style={{ width: "3410px", opacity: "1", transform: "translate3d(-1550px, 0px, 0px)"}}>
+                                    <div data-index="-3" tabIndex="-1" className="slick-slide slick-cloned" aria-hidden="true" style={{ width: "310px"}}>
                                             <div>
-                                            <div className="item p-3" tabindex="-1" style={{ width: "100%", display: "inline-block"}}>
+                                            <div className="item p-3" tabIndex="-1" style={{ width: "100%", display: "inline-block"}}>
                                                     <div className="testimonial-5">
                                                         <div className="testimonial-text">
                                                         <p> They transformed our space into something truly remarkable, exceeding our expectations. Highly recommended!.</p>
@@ -221,9 +219,9 @@ export default function Body() {
                                                 </div>
                                             </div>
                                         </div>
-                                    <div data-index="-2" tabindex="-1" className="slick-slide slick-cloned" aria-hidden="true" style={{ width: "310px"}}>
+                                    <div data-index="-2" tabIndex="-1" className="slick-slide slick-cloned" aria-hidden="true" style={{ width: "310px"}}>
                                             <div>
-                                            <div className="item p-3" tabindex="-1" style={{ width: "100%", display: "inline-block;"}}>
+                                            <div className="item p-3" tabIndex="-1" style={{ width: "100%", display: "inline-block"}}>
                                                     <div className="testimonial-5">
                                                         <div className="testimonial-text">
                                                         <p>The workman team not only delivered excellent results but also made the entire process smooth and stress-free.</p>
@@ -237,9 +235,9 @@ export default function Body() {
                                                 </div>
                                             </div>
                                         </div>
-                                    <div data-index="-1" tabindex="-1" className="slick-slide slick-cloned" aria-hidden="true" style={{ width: "310px"}}>
+                                    <div data-index="-1" tabIndex="-1" className="slick-slide slick-cloned" aria-hidden="true" style={{ width: "310px"}}>
                                             <div>
-                                                <div className="item p-3" tabindex="-1" style={{ width: "100%", display: "inline-block;"}}>
+                                                <div className="item p-3" tabIndex="-1" style={{ width: "100%", display: "inline-block"}}>
                                                     <div className="testimonial-5">
                                                         <div className="testimonial-text">
                                                         <p>I was impressed by the work ethic and skill demonstrated by the workman assigned to our project. They tackled each task with precision and efficiency.</p>
@@ -254,9 +252,9 @@ export default function Body() {
                                                 </div>
                                             </div>
                                         </div>
-                                    <div data-index="0" className="slick-slide" tabindex="-1" aria-hidden="true" style={{outline: "none", width: "310px"}}>
+                                    <div data-index="0" className="slick-slide" tabIndex="-1" aria-hidden="true" style={{outline: "none", width: "310px"}}>
                                             <div>
-                                                <div className="item p-3" tabindex="-1" style={{ width: "100%", display: "inline-block;"}}>
+                                                <div className="item p-3" tabIndex="-1" style={{ width: "100%", display: "inline-block"}}>
                                                     <div className="testimonial-5">
                                                         <div className="testimonial-text">
                                                         <p>Working with this team was an absolute pleasure. Their dedication to quality and craftsmanship is evident in every aspect of their work. </p>

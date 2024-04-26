@@ -1,12 +1,5 @@
 import React from "react";
-import { Col, Form, Button, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { Link } from "react-router-dom";
-import { logout } from "../utils/auth";
-import { useAuth } from "../components/AuthContext";
-import Sidebar from "../components/sidebar";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from "../components/Navbar";
-import Footer from "../components/footer";
+import { Col } from 'react-bootstrap';
 
 const ChangePassword = ({user}) => {
     return (
@@ -15,7 +8,6 @@ const ChangePassword = ({user}) => {
                  <div className="job-bx job-profile">
                      <div className="job-bx-title clearfix">
                          <h5 className="font-weight-700 pull-left text-uppercase">Change Password</h5>
-
                      </div>
                      <form>
                          <div className="row">

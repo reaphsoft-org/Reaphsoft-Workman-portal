@@ -1,13 +1,11 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from './pages/Login';
+import Login from './pages/flogin';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import { AuthProvider } from "./components/AuthContext";
 import Job from './pages/Job';
 import Request from './pages/Request';
-import './App.css';
 import ChangePassword from './pages/ChangePassword';
 import Dashboard from './pages/Dashboard';
 import User from "./components/User";
