@@ -42,7 +42,7 @@ function Login() {
       const responseData = await response.json();
       if (responseData.status === true) {
         console.log(data.email);
-        user.login(data.email);
+        user.login(email, password);
         window.location.href = "/user/dashboard/";
       } else {
         setErrorText("Invalid email/password");
