@@ -5,7 +5,7 @@ const UpdateUser = ({user}) => {
         <div className="job-bx job-profile">
           <div className="job-bx-title clearfix">
             <h5 className="font-weight-700 pull-left text-uppercase">Basic Information</h5>
-            <a className="site-button right-arrow button-sm float-right" href="">Back</a>
+            
           </div>
           <div className="row">
             <div className="col-lg-6 col-md-6">

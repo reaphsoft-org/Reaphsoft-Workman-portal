@@ -64,7 +64,8 @@ const Request = ({user}) => {
                                     <input type="text" className="form-control" placeholder="London" spellCheck="false" data-ms-editor="true" />
                                 </div>
                             </div>
-                        </div><button type="button" className="site-button m-b30 mt-4">Request Worker</button>
+                        </div>
+                        <button type="button" className="site-button m-b30 mt-4">Request Worker</button>
                     </form>
                 </div>
             </div>

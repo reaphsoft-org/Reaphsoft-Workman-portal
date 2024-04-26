@@ -17,7 +17,7 @@ const Dashboard = ({user}) => {
                 <div className="d-flex">
                     <h5 className="m-b30">Personal Details</h5>
                     <Link className="site-button add-btn button-sm text-decoration-none"
-                        to="/user/update/"><i className="fa fa-pencil m-r5"></i> lorem30
+                        to="/user/update/"><i className="fa fa-pencil m-r5"></i> 
                         Edit Account</Link>
                 </div>
                 <div className="row">
@@ -25,7 +25,8 @@ const Dashboard = ({user}) => {
                         <div className="clearfix m-b20"><label className="m-b0">Apartment</label><span className="clearfix font-13">{user.apartment}</span></div>
                         <div className="clearfix m-b20"><label className="m-b0">Email</label><span className="clearfix font-13">{user.email}</span></div>
                         <div className="clearfix m-b20"><label className="m-b0">Full Name</label><span className="clearfix font-13">{user.fullname}</span></div>
-                        <div className="clearfix m-b20"><label className="m-b0">Phone Number</label><span className="clearfix font-13">undefined</span></div>
+                        <div className="clearfix m-b20"><label className="m-b0">Phone Number</label><span className="clearfix font-13"></span></div>
+                        <div className="clearfix m-b20"><label className="m-b0">Service Type</label><span className="clearfix font-13">{user.serviceType}</span></div>
                     </div>
                     
                 </div>

@@ -43,7 +43,7 @@ const Sidebar = ({user}) => {
                         <li>
                             <Link to="/user/job/">
                                 <i className="fa fa-briefcase" aria-hidden="true"></i>
-                                <span>Request Labour</span>
+                                <span>Request History</span>
                             </Link>
                         </li>
                         <li>

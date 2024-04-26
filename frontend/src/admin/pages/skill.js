@@ -1,6 +1,19 @@
-import React from "react";
+import React , { useState } from "react";
+import { Link } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
+
 
 const Skill = () => {
+    const [showModal, setShowModal] = useState(false);
+
+    const handleEditClick = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
     return (  
         <section className="content">
             <div className="body_scroll">
@@ -43,7 +56,7 @@ const Skill = () => {
                                                 <td>Painter</td>
                                                 <td>Priority</td>
                                                 <td>
-                                                    <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
+                                                    <a href="javascript:void(0);" onClick={handleEditClick} className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
                                                     <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
                                                 </td>
                                             </tr>
@@ -54,7 +67,7 @@ const Skill = () => {
                                                 <td>Painter</td>
                                                 <td>Priority</td>
                                                 <td>
-                                                    <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
+                                                    <a href="javascript:void(0);" onClick={handleEditClick} className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
                                                     <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
                                                 </td>
                                             </tr>
@@ -65,7 +78,7 @@ const Skill = () => {
                                                 <td>Painter</td>
                                                 <td>Priority</td>
                                                 <td>
-                                                    <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
+                                                    <a href="javascript:void(0);" onClick={handleEditClick} className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
                                                     <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
                                                 </td>
                                             </tr>
@@ -76,7 +89,7 @@ const Skill = () => {
                                                 <td>Painter</td>
                                                 <td>Priority</td>
                                                 <td>
-                                                    <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
+                                                    <a href="javascript:void(0);" onClick={handleEditClick} className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
                                                     <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
                                                 </td>
                                             </tr>
@@ -99,6 +112,54 @@ const Skill = () => {
                     </div>
                 </div>
             </div>
+           
+                <Modal class="modal-dialog" role="document" show={showModal} onHide={handleCloseModal}>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="title" id="defaultModalLabel">Edit Worker Details</h4>
+                        </div>
+                        <div class="modal-body col-sm-12">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" class="form-control" placeholder="Full Name" />
+                            </div>
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="Text" class="form-control" placeholder="Password" />
+                            </div>
+                            <div class="form-group">
+                                <label>Email Name</label>
+                                <input type="Text" class="form-control" placeholder="Worker Email" />
+                            </div>
+                            <div class="form-group">
+                                <label>Worker Skill</label>
+                                <input type="Text" class="form-control" placeholder="Worker Skill" />
+                            </div>
+                            <div class="form-group">
+                                <label>Service Type</label>
+                                <select class="form-control show-tick">
+                                    <option value=""> Please Service Type</option>
+                                    <option value="10">Priority</option>
+                                    <option value="20">Priority Plus</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Worker Availability Time and Date</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="zmdi zmdi-calendar"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control datetimepicker" placeholder="Please choose date & time..."/>
+                                </div>
+                            </div>
+                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default btn-round waves-effect">SAVE CHANGES</button>
+                            <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+                    </div>
+                </Modal>
         </section>
     );
 }
