@@ -65,8 +65,27 @@ export class EstateService {
         return { status: true, resp: '' };
     }
 
-    // return paginated houses, 50 in each page, sorted by name
-    getHouses(email: string, page: number) {
-        return Promise.resolve(undefined);
+    // return paginated houses, 50 in each page, sorted by name. page should start from 1.
+    async getHouses(email: string, page: number) {
+        if (page <= 0) return [];
+        const start = 50 * (page - 1);
+        const end = 50 * page;
+        const houses = await this.houseRepo.find({
+            where: {
+                manager: {
+                    email: email,
+                },
+            },
+            skip: start,
+            take: end,
+            order: {
+                name: 'ASC',
+            },
+        });
+        return houses.map((house) => ({
+            id: house.id,
+            number: house.number,
+            name: house.name,
+        }));
     }
 }
