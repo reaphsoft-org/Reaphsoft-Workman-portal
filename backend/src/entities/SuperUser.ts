@@ -7,6 +7,6 @@ import { Column, Entity } from 'typeorm';
 
 @Entity()
 export class SuperUser extends BaseUser {
-  @Column({ default: true })
-  is_active: boolean;
+    @Column({ default: true })
+    is_active: boolean;
 }

@@ -36,6 +36,7 @@
 
 ### Packages
 [TypeORM](https://github.com/typeorm/typeorm?tab=readme-ov-file#step-by-step-guide)
+
 Run 
 ```
 npm install --save @nestjs/typeorm typeorm pg
@@ -74,12 +75,12 @@ Install Multer Types, and see sample codes.
 npm install --save-dev @types/multer
 ```
 
+## Testing
 Add test cases in `app.e2e-spec.ts` and run the command below from the CMD (backend)
 ```
 npm run test:e2e
 ```
 
-## Testing
 ```
 npm install --save-dev @nestjs/testing jest @types/jest ts-jest
 npm install --save-dev supertest @types/supertest
@@ -94,8 +95,7 @@ npm install --save-dev cross-env
 3. [Super Agent](https://ladjs.github.io/superagent/#test-documentation)
 4. [Authentication in Tests](https://ladjs.github.io/superagent/#authentication)
 
-## Create PDFs
-[Details](https://github.com/chaitanyamogal/pdf-master)
+## [Create PDFs](https://github.com/chaitanyamogal/pdf-master)
 Install package
 ```
 npm install pdf-master --save
