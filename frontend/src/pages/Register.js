@@ -38,7 +38,8 @@ function Register() {
       postData.append("photo", selectedImage);
     }
     try {
-      const response = await fetch('http://localhost:3001/account/sign/up/', {
+      const link = formData.accountType === "1" ? "account/sign/up/i/" : "account/sign/up/e/";
+      const response = await fetch(`http://localhost:3001/${link}`, {
         method: 'POST',
         body: postData,
       });
@@ -73,8 +74,9 @@ function Register() {
       password: '',
       fullname: '',
       apartment: '',
+      estate: '',
       address: '',
-      serviceType: "0",
+      serviceType: "1",
     }
   );
   const handleInputChange = (e) => {
@@ -191,8 +193,13 @@ function Register() {
                                 />
                               </div>
                               <div className="col-12 mb-2">
-                                <label className="form-label">Estate Name</label>
+                                <label className="form-label">Full Name</label>
                                 <input type="text" className="form-control" name="fullname" autoComplete="name" value={formData.fullname}
+                                  onChange={handleInputChange} required />
+                              </div>
+                              <div className="col-12 mb-2">
+                                <label className="form-label">Estate Name</label>
+                                <input type="text" className="form-control" name="estate" autoComplete="name" value={formData.estate}
                                   onChange={handleInputChange} required />
                               </div>
                               <div className="col-12 mb-2">
