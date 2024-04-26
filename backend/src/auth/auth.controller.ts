@@ -6,7 +6,7 @@ import { Email } from '../utilities/mailman';
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
-    @Post('login')
+    @Post('login/')
     async login(
         @Body() loginDto: LoginDto,
     ): Promise<{ access_token: string; resp: string; status: boolean }> {

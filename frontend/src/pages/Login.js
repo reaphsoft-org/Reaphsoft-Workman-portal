@@ -26,7 +26,7 @@ function Login() {
     setDisableButton(" disabled");
     const formData = JSON.stringify(data);
     try {
-      const response = await fetch('http://localhost:3001/auth/login', {
+      const response = await fetch('http://localhost:3001/auth/login/', {
         method: 'POST',
         body: formData,
         headers: {
