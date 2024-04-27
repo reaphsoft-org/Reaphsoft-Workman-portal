@@ -607,7 +607,6 @@ describe('Accounts Estate Manager Tests', () => {
                 expect(resp.body).toBeTruthy();
                 expect(resp.body.accountType).toBe(EstateManager.accountType);
                 expect(resp.body.email).toBe(estateManager.email);
-                console.log(resp.body);
             });
     });
 
