@@ -17,7 +17,4 @@ export class AdminController {
             };
         return this.service.login(email, password);
     }
-
-    @Post('create/')
-    async create() {}
 }
