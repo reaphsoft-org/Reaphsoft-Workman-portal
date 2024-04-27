@@ -4,7 +4,11 @@
 
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity({
+    orderBy: {
+        name: 'ASC',
+    },
+})
 export class Service {
     @PrimaryGeneratedColumn()
     id: number;

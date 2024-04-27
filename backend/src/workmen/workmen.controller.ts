@@ -1,4 +1,14 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../auth/auth.guard';
+import { WorkmenService } from './workmen.service';
 
-@Controller('workmen')
-export class WorkmenController {}
+@UseGuards(AuthGuard)
+@Controller('workmen/')
+export class WorkmenController {
+    constructor(private readonly service: WorkmenService) {}
+
+    @Get('services/')
+    getServices() {
+        return this.service.getServices();
+    }
+}
