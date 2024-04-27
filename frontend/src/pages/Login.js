@@ -9,7 +9,7 @@ function Login() {
   const [data, setData] = useState({
     email: "",
     password: "",
-    account: ""
+    account: "1"
   });
 
   const [showToast, setShowToast] = useState({ message: "", show: false });
@@ -21,7 +21,7 @@ function Login() {
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('hit');
+    data.account = `${accountType.type}`;
     if (disableButton !== "") {
       return;
     }
@@ -42,8 +42,8 @@ function Login() {
       }
       const responseData = await response.json();
       if (responseData.status === true) {
-        user.login(responseData.access_token);
-        window.location.href = "/user/dashboard/";
+        user.login({token: responseData.access_token, account: data.account});
+        window.location.href = "/user/";
       } else {
         setErrorText(responseData.resp);
         setDisableButton("");
@@ -82,28 +82,25 @@ function Login() {
                         <div className="nav">
                             <p className="text-body">Please log in if you have an account with us.</p>
                             <div className="my-2">
-                              <p className="text-black form-label">Account Type</p>
-                              <div className="col-12 p-a0">
-                                <div className="row">
-                                  <div className="col-6 p-0 pe-1 d-grid">
-                                    <button
-                                        className={accountType.type === 1 ? "btn btn-warning disabled" : "btn btn-outline-secondary"}
-                                        onClick={() => setAccountType({type: 1})} type="button">
-                                      Individual
-                                    </button>
-                                  </div>
-                                  <div className="col-6 p-0 ps-1 d-grid">
-                                    <button
-                                        className={accountType.type === 2 ? "btn btn-warning disabled" : "btn btn-outline-secondary"}
-                                        onClick={() => setAccountType({type: 2})} type="button">
-                                      Estate
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
+                              <strong className="text-black form-label">Account Type</strong>
                             </div>
                           <form className="col-12 p-a0 " onSubmit={handleSubmit}>
-                            <input name="account" type="hidden" value={accountType.type} onChange={handleInputChange}/>
+                            <div className="row mb-3">
+                                <div className="col-6 p-0 pe-1 d-grid">
+                                  <button
+                                      className={accountType.type === 1 ? "btn btn-warning disabled" : "btn btn-outline-secondary"}
+                                      onClick={() => setAccountType({type: 1})} type="button">
+                                    Individual
+                                  </button>
+                                </div>
+                                <div className="col-6 p-0 ps-1 d-grid">
+                                  <button
+                                      className={accountType.type === 2 ? "btn btn-warning disabled" : "btn btn-outline-secondary"}
+                                      onClick={() => setAccountType({type: 2})} type="button">
+                                    Estate
+                                  </button>
+                                </div>
+                              </div>
                             <div className="form-group "><label>Email Address</label>
                               <div className="input-group">
                                 <input type="email" required placeholder='johndoe123@gmail.com' className="form-control"
