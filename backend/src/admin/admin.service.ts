@@ -28,9 +28,9 @@ export class AdminService {
         user.last_visited = date.toISOString();
         await this.adminRepo.save(user);
         return {
-            status: false,
+            status: true,
             access_token: await this.jwtService.signAsync(payload),
-            resp: 'user not found',
+            resp: '',
         };
     }
 }
