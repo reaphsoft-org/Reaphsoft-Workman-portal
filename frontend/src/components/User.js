@@ -28,6 +28,7 @@ const User = ({content}) => {
         )
         .then(resp => resp.json())
         .then( data => {
+          // todo catch token expiry, and force logout, then redirect to login page.
             setUser(data);
         })
         .catch( err => console.error('Error: ', err));

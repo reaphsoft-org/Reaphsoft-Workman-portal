@@ -10,11 +10,12 @@ const UpdateUser = ({user}) => {
           <div className="row">
             <div className="col-lg-6 col-md-6">
               <div className="form-group"><label>Full Name:</label><input type="text" value={user.fullname}
-                                                                          readOnly={true}
                                                                           className="form-control"/></div>
             </div>
             <div className="col-lg-6 col-md-6">
-              <div className="form-group"><label>Email Address:</label><input type="text" value={user.email} className="form-control"/></div>
+              <div className="form-group">
+                <label>Email Address:</label>
+                <input type="text" value={user.email} readOnly={true} className="form-control"/></div>
             </div>
             <div className="col-lg-6 col-md-6">
               <div className="form-group"><label>Apartment:</label><input type="text" className="form-control"
@@ -24,7 +25,7 @@ const UpdateUser = ({user}) => {
               <div className="form-group"><label>Full Address:</label><input type="text" className="form-control" value={user.address}/></div>
             </div>
             <div className="col-lg-6 col-md-6">
-              <div className="form-group"><label>Account Type</label><input type="text" className="form-control" value={ user.accountType === 1 ? 'Individual' : 'Estate'}/></div>
+              <div className="form-group"><label>Account Type</label><input type="text" className="form-control" readOnly={true} value={ user.accountType === 1 ? 'Individual' : 'Estate'}/></div>
             </div>
             <div className="col-lg-6 col-md-6">
               <div className="form-group"><label>Service Type</label><input type="text" className="form-control" value={ user.serviceType === 1 ? 'Priority' : 'Priority Plus'}/></div>
