@@ -6,7 +6,11 @@ import { BaseUser } from './BaseUser';
 import { Column, Entity, ManyToOne, Relation } from 'typeorm';
 import { Service } from './Service';
 
-@Entity()
+@Entity({
+    orderBy: {
+        fullname: 'ASC',
+    },
+})
 export class Workman extends BaseUser {
     @Column({ type: 'varchar', length: 100 })
     address: string;

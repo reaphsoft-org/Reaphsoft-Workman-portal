@@ -18,7 +18,7 @@ abstract class RequestBase {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ default: true })
     accepted: boolean;
 
     @Column({
