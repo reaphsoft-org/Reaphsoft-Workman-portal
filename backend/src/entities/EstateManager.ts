@@ -3,6 +3,7 @@ import { Column, Entity, OneToMany, Relation } from 'typeorm';
 import { NonStaff } from './BaseUser';
 import { House } from './House';
 import { PasswordManager } from '../utilities/passwordmanager';
+import {EstateRequest, UserRequest} from "./Request";
 
 const passwordManager = new PasswordManager();
 
@@ -36,4 +37,7 @@ export class EstateManager extends NonStaff {
 
     @OneToMany(() => House, (house) => house.manager)
     houses: Relation<House>[];
+
+    @OneToMany(() => EstateRequest, (request) => request.client)
+    requests: Relation<EstateRequest>[];
 }
