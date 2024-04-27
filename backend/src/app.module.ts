@@ -28,7 +28,7 @@ if (!fs.existsSync(MEDIA_DIR)) {
         JwtModule.register({
             global: true,
             secret: process.env.JWT_SECRET,
-            signOptions: { expiresIn: '3h' }, // expire in 1 day see docs for details
+            signOptions: { expiresIn: '3h' }, // expire in 1 day see docs for details, e.g '3h', '1d', 60 for seconds
         }),
     ],
     controllers: [

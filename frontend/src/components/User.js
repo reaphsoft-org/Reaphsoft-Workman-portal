@@ -4,6 +4,7 @@ import Sidebar from '../components/sidebar';
 import Navbar from '../components/Navbar';
 import Footer from '../components/footer';
 import {Navigate} from "react-router-dom";
+import {logout} from "../utils/auth";
 
 const User = ({content}) => {
   const userAuth = useAuth();
@@ -26,14 +27,19 @@ const User = ({content}) => {
           }
         }
         )
-        .then(resp => resp.json())
+        .then((resp) => {
+            if (resp.status === 401){
+                // token has expired
+                logout(userAuth);
+                return;
+            }
+            return resp.json();
+        })
         .then( data => {
-          // todo catch token expiry, and force logout, then redirect to login page.
             setUser(data);
         })
         .catch( err => console.error('Error: ', err));
   }, [userAuth.user]);
-
   return (
       <>
       {userAuth.user !== null ? <AuthenticatedUser user={user} content={content} /> : <Navigate to="/login/"/>}
