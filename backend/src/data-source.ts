@@ -4,7 +4,7 @@ import { User } from './entities/User';
 import { EstateManager } from './entities/EstateManager';
 import { House } from './entities/House';
 import { SuperUser } from './entities/SuperUser';
-import { Services } from './entities/Services';
+import { Service } from './entities/Service';
 
 let dbName: string;
 let dropOption: boolean;
@@ -26,7 +26,7 @@ export const AppDataSource = new DataSource({
     synchronize: true,
     dropSchema: dropOption,
     logging: false,
-    entities: [SuperUser, User, EstateManager, House, Services],
+    entities: [SuperUser, User, EstateManager, House, Service],
     migrations: ['./migrations/*.ts'],
     subscribers: ['./subscribers/*.ts'],
 });
