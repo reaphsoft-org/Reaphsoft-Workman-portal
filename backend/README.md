@@ -154,6 +154,11 @@ Then pass the services fixtures file path.
 node dist/loaddata test/services.json
 ```
 
+## Create SuperUser
+```
+npm run create_superuser <email> <password> <firstname> <lastnam>
+```
+
 # NestJS
 
 <p align="center">

@@ -6,10 +6,7 @@ import {
     Column,
     CreateDateColumn,
     UpdateDateColumn,
-    OneToMany,
-    Relation,
 } from 'typeorm';
-import { UserRequest } from './Request';
 
 @Entity()
 export abstract class BaseUser {
