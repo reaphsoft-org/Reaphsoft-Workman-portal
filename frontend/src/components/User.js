@@ -17,6 +17,16 @@ const User = ({content}) => {
     photoURL: '',
     serviceType: '',
   });
+  const [estate, setEstate] = useState({
+      estate: '',
+      accountType: '',
+      address: '',
+      email: '',
+      fullname: '',
+      photoURL: '',
+      serviceType: '',
+      houses: [],
+  });
   useEffect(() => {
     if (userAuth.user)
     fetch(`http://localhost:3001/account/user/`, {
@@ -36,13 +46,14 @@ const User = ({content}) => {
             return resp.json();
         })
         .then( data => {
-            setUser(data);
+            if(userAuth.user.account === 1) setUser(data)
+            else setEstate(data)
         })
         .catch( err => console.error('Error: ', err));
-  }, [userAuth.user]);
+  }, [userAuth, userAuth.user]);
   return (
       <>
-      {userAuth.user !== null ? <AuthenticatedUser user={user} content={content} /> : <Navigate to="/login/"/>}
+      {userAuth.user !== null ? <AuthenticatedUser user={userAuth.user.account === 1 ? user : estate} content={content} /> : <Navigate to="/login/"/>}
       </>
   );
 };
