@@ -22,11 +22,10 @@ const Dashboard = ({user}) => {
                 </div>
                 <div className="row">
                     <div className="col-lg-9 col-md-9 col-sm-9">
-                        <div className="clearfix m-b20"><label className="m-b0">Apartment</label><span className="clearfix font-13">{user.apartment}</span></div>
-                        <div className="clearfix m-b20"><label className="m-b0">Email</label><span className="clearfix font-13">{user.email}</span></div>
                         <div className="clearfix m-b20"><label className="m-b0">Full Name</label><span className="clearfix font-13">{user.fullname}</span></div>
-                        <div className="clearfix m-b20"><label className="m-b0">Phone Number</label><span className="clearfix font-13"></span></div>
-                        <div className="clearfix m-b20"><label className="m-b0">Service Type</label><span className="clearfix font-13">{user.serviceType}</span></div>
+                        <div className="clearfix m-b20"><label className="m-b0">Email</label><span className="clearfix font-13">{user.email}</span></div>
+                        <div className="clearfix m-b20"><label className="m-b0">Apartment</label><span className="clearfix font-13">{user.apartment}</span></div>
+                        <div className="clearfix m-b20"><label className="m-b0">Service Type</label><span className="clearfix font-13">{user.serviceType === 1 ? 'Priority' : 'Priority Plus'}</span></div>
                     </div>
                     
                 </div>

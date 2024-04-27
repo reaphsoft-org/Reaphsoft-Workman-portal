@@ -9,21 +9,18 @@ const UserProfile = ({ user }) => {
         <div className="row">
           <div className="col-lg-6 col-md-9 col-sm-9">
             <div className="clearfix m-b20">
-              <label className="m-b0">Apartment</label>
-              <span className="clearfix font-13">{user.apartment}</span></div>
+              <label className="m-b0">Full Name</label>
+              <span className="clearfix font-13">{user.fullname}</span></div>
             <div className="clearfix m-b20">
               <label className="m-b0">Email</label>
               <span className="clearfix font-13">{user.email}</span></div>
             <div className="clearfix m-b20">
-              <label className="m-b0">Full Name</label>
-              <span className="clearfix font-13">{user.fullname}</span></div>
+              <label className="m-b0">Apartment</label>
+              <span className="clearfix font-13">{user.apartment}</span></div>
             <div className="clearfix m-b20">
-              <label className="m-b0">Phone Number</label>
-              <span className="clearfix font-13"></span>
-            </div>
-            <div className="clearfix m-b20">
-            <label className="m-b0">Service Type</label>
-              <span className="clearfix font-13">{user.serviceType}</span></div>
+              <label className="m-b0">Address</label>
+              <span className="clearfix font-13">{user.address}</span></div>
+            <div className="clearfix m-b20"><label className="m-b0">Service Type</label><span className="clearfix font-13">{user.serviceType === 1? 'Priority' : 'Priority Plus'}</span></div>
           </div>
             {/* <div className="col-lg-6 col-md-6">
             <div className="form-group">

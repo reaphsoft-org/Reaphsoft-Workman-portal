@@ -21,7 +21,7 @@ const User = ({content}) => {
     fetch(`http://localhost:3001/account/user/`, {
           method: 'GET',
           headers: {
-            'Authorization': 'Bearer ' + userAuth.user,
+            'Authorization': 'Bearer ' + userAuth.user.token,
             'Content-Type': 'application/json'
           }
         }

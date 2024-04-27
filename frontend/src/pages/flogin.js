@@ -22,7 +22,6 @@ function Login() {
     setData({ ...data, [e.target.name]: e.target.value });
   }
   const handleSubmit = async (event) => {
-    console.log('hit0');
     event.preventDefault();
     data.account = `${accountType.type}`;
     if (disableButton !== "") {
@@ -46,7 +45,7 @@ function Login() {
       const responseData = await response.json();
       if (responseData.status === true) {
         user.login({token: responseData.access_token, account: data.account});
-        window.location.href = "/user/dashboard/";
+        // window.location.href = "/user/";
       } else {
         setErrorText(responseData.resp);
         setDisableButton("");
@@ -121,7 +120,7 @@ function Login() {
                               <div className="form-text text-danger my-3 px-1">{errorText}</div>
                               <div className="text-center">
                                   <button type="submit" className={customBtnClass + disableButton}>Login</button>
-                                  {/*<Link className="site-button-link forget-pass m-t15 float-right" to="/register/"><i className="fa fa-unlock-alt"></i> Sign up</Link>*/}
+                                  <Link className="site-button-link forget-pass m-t15 float-right" to="/register/"><i className="fa fa-unlock-alt"></i> Sign up</Link>
                               </div>
                           </form>
                       </div>

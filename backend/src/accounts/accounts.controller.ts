@@ -1,12 +1,12 @@
 import {
-    Controller,
-    Post,
     Body,
-    UseInterceptors,
-    UploadedFile,
+    Controller,
     Get,
+    Post,
     Request as RequestDecorator,
+    UploadedFile,
     UseGuards,
+    UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AccountsService } from './accounts.service';
@@ -42,10 +42,8 @@ export class AccountsController {
         // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
         const email = req.user.email;
         // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
-        const type = req.user.type;
-        const resp = await this.accountsService.getUser(email, type);
-        console.log(resp);
-        return resp;
+        const type = Number.parseInt(req.user.type);
+        return await this.accountsService.getUser(email, type);
     }
 
     @UseGuards(AuthGuard)
