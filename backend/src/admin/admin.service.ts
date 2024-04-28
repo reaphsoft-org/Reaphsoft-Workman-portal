@@ -5,6 +5,7 @@ import { PasswordManager } from '../utilities/passwordmanager';
 import { User } from '../entities/User';
 import { CreateUserDto } from '../accounts/dto/create-user.dto';
 import { Email } from '../utilities/mailman';
+import { UpdateUserDto } from '../accounts/dto/update.dto';
 
 @Injectable()
 export class AdminService {
@@ -75,5 +76,26 @@ export class AdminService {
         const email = new Email();
         await email.sendAccountCreateMail(user);
         return { resp: 'Account created successfully', status: true };
+    }
+
+    async updateUser(email: string, updateUserDto: UpdateUserDto) {
+        const user = await this.usersRepo.findOneBy({
+            email: email,
+        });
+        if (!user) {
+            return {
+                resp: `No user was found with the email ${email}`,
+                status: false,
+            };
+        }
+        user.apartment = updateUserDto.apartment;
+        user.address = updateUserDto.address;
+        user.fullname = updateUserDto.fullname;
+        user.serviceType = updateUserDto.serviceType;
+        const check = user.runValidations();
+        if (!check.status) return check;
+        user.setValues();
+        await this.usersRepo.save(user);
+        return { resp: '', status: true };
     }
 }

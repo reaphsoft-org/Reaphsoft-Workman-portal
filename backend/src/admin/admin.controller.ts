@@ -4,6 +4,7 @@ import {
     Get,
     Param,
     Post,
+    Put,
     UploadedFile,
     UseGuards,
     UseInterceptors,
@@ -15,6 +16,7 @@ import { Roles } from '../roles/decorators/roles.decorator';
 import { Role } from '../roles/enum/role.enum';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateUserDto } from '../accounts/dto/create-user.dto';
+import { UpdateUserDto } from '../accounts/dto/update.dto';
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
@@ -34,6 +36,13 @@ export class AdminController {
         @Body() createUserDto: CreateUserDto,
     ) {
         return this.service.createUser(createUserDto, file);
+    }
+    @Put('user/:email/')
+    async updateUser(
+        @Param('email') email: string,
+        @Body() updateUserDto: UpdateUserDto,
+    ) {
+        return this.service.updateUser(email, updateUserDto);
     }
     // EstateManagers LIST, CRUD
     // workers LIST, CRUD
