@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { RolesGuard } from '../roles/roles.guard';
@@ -12,8 +12,10 @@ import { Role } from '../roles/enum/role.enum';
 export class AdminController {
     constructor(private readonly service: AdminService) {}
     // Users, LIST, CRUD,
-    @Get('users/')
-    async getUsers() {}
+    @Get('users/:page/')
+    async getUsers(@Param('page') page: number) {
+        return this.service.getUsers(page);
+    }
     // EstateManagers LIST, CRUD
     // workers LIST, CRUD
     // Requests, LIST CRUD
