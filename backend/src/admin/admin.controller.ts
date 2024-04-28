@@ -1,6 +1,6 @@
 import {
     Body,
-    Controller,
+    Controller, Delete,
     Get,
     Param,
     Post,
@@ -47,6 +47,10 @@ export class AdminController {
     @Get('user/:email/')
     async getUser(@Param('email') email: string) {
         return this.service.getUser(email);
+    }
+    @Delete('user/:email/')
+    async deleteUser(@Param('email') email: string){
+        return this.service.deleteUser(email);
     }
     // EstateManagers LIST, CRUD
     // workers LIST, CRUD

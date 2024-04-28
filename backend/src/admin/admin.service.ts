@@ -115,4 +115,11 @@ export class AdminService {
             photoURL: user.photoURL,
         };
     }
+
+    async deleteUser(email: string) {
+        const user = await this.usersRepo.findOneBy({ email: email });
+        if (!user) return { status: false, resp: 'user not found' };
+        await this.usersRepo.remove(user);
+        return { status: true, resp: '' };
+    }
 }
