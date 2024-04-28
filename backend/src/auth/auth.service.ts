@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { PasswordManager } from '../utilities/passwordmanager';
 import { EstateManager } from '../entities/EstateManager';
 import { SuperUser } from '../entities/SuperUser';
+import { Role } from '../roles/enum/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -80,7 +81,7 @@ export class AuthService {
                 resp: 'invalid password',
             };
         }
-        const payload = { email: user.email };
+        const payload = { email: user.email, roles: [Role.Admin] };
         const date = new Date();
         user.last_visited = date.toISOString();
         await this.adminRepo.save(user);

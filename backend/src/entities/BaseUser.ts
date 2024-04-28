@@ -22,7 +22,7 @@ export abstract class BaseUser {
     @Column({ type: 'varchar', length: 256 })
     password: string;
 
-    @Column({ type: 'varchar', length: 150 })
+    @Column({ type: 'varchar', length: 150, default: '' })
     photoURL: string;
 
     @CreateDateColumn()
