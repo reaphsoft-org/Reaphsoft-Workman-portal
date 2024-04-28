@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { Email } from '../utilities/mailman';
+import { LoginDto as AdminLoginDto } from '../admin/dto/login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -25,10 +25,16 @@ export class AuthController {
             };
         return this.authService.validateUser(email, password, account);
     }
-    @Get('email/test/')
-    async email(): Promise<{ status: string }> {
-        const email = new Email();
-        const resp = await email.sendTextMail('', '', '', '');
-        return { status: resp };
+
+    @Post('admin/login/')
+    async adminLogin(@Body() dto: AdminLoginDto) {
+        const { email, password } = dto;
+        if (email == undefined || password == undefined)
+            return {
+                status: false,
+                access_token: '',
+                resp: 'invalid request',
+            };
+        return this.authService.login(email, password);
     }
 }

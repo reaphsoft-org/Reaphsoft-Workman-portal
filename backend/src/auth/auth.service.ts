@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { PasswordManager } from '../utilities/passwordmanager';
 import { EstateManager } from '../entities/EstateManager';
+import { SuperUser } from '../entities/SuperUser';
 
 @Injectable()
 export class AuthService {
@@ -12,6 +13,7 @@ export class AuthService {
         AppDataSource.getRepository(User);
     private readonly estateRepo: Repository<EstateManager> =
         AppDataSource.getRepository(EstateManager);
+    private readonly adminRepo = AppDataSource.getRepository(SuperUser);
     private readonly passwordManager = new PasswordManager();
     constructor(private jwtService: JwtService) {}
 
@@ -63,5 +65,29 @@ export class AuthService {
             throw new NotFoundException('User not found');
         }
         return user;
+    }
+    async login(
+        email: string,
+        password: string,
+    ): Promise<{ status: boolean; access_token: string; resp: string }> {
+        const user = await this.adminRepo.findOneBy({ email: email });
+        if (!user)
+            return { status: false, access_token: '', resp: 'user not found' };
+        if (!this.passwordManager.comparePassword(password, user.password)) {
+            return {
+                status: false,
+                access_token: '',
+                resp: 'invalid password',
+            };
+        }
+        const payload = { email: user.email };
+        const date = new Date();
+        user.last_visited = date.toISOString();
+        await this.adminRepo.save(user);
+        return {
+            status: true,
+            access_token: await this.jwtService.signAsync(payload),
+            resp: '',
+        };
     }
 }

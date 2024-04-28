@@ -10,11 +10,12 @@ import { AppModule } from '../src/app.module';
 import { AppDataSource } from '../src/data-source';
 import { SuperUser } from '../src/entities/SuperUser';
 
-describe('Admin (e2e)', () => {
+describe('AdminAuth (e2e)', () => {
     let app: INestApplication;
     const user: SuperUser = new SuperUser();
     const passwordManager = new PasswordManager();
     const password = 'WhenYouAreMine';
+    const api = '/auth/admin/login/';
 
     beforeAll(async () => {
         const moduleRef = await Test.createTestingModule({
@@ -39,7 +40,7 @@ describe('Admin (e2e)', () => {
 
     it('should login', async () => {
         const resp = await request(app.getHttpServer())
-            .post('/admin/login/')
+            .post(api)
             .send({
                 email: user.email,
                 password: password,
@@ -51,9 +52,7 @@ describe('Admin (e2e)', () => {
         expect(data.resp).toBeFalsy();
     });
     it('should not login (no email password)', async () => {
-        const resp = await request(app.getHttpServer())
-            .post('/admin/login/')
-            .expect(201);
+        const resp = await request(app.getHttpServer()).post(api).expect(201);
         const data = resp.body;
         expect(data.status).toBe(false);
         expect(data.access_token).toBeFalsy();
@@ -61,7 +60,7 @@ describe('Admin (e2e)', () => {
     });
     it('should not login (nonexistent user)', async () => {
         const resp = await request(app.getHttpServer())
-            .post('/admin/login/')
+            .post(api)
             .send({
                 email: 'user.email',
                 password: 'password',
@@ -74,7 +73,7 @@ describe('Admin (e2e)', () => {
     });
     it('should not login (wrong password)', async () => {
         const resp = await request(app.getHttpServer())
-            .post('/admin/login/')
+            .post(api)
             .send({
                 email: user.email,
                 password: 'password',
