@@ -1,6 +1,9 @@
 import Mailgun, { MailgunMessageData } from 'mailgun.js';
 import { IMailgunClient } from 'mailgun.js/Interfaces';
 import * as fs from 'fs';
+import { User } from '../entities/User';
+import { EstateManager } from '../entities/EstateManager';
+import { createPDF } from './createpdf';
 
 export class Email {
     private mailgun: Mailgun;
@@ -68,5 +71,29 @@ export class Email {
                 response = 'Error encountered';
             });
         return response;
+    }
+
+    async sendAgreement(user: User | EstateManager, filePath: string) {
+        const resp = await this.sendTextMailWithAttachment(
+            user.email,
+            'Reaphsoft Workmen Contractual Agreement',
+            `Dear ${user.fullname},\n\nThank you for creating an account with us. Here is an official contractual agreement between us which is binding whenever you use our services.\n\nWarm Regards\nReaphsoft Workmen`,
+            '',
+            filePath,
+        );
+        return { status: resp };
+    }
+
+    async sendAccountCreateMail(user: User | EstateManager) {
+        const resp = await createPDF(user);
+        if (resp.success) {
+            const mailResponse = await this.sendAgreement(user, resp.filePath!);
+            if (mailResponse.status !== 'Queued') {
+                // log something
+            }
+            fs.rmSync(resp.filePath!);
+        } else {
+            console.log(resp);
+        }
     }
 }

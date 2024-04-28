@@ -11,4 +11,13 @@ export class User extends NonStaff {
 
     @OneToMany(() => UserRequest, (request) => request.client)
     requests: Relation<UserRequest>[];
+
+    runValidations() {
+        const check = this.generalValidations();
+        if (!check) return check;
+        if (this.apartment === undefined || this.apartment === '') {
+            return { status: false, resp: 'Invalid apartment number' };
+        }
+        return { status: true, resp: '' };
+    }
 }

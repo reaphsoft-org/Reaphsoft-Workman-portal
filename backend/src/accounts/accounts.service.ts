@@ -6,7 +6,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { MEDIA_DIR } from '../app.module';
 import { Email } from '../utilities/mailman';
-import { createPDF } from '../utilities/createpdf';
 import { UserDto } from './dto/user.dto';
 import { PasswordDto } from './dto/password.dto';
 import { CreateEstateDto } from './dto/create-estate.dto';
@@ -337,19 +336,8 @@ export class AccountsService {
                 status: false,
             };
         }
-        const resp = await createPDF(object);
-        if (resp.success) {
-            const mailResponse = await this.sendAgreement(
-                object,
-                resp.filePath!,
-            );
-            if (mailResponse.status !== 'Queued') {
-                // log something
-            }
-            fs.rmSync(resp.filePath!);
-        } else {
-            console.log(resp);
-        }
+        const email = new Email();
+        await email.sendAccountCreateMail(object);
         return { resp: 'Account created successfully', status: true };
     }
 
