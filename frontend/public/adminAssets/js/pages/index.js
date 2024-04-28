@@ -5,7 +5,7 @@
 //Primary use:	Aero - Responsive Bootstrap 4 Template
 //should be included in all pages. It controls some layout
 $(function() {
-    "use strict";
+    
     initSparkline();
     initC3Chart();    
 });

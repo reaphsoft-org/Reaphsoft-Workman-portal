@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+// import "../adminAssets/css/style.min.css";
 
 const Index = () => {
     return (
@@ -25,27 +26,27 @@ const Index = () => {
                         <div className="col-lg-3 col-md-6 col-sm-12">
                             <div className="card widget_2 big_icon sales">
                                 <div className="body">
-                                    <h6></h6>
-                                    <h2>200 <small className="info">Worker</small></h2>
-                                    <small>Total Registered Workman</small>
+                                    <div className="py-1"></div>
+                                    <h2>200 <small className="info">Workers</small></h2>
+                                    <small>Total Registered Workmen</small>
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6 col-sm-12">
                             <div className="card widget_2 big_icon email">
                                 <div className="body">
-                                    <h6></h6>
-                                    <h2>50 <small className="info">User</small></h2>
-                                    <small>Total Registered User</small>
+                                    <div className="py-1"></div>
+                                    <h2>50 <small className="info">Users</small></h2>
+                                    <small>Total Registered Users</small>
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6 col-sm-12">
                             <div className="card widget_2 big_icon domains">
                                 <div className="body">
-                                    <h6></h6>
-                                    <h2>74 <small className="info">Estate</small></h2>
-                                    <small>Total Registered Estate</small>
+                                    <div className="py-1"></div>
+                                    <h2>74 <small className="info">Estates</small></h2>
+                                    <small>Total Registered Estates</small>
                                     
                                 </div>
                             </div>
@@ -53,9 +54,9 @@ const Index = () => {
                         <div className="col-lg-3 col-md-6 col-sm-12">
                             <div className="card widget_2 big_icon domains">
                                 <div className="body">
-                                    <h6></h6>
-                                    <h2>300 <small className="info">Request</small></h2>
-                                    <small>Total Workman Request</small>
+                                    <div className="py-1"></div>
+                                    <h2>300 <small className="info">Requests</small></h2>
+                                    <small>Total Workman Requests</small>
                                 </div>
                             </div>
                         </div>

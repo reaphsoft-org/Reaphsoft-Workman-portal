@@ -1,6 +1,6 @@
-import {Body, Controller, Post} from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AdminService } from './admin.service';
-import {LoginDto} from "./dto/login.dto";
+import { LoginDto } from './dto/login.dto';
 
 @Controller('admin/')
 export class AdminController {
@@ -17,7 +17,4 @@ export class AdminController {
             };
         return this.service.login(email, password);
     }
-
-    @Post('create/')
-    async create() {}
 }

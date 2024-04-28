@@ -140,6 +140,25 @@ Set the `JWT_SECRET` environment variable in production
 1. [SignOptions](https://github.com/auth0/node-jsonwebtoken#usage)
 2. [See Also Supertest Authentication](https://ladjs.github.io/superagent/#authentication)
 
+## Fixtures
+I created the code for loading fixtures. 
+```
+npm build
+```
+or 
+```
+nest build
+```
+Then pass the services fixtures file path.
+```
+node dist/loaddata test/services.json
+```
+
+## Create SuperUser
+```
+npm run create_superuser <email> <password> <firstname> <lastnam>
+```
+
 # NestJS
 
 <p align="center">
