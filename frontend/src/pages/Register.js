@@ -2,6 +2,8 @@ import { IoAnalyticsSharp } from "react-icons/io5";
 import React, { useState } from 'react';
 import { Toast, ToastContainer } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import SweetAlertComponent  from "../utils/alert";
 
 export function generateRandomString() {
   let result = '';
@@ -20,6 +22,11 @@ function Register() {
   const [accountTypeValues, setAccountTypeValues] = useState({
     individual: true, description: 'Personal', accountType: 1
   });
+
+  const showAlert = (type, text, title = "") => {
+    let initializer = new SweetAlertComponent();
+    initializer.showAlert(type, text, title);
+  }
 
   // Function to handle when a new image is selected
   const handleImageChange = (event) => {
@@ -56,7 +63,9 @@ function Register() {
       if (data.status === true) {
         const code = generateRandomString();
         localStorage.setItem('register', code + `;;${formData.email}`);
-        window.location.href = `/register/success/?code=${code}`;
+        showAlert(1, data.resp, "success");
+
+        // window.location.href = `/register/success/?code=${code}`;
       } else {
         setShowToast({ message: data.resp, show: true });
         setDisableButton("");
@@ -83,10 +92,12 @@ function Register() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
   const logoSize = 80;
+ 
   return (
     
     <div className="vh-100">
       <div className="page-wraper">
+        <button onClick={() => showAlert(1, "Hello World", "Success")}>Alert !</button>
         <div className="browse-job login-style3">
           <div className="bg-img-fix yes" style={{ position: "relative", height: "auto", minHeight: "100vh" }}>
             <div style={{ backgroundColor: "#f2f5f3", width: "100vw", position: "absolute", opacity: "0.5", height: "100%" }}></div>
