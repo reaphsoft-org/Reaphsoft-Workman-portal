@@ -44,6 +44,10 @@ export class AdminController {
     ) {
         return this.service.updateUser(email, updateUserDto);
     }
+    @Get('user/:email/')
+    async getUser(@Param('email') email: string) {
+        return this.service.getUser(email);
+    }
     // EstateManagers LIST, CRUD
     // workers LIST, CRUD
     // Requests, LIST CRUD

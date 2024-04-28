@@ -98,4 +98,21 @@ export class AdminService {
         await this.usersRepo.save(user);
         return { resp: '', status: true };
     }
+
+    async getUser(email: string) {
+        const user = await this.usersRepo.findOneBy({
+            email: email,
+        });
+        if (!user) {
+            return null;
+        }
+        return {
+            email: user.email,
+            fullname: user.fullname,
+            apartment: user.apartment,
+            address: user.address,
+            serviceType: user.serviceType,
+            photoURL: user.photoURL,
+        };
+    }
 }
