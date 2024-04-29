@@ -24,7 +24,7 @@ import {
 import { CreateEstateDto } from '../accounts/dto/create-estate.dto';
 import { CreateWorkmanDto } from '../workmen/dto/create-workman.dto';
 import { UpdateWorkmanDto } from '../workmen/dto/update-workman.dto';
-import {RequestUpdateDto} from "../workmen/dto/request-update.dto";
+import { RequestUpdateDto } from '../workmen/dto/request-update.dto';
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
@@ -120,11 +120,12 @@ export class AdminController {
     }
     // Requests, LIST CRUD
     // no create for now
-        @Get('work/requests/:type/:page/')
-    async getWorkRequests(@Param('page') page: number,
-                          @Param('type') type: number) {
-        if (type !== 1 && type !== 2)
-            return { pages: 0, data: [] };
+    @Get('work/requests/:type/:page/')
+    async getWorkRequests(
+        @Param('page') page: number,
+        @Param('type') type: number,
+    ) {
+        if (type !== 1 && type !== 2) return { pages: 0, data: [] };
         return this.service.getWorkRequests(page, type);
     }
     @Put('work/request/:type/:id/')
@@ -136,11 +137,15 @@ export class AdminController {
         return this.service.updateWorkRequest(id, type, requestUpdateDto);
     }
     @Get('work/request/:type/:id/')
-    async getWorkRequest(@Param('id') id: number, @Param('type') type: number ) {
+    async getWorkRequest(@Param('id') id: number, @Param('type') type: number) {
         return this.service.getWorkRequest(id, type);
     }
-    @Delete('work/request/:email/')
-    async deleteWorkRequest(@Param('email') email: string) {
-        return this.service.deleteWorkRequest(email);
+    @Delete('work/request/:type/:id/')
+    async deleteWorkRequest(
+        @Param('id') id: number,
+        @Param('type') type: number,
+    ) {
+        return this.service.deleteWorkRequest(id, type);
+    }
     // Service
 }

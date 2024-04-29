@@ -426,7 +426,7 @@ export class AdminService {
         return { resp: '', status: true };
     }
 
-    getWorkRequest(id: number, type: number) {
+    async getWorkRequest(id: number, type: number) {
         const repo =
             type === User.accountType
                 ? this.userRequestRepo
@@ -456,5 +456,21 @@ export class AdminService {
             service: request.worker.service.name,
             service_description: request.worker.service.description,
         };
+    }
+
+    async deleteWorkRequest(id: number, type: number) {
+        const repo =
+            type === User.accountType
+                ? this.userRequestRepo
+                : this.estateRequestRepo;
+        const workRequest = await repo.findOneBy({ id: id });
+        if (!workRequest)
+            return {
+                status: false,
+                resp: `Work request was not found. ErrorCode: {t:${type},i:${id}}`,
+            };
+        // @ts-expect-error, below should work because workRequest isn't null
+        await repo.remove(workRequest);
+        return { status: true, resp: '' };
     }
 }
