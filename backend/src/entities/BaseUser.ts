@@ -100,6 +100,10 @@ export abstract class BaseUser {
         }
         return { status: true, resp: '' };
     }
+
+    checkPassword(password: string) {
+        return this.passwordManager.comparePassword(password, this.password);
+    }
 }
 
 export abstract class NonStaff extends BaseUser {

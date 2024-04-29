@@ -18,6 +18,7 @@ import { UpdateWorkmanDto } from '../workmen/dto/update-workman.dto';
 import { EstateRequest, UserRequest } from '../entities/Request';
 import { RequestUpdateDto } from '../workmen/dto/request-update.dto';
 import { ServiceDto } from '../workmen/dto/service.dto';
+import { UpdateAdminDto } from './dto/update-admin.dto';
 
 @Injectable()
 export class AdminService {
@@ -47,6 +48,35 @@ export class AdminService {
             date_joined: user.date_joined,
             last_visited: user.last_visited,
         };
+    }
+
+    async updateAdmin(email: string, dto: UpdateAdminDto) {
+        const user = await this.adminRepo.findOneBy({
+            email: email,
+        });
+        if (!user)
+            return {
+                resp: `admin with the email ${email} was not found`,
+                status: false,
+            };
+        if (dto.fullname !== undefined && dto.fullname !== '') {
+            user.fullname = dto.fullname;
+        }
+        if (dto.new_password !== undefined && dto.new_password !== '') {
+            if (dto.old_password === undefined)
+                return { status: false, resp: 'old password is required' };
+            if (!user.checkPassword(dto.old_password))
+                return { status: false, resp: 'incorrect old password' };
+            if (dto.old_password == dto.new_password) {
+                return {
+                    status: false,
+                    resp: `Your new password must be different to your old password`,
+                };
+            }
+            user.setValues(true);
+        }
+        await this.adminRepo.save(user);
+        return { resp: '', status: true };
     }
 
     async getUsers(page: number) {
