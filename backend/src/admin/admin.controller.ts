@@ -148,4 +148,29 @@ export class AdminController {
         return this.service.deleteWorkRequest(id, type);
     }
     // Service
+    @Get('services/:page/')
+    async getServices(@Param('page') page: number) {
+        return this.service.getServices(page);
+    }
+    @Post('service/')
+    async createService(
+        @Body() createServiceDto: CreateServiceDto,
+    ) {
+        return this.service.createService(createServiceDto);
+    }
+    @Put('service/:id/')
+    async updateService(
+        @Param('id') id: number,
+        @Body() updateServiceDto: UpdateServiceDto,
+    ) {
+        return this.service.updateService(id, updateServiceDto);
+    }
+    @Get('service/:id/')
+    async getService(@Param('id') id: number) {
+        return this.service.getService(id);
+    }
+    @Delete('service/:id/')
+    async deleteService(@Param('id') id: number) {
+        return this.service.deleteService(id);
+    }
 }

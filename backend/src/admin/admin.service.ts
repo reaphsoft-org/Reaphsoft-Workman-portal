@@ -473,4 +473,25 @@ export class AdminService {
         await repo.remove(workRequest);
         return { status: true, resp: '' };
     }
+
+    async getServices(page: number) {
+        if (page <= 0) return { pages: 0, data: [] };
+        const start = this.paginateBy * (page - 1);
+        const end = this.paginateBy * page;
+        const services = await this.serviceRepo.find({
+            skip: start,
+            take: end,
+        });
+        const count = await this.serviceRepo.count();
+        let pages = Math.floor(count / 50);
+        pages += count % this.paginateBy > 0 ? 1 : 0;
+        return {
+            pages: pages,
+            data: services.map((service) => ({
+                id: service.id,
+                name: service.name,
+                description: service.description,
+            })),
+        };
+    }
 }
