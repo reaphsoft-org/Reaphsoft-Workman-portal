@@ -135,9 +135,9 @@ export class AdminController {
     ) {
         return this.service.updateWorkRequest(id, type, requestUpdateDto);
     }
-    @Get('work/request/:email/')
-    async getWorkRequest(@Param('email') email: string) {
-        return this.service.getWorkRequest(email);
+    @Get('work/request/:type/:id/')
+    async getWorkRequest(@Param('id') id: number, @Param('type') type: number ) {
+        return this.service.getWorkRequest(id, type);
     }
     @Delete('work/request/:email/')
     async deleteWorkRequest(@Param('email') email: string) {

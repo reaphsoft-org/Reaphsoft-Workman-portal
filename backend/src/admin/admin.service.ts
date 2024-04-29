@@ -425,4 +425,36 @@ export class AdminService {
         await repo.save(request!);
         return { resp: '', status: true };
     }
+
+    getWorkRequest(id: number, type: number) {
+        const repo =
+            type === User.accountType
+                ? this.userRequestRepo
+                : this.estateRequestRepo;
+        const request = await repo.findOne({
+            where: {
+                id: id,
+            },
+            relations: {
+                client: true,
+                worker: {
+                    service: true,
+                },
+            },
+        });
+        if (!request) return null;
+        return {
+            accepted: request.accepted,
+            date_created: request.date_created,
+            date_required: request.date_required,
+            date_accepted: request.date_accepted,
+            date_completed: request.date_completed,
+            worker_name: request.worker.fullname,
+            worker_email: request.worker.email,
+            client: request.client.fullname,
+            client_email: request.client.email,
+            service: request.worker.service.name,
+            service_description: request.worker.service.description,
+        };
+    }
 }
