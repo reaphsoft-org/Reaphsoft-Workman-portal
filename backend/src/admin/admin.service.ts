@@ -15,6 +15,7 @@ import { CreateWorkmanDto } from '../workmen/dto/create-workman.dto';
 import { Workman } from '../entities/Workman';
 import { Service } from '../entities/Service';
 import { UpdateWorkmanDto } from '../workmen/dto/update-workman.dto';
+import { EstateRequest, UserRequest } from '../entities/Request';
 
 @Injectable()
 export class AdminService {
@@ -25,6 +26,9 @@ export class AdminService {
         AppDataSource.getRepository(EstateManager);
     private readonly workmanRepo = AppDataSource.getRepository(Workman);
     private readonly serviceRepo = AppDataSource.getRepository(Service);
+    private readonly userRequestRepo = AppDataSource.getRepository(UserRequest);
+    private readonly estateRequestRepo =
+        AppDataSource.getRepository(EstateRequest);
 
     async getUsers(page: number) {
         return await this.getNonStaffUsers(page, this.usersRepo);
@@ -351,5 +355,37 @@ export class AdminService {
         if (!workman) return { status: false, resp: 'workman not found' };
         await this.workmanRepo.remove(workman);
         return { status: true, resp: '' };
+    }
+
+    async getWorkRequests(page: number, type: number) {
+        if (page <= 0) return { pages: 0, data: [] };
+        const start = this.paginateBy * (page - 1);
+        const end = this.paginateBy * page;
+        const repo =
+            type === User.accountType
+                ? this.userRequestRepo
+                : this.estateRequestRepo;
+        const requests = await repo.find({
+            skip: start,
+            take: end,
+            relations: {
+                client: true,
+                worker: {
+                    service: true,
+                },
+            },
+        });
+        const count = await repo.count();
+        let pages = Math.floor(count / 50);
+        pages += count % this.paginateBy > 0 ? 1 : 0;
+        return {
+            pages: pages,
+            data: requests.map((request) => ({
+                id: request.id,
+                created_at: request.date_created,
+                client: request.client.fullname,
+                service: request.worker.service.name,
+            })),
+        };
     }
 }

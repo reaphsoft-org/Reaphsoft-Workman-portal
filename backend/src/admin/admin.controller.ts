@@ -22,8 +22,8 @@ import {
     UpdateUserDto,
 } from '../accounts/dto/update.dto';
 import { CreateEstateDto } from '../accounts/dto/create-estate.dto';
-import {CreateWorkmanDto} from "../workmen/dto/create-workman.dto";
-import {UpdateWorkmanDto} from "../workmen/dto/update-workman.dto";
+import { CreateWorkmanDto } from '../workmen/dto/create-workman.dto';
+import { UpdateWorkmanDto } from '../workmen/dto/update-workman.dto';
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
@@ -118,5 +118,27 @@ export class AdminController {
         return this.service.deleteWorkman(email);
     }
     // Requests, LIST CRUD
+    // no create for now
+        @Get('work/requests/:type/:page/')
+    async getWorkRequests(@Param('page') page: number,
+                          @Param('type') type: number) {
+        if (type !== 1 && type !== 2)
+            return { pages: 0, data: [] };
+        return this.service.getWorkRequests(page, type);
+    }
+    @Put('work/request/:email/')
+    async updateWorkRequest(
+        @Param('email') email: string,
+        @Body() updateWorkRequestDto: UpdateWorkRequestDto,
+    ) {
+        return this.service.updateWorkRequest(email, updateWorkRequestDto);
+    }
+    @Get('work/request/:email/')
+    async getWorkRequest(@Param('email') email: string) {
+        return this.service.getWorkRequest(email);
+    }
+    @Delete('work/request/:email/')
+    async deleteWorkRequest(@Param('email') email: string) {
+        return this.service.deleteWorkRequest(email);
     // Service
 }
