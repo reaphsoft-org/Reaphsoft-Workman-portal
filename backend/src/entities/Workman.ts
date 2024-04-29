@@ -15,7 +15,7 @@ export class Workman extends BaseUser {
     @Column({ type: 'varchar', length: 100 })
     address: string;
 
-    @Column({ type: 'varchar', length: 15 })
+    @Column({ type: 'varchar', length: 15, default: '' })
     phone: string;
 
     @Column({

@@ -22,6 +22,7 @@ import {
     UpdateUserDto,
 } from '../accounts/dto/update.dto';
 import { CreateEstateDto } from '../accounts/dto/create-estate.dto';
+import {CreateWorkmanDto} from "../workmen/dto/create-workman.dto";
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
@@ -87,6 +88,34 @@ export class AdminController {
         return this.service.deleteEstateManager(email);
     }
     // workers LIST, CRUD
+    @Get('workmen/:page/')
+    async getWorkmen(@Param('page') page: number) {
+        // todo add feature to filter and sort using get Query() parameters
+        return this.service.getWorkmen(page);
+    }
+    @Post('workman/')
+    @UseInterceptors(FileInterceptor('photo'))
+    async createWorkman(
+        @UploadedFile() file: any,
+        @Body() createWorkmanDto: CreateWorkmanDto,
+    ) {
+        return this.service.createWorkman(createWorkmanDto, file);
+    }
+    @Put('workman/:email/')
+    async updateWorkman(
+        @Param('email') email: string,
+        @Body() updateWorkmanDto: UpdateWorkmanDto,
+    ) {
+        return this.service.updateWorkman(email, updateWorkmanDto);
+    }
+    @Get('workman/:email/')
+    async getWorkman(@Param('email') email: string) {
+        return this.service.getWorkman(email);
+    }
+    @Delete('workman/:email/')
+    async deleteWorkman(@Param('email') email: string) {
+        return this.service.deleteWorkman(email);
+    }
     // Requests, LIST CRUD
     // Service
 }

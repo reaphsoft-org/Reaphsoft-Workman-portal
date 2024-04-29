@@ -11,6 +11,8 @@ import {
 import { Repository } from 'typeorm';
 import { EstateManager } from '../entities/EstateManager';
 import { CreateEstateDto } from '../accounts/dto/create-estate.dto';
+import { CreateWorkmanDto } from '../workmen/dto/create-workman.dto';
+import {Workman} from "../entities/Workman";
 
 @Injectable()
 export class AdminService {
@@ -19,6 +21,8 @@ export class AdminService {
     private readonly usersRepo = AppDataSource.getRepository(User);
     private readonly estateManagersRepo =
         AppDataSource.getRepository(EstateManager);
+    private readonly workmanRepo = AppDataSource.getRepository(Workman);
+
     async getUsers(page: number) {
         return await this.getNonStaffUsers(page, this.usersRepo);
     }
@@ -126,7 +130,7 @@ export class AdminService {
                 fullname: 'ASC',
             },
         });
-        const count = await this.usersRepo.count();
+        const count = await repo.count();
         let pages = Math.floor(count / 50);
         pages += count % this.paginateBy > 0 ? 1 : 0;
         return {
@@ -222,5 +226,33 @@ export class AdminService {
         if (!user) return { status: false, resp: 'user not found' };
         await this.estateManagersRepo.remove(user);
         return { status: true, resp: '' };
+    }
+
+    createWorkman(createWorkmanDto: CreateWorkmanDto, file: any) {
+        return Promise.resolve(undefined);
+    }
+
+    async getWorkmen(page: number) {
+        if (page <= 0) return { pages: 0, data: [] };
+        const start = this.paginateBy * (page - 1);
+        const end = this.paginateBy * page;
+        const users = await this.workmanRepo.find({
+            skip: start,
+            take: end,
+            order: {
+                fullname: 'ASC',
+            },
+        });
+        const count = await this.workmanRepo.count();
+        let pages = Math.floor(count / 50);
+        pages += count % this.paginateBy > 0 ? 1 : 0;
+        return {
+            pages: pages,
+            data: users.map((user) => ({
+                email: user.email,
+                name: user.fullname,
+                service: user.service,
+            })),
+        };
     }
 }

@@ -3,7 +3,7 @@ import { Column, Entity, OneToMany, Relation } from 'typeorm';
 import { NonStaff } from './BaseUser';
 import { House } from './House';
 import { PasswordManager } from '../utilities/passwordmanager';
-import { EstateRequest, UserRequest } from './Request';
+import { EstateRequest } from './Request';
 
 const passwordManager = new PasswordManager();
 
