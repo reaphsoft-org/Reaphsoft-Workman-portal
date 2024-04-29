@@ -16,6 +16,7 @@ import { Workman } from '../entities/Workman';
 import { Service } from '../entities/Service';
 import { UpdateWorkmanDto } from '../workmen/dto/update-workman.dto';
 import { EstateRequest, UserRequest } from '../entities/Request';
+import { RequestUpdateDto } from '../workmen/dto/request-update.dto';
 
 @Injectable()
 export class AdminService {
@@ -387,5 +388,41 @@ export class AdminService {
                 service: request.worker.service.name,
             })),
         };
+    }
+
+    async updateWorkRequest(
+        id: number,
+        type: number,
+        requestUpdateDto: RequestUpdateDto,
+    ) {
+        const repo =
+            type === User.accountType
+                ? this.userRequestRepo
+                : this.estateRequestRepo;
+        const request = await repo.findOneBy({
+            id: id,
+        });
+        if (!request) {
+            return {
+                resp: `Work request was not found. ErrorCode: {t:${type},i:${id}}`,
+                status: false,
+            };
+        }
+        if (requestUpdateDto.date_required !== undefined)
+            request.date_required = requestUpdateDto.date_required;
+        if (requestUpdateDto.accepted !== undefined)
+            request.accepted = requestUpdateDto.accepted;
+        if (requestUpdateDto.worker !== undefined) {
+            const worker = await this.workmanRepo.findOneBy({
+                id: id,
+            });
+            if (!worker) {
+                return `workman with id: ${requestUpdateDto.worker} not found`;
+            }
+            request.worker = worker;
+        }
+        // @ts-expect-error, request is not null. Below should work
+        await repo.save(request!);
+        return { resp: '', status: true };
     }
 }

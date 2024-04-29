@@ -24,6 +24,7 @@ import {
 import { CreateEstateDto } from '../accounts/dto/create-estate.dto';
 import { CreateWorkmanDto } from '../workmen/dto/create-workman.dto';
 import { UpdateWorkmanDto } from '../workmen/dto/update-workman.dto';
+import {RequestUpdateDto} from "../workmen/dto/request-update.dto";
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
@@ -126,12 +127,13 @@ export class AdminController {
             return { pages: 0, data: [] };
         return this.service.getWorkRequests(page, type);
     }
-    @Put('work/request/:email/')
+    @Put('work/request/:type/:id/')
     async updateWorkRequest(
-        @Param('email') email: string,
-        @Body() updateWorkRequestDto: UpdateWorkRequestDto,
+        @Param('id') id: number,
+        @Param('type') type: number,
+        @Body() requestUpdateDto: RequestUpdateDto,
     ) {
-        return this.service.updateWorkRequest(email, updateWorkRequestDto);
+        return this.service.updateWorkRequest(id, type, requestUpdateDto);
     }
     @Get('work/request/:email/')
     async getWorkRequest(@Param('email') email: string) {
