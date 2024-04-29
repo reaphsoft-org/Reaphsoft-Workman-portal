@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AppDataSource } from '../data-source';
 import { SuperUser } from '../entities/SuperUser';
-import { PasswordManager } from '../utilities/passwordmanager';
 import { User } from '../entities/User';
 import { CreateUserDto } from '../accounts/dto/create-user.dto';
 import { Email } from '../utilities/mailman';
@@ -20,8 +19,6 @@ export class AdminService {
     private readonly usersRepo = AppDataSource.getRepository(User);
     private readonly estateManagersRepo =
         AppDataSource.getRepository(EstateManager);
-    private readonly passwordManager = new PasswordManager();
-
     async getUsers(page: number) {
         return await this.getNonStaffUsers(page, this.usersRepo);
     }
@@ -120,8 +117,8 @@ export class AdminService {
         repo: Repository<User> | Repository<EstateManager>,
     ) {
         if (page <= 0) return { pages: 0, data: [] };
-        const start = 50 * (page - 1);
-        const end = 50 * page;
+        const start = this.paginateBy * (page - 1);
+        const end = this.paginateBy * page;
         const users = await repo.find({
             skip: start,
             take: end,
@@ -131,7 +128,7 @@ export class AdminService {
         });
         const count = await this.usersRepo.count();
         let pages = Math.floor(count / 50);
-        pages += count % 50 > 0 ? 1 : 0;
+        pages += count % this.paginateBy > 0 ? 1 : 0;
         return {
             pages: pages,
             data: users.map((user) => ({
