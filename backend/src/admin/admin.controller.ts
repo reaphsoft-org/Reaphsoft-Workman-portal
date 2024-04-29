@@ -17,8 +17,11 @@ import { Roles } from '../roles/decorators/roles.decorator';
 import { Role } from '../roles/enum/role.enum';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateUserDto } from '../accounts/dto/create-user.dto';
-import { UpdateUserDto } from '../accounts/dto/update.dto';
-import {CreateEstateDto} from "../accounts/dto/create-estate.dto";
+import {
+    UpdateEstateManagerDto,
+    UpdateUserDto,
+} from '../accounts/dto/update.dto';
+import { CreateEstateDto } from '../accounts/dto/create-estate.dto';
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)

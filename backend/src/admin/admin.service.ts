@@ -5,7 +5,10 @@ import { PasswordManager } from '../utilities/passwordmanager';
 import { User } from '../entities/User';
 import { CreateUserDto } from '../accounts/dto/create-user.dto';
 import { Email } from '../utilities/mailman';
-import { UpdateUserDto } from '../accounts/dto/update.dto';
+import {
+    UpdateEstateManagerDto,
+    UpdateUserDto,
+} from '../accounts/dto/update.dto';
 import { Repository } from 'typeorm';
 import { EstateManager } from '../entities/EstateManager';
 import { CreateEstateDto } from '../accounts/dto/create-estate.dto';
@@ -174,5 +177,29 @@ export class AdminService {
         const email = new Email();
         await email.sendAccountCreateMail(manager);
         return { resp: 'Account created successfully', status: true };
+    }
+
+    async updateEstateManager(
+        email: string,
+        updateEstateManagerDto: UpdateEstateManagerDto,
+    ) {
+        const user = await this.estateManagersRepo.findOneBy({
+            email: email,
+        });
+        if (!user) {
+            return {
+                resp: `No estate manager was found with the email ${email}`,
+                status: false,
+            };
+        }
+        user.estate = updateEstateManagerDto.estate;
+        user.address = updateEstateManagerDto.address;
+        user.fullname = updateEstateManagerDto.fullname;
+        user.serviceType = updateEstateManagerDto.serviceType;
+        const check = user.runValidations();
+        if (!check.status) return check;
+        user.setValues();
+        await this.usersRepo.save(user);
+        return { resp: '', status: true };
     }
 }
