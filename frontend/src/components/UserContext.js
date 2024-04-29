@@ -10,7 +10,7 @@ const showSweetAlert = (type, text, title = "") => {
 
 const UserProvider = ({ children }) => {
     const [service, setService] = useState(null);
-    Const [workman, setWorkman] = useState(null);
+    Const [worker, setWorkman] = useState(null);
 
     const getServcice = async () => {
         try {
@@ -65,7 +65,7 @@ const UserProvider = ({ children }) => {
     }, [])
 
     return (
-        <UserContext.Provider value={{ service }}>
+        <UserContext.Provider value={{ service, worker }}>
             {children}
         </UserContext.Provider>
     );

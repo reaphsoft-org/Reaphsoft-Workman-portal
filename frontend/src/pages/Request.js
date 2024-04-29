@@ -3,6 +3,7 @@ import { useUser } from "../components/UserContext";
 
 const Request = ({ user }) => {
     const { service } = useUser();
+    const { worker } = useUser();
     return (
         <div className="col-xl-9 col-lg-8 m-b30">
             <div className="col-xl-10 col-lg-10 m-b30">
@@ -24,7 +25,7 @@ const Request = ({ user }) => {
                                 <div className="form-group">
                                     <label>Select Worker</label>
                                     <select className="custom-select custom-select" >
-                                        <option>IKEA Assembly</option>
+                                        {worker?.map((worker, index) => value = {  } (<option key={index}>{worker}</option>))}
                                     </select>
                                 </div>
                             </div>
