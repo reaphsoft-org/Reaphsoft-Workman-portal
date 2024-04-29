@@ -6,15 +6,17 @@ import { User } from '../entities/User';
 import { CreateUserDto } from '../accounts/dto/create-user.dto';
 import { Email } from '../utilities/mailman';
 import { UpdateUserDto } from '../accounts/dto/update.dto';
-import {Repository} from "typeorm";
-import {EstateManager} from "../entities/EstateManager";
+import { Repository } from 'typeorm';
+import { EstateManager } from '../entities/EstateManager';
+import { CreateEstateDto } from '../accounts/dto/create-estate.dto';
 
 @Injectable()
 export class AdminService {
     paginateBy = 50;
     private readonly adminRepo = AppDataSource.getRepository(SuperUser);
     private readonly usersRepo = AppDataSource.getRepository(User);
-    private readonly estateManagersRepo = AppDataSource.getRepository(EstateManager);
+    private readonly estateManagersRepo =
+        AppDataSource.getRepository(EstateManager);
     private readonly passwordManager = new PasswordManager();
 
     async getUsers(page: number) {
@@ -135,5 +137,42 @@ export class AdminService {
                 address: user.address,
             })),
         };
+    }
+
+    async createEstateManager(createEstateDto: CreateEstateDto, file: any) {
+        const manager = new EstateManager();
+        manager.email = createEstateDto.email;
+        manager.password = createEstateDto.password;
+        manager.fullname = createEstateDto.fullname;
+        manager.address = createEstateDto.address;
+        manager.serviceType = createEstateDto.serviceType;
+        manager.estate = createEstateDto.estate;
+        const check = manager.runValidations();
+        if (!check.status) return check;
+        manager.setValues(true);
+        await manager.saveFile(file);
+        try {
+            await this.usersRepo.save(manager);
+        } catch (e) {
+            manager.deletePhoto();
+            if (
+                e.name === 'QueryFailedError' &&
+                e.message.includes(
+                    'duplicate key value violates unique constraint',
+                )
+            ) {
+                return {
+                    resp: 'A user with the email you supplied already exists.',
+                    status: false,
+                };
+            }
+            return {
+                resp: 'An error was encountered while trying to save the object. Please refresh the page and try again.',
+                status: false,
+            };
+        }
+        const email = new Email();
+        await email.sendAccountCreateMail(manager);
+        return { resp: 'Account created successfully', status: true };
     }
 }

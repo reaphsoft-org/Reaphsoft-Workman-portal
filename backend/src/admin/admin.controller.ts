@@ -18,6 +18,7 @@ import { Role } from '../roles/enum/role.enum';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateUserDto } from '../accounts/dto/create-user.dto';
 import { UpdateUserDto } from '../accounts/dto/update.dto';
+import {CreateEstateDto} from "../accounts/dto/create-estate.dto";
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
@@ -63,9 +64,9 @@ export class AdminController {
     @UseInterceptors(FileInterceptor('photo'))
     async createEstateManager(
         @UploadedFile() file: any,
-        @Body() createEstateManagerDto: CreateEstateManagerDto,
+        @Body() createEstateDto: CreateEstateDto,
     ) {
-        return this.service.createEstateManager(createEstateManagerDto, file);
+        return this.service.createEstateManager(createEstateDto, file);
     }
     @Put('estate/manager/:email/')
     async updateEstateManager(

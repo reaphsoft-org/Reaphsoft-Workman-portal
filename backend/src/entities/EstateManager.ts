@@ -3,7 +3,7 @@ import { Column, Entity, OneToMany, Relation } from 'typeorm';
 import { NonStaff } from './BaseUser';
 import { House } from './House';
 import { PasswordManager } from '../utilities/passwordmanager';
-import {EstateRequest, UserRequest} from "./Request";
+import { EstateRequest, UserRequest } from './Request';
 
 const passwordManager = new PasswordManager();
 
@@ -40,4 +40,13 @@ export class EstateManager extends NonStaff {
 
     @OneToMany(() => EstateRequest, (request) => request.client)
     requests: Relation<EstateRequest>[];
+
+    runValidations() {
+        const check = this.generalValidations();
+        if (!check) return check;
+        if (this.estate === undefined || this.estate === '') {
+            return { status: false, resp: 'Invalid estate name' };
+        }
+        return { status: true, resp: '' };
+    }
 }
