@@ -22,8 +22,10 @@ import {
     UpdateUserDto,
 } from '../accounts/dto/update.dto';
 import { CreateEstateDto } from '../accounts/dto/create-estate.dto';
-import {CreateWorkmanDto} from "../workmen/dto/create-workman.dto";
-import {UpdateWorkmanDto} from "../workmen/dto/update-workman.dto";
+import { CreateWorkmanDto } from '../workmen/dto/create-workman.dto';
+import { UpdateWorkmanDto } from '../workmen/dto/update-workman.dto';
+import { RequestUpdateDto } from '../workmen/dto/request-update.dto';
+import { ServiceDto } from '../workmen/dto/service.dto';
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
@@ -118,5 +120,56 @@ export class AdminController {
         return this.service.deleteWorkman(email);
     }
     // Requests, LIST CRUD
+    // no create for now
+    @Get('work/requests/:type/:page/')
+    async getWorkRequests(
+        @Param('page') page: number,
+        @Param('type') type: number,
+    ) {
+        if (type !== 1 && type !== 2) return { pages: 0, data: [] };
+        return this.service.getWorkRequests(page, type);
+    }
+    @Put('work/request/:type/:id/')
+    async updateWorkRequest(
+        @Param('id') id: number,
+        @Param('type') type: number,
+        @Body() requestUpdateDto: RequestUpdateDto,
+    ) {
+        return this.service.updateWorkRequest(id, type, requestUpdateDto);
+    }
+    @Get('work/request/:type/:id/')
+    async getWorkRequest(@Param('id') id: number, @Param('type') type: number) {
+        return this.service.getWorkRequest(id, type);
+    }
+    @Delete('work/request/:type/:id/')
+    async deleteWorkRequest(
+        @Param('id') id: number,
+        @Param('type') type: number,
+    ) {
+        return this.service.deleteWorkRequest(id, type);
+    }
     // Service
+    @Get('services/:page/')
+    async getServices(@Param('page') page: number) {
+        return this.service.getServices(page);
+    }
+    @Post('service/')
+    async createService(@Body() serviceDto: ServiceDto) {
+        return this.service.createService(serviceDto);
+    }
+    @Put('service/:id/')
+    async updateService(
+        @Param('id') id: number,
+        @Body() serviceDto: ServiceDto,
+    ) {
+        return this.service.updateService(id, serviceDto);
+    }
+    @Get('service/:id/')
+    async getService(@Param('id') id: number) {
+        return this.service.getService(id);
+    }
+    @Delete('service/:id/')
+    async deleteService(@Param('id') id: number) {
+        return this.service.deleteService(id);
+    }
 }

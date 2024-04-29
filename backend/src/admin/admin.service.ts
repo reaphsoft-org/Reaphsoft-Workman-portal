@@ -15,6 +15,9 @@ import { CreateWorkmanDto } from '../workmen/dto/create-workman.dto';
 import { Workman } from '../entities/Workman';
 import { Service } from '../entities/Service';
 import { UpdateWorkmanDto } from '../workmen/dto/update-workman.dto';
+import { EstateRequest, UserRequest } from '../entities/Request';
+import { RequestUpdateDto } from '../workmen/dto/request-update.dto';
+import { ServiceDto } from '../workmen/dto/service.dto';
 
 @Injectable()
 export class AdminService {
@@ -25,6 +28,9 @@ export class AdminService {
         AppDataSource.getRepository(EstateManager);
     private readonly workmanRepo = AppDataSource.getRepository(Workman);
     private readonly serviceRepo = AppDataSource.getRepository(Service);
+    private readonly userRequestRepo = AppDataSource.getRepository(UserRequest);
+    private readonly estateRequestRepo =
+        AppDataSource.getRepository(EstateRequest);
 
     async getUsers(page: number) {
         return await this.getNonStaffUsers(page, this.usersRepo);
@@ -350,6 +356,196 @@ export class AdminService {
         const workman = await this.workmanRepo.findOneBy({ email: email });
         if (!workman) return { status: false, resp: 'workman not found' };
         await this.workmanRepo.remove(workman);
+        return { status: true, resp: '' };
+    }
+
+    async getWorkRequests(page: number, type: number) {
+        if (page <= 0) return { pages: 0, data: [] };
+        const start = this.paginateBy * (page - 1);
+        const end = this.paginateBy * page;
+        const repo =
+            type === User.accountType
+                ? this.userRequestRepo
+                : this.estateRequestRepo;
+        const requests = await repo.find({
+            skip: start,
+            take: end,
+            relations: {
+                client: true,
+                worker: {
+                    service: true,
+                },
+            },
+        });
+        const count = await repo.count();
+        let pages = Math.floor(count / 50);
+        pages += count % this.paginateBy > 0 ? 1 : 0;
+        return {
+            pages: pages,
+            data: requests.map((request) => ({
+                id: request.id,
+                created_at: request.date_created,
+                client: request.client.fullname,
+                service: request.worker.service.name,
+            })),
+        };
+    }
+
+    async updateWorkRequest(
+        id: number,
+        type: number,
+        requestUpdateDto: RequestUpdateDto,
+    ) {
+        const repo =
+            type === User.accountType
+                ? this.userRequestRepo
+                : this.estateRequestRepo;
+        const request = await repo.findOneBy({
+            id: id,
+        });
+        if (!request) {
+            return {
+                resp: `Work request was not found. ErrorCode: {t:${type},i:${id}}`,
+                status: false,
+            };
+        }
+        if (requestUpdateDto.date_required !== undefined)
+            request.date_required = requestUpdateDto.date_required;
+        if (requestUpdateDto.accepted !== undefined)
+            request.accepted = requestUpdateDto.accepted;
+        if (requestUpdateDto.worker !== undefined) {
+            const worker = await this.workmanRepo.findOneBy({
+                id: id,
+            });
+            if (!worker) {
+                return `workman with id: ${requestUpdateDto.worker} not found`;
+            }
+            request.worker = worker;
+        }
+        // @ts-expect-error, request is not null. Below should work
+        await repo.save(request!);
+        return { resp: '', status: true };
+    }
+
+    async getWorkRequest(id: number, type: number) {
+        const repo =
+            type === User.accountType
+                ? this.userRequestRepo
+                : this.estateRequestRepo;
+        const request = await repo.findOne({
+            where: {
+                id: id,
+            },
+            relations: {
+                client: true,
+                worker: {
+                    service: true,
+                },
+            },
+        });
+        if (!request) return null;
+        return {
+            accepted: request.accepted,
+            date_created: request.date_created,
+            date_required: request.date_required,
+            date_accepted: request.date_accepted,
+            date_completed: request.date_completed,
+            worker_name: request.worker.fullname,
+            worker_email: request.worker.email,
+            client: request.client.fullname,
+            client_email: request.client.email,
+            service: request.worker.service.name,
+            service_description: request.worker.service.description,
+        };
+    }
+
+    async deleteWorkRequest(id: number, type: number) {
+        const repo =
+            type === User.accountType
+                ? this.userRequestRepo
+                : this.estateRequestRepo;
+        const workRequest = await repo.findOneBy({ id: id });
+        if (!workRequest)
+            return {
+                status: false,
+                resp: `Work request was not found. ErrorCode: {t:${type},i:${id}}`,
+            };
+        // @ts-expect-error, below should work because workRequest isn't null
+        await repo.remove(workRequest);
+        return { status: true, resp: '' };
+    }
+
+    async getServices(page: number) {
+        if (page <= 0) return { pages: 0, data: [] };
+        const start = this.paginateBy * (page - 1);
+        const end = this.paginateBy * page;
+        const services = await this.serviceRepo.find({
+            skip: start,
+            take: end,
+        });
+        const count = await this.serviceRepo.count();
+        let pages = Math.floor(count / 50);
+        pages += count % this.paginateBy > 0 ? 1 : 0;
+        return {
+            pages: pages,
+            data: services.map((service) => ({
+                id: service.id,
+                name: service.name,
+                description: service.description,
+            })),
+        };
+    }
+
+    async createService(serviceDto: ServiceDto) {
+        if (serviceDto.name === undefined || serviceDto.name === '') {
+            return { status: false, resp: 'Invalid name' };
+        }
+        if (
+            serviceDto.description === undefined ||
+            serviceDto.description === ''
+        ) {
+            return { status: false, resp: 'Invalid description' };
+        }
+        const service = new Service();
+        service.name = serviceDto.name;
+        service.description = serviceDto.description;
+        await this.serviceRepo.save(service);
+        return { resp: '', status: true };
+    }
+
+    async updateService(id: number, serviceDto: ServiceDto) {
+        const service = await this.serviceRepo.findOneBy({
+            id: id,
+        });
+        if (!service) return { resp: `Service not found`, status: false };
+        if (serviceDto.name !== undefined && serviceDto.name !== '') {
+            service.name = serviceDto.name;
+        }
+        if (
+            serviceDto.description !== undefined &&
+            serviceDto.description !== ''
+        ) {
+            service.description = serviceDto.description;
+        }
+        await this.serviceRepo.save(service);
+        return { resp: '', status: true };
+    }
+
+    async getService(id: number) {
+        const service = await this.serviceRepo.findOneBy({ id: id });
+        if (!service) {
+            return null;
+        }
+        return {
+            name: service.name,
+            description: service.description,
+        };
+    }
+
+    async deleteService(id: number) {
+        const service = await this.workmanRepo.findOneBy({ id: id });
+        if (!service) return { status: false, resp: 'service not found' };
+        await this.workmanRepo.remove(service);
         return { status: true, resp: '' };
     }
 }

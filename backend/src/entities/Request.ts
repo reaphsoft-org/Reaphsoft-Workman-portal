@@ -40,13 +40,21 @@ abstract class RequestBase {
     worker: Relation<Workman>;
 }
 
-@Entity()
+@Entity({
+    orderBy: {
+        date_created: 'ASC',
+    },
+})
 export class UserRequest extends RequestBase {
     @ManyToOne(() => User, (user) => user.requests, { onDelete: 'SET NULL' })
     client: Relation<User>;
 }
 
-@Entity()
+@Entity({
+    orderBy: {
+        date_created: 'ASC',
+    },
+})
 export class EstateRequest extends RequestBase {
     @ManyToOne(() => EstateManager, (manager) => manager.requests, {
         onDelete: 'SET NULL',
