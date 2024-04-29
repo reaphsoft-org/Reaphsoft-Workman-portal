@@ -6,36 +6,19 @@ import { User } from '../entities/User';
 import { CreateUserDto } from '../accounts/dto/create-user.dto';
 import { Email } from '../utilities/mailman';
 import { UpdateUserDto } from '../accounts/dto/update.dto';
+import {Repository} from "typeorm";
+import {EstateManager} from "../entities/EstateManager";
 
 @Injectable()
 export class AdminService {
     paginateBy = 50;
     private readonly adminRepo = AppDataSource.getRepository(SuperUser);
     private readonly usersRepo = AppDataSource.getRepository(User);
+    private readonly estateManagersRepo = AppDataSource.getRepository(EstateManager);
     private readonly passwordManager = new PasswordManager();
 
     async getUsers(page: number) {
-        if (page <= 0) return { pages: 0, data: [] };
-        const start = 50 * (page - 1);
-        const end = 50 * page;
-        const users = await this.usersRepo.find({
-            skip: start,
-            take: end,
-            order: {
-                fullname: 'ASC',
-            },
-        });
-        const count = await this.usersRepo.count();
-        let pages = Math.floor(count / 50);
-        pages += count % 50 > 0 ? 1 : 0;
-        return {
-            pages: pages,
-            data: users.map((user) => ({
-                email: user.email,
-                name: user.fullname,
-                address: user.address,
-            })),
-        };
+        return await this.getNonStaffUsers(page, this.usersRepo);
     }
 
     async createUser(createUserDto: CreateUserDto, file: any) {
@@ -121,5 +104,36 @@ export class AdminService {
         if (!user) return { status: false, resp: 'user not found' };
         await this.usersRepo.remove(user);
         return { status: true, resp: '' };
+    }
+
+    async getEstateManagers(page: number) {
+        return await this.getNonStaffUsers(page, this.estateManagersRepo);
+    }
+
+    async getNonStaffUsers(
+        page: number,
+        repo: Repository<User> | Repository<EstateManager>,
+    ) {
+        if (page <= 0) return { pages: 0, data: [] };
+        const start = 50 * (page - 1);
+        const end = 50 * page;
+        const users = await repo.find({
+            skip: start,
+            take: end,
+            order: {
+                fullname: 'ASC',
+            },
+        });
+        const count = await this.usersRepo.count();
+        let pages = Math.floor(count / 50);
+        pages += count % 50 > 0 ? 1 : 0;
+        return {
+            pages: pages,
+            data: users.map((user) => ({
+                email: user.email,
+                name: user.fullname,
+                address: user.address,
+            })),
+        };
     }
 }

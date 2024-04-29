@@ -1,6 +1,7 @@
 import {
     Body,
-    Controller, Delete,
+    Controller,
+    Delete,
     Get,
     Param,
     Post,
@@ -49,10 +50,39 @@ export class AdminController {
         return this.service.getUser(email);
     }
     @Delete('user/:email/')
-    async deleteUser(@Param('email') email: string){
+    async deleteUser(@Param('email') email: string) {
         return this.service.deleteUser(email);
     }
     // EstateManagers LIST, CRUD
+    // EstateManagers, LIST, CRUD,
+    @Get('estate/managers/:page/')
+    async getEstateManagers(@Param('page') page: number) {
+        return this.service.getEstateManagers(page);
+    }
+    @Post('estate/manager/')
+    @UseInterceptors(FileInterceptor('photo'))
+    async createEstateManager(
+        @UploadedFile() file: any,
+        @Body() createEstateManagerDto: CreateEstateManagerDto,
+    ) {
+        return this.service.createEstateManager(createEstateManagerDto, file);
+    }
+    @Put('estate/manager/:email/')
+    async updateEstateManager(
+        @Param('email') email: string,
+        @Body() updateEstateManagerDto: UpdateEstateManagerDto,
+    ) {
+        return this.service.updateEstateManager(email, updateEstateManagerDto);
+    }
+    @Get('estate/manager/:email/')
+    async getEstateManager(@Param('email') email: string) {
+        return this.service.getEstateManager(email);
+    }
+    @Delete('estate/manager/:email/')
+    async deleteEstateManager(@Param('email') email: string) {
+        return this.service.deleteEstateManager(email);
+    }
     // workers LIST, CRUD
     // Requests, LIST CRUD
+    // Service
 }
