@@ -23,13 +23,28 @@ class SweetAlertComponent extends Component {
     }
 
 
-    showAlert = (type, text, title = "") => {
+    showAlert = (type, text, page, title = "") => {
         Swal.fire({
             title: type === 3 ? 'Error!' : title,
             text: text,
             icon: this.gettype(type),
+        }).then((result) => {
+            if (result.isConfirmed) {
+                    window.location.href = `${page}`
+            }
         });
     };
+
+    showToast = (type, text ) => {
+        Swal.fire({
+            position: "top-end",
+            icon: this.gettype(type),
+            text: text,
+            title: type === 3 ? 'Error!' : title,
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
 }
 
 export default SweetAlertComponent;

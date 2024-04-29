@@ -14,8 +14,8 @@ export default function Body() {
                             
                             <div className="extra-nav">
                                 <div className="extra-cell">
-                                    <Link className="site-button text-decoration-none" to="/login/"><i className="fa fa-user"></i>Log In</Link>
-                                    <Link className="site-button text-decoration-none" to="/register/"><i className="fa fa-lock"></i>Register</Link>
+                                    <Link className="site-button text-decoration-none" to="/login/">Log In</Link>
+                                    <Link className="site-button text-decoration-none" to="/register/">Register</Link>
                                 </div>
                             </div>
                             <div className="header-nav navbar-collapse collapse myNavbar justify-content-end" id="navbarNavDropdown">
@@ -194,7 +194,7 @@ export default function Body() {
                             </div>
                         </div>
                     </div> */}
-                <div className="section-full p-tb70 overlay-black-dark text-white text-center bg-img-fix" style={{ backgroundImage: "url(&quot;static/media/slide1.77cb3acb.jpg&quot;)" }}>
+                <div className="section-full p-tb70 overlay-black-dark text-white text-center bg-img-fix text-black" style={{ backgroundImage: "url(&quot;static/media/slide1.77cb3acb.jpg&quot;)" }}>
                         <div className="container">
                             <div className="section-head text-center text-white">
                                 <h2 className="m-b5">Testimonials</h2>

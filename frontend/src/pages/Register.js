@@ -23,9 +23,9 @@ function Register() {
     individual: true, description: 'Personal', accountType: 1
   });
 
-  const showAlert = (type, text, title = "") => {
+  const showAlert = (type, text, page ,title = "") => {
     let initializer = new SweetAlertComponent();
-    initializer.showAlert(type, text, title);
+    initializer.showAlert(type, text, page ,title);
   }
 
   // Function to handle when a new image is selected
@@ -63,7 +63,7 @@ function Register() {
       if (data.status === true) {
         const code = generateRandomString();
         localStorage.setItem('register', code + `;;${formData.email}`);
-        showAlert(1, data.resp, "success");
+        showAlert(1, data.resp, "/login/", "success");
 
         // window.location.href = `/register/success/?code=${code}`;
       } else {
@@ -97,7 +97,6 @@ function Register() {
     
     <div className="vh-100">
       <div className="page-wraper">
-        <button onClick={() => showAlert(1, "Hello World", "Success")}>Alert !</button>
         <div className="browse-job login-style3">
           <div className="bg-img-fix yes" style={{ position: "relative", height: "auto", minHeight: "100vh" }}>
             <div style={{ backgroundColor: "#f2f5f3", width: "100vw", position: "absolute", opacity: "0.5", height: "100%" }}></div>
