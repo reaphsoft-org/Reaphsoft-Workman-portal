@@ -202,4 +202,21 @@ export class AdminService {
         await this.usersRepo.save(user);
         return { resp: '', status: true };
     }
+
+    async getEstateManager(email: string) {
+        const user = await this.estateManagersRepo.findOneBy({
+            email: email,
+        });
+        if (!user) {
+            return null;
+        }
+        return {
+            email: user.email,
+            fullname: user.fullname,
+            estate: user.estate,
+            address: user.address,
+            serviceType: user.serviceType,
+            photoURL: user.photoURL,
+        };
+    }
 }
