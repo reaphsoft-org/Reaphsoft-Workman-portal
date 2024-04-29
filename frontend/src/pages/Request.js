@@ -1,6 +1,47 @@
 import React from "react";
+import { useUser } from "../components/UserContext";
 
-const Request = ({user}) => {
+const Request = ({ user }) => {
+    const { gege } = useUser();
+
+    console.log(gege);
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     data.account = `${accountType.type}`;
+    //     if (disableButton !== "") {
+    //         return;
+    //     }
+    //     setDisableButton(" disabled");
+    //     const formData = JSON.stringify(data);
+    //     try {
+    //         const response = await fetch('http://localhost:3001/auth/login/', {
+    //             method: 'POST',
+    //             body: formData,
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //         });
+    //         if (!response.ok) {
+    //             showSweetAlert(3, "Received a bad response from the server.", "Error");
+    //             // setShowToast({ message: "Received a bad response from the server.", show: true });
+    //             setDisableButton("");
+    //             return;
+    //         }
+    //         const responseData = await response.json();
+    //         if (responseData.status === true) {
+    //             user.login({ token: responseData.access_token, account: data.account });
+    //             showSweetAlert(1, data.resp, "success");
+    //             window.location.href = "/user/";
+    //         } else {
+    //             setErrorText(responseData.resp);
+    //             setDisableButton("");
+    //         }
+    //     } catch (e) {
+    //         showSweetAlert(3, "Encountered server error while posting the form data.", "Error");
+    //         // setShowToast({ message: "Encountered server error while posting the form data.", show: true });
+    //         setDisableButton("");
+    //     }
+    // }
     return (
         <div className="col-xl-9 col-lg-8 m-b30">
             <div className="col-xl-10 col-lg-10 m-b30">

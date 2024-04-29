@@ -35,7 +35,7 @@ class SweetAlertComponent extends Component {
         });
     };
 
-    showToast = (type, text ) => {
+    showSweetAlert = (type, text, title ) => {
         Swal.fire({
             position: "top-end",
             icon: this.gettype(type),

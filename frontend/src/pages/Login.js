@@ -3,7 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import React, { useState } from "react";
 import { useAuth } from "../components/AuthContext";
 import { Toast, ToastContainer } from "react-bootstrap";
-
+import SweetAlertComponent  from "../utils/alert";
 function Login() {
   const user = useAuth();
   const [data, setData] = useState({
@@ -12,12 +12,17 @@ function Login() {
     account: "1"
   });
 
-  const [showToast, setShowToast] = useState({ message: "", show: false });
+  // const [showToast, setShowToast] = useState({ message: "", show: false });
   const [disableButton, setDisableButton] = useState('');
 
   const [errorText, setErrorText] = useState("");
   const handleInputChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
+  }
+
+  const showSweetAlert = (type, text, title = "") => {
+    let initializer = new SweetAlertComponent();
+    initializer.showSweetAlert(type, text, title);
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -36,20 +41,23 @@ function Login() {
         },
       });
       if (!response.ok) {
-        setShowToast({ message: "Received a bad response from the server.", show: true });
+        showSweetAlert(3, "Received a bad response from the server.", "Error");
+        // setShowToast({ message: "Received a bad response from the server.", show: true });
         setDisableButton("");
         return;
       }
       const responseData = await response.json();
       if (responseData.status === true) {
-        user.login({token: responseData.access_token, account: data.account});
+        user.login({ token: responseData.access_token, account: data.account });
+        showSweetAlert(1, data.resp, "success");
         window.location.href = "/user/";
       } else {
         setErrorText(responseData.resp);
         setDisableButton("");
       }
     } catch (e) {
-      setShowToast({ message: "Encountered server error while posting the form data.", show: true });
+      showSweetAlert(3, "Encountered server error while posting the form data.", "Error");
+      // setShowToast({ message: "Encountered server error while posting the form data.", show: true });
       setDisableButton("");
     }
   }
@@ -119,7 +127,7 @@ function Login() {
                               <button type="submit" className={customBtnClass + disableButton}>Login</button>
                               <Link
                               className="site-button-link forget-pass m-t15 float-right"
-                              to="/register/"><i className="fa fa-unlock-alt"></i> Sign up</Link></div>
+                              to="/register/"> Sign up</Link></div>
                           </form>
                         </div>
                       </div>
@@ -136,7 +144,7 @@ function Login() {
               </footer>
             </div>
           </div>
-          <ToastContainer className="p-3" position="bottom-center" style={{ zIndex: 1 }}>
+          {/* <ToastContainer className="p-3" position="bottom-center" style={{ zIndex: 1 }}>
             <Toast show={showToast.show} onClose={() => { setShowToast({ message: "", show: false }) }}>
               <Toast.Header>
                 <IoAnalyticsSharp />
@@ -144,7 +152,7 @@ function Login() {
               </Toast.Header>
               <Toast.Body>{showToast.message}</Toast.Body>
             </Toast>
-          </ToastContainer>
+          </ToastContainer> */}
         </div>
       }
     </>
