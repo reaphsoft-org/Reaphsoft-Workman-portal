@@ -541,4 +541,11 @@ export class AdminService {
             description: service.description,
         };
     }
+
+    async deleteService(id: number) {
+        const service = await this.workmanRepo.findOneBy({ id: id });
+        if (!service) return { status: false, resp: 'service not found' };
+        await this.workmanRepo.remove(service);
+        return { status: true, resp: '' };
+    }
 }
