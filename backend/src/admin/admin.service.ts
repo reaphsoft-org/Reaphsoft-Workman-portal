@@ -530,4 +530,15 @@ export class AdminService {
         await this.serviceRepo.save(service);
         return { resp: '', status: true };
     }
+
+    async getService(id: number) {
+        const service = await this.serviceRepo.findOneBy({ id: id });
+        if (!service) {
+            return null;
+        }
+        return {
+            name: service.name,
+            description: service.description,
+        };
+    }
 }
