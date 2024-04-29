@@ -322,4 +322,27 @@ export class AdminService {
         await this.workmanRepo.save(workman);
         return { resp: '', status: true };
     }
+
+    async getWorkman(email: string) {
+        const workman = await this.workmanRepo.findOne({
+            where: {
+                email: email,
+            },
+            relations: {
+                service: true,
+            },
+        });
+        if (!workman) {
+            return null;
+        }
+        return {
+            email: workman.email,
+            fullname: workman.fullname,
+            address: workman.address,
+            phone: workman.phone,
+            service: workman.service.name,
+            availability: workman.availability,
+            photoURL: workman.photoURL,
+        };
+    }
 }
