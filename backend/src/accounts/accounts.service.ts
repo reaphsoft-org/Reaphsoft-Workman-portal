@@ -336,7 +336,7 @@ export class AccountsService {
             };
         }
         const email = new Email();
-        await email.sendAccountCreateMail(object);
+        // await email.sendAccountCreateMail(object);
         return { resp: 'Account created successfully', status: true };
     }
 
