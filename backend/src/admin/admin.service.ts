@@ -14,6 +14,7 @@ import { CreateEstateDto } from '../accounts/dto/create-estate.dto';
 import { CreateWorkmanDto } from '../workmen/dto/create-workman.dto';
 import { Workman } from '../entities/Workman';
 import { Service } from '../entities/Service';
+import { UpdateWorkmanDto } from '../workmen/dto/update-workman.dto';
 
 @Injectable()
 export class AdminService {
@@ -254,7 +255,7 @@ export class AdminService {
         workman.setValues(true);
         await workman.saveFile(file);
         try {
-            await this.usersRepo.save(workman);
+            await this.workmanRepo.save(workman);
         } catch (e) {
             workman.deletePhoto();
             if (
@@ -298,5 +299,27 @@ export class AdminService {
                 service: user.service,
             })),
         };
+    }
+
+    async updateWorkman(email: string, updateWorkmanDto: UpdateWorkmanDto) {
+        const workman = await this.workmanRepo.findOneBy({
+            email: email,
+        });
+        if (!workman) {
+            return {
+                resp: `No workman was found with the email ${email}`,
+                status: false,
+            };
+        }
+        workman.fullname = updateWorkmanDto.fullname;
+        workman.address = updateWorkmanDto.address;
+        workman.availability = updateWorkmanDto.availability;
+        workman.phone =
+            updateWorkmanDto.phone !== undefined ? updateWorkmanDto.phone : '';
+        const check = workman.runValidations();
+        if (!check.status) return check;
+        workman.setValues();
+        await this.workmanRepo.save(workman);
+        return { resp: '', status: true };
     }
 }

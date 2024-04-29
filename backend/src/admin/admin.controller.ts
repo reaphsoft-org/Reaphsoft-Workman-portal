@@ -23,6 +23,7 @@ import {
 } from '../accounts/dto/update.dto';
 import { CreateEstateDto } from '../accounts/dto/create-estate.dto';
 import {CreateWorkmanDto} from "../workmen/dto/create-workman.dto";
+import {UpdateWorkmanDto} from "../workmen/dto/update-workman.dto";
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
