@@ -226,7 +226,7 @@ export class AdminService {
 
     async deleteEstateManager(email: string) {
         const user = await this.estateManagersRepo.findOneBy({ email: email });
-        if (!user) return { status: false, resp: 'user not found' };
+        if (!user) return { status: false, resp: 'estate account not found' };
         await this.estateManagersRepo.remove(user);
         return { status: true, resp: '' };
     }
@@ -344,5 +344,12 @@ export class AdminService {
             availability: workman.availability,
             photoURL: workman.photoURL,
         };
+    }
+
+    async deleteWorkman(email: string) {
+        const workman = await this.workmanRepo.findOneBy({ email: email });
+        if (!workman) return { status: false, resp: 'workman not found' };
+        await this.workmanRepo.remove(workman);
+        return { status: true, resp: '' };
     }
 }
