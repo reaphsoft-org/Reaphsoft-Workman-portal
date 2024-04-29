@@ -4,8 +4,8 @@
 
 export class CreateWorkmanDto {
     readonly email: string;
-    readonly fullname: string;
     readonly password: string;
+    readonly fullname: string;
     readonly address: string;
     readonly phone: string;
     readonly service: number;

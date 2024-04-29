@@ -29,4 +29,16 @@ export class Workman extends BaseUser {
     service: Relation<Service>;
 
     // unable to get requests here because there are two types of requests
+
+    runValidations() {
+        const check = this.baseValidations();
+        if (!check) return check;
+        if (this.address === undefined || this.address === '') {
+            return { status: false, resp: 'Invalid address' };
+        }
+        if (this.availability === undefined || this.availability === '') {
+            return { status: false, resp: 'Invalid availability' };
+        }
+        return { status: true, resp: '' };
+    }
 }

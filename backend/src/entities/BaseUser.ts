@@ -82,18 +82,8 @@ export abstract class BaseUser {
             fs.rmSync(photoPath);
         }
     }
-}
 
-export abstract class NonStaff extends BaseUser {
-    @Column({ type: 'varchar', length: 100 })
-    address: string;
-
-    @Column({ type: 'integer' })
-    serviceType: number;
-
-    // validate email, fullname, address and serviceType
-    // validate passwords separately
-    generalValidations() {
+    baseValidations() {
         if (
             this.email === undefined ||
             this.email === '' ||
@@ -108,6 +98,22 @@ export abstract class NonStaff extends BaseUser {
         if (this.fullname === undefined || this.fullname === '') {
             return { status: false, resp: 'Invalid Fullname' };
         }
+        return { status: true, resp: '' };
+    }
+}
+
+export abstract class NonStaff extends BaseUser {
+    @Column({ type: 'varchar', length: 100 })
+    address: string;
+
+    @Column({ type: 'integer' })
+    serviceType: number;
+
+    // validate email, fullname, address and serviceType
+    // validate passwords separately
+    generalValidations() {
+        const check = this.baseValidations();
+        if (!check) return check;
         if (this.address === undefined || this.address === '') {
             return { status: false, resp: 'Invalid address' };
         }

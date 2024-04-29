@@ -12,7 +12,8 @@ import { Repository } from 'typeorm';
 import { EstateManager } from '../entities/EstateManager';
 import { CreateEstateDto } from '../accounts/dto/create-estate.dto';
 import { CreateWorkmanDto } from '../workmen/dto/create-workman.dto';
-import {Workman} from "../entities/Workman";
+import { Workman } from '../entities/Workman';
+import { Service } from '../entities/Service';
 
 @Injectable()
 export class AdminService {
@@ -22,6 +23,7 @@ export class AdminService {
     private readonly estateManagersRepo =
         AppDataSource.getRepository(EstateManager);
     private readonly workmanRepo = AppDataSource.getRepository(Workman);
+    private readonly serviceRepo = AppDataSource.getRepository(Service);
 
     async getUsers(page: number) {
         return await this.getNonStaffUsers(page, this.usersRepo);
@@ -228,8 +230,50 @@ export class AdminService {
         return { status: true, resp: '' };
     }
 
-    createWorkman(createWorkmanDto: CreateWorkmanDto, file: any) {
-        return Promise.resolve(undefined);
+    async createWorkman(createWorkmanDto: CreateWorkmanDto, file: any) {
+        const serviceID = createWorkmanDto.service;
+        if (serviceID === undefined)
+            return { resp: 'no service id', status: false };
+        const service = await this.serviceRepo.findOneBy({
+            id: serviceID,
+        });
+        if (!service) return { resp: 'service not found', status: false };
+        const workman = new Workman();
+        workman.email = createWorkmanDto.email;
+        workman.password = createWorkmanDto.password;
+        workman.fullname = createWorkmanDto.fullname;
+        workman.address = createWorkmanDto.address;
+        workman.phone =
+            createWorkmanDto.phone !== undefined ? createWorkmanDto.phone : '';
+        workman.availability = createWorkmanDto.availability;
+        workman.service = service;
+        const check = workman.runValidations();
+        if (!check.status) {
+            return check;
+        }
+        workman.setValues(true);
+        await workman.saveFile(file);
+        try {
+            await this.usersRepo.save(workman);
+        } catch (e) {
+            workman.deletePhoto();
+            if (
+                e.name === 'QueryFailedError' &&
+                e.message.includes(
+                    'duplicate key value violates unique constraint',
+                )
+            ) {
+                return {
+                    resp: 'A workman with the email you supplied already exists.',
+                    status: false,
+                };
+            }
+            return {
+                resp: 'An error was encountered while trying to save the object. Please refresh the page and try again.',
+                status: false,
+            };
+        }
+        return { resp: 'Account created successfully', status: true };
     }
 
     async getWorkmen(page: number) {
