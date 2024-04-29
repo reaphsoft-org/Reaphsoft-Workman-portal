@@ -254,7 +254,6 @@ export class AccountsService {
             return { status: false, resp: 'Invalid new password' };
         }
         this.setPassword(user, passwordDto.new_password);
-        user.password = passwordDto.new_password;
         if (type == User.accountType) await this.userRepository.save(user);
         else await this.estateRepository.save(user);
         return { resp: '', status: true };
@@ -337,7 +336,7 @@ export class AccountsService {
             };
         }
         const email = new Email();
-        await email.sendAccountCreateMail(object);
+        // await email.sendAccountCreateMail(object);
         return { resp: 'Account created successfully', status: true };
     }
 

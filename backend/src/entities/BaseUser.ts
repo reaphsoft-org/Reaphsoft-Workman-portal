@@ -1,18 +1,20 @@
 //24/04/2024 10:25
 
 import {
-    Entity,
     PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
     UpdateDateColumn,
 } from 'typeorm';
 import { PasswordManager } from '../utilities/passwordmanager';
-import path from 'path';
-import { MEDIA_DIR } from '../app.module';
-import fs from 'fs';
+import * as path from 'path';
+import * as fs from 'fs';
 
-@Entity()
+const MEDIA_DIR = path.join(__dirname, '..', '..', 'media/u');
+if (!fs.existsSync(MEDIA_DIR)) {
+    fs.mkdirSync(MEDIA_DIR, { recursive: true });
+}
+
 export abstract class BaseUser {
     @PrimaryGeneratedColumn()
     id: number;
@@ -99,6 +101,10 @@ export abstract class BaseUser {
             return { status: false, resp: 'Invalid Fullname' };
         }
         return { status: true, resp: '' };
+    }
+
+    checkPassword(password: string) {
+        return this.passwordManager.comparePassword(password, this.password);
     }
 }
 

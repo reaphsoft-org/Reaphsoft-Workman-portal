@@ -26,6 +26,8 @@ import { CreateWorkmanDto } from '../workmen/dto/create-workman.dto';
 import { UpdateWorkmanDto } from '../workmen/dto/update-workman.dto';
 import { RequestUpdateDto } from '../workmen/dto/request-update.dto';
 import { ServiceDto } from '../workmen/dto/service.dto';
+import { Request as RequestDecorator } from '@nestjs/common/decorators/http/route-params.decorator';
+import { UpdateAdminDto } from './dto/update-admin.dto';
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
@@ -33,6 +35,23 @@ import { ServiceDto } from '../workmen/dto/service.dto';
 @Controller('admin/')
 export class AdminController {
     constructor(private readonly service: AdminService) {}
+    // admin
+    @Get('m/')
+    async getAdmin(@RequestDecorator() req: Request) {
+        // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
+        const email = req.user.email;
+        return this.service.getAdmin(email);
+    }
+
+    @Put('m/')
+    async updateAdmin(
+        @RequestDecorator() req: Request,
+        @Body() dto: UpdateAdminDto,
+    ) {
+        // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
+        const email = req.user.email;
+        return this.service.updateAdmin(email, dto);
+    }
     // Users, LIST, CRUD,
     @Get('users/:page/')
     async getUsers(@Param('page') page: number) {
