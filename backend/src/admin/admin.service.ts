@@ -219,4 +219,11 @@ export class AdminService {
             photoURL: user.photoURL,
         };
     }
+
+    async deleteEstateManager(email: string) {
+        const user = await this.estateManagersRepo.findOneBy({ email: email });
+        if (!user) return { status: false, resp: 'user not found' };
+        await this.estateManagersRepo.remove(user);
+        return { status: true, resp: '' };
+    }
 }
