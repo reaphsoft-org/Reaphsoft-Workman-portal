@@ -25,6 +25,7 @@ import { CreateEstateDto } from '../accounts/dto/create-estate.dto';
 import { CreateWorkmanDto } from '../workmen/dto/create-workman.dto';
 import { UpdateWorkmanDto } from '../workmen/dto/update-workman.dto';
 import { RequestUpdateDto } from '../workmen/dto/request-update.dto';
+import { ServiceDto } from '../workmen/dto/service.dto';
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
@@ -153,17 +154,15 @@ export class AdminController {
         return this.service.getServices(page);
     }
     @Post('service/')
-    async createService(
-        @Body() createServiceDto: CreateServiceDto,
-    ) {
-        return this.service.createService(createServiceDto);
+    async createService(@Body() serviceDto: ServiceDto) {
+        return this.service.createService(serviceDto);
     }
     @Put('service/:id/')
     async updateService(
         @Param('id') id: number,
-        @Body() updateServiceDto: UpdateServiceDto,
+        @Body() serviceDto: ServiceDto,
     ) {
-        return this.service.updateService(id, updateServiceDto);
+        return this.service.updateService(id, serviceDto);
     }
     @Get('service/:id/')
     async getService(@Param('id') id: number) {

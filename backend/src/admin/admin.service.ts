@@ -17,6 +17,7 @@ import { Service } from '../entities/Service';
 import { UpdateWorkmanDto } from '../workmen/dto/update-workman.dto';
 import { EstateRequest, UserRequest } from '../entities/Request';
 import { RequestUpdateDto } from '../workmen/dto/request-update.dto';
+import { ServiceDto } from '../workmen/dto/service.dto';
 
 @Injectable()
 export class AdminService {
@@ -493,5 +494,22 @@ export class AdminService {
                 description: service.description,
             })),
         };
+    }
+
+    async createService(serviceDto: ServiceDto) {
+        if (serviceDto.name === undefined || serviceDto.name === '') {
+            return { status: false, resp: 'Invalid name' };
+        }
+        if (
+            serviceDto.description === undefined ||
+            serviceDto.description === ''
+        ) {
+            return { status: false, resp: 'Invalid description' };
+        }
+        const service = new Service();
+        service.name = serviceDto.name;
+        service.description = serviceDto.description;
+        await this.serviceRepo.save(service);
+        return { resp: '', status: true };
     }
 }
