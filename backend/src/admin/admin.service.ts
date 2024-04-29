@@ -32,6 +32,23 @@ export class AdminService {
     private readonly estateRequestRepo =
         AppDataSource.getRepository(EstateRequest);
 
+    async getAdmin(email: string) {
+        const user = await this.adminRepo.findOneBy({
+            email: email,
+        });
+        if (!user) {
+            return null;
+        }
+        return {
+            email: user.email,
+            fullname: user.fullname,
+            is_active: user.is_active,
+            photoURL: user.photoURL,
+            date_joined: user.date_joined,
+            last_visited: user.last_visited,
+        };
+    }
+
     async getUsers(page: number) {
         return await this.getNonStaffUsers(page, this.usersRepo);
     }
