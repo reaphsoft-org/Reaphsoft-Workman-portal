@@ -22,45 +22,44 @@ const Sidebar = ({user}) => {
                         </div>
                     </div>
                     <ul>
-                        <li>
-                            <Link to="/user/">
-                                <i className="fa fa-user-o" aria-hidden="true"></i>
+                        <li >
+                            <Link to="/user/" className='text-decoration-none'>
                                 <span>Dashboard</span>
                             </Link>
                         </li>
                          <li>
-                            <Link to="/user/profile/">
-                                    <i className="fa fa-user-o" aria-hidden="true"></i>
+                            <Link to="/user/profile/" className='text-decoration-none'>
+                                    
                                 <span>Profile</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/user/request/">
-                                <i className="fa fa-heart-o" aria-hidden="true"></i>
+                            <Link to="/user/request/" className='text-decoration-none'>
+                                
                                 <span>Post a Request</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/user/job/">
-                                <i className="fa fa-briefcase" aria-hidden="true"></i>
+                            <Link to="/user/job/" className='text-decoration-none'>
+                                
                                 <span>Request History</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/user/update/">
-                                <i className="fa fa-briefcase" aria-hidden="true"></i>
+                            <Link to="/user/update/" className='text-decoration-none'>
+                                
                                 <span>Update Profile</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/user/change/password/">
-                                <i className="fa fa-lock" aria-hidden="true"></i>
+                            <Link to="/user/change/password/" className='text-decoration-none'>
+                                
                                 <span>Change Password</span>
                             </Link>
                         </li>
                         <li>
-                            <Link variant="link" className="link-offset-3" onClick={() => logout(useAuth1)}>
-                                <i className="fa fa-sign-out" aria-hidden="true"></i>
+                            <Link variant="link" className="link-offset-3 text-decoration-none" onClick={() => logout(useAuth1)}>
+                                
                                 <span>Log Out</span>
                             </Link>
                         </li>

@@ -42,7 +42,7 @@ class SweetAlertComponent extends Component {
             text: text,
             title: type === 3 ? 'Error!' : title,
             showConfirmButton: false,
-            timer: 1500
+            timer: 2000
         });
     }
 }

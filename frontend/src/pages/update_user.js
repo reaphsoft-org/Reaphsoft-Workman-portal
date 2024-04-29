@@ -4,7 +4,7 @@ const UpdateUser = ({user}) => {
       <div className="col-xl-9 col-lg-8 m-b30">
         <div className="job-bx job-profile">
           <div className="job-bx-title clearfix">
-            <h5 className="font-weight-700 pull-left text-uppercase">Basic Information</h5>
+            <h5 className="font-weight-700 pull-left text-uppercase">Update Personal Information</h5>
             
           </div>
           <div className="row">
