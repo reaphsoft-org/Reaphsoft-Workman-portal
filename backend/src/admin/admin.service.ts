@@ -512,4 +512,22 @@ export class AdminService {
         await this.serviceRepo.save(service);
         return { resp: '', status: true };
     }
+
+    async updateService(id: number, serviceDto: ServiceDto) {
+        const service = await this.serviceRepo.findOneBy({
+            id: id,
+        });
+        if (!service) return { resp: `Service not found`, status: false };
+        if (serviceDto.name !== undefined && serviceDto.name !== '') {
+            service.name = serviceDto.name;
+        }
+        if (
+            serviceDto.description !== undefined &&
+            serviceDto.description !== ''
+        ) {
+            service.description = serviceDto.description;
+        }
+        await this.serviceRepo.save(service);
+        return { resp: '', status: true };
+    }
 }
