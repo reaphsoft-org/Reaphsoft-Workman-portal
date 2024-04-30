@@ -169,6 +169,57 @@ describe('Admin (e2e)', () => {
         expect(updatedUser?.password !== superUser.password).toBe(true);
         await adminRepo.save(superUser);
     });
+
+    it('should return empty users, page out of range', async () => {
+        const resp = await request(app.getHttpServer())
+            .get('/admin/users/0/')
+            .auth(authToken, { type: 'bearer' })
+            .expect(200);
+        expect(resp.body.pages).toBe(0);
+        expect(resp.body.data).toEqual([]);
+    });
+
+    it('should return empty data, no users', async () => {
+        const resp = await request(app.getHttpServer())
+            .get('/admin/users/1/')
+            .auth(authToken, { type: 'bearer' })
+            .expect(200);
+        expect(resp.body.pages).toBe(0);
+        expect(resp.body.data).toEqual([]);
+    });
+
+    it('should return users', async () => {
+        const users: User[] = [];
+        const count = 200;
+        for (let i = 0; i < count; i++) {
+            const user = new User();
+            user.email = `em${i}@mail.com`;
+            user.password = 'pass-word';
+            user.fullname = `F N ${i}`;
+            user.apartment = `${i}B`;
+            user.address = `some address ${i}`;
+            user.serviceType = 1;
+            users.push(user);
+        }
+        const repo = AppDataSource.getRepository(User);
+        await repo.save(users);
+        const resp = await request(app.getHttpServer())
+            .get('/admin/users/1/')
+            .auth(authToken, { type: 'bearer' })
+            .expect(200);
+        expect(resp.body.pages).toBeGreaterThanOrEqual(4);
+        expect(resp.body.data.length).toBe(50);
+        expect(resp.body.data[0].name).toBe('F N 0');
+        expect(resp.body.data[0].email).toBe('em0@mail.com'); // ensure it exists
+
+        const resp1 = await request(app.getHttpServer())
+            .get('/admin/users/2/')
+            .auth(authToken, { type: 'bearer' })
+            .expect(200);
+        expect(resp.body.data[0] !== resp1.body.data[0]);
+        expect(resp1.body.data.length).toBe(50);
+        expect(resp1.body.pages).toBeGreaterThanOrEqual(4);
+    });
 });
 
 async function login(

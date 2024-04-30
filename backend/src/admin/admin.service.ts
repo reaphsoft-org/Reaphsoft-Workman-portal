@@ -178,7 +178,7 @@ export class AdminService {
     ) {
         if (page <= 0) return { pages: 0, data: [] };
         const start = this.paginateBy * (page - 1);
-        const end = this.paginateBy * page;
+        const end = this.paginateBy;
         const users = await repo.find({
             skip: start,
             take: end,
@@ -186,6 +186,7 @@ export class AdminService {
                 fullname: 'ASC',
             },
         });
+        // console.log(start, end, users.length);
         const count = await repo.count();
         let pages = Math.floor(count / 50);
         pages += count % this.paginateBy > 0 ? 1 : 0;
