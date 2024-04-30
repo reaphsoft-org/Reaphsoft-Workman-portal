@@ -220,6 +220,178 @@ describe('Admin (e2e)', () => {
         expect(resp1.body.data.length).toBe(50);
         expect(resp1.body.pages).toBeGreaterThanOrEqual(4);
     });
+
+    it('should not created user (no email)', async () => {
+        const resp = await request(app.getHttpServer())
+            .post('/admin/user/')
+            .auth(authToken, { type: 'bearer' })
+            .expect(201);
+        expect(resp.body.status).toBeFalsy();
+        expect(resp.body.resp).toBe('Invalid email address');
+    });
+
+    it('should not created user (no password)', async () => {
+        const resp = await request(app.getHttpServer())
+            .post('/admin/user/')
+            .send({ email: 'user@reaphsoft.com' })
+            .auth(authToken, { type: 'bearer' })
+            .expect(201);
+        expect(resp.body.status).toBeFalsy();
+        expect(resp.body.resp).toBe('Invalid password');
+    });
+
+    it('should not created user (no fullname)', async () => {
+        const resp = await request(app.getHttpServer())
+            .post('/admin/user/')
+            .send({ email: 'user@reaphsoft.com', password: 'full-water' })
+            .auth(authToken, { type: 'bearer' })
+            .expect(201);
+        expect(resp.body.status).toBeFalsy();
+        expect(resp.body.resp).toBe('Invalid Fullname');
+    });
+
+    it('should not created user (no address)', async () => {
+        const resp = await request(app.getHttpServer())
+            .post('/admin/user/')
+            .send({
+                email: 'user@reaphsoft.com',
+                password: 'full-water',
+                fullname: 'Full Name',
+            })
+            .auth(authToken, { type: 'bearer' })
+            .expect(201);
+        expect(resp.body.status).toBeFalsy();
+        expect(resp.body.resp).toBe('Invalid address');
+    });
+
+    it('should not created user (no service type)', async () => {
+        const resp = await request(app.getHttpServer())
+            .post('/admin/user/')
+            .send({
+                email: 'user@reaphsoft.com',
+                password: 'full-water',
+                fullname: 'Full Name',
+                address: 'An address',
+            })
+            .auth(authToken, { type: 'bearer' })
+            .expect(201);
+        expect(resp.body.status).toBeFalsy();
+        expect(resp.body.resp).toBe('Invalid service type');
+    });
+
+    it('should not created user (invalid service type)', async () => {
+        const resp = await request(app.getHttpServer())
+            .post('/admin/user/')
+            .send({
+                email: 'user@reaphsoft.com',
+                password: 'full-water',
+                fullname: 'Full Name',
+                address: 'An address',
+                serviceType: 0,
+            })
+            .auth(authToken, { type: 'bearer' })
+            .expect(201);
+        expect(resp.body.status).toBeFalsy();
+        expect(resp.body.resp).toBe('Invalid service type');
+    });
+
+    it('should not created user (invalid service type)', async () => {
+        const resp = await request(app.getHttpServer())
+            .post('/admin/user/')
+            .send({
+                email: 'user@reaphsoft.com',
+                password: 'full-water',
+                fullname: 'Full Name',
+                address: 'An address',
+                serviceType: 3,
+            })
+            .auth(authToken, { type: 'bearer' })
+            .expect(201);
+        expect(resp.body.status).toBeFalsy();
+        expect(resp.body.resp).toBe('Invalid service type');
+    });
+
+    it('should not created user (invalid apartment number)', async () => {
+        const resp = await request(app.getHttpServer())
+            .post('/admin/user/')
+            .send({
+                email: 'user@reaphsoft.com',
+                password: 'full-water',
+                fullname: 'Full Name',
+                address: 'An address',
+                serviceType: '2',
+            })
+            .auth(authToken, { type: 'bearer' })
+            .expect(201);
+        expect(resp.body.status).toBeFalsy();
+        expect(resp.body.resp).toBe('Invalid apartment number');
+    });
+
+    it('should created user', async () => {
+        const resp = await request(app.getHttpServer())
+            .post('/admin/user/')
+            .send({
+                email: 'user@reaphsoft.com',
+                password: 'full-water',
+                fullname: 'Full Name',
+                address: 'An address',
+                serviceType: '2',
+                apartment: 'An apartment',
+            })
+            .auth(authToken, { type: 'bearer' })
+            .expect(201);
+        expect(resp.body.status).toBeTruthy();
+        expect(resp.body.resp).toBe('Account created successfully');
+    });
+
+    it('should update user', async () => {
+        const user = new User();
+        user.email = `user@mail.com`;
+        user.password = 'pass-word';
+        user.fullname = `First Name`;
+        user.apartment = `12 B`;
+        user.address = `some address 12`;
+        user.serviceType = 1;
+        const repo = AppDataSource.getRepository(User);
+        await repo.save(user);
+
+        const data = {
+            fullname: 'Full Another Name',
+            address: 'An address',
+            serviceType: '2',
+            apartment: 'An apartment',
+        };
+        const resp = await request(app.getHttpServer())
+            .put(`/admin/user/${user.email}/`)
+            .send(data)
+            .auth(authToken, { type: 'bearer' })
+            .expect(200);
+        expect(resp.body.status).toBeTruthy();
+        expect(resp.body.resp).toBeFalsy();
+        const user0 = await repo.findOneBy({ email: user.email });
+        expect(user0?.fullname).toBe(data.fullname);
+        expect(user0?.address).toBe(data.address);
+        expect(user0?.serviceType).toBe(Number.parseInt(data.serviceType));
+        expect(user0?.apartment).toBe(data.apartment);
+    });
+
+    it('should get user', async () => {
+        const user = new User();
+        user.email = `newuser@mail.com`;
+        user.password = 'pass0-word';
+        user.fullname = `First Name`;
+        user.apartment = `12 B`;
+        user.address = `address 12`;
+        user.serviceType = 1;
+        const repo = AppDataSource.getRepository(User);
+        await repo.save(user);
+
+        const resp = await request(app.getHttpServer())
+            .get(`/admin/user/${user.email}/`)
+            .auth(authToken, { type: 'bearer' })
+            .expect(200);
+        expect(resp.body.email).toBe(user.email);
+    });
 });
 
 async function login(

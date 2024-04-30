@@ -119,7 +119,7 @@ export abstract class NonStaff extends BaseUser {
     // validate passwords separately
     generalValidations() {
         const check = this.baseValidations();
-        if (!check) return check;
+        if (!check.status) return check;
         if (this.address === undefined || this.address === '') {
             return { status: false, resp: 'Invalid address' };
         }

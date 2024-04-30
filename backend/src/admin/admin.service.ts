@@ -118,8 +118,8 @@ export class AdminService {
                 status: false,
             };
         }
-        const email = new Email();
-        await email.sendAccountCreateMail(user);
+        // const email = new Email();
+        // await email.sendAccountCreateMail(user);
         return { resp: 'Account created successfully', status: true };
     }
 
