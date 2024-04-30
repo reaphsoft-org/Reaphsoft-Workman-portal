@@ -21,6 +21,7 @@ describe('Admin (e2e)', () => {
     const adminAuthLink = '/auth/admin/login/';
     let authToken: string;
     let adminRepo: Repository<SuperUser>;
+    let userRepo: Repository<User>;
 
     beforeAll(async () => {
         const moduleRef = await Test.createTestingModule({
@@ -36,6 +37,7 @@ describe('Admin (e2e)', () => {
             });
         }
         adminRepo = AppDataSource.getRepository(SuperUser);
+        userRepo = AppDataSource.getRepository(User);
         superUser.email = 'admin@reaphsoft.com';
         superUser.password = passwordManager.getHashedKey(password);
         superUser.fullname = 'Admin Man';
@@ -60,8 +62,7 @@ describe('Admin (e2e)', () => {
         user.apartment = '1B';
         user.address = 'some address';
         user.serviceType = 1;
-        const repo = AppDataSource.getRepository(User);
-        await repo.save(user);
+        await userRepo.save(user);
         const token = await login(user, password1, app, '/auth/login/');
         const resp = await request(app.getHttpServer())
             .get('/admin/users/1/')
@@ -201,8 +202,7 @@ describe('Admin (e2e)', () => {
             user.serviceType = 1;
             users.push(user);
         }
-        const repo = AppDataSource.getRepository(User);
-        await repo.save(users);
+        await userRepo.save(users);
         const resp = await request(app.getHttpServer())
             .get('/admin/users/1/')
             .auth(authToken, { type: 'bearer' })
@@ -352,8 +352,7 @@ describe('Admin (e2e)', () => {
         user.apartment = `12 B`;
         user.address = `some address 12`;
         user.serviceType = 1;
-        const repo = AppDataSource.getRepository(User);
-        await repo.save(user);
+        await userRepo.save(user);
 
         const data = {
             fullname: 'Full Another Name',
@@ -368,11 +367,29 @@ describe('Admin (e2e)', () => {
             .expect(200);
         expect(resp.body.status).toBeTruthy();
         expect(resp.body.resp).toBeFalsy();
-        const user0 = await repo.findOneBy({ email: user.email });
+        const user0 = await userRepo.findOneBy({ email: user.email });
         expect(user0?.fullname).toBe(data.fullname);
         expect(user0?.address).toBe(data.address);
         expect(user0?.serviceType).toBe(Number.parseInt(data.serviceType));
         expect(user0?.apartment).toBe(data.apartment);
+    });
+
+    it('should return false (update user)', async () => {
+        const data = {
+            fullname: 'Full Another Name',
+            address: 'An address',
+            serviceType: '2',
+            apartment: 'An apartment',
+        };
+        const resp = await request(app.getHttpServer())
+            .put(`/admin/user/invalid@mail.com/`)
+            .send(data)
+            .auth(authToken, { type: 'bearer' })
+            .expect(200);
+        expect(resp.body.status).toBeFalsy();
+        expect(resp.body.resp).toBe(
+            'No user was found with the email invalid@mail.com',
+        );
     });
 
     it('should get user', async () => {
@@ -383,14 +400,47 @@ describe('Admin (e2e)', () => {
         user.apartment = `12 B`;
         user.address = `address 12`;
         user.serviceType = 1;
-        const repo = AppDataSource.getRepository(User);
-        await repo.save(user);
+        await userRepo.save(user);
 
         const resp = await request(app.getHttpServer())
             .get(`/admin/user/${user.email}/`)
             .auth(authToken, { type: 'bearer' })
             .expect(200);
         expect(resp.body.email).toBe(user.email);
+    });
+
+    it('should not get user', async () => {
+        const resp = await request(app.getHttpServer())
+            .get(`/admin/user/invalid@mail.com/`)
+            .auth(authToken, { type: 'bearer' })
+            .expect(200);
+        expect(resp.body).toEqual({});
+    });
+    it('should delete user', async () => {
+        const user = new User();
+        user.email = `tobedeleteduser@mail.com`;
+        user.password = 'pass2-word';
+        user.fullname = `First Name 3`;
+        user.apartment = `12 B 4`;
+        user.address = `address 12`;
+        user.serviceType = 2;
+        await userRepo.save(user);
+
+        const resp = await request(app.getHttpServer())
+            .delete(`/admin/user/${user.email}/`)
+            .auth(authToken, { type: 'bearer' })
+            .expect(200);
+        expect(resp.body.status).toBeTruthy();
+        expect(resp.body.resp).toBeFalsy();
+    });
+
+    it('should not delete user', async () => {
+        const resp = await request(app.getHttpServer())
+            .delete(`/admin/user/delete@test.com/`)
+            .auth(authToken, { type: 'bearer' })
+            .expect(200);
+        expect(resp.body.status).toBeFalsy();
+        expect(resp.body.resp).toBe('user not found');
     });
 });
 
