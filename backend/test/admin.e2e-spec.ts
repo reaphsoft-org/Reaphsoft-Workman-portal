@@ -43,7 +43,7 @@ describe('Admin (e2e)', () => {
     it('should be able to access', async () => {
         const token = await login(superUser, password, app, adminAuthLink);
         await request(app.getHttpServer())
-            .get('/admin/users/')
+            .get('/admin/users/1/')
             .auth(token, { type: 'bearer' })
             .expect(200);
     });
@@ -61,7 +61,7 @@ describe('Admin (e2e)', () => {
         await repo.save(user);
         const token = await login(user, password1, app, '/auth/login/');
         const resp = await request(app.getHttpServer())
-            .get('/admin/users/')
+            .get('/admin/users/1/')
             .auth(token, { type: 'bearer' });
         // forbidden resource for normal users
         expect(resp.body.statusCode == 403).toBe(true);
@@ -80,7 +80,7 @@ describe('Admin (e2e)', () => {
         await repo.save(user);
         const token = await login(user, password1, app, '/auth/login/', 2);
         const resp = await request(app.getHttpServer())
-            .get('/admin/users/')
+            .get('/admin/users/1/')
             .auth(token, { type: 'bearer' });
         // forbidden resource for normal users
         expect(resp.body.statusCode == 403).toBe(true);
