@@ -36,7 +36,7 @@ const Sidebar = ({user}) => {
                         <li>
                             <Link to="/user/request/" className='text-decoration-none'>
                                 
-                                <span>Post a Request</span>
+                                <span>Workman Request</span>
                             </Link>
                         </li>
                         <li>

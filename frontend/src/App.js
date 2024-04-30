@@ -22,12 +22,13 @@ import Skill from './admin/pages/skill';
 import Estate from './admin/pages/estate';
 import Client from './admin/pages/client';
 import UserProvider from './components/UserContext';
+import AdminProvider from './components/AdminContext';
 
 function App() {
   return (
     <AuthProvider>
       <UserProvider>
-
+        <AdminProvider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/service/" element={<Services />} />
@@ -43,6 +44,7 @@ function App() {
           <Route path="/user/update/" element={<User content={UpdateUser} />} />
           <Route path="/user/change/password/" element={<User content={ChangePassword} />} />
           <Route path="/admin/" element={<AdminLogin />} />
+
           <Route path="/dashboard" element={<Layout />} >
             <Route index element={<Index />} />
             <Route path="skill" element={<Skill />} />
@@ -50,6 +52,7 @@ function App() {
             <Route path="client" element={<Client />} />
           </Route>
         </Routes>
+        </AdminProvider>
       </UserProvider>
     </AuthProvider>
   );
