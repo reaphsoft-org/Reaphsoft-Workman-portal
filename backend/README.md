@@ -159,6 +159,11 @@ node dist/loaddata test/services.json
 npm run create_superuser <email> <password> <firstname> <lastnam>
 ```
 
+## Endpoints
+| No | Description | Form | Example | Method |
+|----|-------------|------|---------|--------|
+| 1  |             |      |         |        |
+
 # NestJS
 
 <p align="center">

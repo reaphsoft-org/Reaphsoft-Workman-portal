@@ -37,9 +37,7 @@ export class AdminService {
         const user = await this.adminRepo.findOneBy({
             email: email,
         });
-        if (!user) {
-            return null;
-        }
+        if (!user) return null;
         return {
             email: user.email,
             fullname: user.fullname,
@@ -54,6 +52,7 @@ export class AdminService {
         const user = await this.adminRepo.findOneBy({
             email: email,
         });
+        // maybe user was deleted before this call was made
         if (!user)
             return {
                 resp: `admin with the email ${email} was not found`,
@@ -73,6 +72,7 @@ export class AdminService {
                     resp: `Your new password must be different to your old password`,
                 };
             }
+            user.password = dto.new_password;
             user.setValues(true);
         }
         await this.adminRepo.save(user);
@@ -118,8 +118,8 @@ export class AdminService {
                 status: false,
             };
         }
-        const email = new Email();
-        await email.sendAccountCreateMail(user);
+        // const email = new Email();
+        // await email.sendAccountCreateMail(user);
         return { resp: 'Account created successfully', status: true };
     }
 
@@ -178,7 +178,7 @@ export class AdminService {
     ) {
         if (page <= 0) return { pages: 0, data: [] };
         const start = this.paginateBy * (page - 1);
-        const end = this.paginateBy * page;
+        const end = this.paginateBy;
         const users = await repo.find({
             skip: start,
             take: end,
@@ -186,6 +186,7 @@ export class AdminService {
                 fullname: 'ASC',
             },
         });
+        // console.log(start, end, users.length);
         const count = await repo.count();
         let pages = Math.floor(count / 50);
         pages += count % this.paginateBy > 0 ? 1 : 0;
