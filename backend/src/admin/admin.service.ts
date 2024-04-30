@@ -37,9 +37,7 @@ export class AdminService {
         const user = await this.adminRepo.findOneBy({
             email: email,
         });
-        if (!user) {
-            return null;
-        }
+        if (!user) return null;
         return {
             email: user.email,
             fullname: user.fullname,
@@ -54,6 +52,7 @@ export class AdminService {
         const user = await this.adminRepo.findOneBy({
             email: email,
         });
+        // maybe user was deleted before this call was made
         if (!user)
             return {
                 resp: `admin with the email ${email} was not found`,
@@ -73,6 +72,7 @@ export class AdminService {
                     resp: `Your new password must be different to your old password`,
                 };
             }
+            user.password = dto.new_password;
             user.setValues(true);
         }
         await this.adminRepo.save(user);
