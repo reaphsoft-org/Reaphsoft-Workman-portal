@@ -12,6 +12,8 @@ const showSweetAlert = (type, text, title = "") => {
 const UserProvider = ({ children }) => {
     const [service, setService] = useState(null);
     const [worker, setWorker] = useState(null);
+    const [request, setRequest] = useState(null);
+    const [history, setHistory] = useState([]);
     const {user} = useAuth();
     const getServcice = async () => {
         try {
@@ -51,7 +53,7 @@ const UserProvider = ({ children }) => {
             }
             const responseData = await response.json();
             if (responseData.status) {
-                setService(responseData.data)
+                setHistory(responseData.data)
             }
         } catch (e) {
             showSweetAlert(3, "Encountered server error while posting the form data.", "Error");
@@ -83,7 +85,7 @@ const UserProvider = ({ children }) => {
 
     const postRequest = async () => {
         try {
-            const response = await fetch('', {
+            const response = await fetch('http://localhost:3001/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -107,10 +109,12 @@ const UserProvider = ({ children }) => {
 
     useEffect(() => {
         getServcice();
+        postRequest();
+        requestHistory();
     }, [])
 
     return (
-        <UserContext.Provider value={{ service, getWorkman}}>
+        <UserContext.Provider value={{ service, getWorkman, request, history}}>
             {children}
         </UserContext.Provider>
     );

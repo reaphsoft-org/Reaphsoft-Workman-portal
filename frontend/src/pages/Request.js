@@ -1,8 +1,11 @@
 import React from "react";
 import { useUser } from "../components/UserContext";
+import { useState } from "react";
 
 const Request = ({ user }) => {
     const { service, worker, getWorkman } = useUser();
+    const [date, setDate] = useState();
+    const [workman, setWorkman] = useState();
     const handleChange = (event) => {
         const selectedOption = event.target.options[event.target.selectedIndex];
         getWorkman({
@@ -10,6 +13,15 @@ const Request = ({ user }) => {
           name: selectedOption.value,
         });
       };
+    
+    const handleDateChange = (event) => {
+        setDate (event.target.value);
+    }
+
+    const handleWorkerChange = (event) => {
+        setWorkman(event.target.value);
+    }
+    
     
     return (
         <div className="col-xl-9 col-lg-8 m-b30">
@@ -33,21 +45,15 @@ const Request = ({ user }) => {
                             <div className="col-lg-6 col-md-6">
                                 <div className="form-group">
                                     <label>Select Worker</label>
-                                    <select className="custom-select custom-select" >
+                                    <select onChangeCapture={handleWorkerChange} className="custom-select custom-select" >
                                         {worker?.map((worker, index) =>  (<option key={index}>{worker}</option>))}
                                     </select>
                                 </div>
                             </div>
                             <div className="col-lg-6 col-md-6">
                                 <div className="form-group">
-                                    <label>Maximum Wage (&#8358;):</label>
-                                    <input type="text" className="form-control" placeholder="e.g. 20000" spellCheck="false" data-ms-editor="true" />
-                                </div>
-                            </div>
-                            <div className="col-lg-6 col-md-6">
-                                <div className="form-group">
                                     <label>Date Needed:</label>
-                                    <input type="date" className="form-control" placeholder=" 2020-01-01" spellCheck="false" data-ms-editor="true" />
+                                    <input type="date" className="form-control" onChange={handleDateChange} placeholder=" 2020-01-01" spellCheck="false" data-ms-editor="true" />
                                 </div>
                             </div>
 

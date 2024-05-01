@@ -14,9 +14,9 @@ const Sidebar = ({user}) => {
                         </div>
                         <div className="candidate-title">
                             <div className="">
-                                <h5 className="m-b5"><a className="link-offset-2 link-underline-primary">{user.fullname}</a>
+                                <h5 className="m-b5"><a className="link-offset-2 link-underline-primary text-decoration-none">{user.fullname}</a>
                                 </h5>
-                                <p className="m-b0"><a className="link-offset-2 link-underline-secondary">{user.address}</a>
+                                <p className="m-b0"><a className="link-offset-2 link-underline-secondary text-decoration-none">{user.address}</a>
                                 </p>
                             </div>
                         </div>

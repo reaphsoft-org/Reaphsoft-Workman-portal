@@ -30,6 +30,7 @@ const UpdateUser = ({user}) => {
             <div className="col-lg-6 col-md-6">
               <div className="form-group"><label>Service Type</label><input type="text" className="form-control" value={ user.serviceType === 1 ? 'Priority' : 'Priority Plus'}/></div>
             </div>
+            <button type="button" className="site-button m-b30 mt-4 align-center">Update Personal Details</button>
           </div>
         </div>
       </div>
