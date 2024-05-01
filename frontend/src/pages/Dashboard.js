@@ -4,14 +4,6 @@ import { Link } from "react-router-dom";
 const Dashboard = ({user}) => {
     return ( 
         <div className="col-xl-9 col-lg-8 m-b30 text-black">
-            <div id="key_skills_bx" className="job-bx bg-white m-b30">
-                <div className="d-flex">
-                    <h5 className="m-b15">Key Services</h5>
-                </div>
-                <div className="job-time mr-auto"><a className="mr-1" href=""><span>Painting</span></a><a
-                    className="mr-1" href=""><span>IKEA Assembly</span></a><a className="mr-1"
-                        href=""><span>Furniture Repair</span></a></div>
-            </div>
             <div id="personal_details_bx" className="job-bx bg-white m-b30">
                 
                 <div className="d-flex">
@@ -48,21 +40,7 @@ const Dashboard = ({user}) => {
                             <td className="criterias">Lorem Ipsum is simply dummy text.</td>
                             <td className="date">December 15,2018</td>
                         </tr>
-                        <tr>
-                            <td className="job-name"><a href="">Painter</a></td>
-                            <td className="criterias">Lorem Ipsum is simply dummy text.</td>
-                            <td className="date">November 10,2018</td>
-                        </tr>
-                        <tr>
-                            <td className="job-name"><a href="">Plumber</a></td>
-                            <td className="criterias">Lorem Ipsum is simply dummy text.</td>
-                            <td className="date">October 5,2018</td>
-                        </tr>
-                        <tr>
-                            <td className="job-name"><a href="">Carpenter</a></td>
-                            <td className="criterias">Lorem Ipsum is simply dummy text.</td>
-                            <td className="date">December 15,2018</td>
-                        </tr>
+                        
                         <tr>
                             <td className="job-name"><a href="">Cleaner</a></td>
                             <td className="criterias">Lorem Ipsum is simply dummy text.</td>

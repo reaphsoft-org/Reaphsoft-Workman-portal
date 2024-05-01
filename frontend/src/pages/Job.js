@@ -4,8 +4,8 @@ const Job = ({user}) => {
     const {history} = useUser();
     return (
         <div className="col-xl-9 col-lg-8 m-b30 browse-job">
-            <h3 className="m-b5">Workman Request</h3>
-            {history.length === 0 && <h3>No Workman Request</h3>}
+            <h3 className="m-b5 text-black">Workman Request</h3>
+            {history.length === 0 && <h3 className="text-black">No Workman Request</h3>}
 
             {history?.map((history) => (
                 <ul className="post-job-bx browse-job">

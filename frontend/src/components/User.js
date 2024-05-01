@@ -46,12 +46,11 @@ const User = ({content}) => {
             return resp.json();
         })
         .then( data => {
-          userAuth.setData(data);
             if(userAuth.user.account === 1) setUser(data)
             else setEstate(data)
         })
         .catch( err => console.error('Error: ', err));
-  }, [userAuth, userAuth.user, userAuth.setData]);
+  }, [userAuth, userAuth.user]);
   return (
       <>
       {userAuth.user !== null ? <AuthenticatedUser user={userAuth.user.account === 1 ? user : estate} content={content} /> : <Navigate to="/login/"/>}
