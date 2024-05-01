@@ -16,7 +16,7 @@ const AdminLogin = () => {
           [e.target.name]: e.target.value,
         }));
       };
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
       event.preventDefault();
       adminLogin(data);
     }
@@ -34,20 +34,21 @@ const AdminLogin = () => {
                             </div>
                             <div className="body">
                                 <div className="input-group mb-3">
-                                    <input type="email" className="form-control" value={data.email} onChange={handleInputChange} placeholder="Admin Email"/>
+                                    <input type="email" className="form-control" name="email" value={data.email} onChange={handleInputChange} placeholder="Admin Email"/>
                                         <div className="input-group-append">
                                             <span className="input-group-text"><i className="zmdi zmdi-account-circle"></i></span>
                                         </div>
                                 </div>
                                 <div className="input-group mb-3">
-                                    <input type="text" className="form-control" value={data.password} onChange={handleInputChange} placeholder="Admin Password"/>
+                                    <input type="text" className="form-control" name="password" value={data.password} onChange={handleInputChange} placeholder="Admin Password"/>
                                         <div className="input-group-append">
                                             <span className="input-group-text"><i className="zmdi zmdi-lock"></i></span>
                                         </div>
                                 </div>
                                 
-                                <Link to="" className="btn btn-primary btn-block waves-effect waves-light">SIGN IN</Link>
+                                
                             </div>
+                            <button type="submit" className="btn btn-primary btn-block waves-effect waves-light">SIGN IN</button>
                         </form>
                     </div>
                     <div className="col-lg-8 col-sm-12">

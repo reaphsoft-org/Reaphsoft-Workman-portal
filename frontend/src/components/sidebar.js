@@ -2,21 +2,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { logout } from '../utils/auth';
 import { useAuth } from './AuthContext';
-const Sidebar = ({user}) => {
+const Sidebar = () => {
     const useAuth1 = useAuth();
+    const {data} = useAuth();
     return (
         <div className="col-xl-3 col-lg-4 m-b30">
             <div className="sticky-top">
                 <div className="candidate-info">
                     <div className="candidate-detail text-center">
                         <div className="canditate-des">
-                            <img alt={user.fullname} className="img-fluid" src={ user.photoURL !== '' ? "http://localhost:3001/" + user.photoURL : null} style={{width: '150px', height: '150px'}}/>
+                            <img alt={data.fullname} className="img-fluid" src={ data.photoURL !== '' ? "http://localhost:3001/" + data.photoURL : null} style={{width: '150px', height: '150px'}}/>
                         </div>
                         <div className="candidate-title">
                             <div className="">
-                                <h5 className="m-b5"><a className="link-offset-2 link-underline-primary text-decoration-none">{user.fullname}</a>
+                                <h5 className="m-b5"><a className="link-offset-2 link-underline-primary text-decoration-none text-black">{data.fullname}</a>
                                 </h5>
-                                <p className="m-b0"><a className="link-offset-2 link-underline-secondary text-decoration-none">{user.address}</a>
+                                <p className="m-b0"><a className="link-offset-2 link-underline-secondary text-decoration-none text-black">{data.address}</a>
                                 </p>
                             </div>
                         </div>

@@ -12,7 +12,8 @@ const AdminProvider = ({ children }) => {
     const [login, setLogin] = useState(JSON.parse(localStorage.getItem('adminData')) || null);
     const [admin, setAdmin] = useState(null);
     
-    const adminLogin = (adminData) => async (data) => {
+    const adminLogin = async (data) => {
+      console.log("we are here");
         const formData = (data);
         try {
           const response = await fetch('http://localhost:3001/admin/login/', {
@@ -29,8 +30,8 @@ const AdminProvider = ({ children }) => {
           const responseData = await response.json();
           if (responseData.status === true) {
             setLogin({ token: responseData.access_token, account: data.account });
-            setAdmin(adminData);
-            localStorage.setItem('adminData', JSON.stringify(adminData));
+            // setAdmin(adminData);
+            // localStorage.setItem('adminData', JSON.stringify(adminData));
             showSweetAlert(1, data.resp, "success");
             window.location.href = "/dashboard/";
           } else {
