@@ -160,21 +160,26 @@ npm run create_superuser <email> <password> <firstname> <lastnam>
 ```
 
 ## Endpoints
-| No | Description                            | Form                        | Example                     | Method |
-|----|----------------------------------------|-----------------------------|-----------------------------|--------|
-|    | Log in individual or estate            | `/auth/login/ `             | `/auth/login/`              | POST   |
-|    | Log in admin                           | `/auth/admin/login/`        | `/auth/admin/login/`        | POST   |
-|    | Sign up Individual                     | `/account/sign/up/i/`       | `/account/sign/up/i/`       | POST   |
-|    | Get User (Individual or Estate)        | `/account/user/`            | `/account/user/`            | GET    |
-|    | Update User (Individual)               | `/account/update/user/i/`   | `/account/update/user/i/`   | PUT    |
-|    | Update User (Estate)                   | `/account/update/user/e/`   | `/account/update/user/e/`   | PUT    |
-|    | Change Password (Individual or Estate) | `/account/change/password/` | `/account/change/password/` | POST   |
-|    | Sign up Estate                         | `/account/sign/up/e/`       | `/account/sign/up/e/`       | POST   |
-|    | Add Estate House                       | `/estate/add/house/`        | `/estate/add/house/`        | POST   |
-|    | Update Estate House                    | `/estate/house/:id/`        | `/estate/house/1/`          | PUT    |
-|    | Get Estate House                       | `/estate/house/:id/`        | `/estate/house/4/`          | GET    |
-|    | Delete Estate House                    | `/estate/house/:id/`        | `/estate/house/12/`         | DELETE |
-|    | Get Estate Houses                      | `/estate/houses/:page/`     | `/estate/houses/1/`         | GET    |
+| No | Description                            | Form                                  | Example                                      | Method |
+|----|----------------------------------------|---------------------------------------|----------------------------------------------|--------|
+|    | Log in individual or estate            | `/auth/login/ `                       | `/auth/login/`                               | POST   |
+|    | Log in admin                           | `/auth/admin/login/`                  | `/auth/admin/login/`                         | POST   |
+|    | Sign up Individual                     | `/account/sign/up/i/`                 | `/account/sign/up/i/`                        | POST   |
+|    | Get User (Individual or Estate)        | `/account/user/`                      | `/account/user/`                             | GET    |
+|    | Update User (Individual)               | `/account/update/user/i/`             | `/account/update/user/i/`                    | PUT    |
+|    | Update User (Estate)                   | `/account/update/user/e/`             | `/account/update/user/e/`                    | PUT    |
+|    | Change Password (Individual or Estate) | `/account/change/password/`           | `/account/change/password/`                  | POST   |
+|    | Sign up Estate                         | `/account/sign/up/e/`                 | `/account/sign/up/e/`                        | POST   |
+|    | Add Estate House                       | `/estate/add/house/`                  | `/estate/add/house/`                         | POST   |
+|    | Update Estate House                    | `/estate/house/:id/`                  | `/estate/house/1/`                           | PUT    |
+|    | Get Estate House                       | `/estate/house/:id/`                  | `/estate/house/4/`                           | GET    |
+|    | Delete Estate House                    | `/estate/house/:id/`                  | `/estate/house/12/`                          | DELETE |
+|    | Get Estate Houses                      | `/estate/houses/:page/`               | `/estate/houses/1/`                          | GET    |
+|    | Get Services                           | `/estate/services/`                   | `/estate/services/`                          | GET    |
+|    | Get Service Workers                    | `/estate/services/workers/?id=&name=` | `/estate/services/workers/id=1&name=painter` | GET    |
+|    | Request Service                        | `/estate/request/service/`            | `/estate/request/service/`                   | POST   |
+|    | Get Requested Service                  | `/estate/request/service/:id/`        | `/estate/request/service/1/`                 | GET    |
+|    | Get Requested Services                 | `/estate/requested/services/`         | `/estate/requested/services/`                | GET    |
 
 ## Auth and Account
 
@@ -296,6 +301,61 @@ A `status` of `true` indicates success, else, check `resp` for the particular is
 
 `pages` is the number of pages of houses, while `data` is an array of objects, giving each house' `id`, `number` and occupant's `name`.
 
+## Workmen (auth required for all)
+### Get All Available Services
+#### Output
+`{ id: number, name: string, description: string }[]`
+
+Return an array containing each service's id, name and description. Empty if no service is available.
+
+### Get Services Workers
+All workers for a particular service, service `id` and `name` are obtained from the Get Services call.
+#### Output
+`{ status: boolean, resp: string, data: { id: number, fullname: string, availability: string }[] }`
+
+A `status` of `true` includes an array containing each worker's id, name and availability. Empty if no worker is found.
+
+### Request Service
+#### Input Parameters
+`workerID: number`\
+`workerName: string`\
+`date: Date`
+#### Output
+`{ status: boolean, resp: string }` A `status` of `true` indicates success, else check the `resp` for the particular issue.
+
+### Get Requested Service
+#### Output
+```
+{ 
+   status: boolean, 
+   resp: string, 
+   data: null | { 
+      accepted: boolean, // service requested was accepted or declined
+      date_required: Date, // date & time service is required by client
+      date_created: Date, // date & time, service request was created by client
+      date_accepted: null | Date, // date & time service request was accepted by worker
+      date_completed: null | Date, // date & time service was completed by worker
+      worker: string // worker's fullname
+   }
+}
+```
+ A `status` of `true` indicates success, else check the `resp` for the particular issue.
+
+### Get Requested Services
+#### Output
+```
+{ 
+   status: boolean, 
+   resp: string, 
+   data: null | { 
+      id: number // request id which can be used to get the service request's details.
+      accepted: boolean // service requested was accepted or declined
+      date_created: Date // date & time, service request was created by client
+      worker: string // worker's fullname
+   }
+}
+```
+ A `status` will usually be `true`. Array might be empty.
 
 # NestJS
 
