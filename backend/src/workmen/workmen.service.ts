@@ -157,11 +157,9 @@ export class WorkmenService {
             status: true,
             resp: '',
             data: {
+                id: request.id,
                 accepted: request.accepted,
-                date_required: request.date_required,
                 date_created: request.date_created,
-                date_accepted: request.date_accepted,
-                date_completed: request.date_completed,
                 worker: request.worker.fullname,
             },
         }));

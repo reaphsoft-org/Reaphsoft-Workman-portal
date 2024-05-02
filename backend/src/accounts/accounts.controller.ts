@@ -3,6 +3,7 @@ import {
     Controller,
     Get,
     Post,
+    Put,
     Request as RequestDecorator,
     UploadedFile,
     UseGuards,
@@ -47,7 +48,7 @@ export class AccountsController {
     }
 
     @UseGuards(AuthGuard)
-    @Post('update/user/i/')
+    @Put('update/user/i/')
     async updateUser(
         @RequestDecorator() req: Request,
         @Body() updateUserDto: UpdateUserDto,
@@ -58,7 +59,7 @@ export class AccountsController {
     }
 
     @UseGuards(AuthGuard)
-    @Post('update/user/e/')
+    @Put('update/user/e/')
     async updateEstateManager(
         @RequestDecorator() req: Request,
         @Body() updateEstateManagerDto: UpdateEstateManagerDto,
