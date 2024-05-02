@@ -341,6 +341,9 @@ export class AdminService {
             order: {
                 fullname: 'ASC',
             },
+            relations: {
+                service: true,
+            },
         });
         const count = await this.workmanRepo.count();
         let pages = Math.floor(count / 50);

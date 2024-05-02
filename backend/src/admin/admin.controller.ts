@@ -81,7 +81,6 @@ export class AdminController {
         return this.service.deleteUser(email);
     }
     // EstateManagers LIST, CRUD
-    // EstateManagers, LIST, CRUD,
     @Get('estate/managers/:page/')
     async getEstateManagers(@Param('page') page: number) {
         return this.service.getEstateManagers(page);

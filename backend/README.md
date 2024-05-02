@@ -182,9 +182,21 @@ npm run create_superuser <email> <password> <firstname> <lastnam>
 |    | Get Requested Services                 | `/estate/requested/services/`         | `/estate/requested/services/`                | GET    |
 |    | Get Admin                              | `/admin/m/`                           | `/admin/m/`                                  | GET    |
 |    | Update Admin                           | `/admin/m/`                           | `/admin/m/`                                  | PUT    |
+|    | Get Users (Individuals)                | `/admin/users/:page/`                 | `/admin/users/1/`                            | GET    |
+|    | Create User (Individual)               | `/admin/user/`                        | `/admin/user/`                               | POST   |
+|    | Update User (Individual)               | `/admin/user/:email/`                 | `/admin/user/user@reaphsoft.com/`            | PUT    |
+|    | Get User (Individual)                  | `/admin/user/:email/`                 | `/admin/user/user@reaphsoft.com/`            | GET    |
+|    | Delete User (Individual)               | `/admin/user/:email/`                 | `/admin/user/user@reaphsoft.com/`            | DELETE |
+|    | Get Users (Estates)                    | `/admin/estate/managers/:page/`       | `/admin/estate/managers/1/`                  | GET    |
+|    | Create User (Estate)                   | `/admin/estate/manager/`              | `/admin/estate/manager/`                     | POST   |
+|    | Update User (Estate)                   | `/admin/estate/manager/:email/`       | `/admin/estate/manager/user@reaphsoft.com/`  | PUT    |
+|    | Get User (Estate)                      | `/admin/estate/manager/:email/`       | `/admin/estate/manager/user@reaphsoft.com/`  | GET    |
+|    | Delete User (Estate)                   | `/admin/estate/manager/:email/`       | `/admin/estate/manager/user@reaphsoft.com/`  | DELETE |
+|    | Get Workmen                            | `/admin/workmen/:page/`               | `/admin/workmen/1/`                          | GET    |
+|    | Create Workman                         | `/admin/workman/:email/`              | `/admin/workman/user@reaphsoft.com/`         | POST   |
+|    | Update Workman                         | `/admin/workman/:email/`              | `/admin/workman/user@reaphsoft.com/`         | PUT    |
 
 ## Auth and Account
-
 ### Individual & Estate Login
 #### Input Parameters
 `email: string` \
@@ -384,6 +396,128 @@ new_password: string,
 ```
 ##### Output
 `{ status: boolean, resp: string }` A `status` of `true` indicates success, else check the `resp` for the particular issue.
+
+### Get Users
+#### Output
+`{ pages: number, data: { email: string, name: string, address: string }[] }`\
+`data` is an array. `pages` has the number of pages of users. It is set to 0 when no users are found.\
+Pagination starts from 50 as usual. 
+
+### Create User (Individual)
+#### Input Parameters
+`email: string`\
+`password: string`\
+`fullname: string`\
+`apartment: string`\
+`address: string`\
+`serviceType: number` 1 for priority, 2 for priority plus \
+`photo: file` optional
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Update User (Individual)
+#### Input Parameters
+`address: string`\
+`fullname: string`\
+`serviceType: number` 1 for priority, 2 for priority plus \
+`apartment: string`
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Get User
+#### Output Parameters Individual
+`null` if user not found, else
+`email: string`\
+`fullname: string`\
+`apartment: string`\
+`address: string`\
+`serviceType: number` 1 for priority, 2 for priority plus \
+`photoURL: string`\
+
+### Delete User
+#### Output Parameters
+`{ status: boolean, resp: string }` A `status` of `true` indicates success, else check the `resp` for the particular issue.
+
+### Get Estate Managers
+#### Output
+`{ pages: number, data: { email: string, name: string, address: string }[] }`\
+`data` is an array. `pages` has the number of pages of users. It is set to 0 when no users are found.\
+Pagination starts from 50 as usual. 
+
+### Create User (Estate Manager)
+#### Input Parameters
+`email: string`\
+`password: string`\
+`fullname: string`\
+`estate: string`\
+`address: string`\
+`serviceType: number` 1 for priority, 2 for priority plus \
+`photo: file` optional
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Update User (Estate Manager)
+#### Input Parameters
+`address: string`\
+`fullname: string`\
+`serviceType: number` 1 for priority, 2 for priority plus \
+`apartment: string`
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Get Estate Managers
+#### Output Parameters Individual
+`null` if user not found, else
+`email: string`\
+`fullname: string`\
+`estate: string`\
+`address: string`\
+`serviceType: number` 1 for priority, 2 for priority plus \
+`photoURL: string`\
+
+### Delete User
+#### Output Parameters
+`{ status: boolean, resp: string }` A `status` of `true` indicates success, else check the `resp` for the particular issue.
+
+### Get Workmen
+Paginated by 50
+#### Output
+```
+{
+   pages: number,
+   data: {
+      email: string, 
+      name: string,
+      service: string // title of the service for this worker
+   }[]
+}
+```
+
+### Create Workman
+#### Input Parameters
+`email: string`\
+`password: string`\
+`fullname: string`\
+`address: string`\
+`phone: string` optional\
+`availability: string` optional\
+`service: number` id of the service \
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Update Workman
+Paginated by 50
+### Output
+```
+{
+   pages: number,
+   data: {
+      email: string, 
+      name: string,
+      service: string // title of the service for this worker
+   }[]
+}
+```
 
 # NestJS
 
