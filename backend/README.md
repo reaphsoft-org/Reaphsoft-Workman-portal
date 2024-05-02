@@ -170,7 +170,13 @@ npm run create_superuser <email> <password> <firstname> <lastnam>
 |    | Update User (Estate)                   | `/account/update/user/e/`   | `/account/update/user/e/`   | PUT    |
 |    | Change Password (Individual or Estate) | `/account/change/password/` | `/account/change/password/` | POST   |
 |    | Sign up Estate                         | `/account/sign/up/e/`       | `/account/sign/up/e/`       | POST   |
+|    | Add Estate House                       | `/estate/add/house/`        | `/estate/add/house/`        | POST   |
+|    | Update Estate House                    | `/estate/house/:id/`        | `/estate/house/1/`          | PUT    |
+|    | Get Estate House                       | `/estate/house/:id/`        | `/estate/house/4/`          | GET    |
+|    | Delete Estate House                    | `/estate/house/:id/`        | `/estate/house/12/`         | DELETE |
+|    | Get Estate Houses                      | `/estate/houses/:page/`     | `/estate/houses/1/`         | GET    |
 
+## Auth and Account
 
 ### Individual & Estate Login
 #### Input Parameters
@@ -243,6 +249,7 @@ npm run create_superuser <email> <password> <firstname> <lastnam>
 #### Output
 `{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
 
+## Estate (auth required for all)
 ### Sign Up Estate
 #### Input Parameters
 `email: string`\
@@ -254,6 +261,41 @@ npm run create_superuser <email> <password> <firstname> <lastnam>
 `photo: file` optional
 #### Output
 `{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Add Estate House
+#### Input Parameters
+`number: string`\
+`occupant_name: string`\
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Update Estate House
+#### Input Parameters
+`number: string`\
+`occupant_name: string`\
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Get Estate House
+#### Output
+`{ status: boolean, resp: string, data: null | { number: string, name: string } }` 
+
+A `status` of `true` indicates success, and `data` is set to the non-null object,\
+Else, `data` is set to `null`, check `resp` for the particular issue.
+
+### Delete Estate House
+#### Output
+`{ status: boolean, resp: string }` 
+
+A `status` of `true` indicates success, else, check `resp` for the particular issue.
+
+### Get Estate Houses
+`page` must start from 1 and should not exceed the number of pages. Data is paginated by **50** at the moment.
+#### Output
+`{ pages: number, data: {id: number, number: string, name: string }[]`
+
+`pages` is the number of pages of houses, while `data` is an array of objects, giving each house' `id`, `number` and occupant's `name`.
+
 
 # NestJS
 
