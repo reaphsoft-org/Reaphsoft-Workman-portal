@@ -180,6 +180,8 @@ npm run create_superuser <email> <password> <firstname> <lastnam>
 |    | Request Service                        | `/estate/request/service/`            | `/estate/request/service/`                   | POST   |
 |    | Get Requested Service                  | `/estate/request/service/:id/`        | `/estate/request/service/1/`                 | GET    |
 |    | Get Requested Services                 | `/estate/requested/services/`         | `/estate/requested/services/`                | GET    |
+|    | Get Admin                              | `/admin/m/`                           | `/admin/m/`                                  | GET    |
+|    | Update Admin                           | `/admin/m/`                           | `/admin/m/`                                  | PUT    |
 
 ## Auth and Account
 
@@ -356,6 +358,32 @@ A `status` of `true` includes an array containing each worker's id, name and ava
 }
 ```
  A `status` will usually be `true`. Array might be empty.
+
+## Admin (Auth & Admin Required)
+### Get Admin
+#### Output
+```
+null | 
+{
+   email: string,
+   fullname: string,
+   is_active: boolean,
+   photoURL: string,
+   date_joined: date,
+   last_visited: string,
+}
+```
+`null` if user is not found, or the mentioned fields.
+
+### Update Admin
+#### Input Parameters
+```
+fullname: string
+old_password: string,
+new_password: string,
+```
+##### Output
+`{ status: boolean, resp: string }` A `status` of `true` indicates success, else check the `resp` for the particular issue.
 
 # NestJS
 
