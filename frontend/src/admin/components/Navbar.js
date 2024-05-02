@@ -10,7 +10,7 @@ const NavBar = () => {
                     {/* <a href="#search" className="main_search" title="Search..."><i className="zmdi zmdi-search"></i></a> */}
                 </li>
                 <li>
-                    <a href="sign-in.html" className="mega-menu" title="Sign Out"><i className="zmdi zmdi-power"></i></a></li>
+                    <Link to="http://localhost:3000/admin/" className="mega-menu" title="Sign Out"><i className="zmdi zmdi-power"></i></Link></li>
             </ul>
         </div>
     );

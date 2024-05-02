@@ -34,7 +34,7 @@ const AboutS = () => {
                 </header>
                 <div className="page-content bg-white">
                     <div className="dez-bnr-inr overlay-black-light" style={{
-                        backgroundImage: "url(../asset/image/labour.jpg)" }}>
+                        backgroundImage: "url(../asset/image/work.jpg)" }}>
                         <div className="container">
                             <div className="dez-bnr-inr-entry">
                                 <h1 className="text-white">About Us</h1>

@@ -36,9 +36,9 @@ const LeftSideBar = () => {
                     <li className="active open">
                         <Link to="estate"><i className="zmdi zmdi-flower"></i><span>Estate</span></Link>
                     </li>
-                    <li className="active open">
+                    {/* <li className="active open">
                         <Link to="client"><i className="zmdi zmdi-folder"></i><span>Clients</span></Link>
-                    </li>
+                    </li> */}
                     {/* <li className="active open">
                         <a href=""><i className="zmdi zmdi-blogger"></i><span>Request</span></a>
                     </li>

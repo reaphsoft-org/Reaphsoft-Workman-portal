@@ -1,9 +1,10 @@
 import React , { useState } from "react";
 import { Modal } from "react-bootstrap";
-
+import { useEffect } from "react";
 
 const Skill = () => {
     const [showModal, setShowModal] = useState(false);
+    const [worker, setWorker] = useState([]);
 
     const handleEditClick = () => {
         setShowModal(true);
@@ -12,7 +13,20 @@ const Skill = () => {
     const handleCloseModal = () => {
         setShowModal(false);
     };
+    
 
+    useEffect(() => {
+        fetch("https://jsonplaceholder.typicode.com/users", {
+            // method: 'GET',
+            // headers: {
+            // 'Content-Type': 'application/json',
+            // 'Authorization': `Bearer ${adminData.token}`
+            // },
+        })
+            .then((res) => res.json())
+            .then((data) => setWorker(data))
+            .catch((err) => console.log(err));
+    }, []);
     return (  
         <section className="content">
             <div className="body_scroll">
@@ -39,7 +53,7 @@ const Skill = () => {
                                     <table className="table table-hover product_item_list c_table theme-color mb-0">
                                         <thead>
                                             <tr>
-                                                <th>Image</th>
+                                                <th>S/N</th>
                                                 <th>Workman Name</th>
                                                 <th data-breakpoints="sm xs">Address</th>
                                                 <th data-breakpoints="xs">Skilled</th>
@@ -48,51 +62,21 @@ const Skill = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><img src="../adminAssets/images/ecommerce/1.png" width="48" alt="Product img"/></td>
-                                                <td><h5>Foluke Foluke</h5></td>
-                                                <td><span className="text-muted">No 17, Estate Street, Poly Road</span></td>
-                                                <td>Painter</td>
-                                                <td>Priority</td>
+                                            {worker.map((list, index) => (
+                                            <tr key={index}>
+                                                <td>{index + 1}</td>
+                                                <td><h5>{list.name}</h5></td>
+                                                <td><span className="text-muted">{list.street}</span></td>
+                                                <td>{list.skill}</td>
+                                                <td>{list.serviceType}</td>
                                                 <td>
                                                     <a href="javascript:void(0);" onClick={handleEditClick} className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
                                                     <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td><img src="../adminAssets/images/ecommerce/1.png" width="48" alt="Product img" /></td>
-                                                <td><h5>Foluke Foluke</h5></td>
-                                                <td><span className="text-muted">No 17, Estate Street, Poly Road</span></td>
-                                                <td>Painter</td>
-                                                <td>Priority</td>
-                                                <td>
-                                                    <a href="javascript:void(0);" onClick={handleEditClick} className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
-                                                    <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="../adminAssets/images/ecommerce/1.png" width="48" alt="Product img" /></td>
-                                                <td><h5>Foluke Foluke</h5></td>
-                                                <td><span className="text-muted">No 17, Estate Street, Poly Road</span></td>
-                                                <td>Painter</td>
-                                                <td>Priority</td>
-                                                <td>
-                                                    <a href="javascript:void(0);" onClick={handleEditClick} className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
-                                                    <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="../adminAssets/images/ecommerce/1.png" width="48" alt="Product img" /></td>
-                                                <td><h5>Foluke Foluke</h5></td>
-                                                <td><span className="text-muted">No 17, Estate Street, Poly Road</span></td>
-                                                <td>Painter</td>
-                                                <td>Priority</td>
-                                                <td>
-                                                    <a href="javascript:void(0);" onClick={handleEditClick} className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
-                                                    <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
-                                                </td>
-                                            </tr>
-                                            
+                                                
+                                            ))}
+                                            {worker.length === 0 && <h3 className="text-black text-center">No Workman Registered Yet</h3>}
                                         </tbody>
                                     </table>
                                 </div>
