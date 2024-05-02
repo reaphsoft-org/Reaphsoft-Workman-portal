@@ -4,6 +4,7 @@ import { logout } from '../utils/auth';
 import { useAuth } from './AuthContext';
 const Sidebar = ({user}) => {
     const useAuth1 = useAuth();
+   
     return (
         <div className="col-xl-3 col-lg-4 m-b30">
             <div className="sticky-top">
@@ -22,47 +23,97 @@ const Sidebar = ({user}) => {
                         </div>
                     </div>
                     <ul>
-                        <li >
-                            <Link to="/user/" className='text-decoration-none'>
-                                <span>Dashboard</span>
-                            </Link>
-                        </li>
-                         <li>
-                            <Link to="/user/profile/" className='text-decoration-none'>
+                    {user.accountType === 1 &&
+                        <div >
+                            <li >
+                                <Link to="/user/" className='text-decoration-none'>
+                                    <span>Dashboard</span>
+                                </Link>
+                            </li>
+                                <li>
+                                <Link to="/user/profile/" className='text-decoration-none'>
+                                        
+                                    <span>Profile</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/user/request/" className='text-decoration-none'>
                                     
-                                <span>Profile</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/user/request/" className='text-decoration-none'>
-                                
-                                <span>Workman Request</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/user/job/" className='text-decoration-none'>
-                                
-                                <span>Request History</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/user/update/" className='text-decoration-none'>
-                                
-                                <span>Update Profile</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/user/change/password/" className='text-decoration-none'>
-                                
-                                <span>Change Password</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link variant="link" className="link-offset-3 text-decoration-none" onClick={() => logout(useAuth1)}>
-                                
-                                <span>Log Out</span>
-                            </Link>
-                        </li>
+                                    <span>Workman Request</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/user/job/" className='text-decoration-none'>
+                                    
+                                    <span>Request History</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/user/update/" className='text-decoration-none'>
+                                    
+                                    <span>Update Profile</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/user/change/password/" className='text-decoration-none'>
+                                    
+                                    <span>Change Password</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link variant="link" className="link-offset-3 text-decoration-none" onClick={() => logout(useAuth1)}>
+                                    
+                                    <span>Log Out</span>
+                                </Link>
+                            </li>
+                        </div>
+                    }
+                    {user.accountType === 2  &&
+                        <div>
+                                            <li >
+                                                <Link to="/user/" className='text-decoration-none'>
+                                                    <span> Estate Dashboard</span>
+                                                </Link>
+                                            </li>
+                                                <li>
+                                                <Link to="/user/profile/" className='text-decoration-none'>
+                                                        
+                                                    <span>Estate Profile</span>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/user/request/" className='text-decoration-none'>
+                                                    
+                                                    <span>Estate Workman Request</span>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/user/job/" className='text-decoration-none'>
+                                                    
+                                                    <span>Estate Request History</span>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/user/update/" className='text-decoration-none'>
+                                                    
+                                                    <span>Update Estate Profile</span>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/user/change/password/" className='text-decoration-none'>
+                                                    
+                                                    <span>Change Estate Password</span>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link variant="link" className="link-offset-3 text-decoration-none" onClick={() => logout(useAuth1)}>
+                                                    
+                                                    <span>Log Out</span>
+                                                </Link>
+                                            </li>
+                        </div>
+                    }
+                        
                     </ul>
                 </div>
             </div>

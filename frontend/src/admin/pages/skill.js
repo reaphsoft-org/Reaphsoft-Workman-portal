@@ -16,12 +16,12 @@ const Skill = () => {
     
 
     useEffect(() => {
-        fetch("https://jsonplaceholder.typicode.com/users", {
-            // method: 'GET',
-            // headers: {
-            // 'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${adminData.token}`
-            // },
+        fetch("http://localhost:3001/admin/workmen/skills/", {
+            method: 'GET',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${(JSON.parse(localStorage.getItem('adminData.token')))}`
+            },
         })
             .then((res) => res.json())
             .then((data) => setWorker(data))
@@ -42,6 +42,10 @@ const Skill = () => {
                                 <li className="breadcrumb-item active">Worker List</li>
                             </ul>
                         </div>
+                        <div className="col-lg-5 col-md-6 col-sm-12">                
+                            {/* <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button> */}
+                            <button className="btn btn-success btn-icon float-right" onClick={handleEditClick} type="button"><i class="zmdi zmdi-plus"></i></button>
+                        </div>
                         
                     </div>
                 </div>
@@ -52,7 +56,7 @@ const Skill = () => {
                                 <div className="table-responsive">
                                     <table className="table table-hover product_item_list c_table theme-color mb-0">
                                         <thead>
-                                            <tr>
+                                            <tr className="text-black">
                                                 <th>S/N</th>
                                                 <th>Workman Name</th>
                                                 <th data-breakpoints="sm xs">Address</th>
@@ -62,20 +66,19 @@ const Skill = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {worker.map((list, index) => (
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td><h5>{list.name}</h5></td>
-                                                <td><span className="text-muted">{list.street}</span></td>
-                                                <td>{list.skill}</td>
-                                                <td>{list.serviceType}</td>
-                                                <td>
-                                                    <a href="javascript:void(0);" onClick={handleEditClick} className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
-                                                    <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
-                                                </td>
-                                            </tr>
-                                                
-                                            ))}
+                                            {worker && worker.map((list, index) => (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td><h5>{list.name}</h5></td>
+                                                    <td><span className="text-muted">{list.street}</span></td>
+                                                    <td>{list.skill}</td>
+                                                    <td>{list.serviceType}</td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" onClick={handleEditClick} className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></a>
+                                                        <a href="javascript:void(0);" className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></a>
+                                                    </td>
+                                                </tr>
+                                                ))}
                                             {worker.length === 0 && <h3 className="text-black text-center">No Workman Registered Yet</h3>}
                                         </tbody>
                                     </table>
