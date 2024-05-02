@@ -160,9 +160,100 @@ npm run create_superuser <email> <password> <firstname> <lastnam>
 ```
 
 ## Endpoints
-| No | Description | Form | Example | Method |
-|----|-------------|------|---------|--------|
-| 1  |             |      |         |        |
+| No | Description                            | Form                        | Example                     | Method |
+|----|----------------------------------------|-----------------------------|-----------------------------|--------|
+|    | Log in individual or estate            | `/auth/login/ `             | `/auth/login/`              | POST   |
+|    | Log in admin                           | `/auth/admin/login/`        | `/auth/admin/login/`        | POST   |
+|    | Sign up Individual                     | `/account/sign/up/i/`       | `/account/sign/up/i/`       | POST   |
+|    | Get User (Individual or Estate)        | `/account/user/`            | `/account/user/`            | GET    |
+|    | Update User (Individual)               | `/account/update/user/i/`   | `/account/update/user/i/`   | PUT    |
+|    | Update User (Estate)                   | `/account/update/user/e/`   | `/account/update/user/e/`   | PUT    |
+|    | Change Password (Individual or Estate) | `/account/change/password/` | `/account/change/password/` | POST   |
+|    | Sign up Estate                         | `/account/sign/up/e/`       | `/account/sign/up/e/`       | POST   |
+
+
+### Individual & Estate Login
+#### Input Parameters
+`email: string` \
+`password: string` \
+`account: 1 | 2` 1 for individual, 2 for estate
+#### Output
+`{ access_token: string; resp: string; status: boolean }` if `status` is `true`, the `access_token` is included, else check `resp` for the response or error message.
+
+### Admin Login
+#### Input Parameters
+`email: string` \
+`password: string`
+#### Output
+`{ access_token: string; resp: string; status: boolean }` if `status` is `true`, the `access_token` is included, else check `resp` for the response or error message.
+
+### Sign Up Individual
+#### Input Parameters
+`email: string`\
+`password: string`\
+`fullname: string`\
+`apartment: string`\
+`address: string`\
+`serviceType: number` 1 for priority, 2 for priority plus \
+`photo: file` optional
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Get User (auth-required)
+#### Output Parameters Individual
+`accountType: number`\
+`address: string`\
+`email: string`\
+`fullname: string`\
+`photoURL: string`\
+`serviceType: number` 1 for priority, 2 for priority plus \
+`apartment: string`
+#### Output Parameters Estate
+`accountType: number`\
+`address: string`\
+`email: string`\
+`fullname: string`\
+`photoURL: string`\
+`serviceType: number` 1 for priority, 2 for priority plus\
+`estate: string`\
+`houses: { number: string; name: string; id: string }[]` containing houses this user has added
+
+### Update User (Individual) (auth-required)
+#### Input Parameters
+`address: string`\
+`fullname: string`\
+`serviceType: number` 1 for priority, 2 for priority plus \
+`apartment: string`
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Update User (Estate) (auth-required)
+#### Input Parameters
+`address: string`\
+`fullname: string`\
+`serviceType: number` 1 for priority, 2 for priority plus \
+`estate: string`
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Change Password (Individual or Estate) (auth required)
+#### Input Parameters
+`new_password: string`\
+`old_password: string`\
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Sign Up Estate
+#### Input Parameters
+`email: string`\
+`password: string`\
+`fullname: string`\
+`estate: string`\
+`address: string`\
+`serviceType: number` 1 for priority, 2 for priority plus \
+`photo: file` optional
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
 
 # NestJS
 
