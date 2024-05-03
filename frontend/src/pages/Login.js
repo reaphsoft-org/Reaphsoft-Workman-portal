@@ -1,5 +1,5 @@
 import { Link, Navigate } from 'react-router-dom';
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import { useAuth } from "../components/AuthContext";
 import SweetAlertComponent  from "../utils/alert";
 function Login() {

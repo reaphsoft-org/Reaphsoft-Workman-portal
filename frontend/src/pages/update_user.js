@@ -1,8 +1,66 @@
 import React, {useEffect, useState} from 'react';
+import {useAuth} from "../components/AuthContext";
+import SweetAlertComponent from "../utils/alert";
 const UpdateUser = ({user}) => {
+  const userAuth = useAuth();
   const handleSubmit = (event) => {
     event.preventDefault();
+    setDisableButton(true);
+    if (user.address === data.address &&
+        user.fullname === data.fullname &&
+        user.serviceType === data.serviceType &&
+        user.apartment === data.apartment
+    ){
+      setDisableButton(false);
+      return;
+    }
+    const link = user.accountType === 1 ? "i/" : "e/";
+    const postData = new FormData();
+    postData.append('address', data.address);
+    postData.append('fullname', data.fullname);
+    postData.append('serviceType', data.serviceType);
+    postData.append('apartment', data.apartment);
+    postData.append('estate', data.estate);
+    const alert = (type, text, title) => {
+      const component = new SweetAlertComponent();
+      component.showSweetAlert(type, text, title);
+      setDisableButton(false);
+    };
+    fetch(`http://localhost:3001/account/update/user/${link}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'Bearer ' + userAuth.user.token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    }).then( res => {
+      if (!res.ok){
+        alert(3,
+            "Got a bad response from the server. Please contact the administrators.",
+            "Error");
+
+      }else {
+        return res.json();
+      }
+    }).then((data) => {
+          if (data.status === true){
+            alert(1, "Profile Updated Successfully", "Success");
+            user.fullname = data.fullname;
+            user.address = data.address;
+            user.serviceType = data.serviceType;
+            user.apartment = data.apartment;
+            user.estate = data.estate;
+          }else{
+            alert(3, data.resp, "Error");
+          }
+          setDisableButton(false);
+        }
+    ).catch((reason) => {
+      alert(3, reason.message, "Error");
+      setDisableButton(false);
+    });
   }
+  const [disableButton, setDisableButton] = useState(false);
   const handleInputChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   }
@@ -79,7 +137,7 @@ const UpdateUser = ({user}) => {
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-8 offset-2 d-grid">
-                <button type="submit" className="site-button m-b30 mt-4 align-center text-black">Update Personal Details</button>
+                <button type="submit" className="site-button m-b30 mt-4 align-center text-black" disabled={disableButton}>Update Personal Details</button>
               </div>
             </div>
           </form>
