@@ -38,7 +38,6 @@ const UpdateUser = ({user}) => {
         alert(3,
             "Got a bad response from the server. Please contact the administrators.",
             "Error");
-
       }else {
         return res.json();
       }
