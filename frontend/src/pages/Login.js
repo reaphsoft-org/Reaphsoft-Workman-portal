@@ -1,8 +1,6 @@
-import { IoAnalyticsSharp } from "react-icons/io5";
 import { Link, Navigate } from 'react-router-dom';
 import React, { useState } from "react";
 import { useAuth } from "../components/AuthContext";
-import { Toast, ToastContainer } from "react-bootstrap";
 import SweetAlertComponent  from "../utils/alert";
 function Login() {
   const user = useAuth();
@@ -12,7 +10,6 @@ function Login() {
     account: "1"
   });
 
-  // const [showToast, setShowToast] = useState({ message: "", show: false });
   const [disableButton, setDisableButton] = useState('');
 
   const [errorText, setErrorText] = useState("");
