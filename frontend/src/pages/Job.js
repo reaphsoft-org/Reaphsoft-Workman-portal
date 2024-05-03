@@ -1,16 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import {useUser} from "../components/UserContext";
 const Job = ({user}) => {
-    const {history} = useUser();
+    const [history, setHistory] = useState([]);
     return (
         <div className="col-xl-9 col-lg-8 m-b30 browse-job">
-            <h3 className="m-b5 text-black">Workman Request</h3>
-            
-            {history.length === 0 && <div> 
-            <img src="../../asset/image/empty.png" className="align-item-center"/>
-            <h3 className="text-black m-b5 text-center"> No Workman Request Yet</h3></div> }
+            <h3 className="m-b5 text-black">Workman Requests</h3>
+            {history.length === 0 &&
+                <div className="my-5 text-center">
+                    <img src="../../../asset/image/empty.png" className="img-fluid mb-4" alt="work" />
+                    <h3 className="text-black m-b5 text-center"> No Workman Request Yet</h3>
+                </div> }
 
-            {history?.map((history) => (
+            {history.map((history) => (
                 <ul className="post-job-bx browse-job">
                 <li>
                     <div className="post-bx">
@@ -19,9 +20,7 @@ const Job = ({user}) => {
                             <ul>
                                 <li >{history.workerID}</li>
                                 <li><i className="fa fa-map-marker"></i> {history.date}</li>
-                                {/* <li><i className="fa fa-money"></i> 25,000</li> */}
                             </ul>
-                            
                             <div className="posted-info clearfix">
                                 <p className="m-tb0 text-primary float-left"><span
                                     className="text-black m-r10">Date Request:</span> {history.date}</p>
@@ -29,8 +28,6 @@ const Job = ({user}) => {
                         </div>
                     </div>
                 </li>
-                
-
             </ul> 
             ))}
         </div>
