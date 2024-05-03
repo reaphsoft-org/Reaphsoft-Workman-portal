@@ -193,7 +193,7 @@ describe('Accounts Individual User Tests', () => {
             serviceType: classBasedUser.serviceType,
         };
         return request(app.getHttpServer())
-            .post(updateAPI)
+            .put(updateAPI)
             .send(data)
             .expect(401);
     });
@@ -222,10 +222,10 @@ describe('Accounts Individual User Tests', () => {
             serviceType: user0.serviceType,
         };
         return request(app.getHttpServer())
-            .post(updateAPI)
+            .put(updateAPI)
             .auth(token, { type: 'bearer' })
             .send(data)
-            .expect(201)
+            .expect(200)
             .then(async (response) => {
                 const data = response.body;
                 expect(data.status);
@@ -533,10 +533,10 @@ describe('Accounts Estate Manager Tests', () => {
             serviceType: estateManager.serviceType,
         };
         return request(app.getHttpServer())
-            .post('/account/update/user/e/')
+            .put('/account/update/user/e/')
             .auth(token, { type: 'bearer' })
             .send(data)
-            .expect(201)
+            .expect(200)
             .then(async (response) => {
                 const data = response.body;
                 expect(data.status);

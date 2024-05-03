@@ -2,7 +2,6 @@ import { IoAnalyticsSharp } from "react-icons/io5";
 import React, { useState } from 'react';
 import { Toast, ToastContainer } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
 import SweetAlertComponent  from "../utils/alert";
 
 export function generateRandomString() {
@@ -45,7 +44,7 @@ function Register() {
       postData.append("photo", selectedImage);
     }
     try {
-      const link = formData.accountType === "1" ? "account/sign/up/i/" : "account/sign/up/e/";
+      const link = accountTypeValues.accountType === 1 ? "account/sign/up/i/" : "account/sign/up/e/";
       const response = await fetch(`http://localhost:3001/${link}`, {
         method: 'POST',
         body: postData,
@@ -64,8 +63,6 @@ function Register() {
         const code = generateRandomString();
         localStorage.setItem('register', code + `;;${formData.email}`);
         showAlert(1, data.resp, "/login/", "success");
-
-        // window.location.href = `/register/success/?code=${code}`;
       } else {
         setShowToast({ message: data.resp, show: true });
         setDisableButton("");
@@ -78,7 +75,6 @@ function Register() {
 
   const [formData, setFormData] = useState(
     {
-      accountType: "1",
       email: '',
       password: '',
       fullname: '',
@@ -130,7 +126,6 @@ function Register() {
                         <h4 className="text-secondary">{accountTypeValues.description} Information</h4>
                         {accountTypeValues.individual ?
                           <form onSubmit={handleSubmit}>
-                            <input type="hidden" name="accountType" value={accountTypeValues.accountType} onChange={handleInputChange} />
                             {/* Above would be dynamically set subsequently */}
                             <div className="my-3">
                               <div className="col-12 mb-2">

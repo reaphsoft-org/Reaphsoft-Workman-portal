@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import Swal from 'sweetalert2';
 
 class SweetAlertComponent extends Component {
