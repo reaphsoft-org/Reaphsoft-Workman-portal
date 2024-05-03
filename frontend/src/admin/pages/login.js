@@ -16,70 +16,19 @@ function Login () {
     async function login(){
         console.log(email, password);
         let item= {email, password}
-        let result = fetch("http://localhost:3001/admin/login/", {
+        let result = fetch("http://localhost:3001/auth/admin/login/", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(item)
         });
-        result = await result.JSON;
+        const response = await result;
         showSweetAlert(1, "Admin Login Successful", "success");
         localStorage.setItem("adminData", JSON.stringify(result));
-        window.location.href = "http://localhost:3000/dashboard/";
+        // window.location.href = "http://localhost:3000/dashboard/";
         
     }
-
-//     const user = useAuth();
-//     const [data, setData] = useState({
-//     email: "",
-//     password: "",
-//   });
-
-//   const [disableButton, setDisableButton] = useState('');
-//   const [errorText, setErrorText] = useState("");
-//   const handleInputChange = (e) => {
-//     setData({ ...data, [e.target.name]: e.target.value });
-//   }
-
-//   
-
-//   const handleSubmit = async (event) => {
-//     event.preventDefault();
-//     if (disableButton !== "") {
-//       return;
-//     }
-//     setDisableButton(" disabled");
-//     const formData = JSON.stringify(data);
-//     try {
-//       const response = await fetch('http://localhost:3001/admin/login/', {
-//         method: 'POST',
-//         body: formData,
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//       });
-//       if (!response.ok) {
-//         showSweetAlert(3, "Received a bad response from the server.", "Error");
-//         // setShowToast({ message: "Received a bad response from the server.", show: true });
-//         setDisableButton("");
-//         return;
-//       }
-//       const responseData = await response.json();
-//       if (responseData.status === true) {
-//         user.login({ token: responseData.access_token, account: data.account });
-//         showSweetAlert(1, data.resp, "success");
-//         window.location.href = "http://localhost:3000/dashboard/";
-//       } else {
-//         setErrorText(responseData.resp);
-//         setDisableButton("");
-//       }
-//     } catch (e) {
-//       showSweetAlert(3, "Encountered server error while posting the form data.", "Error");
-//       // setShowToast({ message: "Encountered server error while posting the form data.", show: true });
-//       setDisableButton("");
-//     }
-//   }
 
     return ( 
         <div className="authentication">

@@ -14,13 +14,16 @@ const Skill = () => {
         setShowModal(false);
     };
     
+    const token = localStorage.getItem('adminData');
+    console.log(token);
 
     useEffect(() => {
         fetch("http://localhost:3001/admin/workmen/skills/", {
             method: 'GET',
             headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${(JSON.parse(localStorage.getItem('adminData.token')))}`
+            'Authorization': 'Bearer ' + `${token}`,
+          
             },
         })
             .then((res) => res.json())
@@ -43,7 +46,6 @@ const Skill = () => {
                             </ul>
                         </div>
                         <div className="col-lg-5 col-md-6 col-sm-12">                
-                            {/* <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button> */}
                             <button className="btn btn-success btn-icon float-right" onClick={handleEditClick} type="button"><i class="zmdi zmdi-plus"></i></button>
                         </div>
                         
