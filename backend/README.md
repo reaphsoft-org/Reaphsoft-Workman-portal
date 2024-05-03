@@ -195,6 +195,8 @@ npm run create_superuser <email> <password> <firstname> <lastnam>
 |    | Get Workmen                            | `/admin/workmen/:page/`               | `/admin/workmen/1/`                          | GET    |
 |    | Create Workman                         | `/admin/workman/:email/`              | `/admin/workman/user@reaphsoft.com/`         | POST   |
 |    | Update Workman                         | `/admin/workman/:email/`              | `/admin/workman/user@reaphsoft.com/`         | PUT    |
+|    | Get Workman                            | `/admin/workman/:email/`              | `/admin/workman/user@reaphsoft.com/`         | GET    |
+|    | Delete Workman                         | `/admin/workman/:email/`              | `/admin/workman/user@reaphsoft.com/`         | DELETE |
 
 ## Auth and Account
 ### Individual & Estate Login
@@ -468,12 +470,16 @@ Pagination starts from 50 as usual.
 ### Get Estate Managers
 #### Output Parameters Individual
 `null` if user not found, else
-`email: string`\
-`fullname: string`\
-`estate: string`\
-`address: string`\
-`serviceType: number` 1 for priority, 2 for priority plus \
-`photoURL: string`\
+```
+{
+   email: string
+   fullname: string
+   estate: string
+   address: string
+   serviceType: number 1 for priority, 2 for priority plus 
+   photoURL: string
+}
+```
 
 ### Delete User
 #### Output Parameters
@@ -500,24 +506,39 @@ Paginated by 50
 `fullname: string`\
 `address: string`\
 `phone: string` optional\
-`availability: string` optional\
-`service: number` id of the service \
+`availability: string`\
+`service: number` id of the service
 #### Output
 `{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
 
 ### Update Workman
-Paginated by 50
-### Output
+#### Input Parameters
+`fullname: string`\
+`address: string`\
+`phone: string` optional\
+`availability: string` \
+`service: number` id of the service
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Get Workman
+#### Output
+`null` if not found, else  
 ```
 {
-   pages: number,
-   data: {
-      email: string, 
-      name: string,
-      service: string // title of the service for this worker
-   }[]
+   email: string,
+   fullname: string,
+   address: string,
+   phone: string,
+   service: string // service name,
+   availability: string,
+   photoURL: string,
 }
 ```
+
+### Delete Workman
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
 
 # NestJS
 
