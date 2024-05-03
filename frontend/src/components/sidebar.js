@@ -75,10 +75,16 @@ const Sidebar = ({user}) => {
                                                     <span> Estate Dashboard</span>
                                                 </Link>
                                             </li>
-                                                <li>
+                                            <li>
                                                 <Link to="/user/profile/" className='text-decoration-none'>
                                                         
                                                     <span>Estate Profile</span>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/user/house/" className='text-decoration-none'>
+                                                        
+                                                    <span>Estate Houses</span>
                                                 </Link>
                                             </li>
                                             <li>

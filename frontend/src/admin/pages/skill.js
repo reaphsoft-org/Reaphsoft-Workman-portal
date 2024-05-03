@@ -81,7 +81,11 @@ const Skill = () => {
                                                     </td>
                                                 </tr>
                                                 ))}
-                                            {worker.length === 0 && <h3 className="text-black text-center">No Workman Registered Yet</h3>}
+                                                {worker.length === 0 && 
+                                                <div> 
+                                                    <img src="../../asset/image/empty.png" className="align-item-center"/>
+                                                    <h3 className="text-black m-b5 text-center"> No Workman Yet</h3>
+                                                </div> }
                                         </tbody>
                                     </table>
                                 </div>
@@ -112,11 +116,7 @@ const Skill = () => {
                                 <input type="text" class="form-control" placeholder="Full Name" />
                             </div>
                             <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="Text" class="form-control" placeholder="Password" />
-                            </div>
-                            <div class="form-group">
-                                <label>Email Name</label>
+                                <label>Email</label>
                                 <input type="Text" class="form-control" placeholder="Worker Email" />
                             </div>
                             <div class="form-group">

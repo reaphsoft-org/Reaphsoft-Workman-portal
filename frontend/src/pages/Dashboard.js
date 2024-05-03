@@ -36,15 +36,14 @@ const Dashboard = ({user}) => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td className="job-name"><a href="">Electrician</a></td>
-                            <td className="criterias">Lorem Ipsum is simply dummy text.</td>
-                            <td className="date">December 15,2018</td>
+                            <td className="job-name text-decoration-none"><a href="">Electrician</a></td>
+                            <td className="criterias text-decoration-none">Request for Electrician</td>
+                            <td className="date text-decoration-none">December 15,2018</td>
                         </tr>
-                        
                         <tr>
-                            <td className="job-name"><a href="">Cleaner</a></td>
-                            <td className="criterias">Lorem Ipsum is simply dummy text.</td>
-                            <td className="date">November 10,2018</td>
+                            <td className="job-name text-decoration-none"><a href="">Cleaner</a></td>
+                            <td className="criterias text-decoration-none">Request for Cleaner.</td>
+                            <td className="date text-decoration-none">November 10,2018</td>
                         </tr>
                     </tbody>
                 </table>

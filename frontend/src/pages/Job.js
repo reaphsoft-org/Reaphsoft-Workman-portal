@@ -5,7 +5,10 @@ const Job = ({user}) => {
     return (
         <div className="col-xl-9 col-lg-8 m-b30 browse-job">
             <h3 className="m-b5 text-black">Workman Request</h3>
-            {history.length === 0 && <h3 className="text-black">No Workman Request</h3>}
+            
+            {history.length === 0 && <div> 
+            <img src="../../asset/image/empty.png" className="align-item-center"/>
+            <h3 className="text-black m-b5 text-center"> No Workman Request Yet</h3></div> }
 
             {history?.map((history) => (
                 <ul className="post-job-bx browse-job">
@@ -16,7 +19,7 @@ const Job = ({user}) => {
                             <ul>
                                 <li >{history.workerID}</li>
                                 <li><i className="fa fa-map-marker"></i> {history.date}</li>
-                                <li><i className="fa fa-money"></i> 25,000</li>
+                                {/* <li><i className="fa fa-money"></i> 25,000</li> */}
                             </ul>
                             
                             <div className="posted-info clearfix">
