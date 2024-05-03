@@ -62,7 +62,7 @@ function Register() {
       if (data.status === true) {
         const code = generateRandomString();
         localStorage.setItem('register', code + `;;${formData.email}`);
-        showAlert(1, data.resp, "/login/", "success");
+        showAlert(1, data.resp, "/login/", "Success");
       } else {
         setShowToast({ message: data.resp, show: true });
         setDisableButton("");

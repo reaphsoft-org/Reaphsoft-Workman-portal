@@ -16,7 +16,8 @@ const Dashboard = ({user}) => {
                     <div className="col-lg-9 col-md-9 col-sm-9">
                         <div className="clearfix m-b20"><label className="m-b0">Full Name</label><span className="clearfix font-13 text-black">{user.fullname}</span></div>
                         <div className="clearfix m-b20"><label className="m-b0">Email</label><span className="clearfix font-13 text-black">{user.email}</span></div>
-                        <div className="clearfix m-b20"><label className="m-b0">Apartment</label><span className="clearfix font-13 text-black">{user.apartment}</span></div>
+                        {user.accountType === 1 ? <div className="clearfix m-b20"><label className="m-b0">Apartment</label><span className="clearfix font-13 text-black">{user.apartment}</span></div> :
+                            <div className="clearfix m-b20"><label className="m-b0">Estate</label><span className="clearfix font-13 text-black">{user.estate}</span></div>}
                         <div className="clearfix m-b20"><label className="m-b0">Service Type</label><span className="clearfix font-13 text-black">{user.serviceType === 1 ? 'Priority' : 'Priority Plus'}</span></div>
                     </div>
                     

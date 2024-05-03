@@ -28,8 +28,6 @@ import House from './pages/Houses';
 function App() {
   return (
     <AuthProvider>
-      <UserProvider>
-        <AdminProvider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/service/" element={<Services />} />
@@ -53,8 +51,6 @@ function App() {
             <Route path="client" element={<Client />} />
           </Route>
         </Routes>
-        </AdminProvider>
-      </UserProvider>
     </AuthProvider>
   );
 }
