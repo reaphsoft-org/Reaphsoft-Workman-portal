@@ -197,6 +197,16 @@ npm run create_superuser <email> <password> <firstname> <lastnam>
 |    | Update Workman                         | `/admin/workman/:email/`              | `/admin/workman/user@reaphsoft.com/`         | PUT    |
 |    | Get Workman                            | `/admin/workman/:email/`              | `/admin/workman/user@reaphsoft.com/`         | GET    |
 |    | Delete Workman                         | `/admin/workman/:email/`              | `/admin/workman/user@reaphsoft.com/`         | DELETE |
+|    | Get Work Requests                      | `/admin/work/requests/:type/:page/`   | `/admin/work/requests/1/1/`                  | GET    |
+|    | Update Work Request                    | `/admin/work/request/:type/:id/`      | `/admin/work/request/1/1/`                   | PUT    |
+|    | Get Work Request                       | `/admin/work/request/:type/:id/`      | `/admin/work/request/1/1/`                   | GET    |
+|    | Delete Work Request                    | `/admin/work/request/:type/:id/`      | `/admin/work/request/1/1/`                   | DELETE |
+|    | Get Services                           | `/admin/services/:page/`              | `/admin/services/1/`                         | GET    |
+|    | Create Service                         | `/admin/service/`                     | `/admin/service/`                            | POST   |
+|    | Update Service                         | `/admin/service/:id/`                 | `/admin/service/1/`                          | PUT    |
+|    | Get Service                            | `/admin/service/:id/`                 | `/admin/service/1/`                          | GET    |
+|    | Delete Service                         | `/admin/service/:id/`                 | `/admin/service/1/`                          | DELETE |
+
 
 ## Auth and Account
 ### Individual & Estate Login
@@ -266,7 +276,7 @@ npm run create_superuser <email> <password> <firstname> <lastnam>
 ### Change Password (Individual or Estate) (auth required)
 #### Input Parameters
 `new_password: string`\
-`old_password: string`\
+`old_password: string`
 #### Output
 `{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
 
@@ -286,14 +296,14 @@ npm run create_superuser <email> <password> <firstname> <lastnam>
 ### Add Estate House
 #### Input Parameters
 `number: string`\
-`occupant_name: string`\
+`occupant_name: string`
 #### Output
 `{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
 
 ### Update Estate House
 #### Input Parameters
 `number: string`\
-`occupant_name: string`\
+`occupant_name: string`
 #### Output
 `{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
 
@@ -434,7 +444,7 @@ Pagination starts from 50 as usual.
 `apartment: string`\
 `address: string`\
 `serviceType: number` 1 for priority, 2 for priority plus \
-`photoURL: string`\
+`photoURL: string`
 
 ### Delete User
 #### Output Parameters
@@ -467,7 +477,7 @@ Pagination starts from 50 as usual.
 #### Output
 `{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
 
-### Get Estate Managers
+### Get Estate Manager
 #### Output Parameters Individual
 `null` if user not found, else
 ```
@@ -481,7 +491,7 @@ Pagination starts from 50 as usual.
 }
 ```
 
-### Delete User
+### Delete User (Estate Manager)
 #### Output Parameters
 `{ status: boolean, resp: string }` A `status` of `true` indicates success, else check the `resp` for the particular issue.
 
@@ -539,6 +549,96 @@ Paginated by 50
 ### Delete Workman
 #### Output
 `{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Get Work Requests
+`type` refers to the work request type, `1` for individual user work requests, while `2` is for work requests made by estate accounts.\
+`page` starts from 1, and output is paginated by 50 as usual.
+#### Output
+```
+{
+   pages: number,
+   data: {
+      id: number,       // work request id
+      created_at: Date, // date time the work request was created
+      client: string,   // full name of the client who made the request
+      service: string   // name of the service, e.g painting, carpentry, etc
+   }[]
+}
+```
+
+### Update Work Request
+#### Input Parameters
+`date_required: Date`\
+`accepted: boolean` work accepted or not\
+`worker: number` id of the workman who you want to (re)assign the work to.
+#### Output
+`{ status: boolean, resp: string }` A `status` of `true` indicates success, else check the `resp` for the particular issue.
+
+### Get Work Request
+#### Output
+`null` or\
+```
+{
+   accepted: boolean,
+   date_created: Date,
+   date_required: Date,
+   date_accepted: Date | null,
+   date_completed: Date | null,
+   worker_name: string, // worker assigned to this task 
+   worker_email: string,
+   client: string // user who requested this task.
+   client_email: string,
+   service: string, // name of service
+   service_description: string, // description of service
+}
+```
+
+### Delete Work Request
+#### Output
+`{ status: boolean, resp: string }` A status of `true` indicates success, else check the resp for the particular issue.
+
+### Get Services
+`page` starts from 1, and output is paginated by 50 as usual.
+#### Output
+```
+{
+   pages: number, // total number of pages that services can be paginated into
+   data: {
+      id: number,
+      name: string,
+      description: string,
+   }[]
+}
+```
+
+### Create Service
+#### Input Parameters
+`name: string`\
+`description: string` brief description of the service.
+#### Output
+`{ status: boolean, resp: string }` A `status` of `true` indicates success, else check the `resp` for the particular issue.
+
+### Update Service
+#### Input Parameters
+`name: string`\
+`description: string` brief description of the service.
+#### Output
+`{ status: boolean, resp: string }` A `status` of `true` indicates success, else check the `resp` for the particular issue.
+
+### Get Service
+#### Output
+`null` if not found, else\
+```
+{
+   name: string,
+   description: string,
+}
+```
+
+### Delete Service
+#### Output
+`{ status: boolean, resp: string }` A `status` of `true` indicates success, else check the `resp` for the particular issue.
+
 
 # NestJS
 

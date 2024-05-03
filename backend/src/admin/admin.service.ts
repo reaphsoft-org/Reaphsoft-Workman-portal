@@ -413,7 +413,7 @@ export class AdminService {
     async getWorkRequests(page: number, type: number) {
         if (page <= 0) return { pages: 0, data: [] };
         const start = this.paginateBy * (page - 1);
-        const end = this.paginateBy * page;
+        const end = this.paginateBy;
         const repo =
             type === User.accountType
                 ? this.userRequestRepo
