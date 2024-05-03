@@ -82,12 +82,12 @@ const Sidebar = ({user}) => {
                             </li>
                             <li>
                                 <Link to="/user/request/" className='text-decoration-none'>
-                                    <span>Estate Workman Request</span>
+                                    <span>Request Workman</span>
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/estate/work/requests/" className='text-decoration-none'>
-                                    <span>Estate Request History</span>
+                                <Link to="/work/requests/" className='text-decoration-none'>
+                                    <span>Work Request History</span>
                                 </Link>
                             </li>
                             <li>

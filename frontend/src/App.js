@@ -42,7 +42,7 @@ function App() {
           <Route path="/user/update/" element={<User content={UpdateUser} />} />
           <Route path="/user/change/password/" element={<User content={ChangePassword} />} />
           <Route path="/estate/houses/" element={<User content={House} />} />
-          <Route path="/estate/work/requests/" element={<User content={Job} />} />
+          <Route path="/work/requests/" element={<User content={Job} />} />
           <Route path="/admin/" element={<AdminLogin />} />
           <Route path="/dashboard" element={<Layout />} >
             <Route index element={<Index />} />

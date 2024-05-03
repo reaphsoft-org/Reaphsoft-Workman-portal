@@ -47,4 +47,9 @@ class SweetAlertComponent extends Component {
     }
 }
 
+
+export const showAlert = (type, text, title) => {
+    const component = new SweetAlertComponent();
+    component.showSweetAlert(type, text, title);
+};
 export default SweetAlertComponent;
