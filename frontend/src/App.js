@@ -23,7 +23,8 @@ import Estate from './admin/pages/estate';
 import Client from './admin/pages/client';
 import UserProvider from './components/UserContext';
 import AdminProvider from './components/AdminContext';
-import House from './pages/Houses';
+import Houses from './pages/Houses';
+import {House} from "./pages/House";
 
 function App() {
   return (
@@ -40,7 +41,8 @@ function App() {
           <Route path="/user/profile/" element={<User content={UserProfile} />} />
           <Route path="/user/update/" element={<User content={UpdateUser} />} />
           <Route path="/user/change/password/" element={<User content={ChangePassword} />} />
-          <Route path="/estate/houses/" element={<User content={House} />} />
+          <Route path="/estate/houses/" element={<User content={Houses} />} />
+          <Route path="/estate/house/:id/" element={<User content={House} />} />
           <Route path="/work/request/service/" element={<User content={Request} />} />
           <Route path="/work/requests/" element={<User content={Job} />} />
           <Route path="/admin/" element={<AdminLogin />} />
