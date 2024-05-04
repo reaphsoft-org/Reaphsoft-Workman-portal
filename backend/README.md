@@ -371,15 +371,11 @@ A `status` of `true` includes an array containing each worker's id, name and ava
 #### Output
 ```
 { 
-   status: boolean, 
-   resp: string, 
-   data: null | { 
       id: number // request id which can be used to get the service request's details.
       accepted: boolean // service requested was accepted or declined
       date_created: Date // date & time, service request was created by client
-      worker: string // worker's fullname
-   }
-}
+      service: string // service's name
+}[]
 ```
  A `status` will usually be `true`. Array might be empty.
 

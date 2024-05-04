@@ -43,7 +43,7 @@ const Job = ({user}) => {
                 <thead>
                     <tr>
                         <th>S/N</th>
-                        <th>Workman</th>
+                        <th>Service</th>
                         <th>Accepted</th>
                         <th>Date Created</th>
                         <th>Action</th>
