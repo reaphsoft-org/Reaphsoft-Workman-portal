@@ -15,12 +15,6 @@ const UpdateUser = ({user}) => {
       return;
     }
     const link = user.accountType === 1 ? "i/" : "e/";
-    const postData = new FormData();
-    postData.append('address', data.address);
-    postData.append('fullname', data.fullname);
-    postData.append('serviceType', data.serviceType);
-    postData.append('apartment', data.apartment);
-    postData.append('estate', data.estate);
     const alert = (type, text, title) => {
       const component = new SweetAlertComponent();
       component.showSweetAlert(type, text, title);

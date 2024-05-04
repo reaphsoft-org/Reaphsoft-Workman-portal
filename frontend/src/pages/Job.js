@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {useUser} from "../components/UserContext";
 import {showAlert} from "../utils/alert";
 import {useAuth} from "../components/AuthContext";
 import {Button} from "react-bootstrap";

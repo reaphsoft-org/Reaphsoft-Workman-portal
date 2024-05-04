@@ -160,53 +160,52 @@ npm run create_superuser <email> <password> <firstname> <lastnam>
 ```
 
 ## Endpoints
-| No | Description                            | Form                                  | Example                                      | Method |
-|----|----------------------------------------|---------------------------------------|----------------------------------------------|--------|
-| 01 | Log in individual or estate            | `/auth/login/ `                       | `/auth/login/`                               | POST   |
-| 02 | Log in admin                           | `/auth/admin/login/`                  | `/auth/admin/login/`                         | POST   |
-| 03 | Sign up Individual                     | `/account/sign/up/i/`                 | `/account/sign/up/i/`                        | POST   |
-| 04 | Get User (Individual or Estate)        | `/account/user/`                      | `/account/user/`                             | GET    |
-| 05 | Update User (Individual)               | `/account/update/user/i/`             | `/account/update/user/i/`                    | PUT    |
-| 06 | Update User (Estate)                   | `/account/update/user/e/`             | `/account/update/user/e/`                    | PUT    |
-| 07 | Change Password (Individual or Estate) | `/account/change/password/`           | `/account/change/password/`                  | POST   |
-| 08 | Sign up Estate                         | `/account/sign/up/e/`                 | `/account/sign/up/e/`                        | POST   |
-| 09 | Add Estate House                       | `/estate/add/house/`                  | `/estate/add/house/`                         | POST   |
-| 10 | Update Estate House                    | `/estate/house/:id/`                  | `/estate/house/1/`                           | PUT    |
-| 11 | Get Estate House                       | `/estate/house/:id/`                  | `/estate/house/4/`                           | GET    |
-| 12 | Delete Estate House                    | `/estate/house/:id/`                  | `/estate/house/12/`                          | DELETE |
-| 13 | Get Estate Houses                      | `/estate/houses/:page/`               | `/estate/houses/1/`                          | GET    |
-| 14 | Get Services                           | `/estate/services/`                   | `/estate/services/`                          | GET    |
-| 15 | Get Service Workers                    | `/estate/services/workers/?id=&name=` | `/estate/services/workers/id=1&name=painter` | GET    |
-| 16 | Request Service                        | `/estate/request/service/`            | `/estate/request/service/`                   | POST   |
-| 17 | Get Requested Service                  | `/estate/request/service/:id/`        | `/estate/request/service/1/`                 | GET    |
-| 18 | Get Requested Services                 | `/estate/requested/services/`         | `/estate/requested/services/`                | GET    |
-| 19 | Get Admin                              | `/admin/m/`                           | `/admin/m/`                                  | GET    |
-| 20 | Update Admin                           | `/admin/m/`                           | `/admin/m/`                                  | PUT    |
-| 21 | Get Users (Individuals)                | `/admin/users/:page/`                 | `/admin/users/1/`                            | GET    |
-| 22 | Create User (Individual)               | `/admin/user/`                        | `/admin/user/`                               | POST   |
-| 23 | Update User (Individual)               | `/admin/user/:email/`                 | `/admin/user/user@reaphsoft.com/`            | PUT    |
-| 24 | Get User (Individual)                  | `/admin/user/:email/`                 | `/admin/user/user@reaphsoft.com/`            | GET    |
-| 25 | Delete User (Individual)               | `/admin/user/:email/`                 | `/admin/user/user@reaphsoft.com/`            | DELETE |
-| 26 | Get Users (Estates)                    | `/admin/estate/managers/:page/`       | `/admin/estate/managers/1/`                  | GET    |
-| 27 | Create User (Estate)                   | `/admin/estate/manager/`              | `/admin/estate/manager/`                     | POST   |
-| 28 | Update User (Estate)                   | `/admin/estate/manager/:email/`       | `/admin/estate/manager/user@reaphsoft.com/`  | PUT    |
-| 29 | Get User (Estate)                      | `/admin/estate/manager/:email/`       | `/admin/estate/manager/user@reaphsoft.com/`  | GET    |
-| 30 | Delete User (Estate)                   | `/admin/estate/manager/:email/`       | `/admin/estate/manager/user@reaphsoft.com/`  | DELETE |
-| 31 | Get Workmen                            | `/admin/workmen/:page/`               | `/admin/workmen/1/`                          | GET    |
-| 32 | Create Workman                         | `/admin/workman/:email/`              | `/admin/workman/user@reaphsoft.com/`         | POST   |
-| 33 | Update Workman                         | `/admin/workman/:email/`              | `/admin/workman/user@reaphsoft.com/`         | PUT    |
-| 34 | Get Workman                            | `/admin/workman/:email/`              | `/admin/workman/user@reaphsoft.com/`         | GET    |
-| 35 | Delete Workman                         | `/admin/workman/:email/`              | `/admin/workman/user@reaphsoft.com/`         | DELETE |
-| 36 | Get Work Requests                      | `/admin/work/requests/:type/:page/`   | `/admin/work/requests/1/1/`                  | GET    |
-| 37 | Update Work Request                    | `/admin/work/request/:type/:id/`      | `/admin/work/request/1/1/`                   | PUT    |
-| 38 | Get Work Request                       | `/admin/work/request/:type/:id/`      | `/admin/work/request/1/1/`                   | GET    |
-| 39 | Delete Work Request                    | `/admin/work/request/:type/:id/`      | `/admin/work/request/1/1/`                   | DELETE |
-| 40 | Get Services                           | `/admin/services/:page/`              | `/admin/services/1/`                         | GET    |
-| 41 | Create Service                         | `/admin/service/`                     | `/admin/service/`                            | POST   |
-| 42 | Update Service                         | `/admin/service/:id/`                 | `/admin/service/1/`                          | PUT    |
-| 43 | Get Service                            | `/admin/service/:id/`                 | `/admin/service/1/`                          | GET    |
-| 44 | Delete Service                         | `/admin/service/:id/`                 | `/admin/service/1/`                          | DELETE |
-
+| No | Description                            | Form                                   | Example                                       | Method |
+|----|----------------------------------------|----------------------------------------|-----------------------------------------------|--------|
+| 01 | Log in individual or estate            | `/auth/login/ `                        | `/auth/login/`                                | POST   |
+| 02 | Log in admin                           | `/auth/admin/login/`                   | `/auth/admin/login/`                          | POST   |
+| 03 | Sign up Individual                     | `/account/sign/up/i/`                  | `/account/sign/up/i/`                         | POST   |
+| 04 | Get User (Individual or Estate)        | `/account/user/`                       | `/account/user/`                              | GET    |
+| 05 | Update User (Individual)               | `/account/update/user/i/`              | `/account/update/user/i/`                     | PUT    |
+| 06 | Update User (Estate)                   | `/account/update/user/e/`              | `/account/update/user/e/`                     | PUT    |
+| 07 | Change Password (Individual or Estate) | `/account/change/password/`            | `/account/change/password/`                   | POST   |
+| 08 | Sign up Estate                         | `/account/sign/up/e/`                  | `/account/sign/up/e/`                         | POST   |
+| 09 | Add Estate House                       | `/estate/add/house/`                   | `/estate/add/house/`                          | POST   |
+| 10 | Update Estate House                    | `/estate/house/:id/`                   | `/estate/house/1/`                            | PUT    |
+| 11 | Get Estate House                       | `/estate/house/:id/`                   | `/estate/house/4/`                            | GET    |
+| 12 | Delete Estate House                    | `/estate/house/:id/`                   | `/estate/house/12/`                           | DELETE |
+| 13 | Get Estate Houses                      | `/estate/houses/:page/`                | `/estate/houses/1/`                           | GET    |
+| 14 | Get Services                           | `/workmen/services/`                   | `/workmen/services/`                          | GET    |
+| 15 | Get Service Workers                    | `/workmen/services/workers/?id=&name=` | `/workmen/services/workers/id=1&name=painter` | GET    |
+| 16 | Request Service                        | `/workmen/request/service/`            | `/workmen/request/service/`                   | POST   |
+| 17 | Get Requested Service                  | `/workmen/request/service/:id/`        | `/workmen/request/service/1/`                 | GET    |
+| 18 | Get Requested Services                 | `/workmen/requested/services/`         | `/workmen/requested/services/`                | GET    |
+| 19 | Get Admin                              | `/admin/m/`                            | `/admin/m/`                                   | GET    |
+| 20 | Update Admin                           | `/admin/m/`                            | `/admin/m/`                                   | PUT    |
+| 21 | Get Users (Individuals)                | `/admin/users/:page/`                  | `/admin/users/1/`                             | GET    |
+| 22 | Create User (Individual)               | `/admin/user/`                         | `/admin/user/`                                | POST   |
+| 23 | Update User (Individual)               | `/admin/user/:email/`                  | `/admin/user/user@reaphsoft.com/`             | PUT    |
+| 24 | Get User (Individual)                  | `/admin/user/:email/`                  | `/admin/user/user@reaphsoft.com/`             | GET    |
+| 25 | Delete User (Individual)               | `/admin/user/:email/`                  | `/admin/user/user@reaphsoft.com/`             | DELETE |
+| 26 | Get Users (Estates)                    | `/admin/estate/managers/:page/`        | `/admin/estate/managers/1/`                   | GET    |
+| 27 | Create User (Estate)                   | `/admin/estate/manager/`               | `/admin/estate/manager/`                      | POST   |
+| 28 | Update User (Estate)                   | `/admin/estate/manager/:email/`        | `/admin/estate/manager/user@reaphsoft.com/`   | PUT    |
+| 29 | Get User (Estate)                      | `/admin/estate/manager/:email/`        | `/admin/estate/manager/user@reaphsoft.com/`   | GET    |
+| 30 | Delete User (Estate)                   | `/admin/estate/manager/:email/`        | `/admin/estate/manager/user@reaphsoft.com/`   | DELETE |
+| 31 | Get Workmen                            | `/admin/workmen/:page/`                | `/admin/workmen/1/`                           | GET    |
+| 32 | Create Workman                         | `/admin/workman/:email/`               | `/admin/workman/user@reaphsoft.com/`          | POST   |
+| 33 | Update Workman                         | `/admin/workman/:email/`               | `/admin/workman/user@reaphsoft.com/`          | PUT    |
+| 34 | Get Workman                            | `/admin/workman/:email/`               | `/admin/workman/user@reaphsoft.com/`          | GET    |
+| 35 | Delete Workman                         | `/admin/workman/:email/`               | `/admin/workman/user@reaphsoft.com/`          | DELETE |
+| 36 | Get Work Requests                      | `/admin/work/requests/:type/:page/`    | `/admin/work/requests/1/1/`                   | GET    |
+| 37 | Update Work Request                    | `/admin/work/request/:type/:id/`       | `/admin/work/request/1/1/`                    | PUT    |
+| 38 | Get Work Request                       | `/admin/work/request/:type/:id/`       | `/admin/work/request/1/1/`                    | GET    |
+| 39 | Delete Work Request                    | `/admin/work/request/:type/:id/`       | `/admin/work/request/1/1/`                    | DELETE |
+| 40 | Get Services                           | `/admin/services/:page/`               | `/admin/services/1/`                          | GET    |
+| 41 | Create Service                         | `/admin/service/`                      | `/admin/service/`                             | POST   |
+| 42 | Update Service                         | `/admin/service/:id/`                  | `/admin/service/1/`                           | PUT    |
+| 43 | Get Service                            | `/admin/service/:id/`                  | `/admin/service/1/`                           | GET    |
+| 44 | Delete Service                         | `/admin/service/:id/`                  | `/admin/service/1/`                           | DELETE |
 
 ## Auth and Account
 ### Individual & Estate Login

@@ -81,7 +81,7 @@ const Sidebar = ({user}) => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/user/request/" className='text-decoration-none'>
+                                <Link to="/work/request/service/" className='text-decoration-none'>
                                     <span>Request Workman</span>
                                 </Link>
                             </li>
