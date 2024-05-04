@@ -67,4 +67,3 @@ const Job = ({user}) => {
 }
  
 export default Job;
-
