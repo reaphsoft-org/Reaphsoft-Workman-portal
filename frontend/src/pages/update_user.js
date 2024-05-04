@@ -9,7 +9,8 @@ const UpdateUser = ({user}) => {
     if (user.address === data.address &&
         user.fullname === data.fullname &&
         user.serviceType === data.serviceType &&
-        user.apartment === data.apartment
+        user.apartment === data.apartment &&
+        user.estate === data.estate
     ){
       setDisableButton(false);
       return;
@@ -41,8 +42,10 @@ const UpdateUser = ({user}) => {
             user.fullname = data.fullname;
             user.address = data.address;
             user.serviceType = data.serviceType;
-            user.apartment = data.apartment;
-            user.estate = data.estate;
+            if (userAuth.user.account === 1)
+              user.apartment = data.apartment;
+            else
+              user.estate = data.estate;
           }else{
             alert(3, data.resp, "Error");
           }
@@ -64,7 +67,6 @@ const UpdateUser = ({user}) => {
     apartment: '',
     estate: '',
   });
-
   useEffect(() => {
     setData({
       address: user.address,
@@ -130,7 +132,7 @@ const UpdateUser = ({user}) => {
                 </div>
               </div>
               <div className="col-lg-6 col-md-6 col-8 offset-2 d-grid">
-                <button type="submit" className="site-button m-b30 mt-4 align-center text-black" disabled={disableButton}>Update Personal Details</button>
+                <button type="submit" className="site-button m-b30 mt-4 align-center text-black" disabled={disableButton}>Update Profile</button>
               </div>
             </div>
           </form>
