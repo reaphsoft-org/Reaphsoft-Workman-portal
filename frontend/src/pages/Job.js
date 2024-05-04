@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {showAlert} from "../utils/alert";
 import {useAuth} from "../components/AuthContext";
 import {Button} from "react-bootstrap";
-const Job = ({user}) => {
+const Job = ({_}) => {
     const [workRequests, setWorkRequests] = useState([]);
     const userAuth = useAuth();
     useEffect(() => {

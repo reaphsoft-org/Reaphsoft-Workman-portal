@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {Button} from "react-bootstrap";
+import {Button, Form, FormControl} from "react-bootstrap";
 import {useAuth} from "../components/AuthContext";
-import SweetAlertComponent from "../utils/alert";
-import { Link } from "react-router-dom";
+import SweetAlertComponent, {showAlert} from "../utils/alert";
 import { Modal } from "react-bootstrap";
 
 function range(stop) {
@@ -13,16 +12,60 @@ function range(stop) {
     return items;
 }
 const Houses = ({user}) => {
-    const [estate, setEstate] = useState();
+    const userAuth = useAuth();
     const [showModal, setShowModal] = useState(false);
-    const onhandleClick = (addEstate) => {
-        setEstate(addEstate);
+    const [disableAddHouse, setDisableAddHouse] = useState(false);
+    const [formData, setFormData] = useState({
+        number: '',
+        occupant_name: '',
+    });
+    const handleInputChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     }
-
+    let newHouse = 0;
+    const addHouse = () => {
+        setDisableAddHouse(true);
+        handleCloseModal();
+        if (formData.number === '' || formData.occupant_name === ''){
+            setDisableAddHouse(false);
+            return;
+        }
+        try {
+             fetch('http://localhost:3001/estate/add/house/', {
+                 method: 'POST',
+                 headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userAuth.user.token}`
+                 },
+                 body: JSON.stringify(formData),
+            }).then((res) => {
+                if (!res.ok) {
+                    showAlert(3, "Received a bad response from the server.", "Error");
+                    return;
+                }
+                return res.json();
+             })
+                 .then(data => {
+                    if (data.status === true){
+                        showAlert(1, "House added successfully, please refresh the page", "Success");
+                        newHouse += 1;
+                    }else {
+                        showAlert(3, data.resp, "Error");
+                    }
+                    setDisableAddHouse(false);
+                 })
+                 .catch((reason) => {
+                     showAlert(3, reason.message, "Error");
+                     setDisableAddHouse(false);
+                 });
+        } catch (e) {
+            showAlert(3, "Encountered server error while posting the form data.", "Error");
+            setDisableAddHouse(false);
+        }
+    }
     const handleCloseModal = () => {
         setShowModal(false);
     };
-    const userAuth = useAuth();
     const [page, setPage] = useState(1);
     const alert = (type, text, title) => {
       const component = new SweetAlertComponent();
@@ -53,91 +96,93 @@ const Houses = ({user}) => {
                     reason.message,
                     "Error");
             });
-    }, [page, user, userAuth.user.token]);
+    }, [page, user, userAuth.user.token, newHouse]);
     let count = houses.pages >= 5 ? 5 : houses.pages;
     return (
-        <div className="col-xl-9 col-lg-8 m-b30">
-            <div className="job-bx browse-job clearfix">
-                <div className="job-bx-title  clearfix">
-                    <h5 className="font-weight-700 pull-left text-uppercase text-black">Estate House</h5>
-                    <div className="float-right">
-                        <Button className=""><i className="pe-2 ti-plus"></i>Add House</Button>
+        <>
+            <div className="col-xl-9 col-lg-8 m-b30">
+                <div className="job-bx browse-job clearfix">
+                    <div className="job-bx-title clearfix">
+                        <h5 className="font-weight-700 pull-left text-uppercase text-black">Estate House</h5>
+                        <div className="float-right">
+                            <Button disabled={disableAddHouse} onClick={()=>{setShowModal(true)}}><i className="pe-2 ti-plus"></i>Add House</Button>
+                        </div>
                     </div>
-                </div>
-                <table className="table-job-bx cv-manager company-manage-job">
-                    <thead>
-                        <tr>
-                            <th>S/N</th>
-                            <th>House Number</th>
-                            <th>House Occupant</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        houses.data.map((house, index) => (
-                            <tr key={index}>
-                                <td className="text-primary">{index + 1}</td>
-                                <td className="text-dark">{house.number}</td>
-                                <td className="text-dark">{house.name}</td>
-                                <td>
-                                    <a href={`/estate/house/${house.id}/`} className="btn btn-primary"><i className="ti-eye"></i></a>
-                                    <Button className="btn-danger"><i className="ti-trash"></i></Button>
-                                    {/*  show modal on click to delete item with id on confirmation. */}
-                                </td>
+                    <table className="table-job-bx cv-manager company-manage-job">
+                        <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>House Number</th>
+                                <th>House Occupant</th>
+                                <th>Action</th>
                             </tr>
-                        ))
-                    }
-                    </tbody>
-                </table>
-                <nav aria-label="Page navigation example" className="mt-4">
-                    <ul className="pagination justify-content-center">
-                        <li className={ page <= 1 ? "page-item disabled" : "page-item" }>
-                            <Button onClick={ page <= 1 ? null : () => {
-                                setPage(page - 1)
-                            }} className="page-link" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </Button>
-                        </li>
+                        </thead>
+                        <tbody>
                         {
-                            range(count).map((item) => (
-                            <li key={item} className={page === item ? "page-item active" : "page-item"}>
-                                <Button className="page-link" onClick={ page === item ? null : () => {setPage(item)}}>{item}</Button>
-                            </li>
+                            houses.data.map((house, index) => (
+                                <tr key={index}>
+                                    <td className="text-primary">{index + 1}</td>
+                                    <td className="text-dark">{house.number}</td>
+                                    <td className="text-dark">{house.name}</td>
+                                    <td>
+                                        <a href={`/estate/house/${house.id}/`} className="btn btn-primary"><i className="ti-eye"></i></a>
+                                        <Button className="btn-danger"><i className="ti-trash"></i></Button>
+                                        {/*  show modal on click to delete item with id on confirmation. */}
+                                    </td>
+                                </tr>
                             ))
                         }
-                        <li className={ page >= houses.pages ? "page-item disabled" : "page-item" }>
-                            <Button onClick={ page >= houses.pages ? null : () => {
-                                setPage(page + 1)
-                            }} className="page-link" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </Button>
-                        </li>
-                    </ul>
-                </nav>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation" className="mt-4">
+                        <ul className="pagination justify-content-center">
+                            <li className={ page <= 1 ? "page-item disabled" : "page-item" }>
+                                <Button onClick={ page <= 1 ? null : () => {
+                                    setPage(page - 1)
+                                }} className="page-link" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </Button>
+                            </li>
+                            {
+                                range(count).map((item) => (
+                                <li key={item} className={page === item ? "page-item active" : "page-item"}>
+                                    <Button className="page-link" onClick={ page === item ? null : () => {setPage(item)}}>{item}</Button>
+                                </li>
+                                ))
+                            }
+                            <li className={ page >= houses.pages ? "page-item disabled" : "page-item" }>
+                                <Button onClick={ page >= houses.pages ? null : () => {
+                                    setPage(page + 1)
+                                }} className="page-link" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </Button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-                <Modal class="modal-dialog" id={estate} role="document" show={showModal} >
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="title" id="defaultModalLabel">Add Estate Houses</h4>
-                        </div>
-                        <div class="modal-body col-sm-12">
-                            <div class="form-group">
-                                <label>House Owner</label>
-                                <input type="text" class="form-control" placeholder="Full Name" />
-                            </div>
-                            <div class="form-group">
-                                <label>House Number</label>
-                                <input type="Text" class="form-control" placeholder="Worker Email" />
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default btn-round waves-effect">SAVE CHANGES</button>
-                            <button type="button" onClick={handleCloseModal} class="btn btn-danger waves-effect" data-dismiss="modal">CLOSE</button>
-                        </div>
-                    </div>
+            <Modal show={showModal} onHide={handleCloseModal}>
+                    <Modal.Header closeButton>
+                        <h4 className="mb-3">Add House</h4>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group className="mb-3">
+                                <Form.Label>House Owner</Form.Label>
+                                <FormControl name="occupant_name" value={formData.occupant_name} type="name" onChange={handleInputChange} required={true}></FormControl>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>House Number</Form.Label>
+                                <FormControl name="number" value={formData.number} onChange={handleInputChange} type="text" required={true}></FormControl>
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button type="button" onClick={addHouse} className="btn btn-primary waves-effect">Save</button>
+                        <button type="button" onClick={handleCloseModal} className="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+                    </Modal.Footer>
                 </Modal>
-        </div>
+        </>
     );
 }
 
