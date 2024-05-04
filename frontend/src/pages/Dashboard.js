@@ -1,7 +1,36 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
+import {useAuth} from "../components/AuthContext";
+import {showAlert} from "../utils/alert";
 
 const Dashboard = ({user}) => {
+    const [workRequests, setWorkRequests] = useState([]);
+    const userAuth = useAuth();
+    useEffect(() => {
+        try {
+             fetch('http://localhost:3001/workmen/requested/services/?recent=true', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userAuth.user.token}`
+                },
+            }).then((res) => {
+                if (!res.ok) {
+                    showAlert(3, "Received a bad response from the server when loading recent work requests.", "Error");
+                    return;
+                }
+                return res.json();
+             })
+                 .then(responseData => {
+                    setWorkRequests(responseData);
+                 })
+                 .catch((reason) => {
+                     showAlert(3, reason.message, "Error");
+                 });
+        } catch (e) {
+            showAlert(3, "Encountered server error while posting the form data.", "Error");
+        }
+    }, [userAuth.user.token]);
     return ( 
         <div className="col-xl-9 col-lg-8 m-b30 text-black">
             <div id="personal_details_bx" className="job-bx bg-white m-b30">
@@ -9,7 +38,7 @@ const Dashboard = ({user}) => {
                 <div className="d-flex">
                     <h5 className="m-b30">Personal Details</h5>
                     <Link className="site-button add-btn button-sm text-decoration-none"
-                        to="/user/update/"><i className="fa fa-pencil m-r5"></i> 
+                        to="/user/update/"><i className="ti-pencil m-r5"></i>
                         Edit Account</Link>
                 </div>
                 <div className="row text-black">
@@ -25,27 +54,25 @@ const Dashboard = ({user}) => {
             </div>
             <div className="job-bx table-job-bx browse-job clearfix">
                 <div className="job-bx-title clearfix">
-                    <h5 className="font-weight-700 pull-left text-uppercase text-black">Recent Request</h5>
+                    <h5 className="font-weight-700 pull-left text-uppercase text-black">Recent Requests</h5>
                 </div>
                 <table>
                     <thead>
                         <tr>
-                            <th>Skills</th>
-                            <th>Comment</th>
-                            <th>Date</th>
+                            <th>Service</th>
+                            <th>Accepted</th>
+                            <th>Date Created</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="job-name text-decoration-none"><a href="">Electrician</a></td>
-                            <td className="criterias text-decoration-none">Request for Electrician</td>
-                            <td className="date text-decoration-none">December 15,2018</td>
+                    {workRequests.map((workRequest, index) => (
+                        <tr key={index}>
+                            <td className="job-name text-decoration-none">{workRequest.worker}</td>
+                            <td className="criterias text-decoration-none">{workRequest.accepted ? 'Accepted' : 'Pending'}</td>
+                            <td className="date text-decoration-none">{new Date(workRequest.date_created).toLocaleString()}</td>
                         </tr>
-                        <tr>
-                            <td className="job-name text-decoration-none"><a href="">Cleaner</a></td>
-                            <td className="criterias text-decoration-none">Request for Cleaner.</td>
-                            <td className="date text-decoration-none">November 10,2018</td>
-                        </tr>
+                    ))}
+                        {/*Electrician, Cleaner*/}
                     </tbody>
                 </table>
             </div>

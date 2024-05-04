@@ -130,7 +130,7 @@ export class WorkmenService {
         };
     }
 
-    async getRequestedServices(email: string, type: number) {
+    async getRequestedServices(email: string, type: number, recent: boolean) {
         const requests: UserRequest[] | EstateRequest[] =
             type == User.accountType
                 ? await this.userRequestRepo.find({
@@ -142,6 +142,7 @@ export class WorkmenService {
                       relations: {
                           worker: true,
                       },
+                      take: recent ? 5 : undefined,
                   })
                 : await this.estateRequestRepo.find({
                       where: {
@@ -154,6 +155,7 @@ export class WorkmenService {
                               service: true,
                           },
                       },
+                      take: recent ? 5 : undefined,
                   });
         return requests.map((request) => ({
             id: request.id,

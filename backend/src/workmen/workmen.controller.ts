@@ -66,11 +66,14 @@ export class WorkmenController {
     }
 
     @Get('requested/services/')
-    getRequestedServices(@RequestDecorator() req: Request) {
+    getRequestedServices(
+        @RequestDecorator() req: Request,
+        @Query('recent') recent: boolean,
+    ) {
         // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
         const email = req.user.email;
         // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
         const type = req.user.type;
-        return this.service.getRequestedServices(email, type);
+        return this.service.getRequestedServices(email, type, recent);
     }
 }

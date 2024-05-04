@@ -42,7 +42,7 @@ abstract class RequestBase {
 
 @Entity({
     orderBy: {
-        date_created: 'ASC',
+        date_created: 'DESC',
     },
 })
 export class UserRequest extends RequestBase {
@@ -52,7 +52,7 @@ export class UserRequest extends RequestBase {
 
 @Entity({
     orderBy: {
-        date_created: 'ASC',
+        date_created: 'DESC',
     },
 })
 export class EstateRequest extends RequestBase {
