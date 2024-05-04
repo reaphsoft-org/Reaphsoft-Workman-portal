@@ -7,7 +7,7 @@ async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
     app.enableCors({
         origin: 'http://localhost:3000',
-        methods: 'GET,POST',
+        methods: 'GET,POST,PUT,DELETE',
         allowedHeaders: 'Content-Type, Accept, Authorization',
     });
     app.useStaticAssets('media');

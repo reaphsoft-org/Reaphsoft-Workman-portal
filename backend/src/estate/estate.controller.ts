@@ -57,7 +57,7 @@ export class EstateController {
         return this.estateService.getHouse(email, id);
     }
 
-    @Delete('add/house/:id/')
+    @Delete('house/:id/')
     async deleteHouse(
         @RequestDecorator() req: Request,
         @Param('id') id: string,

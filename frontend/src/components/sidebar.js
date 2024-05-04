@@ -64,55 +64,48 @@ const Sidebar = ({user}) => {
                         </div>
                     }
                     {user.accountType === 2  &&
-                        <div>
-                                            <li >
-                                                <Link to="/user/" className='text-decoration-none'>
-                                                    <span> Estate Dashboard</span>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/user/profile/" className='text-decoration-none'>
-                                                        
-                                                    <span>Estate Profile</span>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/user/house/" className='text-decoration-none'>
-                                                        
-                                                    <span>Estate Houses</span>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/user/request/" className='text-decoration-none'>
-                                                    
-                                                    <span>Estate Workman Request</span>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/user/job/" className='text-decoration-none'>
-                                                    
-                                                    <span>Estate Request History</span>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/user/update/" className='text-decoration-none'>
-                                                    
-                                                    <span>Update Estate Profile</span>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/user/change/password/" className='text-decoration-none'>
-                                                    
-                                                    <span>Change Estate Password</span>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link variant="link" className="link-offset-3 text-decoration-none" onClick={() => logout(useAuth1)}>
-                                                    
-                                                    <span>Log Out</span>
-                                                </Link>
-                                            </li>
-                        </div>
+                        <>
+                            <li >
+                                <Link to="/user/" className='text-decoration-none'>
+                                    <span> Estate Dashboard</span>
+                                </Link>
+                            </li>
+                                <li>
+                                <Link to="/user/profile/" className='text-decoration-none'>
+                                    <span>Estate Profile</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/estate/houses/" className='text-decoration-none'>
+                                    <span>Estate Houses</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/user/request/" className='text-decoration-none'>
+                                    <span>Request Workman</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/work/requests/" className='text-decoration-none'>
+                                    <span>Work Request History</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/user/update/" className='text-decoration-none'>
+                                    <span>Update Estate Profile</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/user/change/password/" className='text-decoration-none'>
+                                    <span>Change Estate Password</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link variant="link" className="link-offset-3 text-decoration-none" onClick={() => logout(userAuth)}>
+                                    <span>Log Out</span>
+                                </Link>
+                            </li>
+                        </>
                     }
                     </ul>
                 </div>

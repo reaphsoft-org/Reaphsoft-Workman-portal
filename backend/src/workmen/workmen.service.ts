@@ -150,18 +150,16 @@ export class WorkmenService {
                           },
                       },
                       relations: {
-                          worker: true,
+                          worker: {
+                              service: true,
+                          },
                       },
                   });
         return requests.map((request) => ({
-            status: true,
-            resp: '',
-            data: {
-                id: request.id,
-                accepted: request.accepted,
-                date_created: request.date_created,
-                worker: request.worker.fullname,
-            },
+            id: request.id,
+            accepted: request.accepted,
+            date_created: request.date_created,
+            worker: request.worker.service.name,
         }));
     }
 }
