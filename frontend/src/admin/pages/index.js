@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import "../adminAssets/css/style.min.css";
 
 const Index = () => {
     return (
@@ -12,8 +11,8 @@ const Index = () => {
                             <h2>Dashboard</h2>
                             <ul className="breadcrumb">
                                 <li className="breadcrumb-item">
-                                    <Link to="dashboard" className="text-decoration-none">
-                                        <i className="zmdi zmdi-home"></i> Reaphsoft Workman Portal</Link>
+                                    <Link to="/admin/dashboard/" className="text-decoration-none">
+                                        <i className="zmdi zmdi-home"></i>Reaphsoft Workman Portal</Link>
                                 </li>
                                 <li className="breadcrumb-item active">Reaphsoft Workman Portal DashBoard</li>
                             </ul>
