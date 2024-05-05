@@ -52,6 +52,10 @@ export class AdminController {
         const email = req.user.email;
         return this.service.updateAdmin(email, dto);
     }
+    @Get('dashboard/')
+    async getDashboardValues() {
+        return this.service.getDashboardValues();
+    }
     // Users, LIST, CRUD,
     @Get('users/:page/')
     async getUsers(@Param('page') page: number) {

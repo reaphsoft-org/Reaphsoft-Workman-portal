@@ -599,4 +599,55 @@ export class AdminService {
         await this.workmanRepo.remove(service);
         return { status: true, resp: '' };
     }
+
+    async getDashboardValues() {
+        // registered workers
+        const registeredWorkers = await this.workmanRepo.count();
+        const users = await this.usersRepo.count();
+        const estates = await this.estateManagersRepo.count();
+        const userRequests = await this.userRequestRepo.count();
+        const estateRequests = await this.estateRequestRepo.count();
+        const recentWorkmen = await this.workmanRepo.find({
+            take: 5,
+            order: {
+                date_joined: 'DESC',
+            },
+            relations: {
+                service: true,
+            },
+        });
+        const recentUsers = await this.usersRepo.find({
+            take: 5,
+            order: {
+                date_joined: 'DESC',
+            },
+        });
+        const recentEstates = await this.estateManagersRepo.find({
+            take: 5,
+            order: {
+                date_joined: 'DESC',
+            },
+        });
+        return {
+            registeredWorkers: registeredWorkers,
+            users: users,
+            estates: estates,
+            requests: userRequests + estateRequests,
+            recentWorkmen: recentWorkmen.map((workman) => ({
+                email: workman.email,
+                fullname: workman.fullname,
+                service: workman.service.name,
+            })),
+            recentUsers: recentUsers.map((user) => ({
+                name: user.fullname,
+                apartment: user.apartment,
+                email: user.email,
+            })),
+            recentEstates: recentEstates.map((estate) => ({
+                name: estate.fullname,
+                estate: estate.estate,
+                email: estate.email,
+            })),
+        };
+    }
 }

@@ -1,7 +1,42 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
+import {useAuth} from "../../components/AuthContext";
+import {showAlert} from "../../utils/alert";
 
 const Index = () => {
+    const userAuth = useAuth();
+    const [data, setData] = useState({
+        registeredWorkers: 0,
+        users: 0,
+        estates: 0,
+        requests: 0,
+        recentWorkmen: [],
+        recentUsers: [],
+        recentEstates: []
+    });
+    useEffect(() => {
+        fetch('http://localhost:3001/admin/dashboard/', {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + userAuth.admin.token,
+            'Content-Type': 'application/json'
+          }
+        }).then(res =>{
+            if (res.status !== 200){
+                showAlert(3, `Error with status code ${res.status}`, 'Error');
+                return;
+            }
+            return res.json();
+        }).then(data => {
+            if (!data){
+                showAlert(3, 'Unable to get admin dashboard', 'Error');
+            }else {
+                setData(data);
+            }
+        }).catch(reason => {
+            showAlert(3, reason.message, 'Error');
+        });
+    }, [userAuth, userAuth.admin.token]);
     return (
         <section className="content">
             <div className="">
@@ -21,12 +56,11 @@ const Index = () => {
                 </div>
                 <div className="container-fluid">
                     <div className="row clearfix">
-                        
                         <div className="col-lg-3 col-md-6 col-sm-12">
                             <div className="card widget_2 big_icon sales">
                                 <div className="body">
                                     <div className="py-1"></div>
-                                    <h2>200 <small className="info">Workers</small></h2>
+                                    <h2>{data.registeredWorkers} <small className="info">Workers</small></h2>
                                     <small>Total Registered Workmen</small>
                                 </div>
                             </div>
@@ -35,7 +69,7 @@ const Index = () => {
                             <div className="card widget_2 big_icon email">
                                 <div className="body">
                                     <div className="py-1"></div>
-                                    <h2>50 <small className="info">Users</small></h2>
+                                    <h2>{data.users} <small className="info">Users</small></h2>
                                     <small>Total Registered Users</small>
                                 </div>
                             </div>
@@ -44,7 +78,7 @@ const Index = () => {
                             <div className="card widget_2 big_icon domains">
                                 <div className="body">
                                     <div className="py-1"></div>
-                                    <h2>74 <small className="info">Estates</small></h2>
+                                    <h2>{data.estates} <small className="info">Estates</small></h2>
                                     <small>Total Registered Estates</small>
                                     
                                 </div>
@@ -54,7 +88,7 @@ const Index = () => {
                             <div className="card widget_2 big_icon domains">
                                 <div className="body">
                                     <div className="py-1"></div>
-                                    <h2>300 <small className="info">Requests</small></h2>
+                                    <h2>{data.requests} <small className="info">Requests</small></h2>
                                     <small>Total Workman Requests</small>
                                 </div>
                             </div>
@@ -67,7 +101,7 @@ const Index = () => {
                         <div className="col-lg-12 col-md-12 col-sm-12">
                             <div className="card">
                                 <div className="header">
-                                    <h2 className="px-3"><strong>Recent Worker Who Just Join the Workman Portal</strong></h2>
+                                    <h2 className="px-3"><strong>Recent Workers in the Workman Portal</strong></h2>
                                 </div>
                                 <div className="body">
                                     <div className="table-responsive">
@@ -75,42 +109,22 @@ const Index = () => {
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Full NAME</th>
-                                                    <th>WORKER SKILL</th>
-                                                    <th>EMAIL</th>
+                                                    <th>Name</th>
+                                                    <th>Service</th>
+                                                    <th>Email</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark Ogunlaye</td>
-                                                    <td>Painter</td>
-                                                    <td>markjohn@gmail.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Mark Johnson</td>
-                                                    <td>Painter</td>
-                                                    <td>markjohn@gmail.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Mark Johnson</td>
-                                                    <td>Plumber</td>
-                                                    <td>markjohn@gmail.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">4</th>
-                                                    <td>Mark Johnson</td>
-                                                    <td>Ikea Assembly Man</td>
-                                                    <td>markjohn@gmail.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">5</th>
-                                                    <td>Mark Ogundiji</td>
-                                                    <td>Painter</td>
-                                                    <td>markjohn@gmail.com</td>
-                                                </tr>
+                                            {
+                                                data.recentWorkmen.map((workman, index) =>
+                                                    <tr key={index}>
+                                                        <th scope="row">{index + 1}</th>
+                                                        <td>{workman.fullname}</td>
+                                                        <td>{workman.service}</td>
+                                                        <td>{workman.email}</td>
+                                                    </tr>
+                                                )
+                                            }
                                             </tbody>
                                         </table>
                                     </div>
@@ -118,16 +132,14 @@ const Index = () => {
                             </div>
                         </div>
                     </div>
-
-                    
                 </div>
-                {/* Recent Worker with limit by 5 */}
+                {/* Recent Users with limit by 5 */}
                 <div className="container-fluid">
                     <div className="row clearfix">
                         <div className="col-lg-12 col-md-12 col-sm-12">
                             <div className="card">
                                 <div className="header">
-                                    <h2 className="px-3"><strong>Recent Client Who Just Join the Workman Portal</strong></h2>
+                                    <h2 className="px-3"><strong>Recent Users who joined the Workman Portal</strong></h2>
                                 </div>
                                 <div className="body">
                                     <div className="table-responsive">
@@ -135,42 +147,60 @@ const Index = () => {
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Full NAME</th>
-                                                    <th>APARtMent SKILL</th>
+                                                    <th>NAME</th>
+                                                    <th>APARTMENT</th>
                                                     <th>EMAIL</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark Ogunlaye</td>
-                                                    <td>Apartment 2</td>
-                                                    <td>markjohn@gmail.com</td>
+                                            {
+                                                data.recentUsers.map((user, index) =>
+                                                <tr key={index}>
+                                                    <th scope="row">{index + 1}</th>
+                                                    <td>{user.name}</td>
+                                                    <td>{user.apartment}</td>
+                                                    <td>{user.email}</td>
                                                 </tr>
+                                                )
+                                            }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* Recent Estates with limit by 5 */}
+                <div className="container-fluid">
+                    <div className="row clearfix">
+                        <div className="col-lg-12 col-md-12 col-sm-12">
+                            <div className="card">
+                                <div className="header">
+                                    <h2 className="px-3"><strong>Recent Estates who joined the Workman Portal</strong></h2>
+                                </div>
+                                <div className="body">
+                                    <div className="table-responsive">
+                                        <table className="table">
+                                            <thead>
                                                 <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Mark Johnson</td>
-                                                    <td>Apartment 2B</td>
-                                                    <td>markjohn@gmail.com</td>
+                                                    <th>#</th>
+                                                    <th>NAME</th>
+                                                    <th>ESTATE</th>
+                                                    <th>EMAIL</th>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Mark Johnson</td>
-                                                    <td>Plumber</td>
-                                                    <td>markjohn@gmail.com</td>
+                                            </thead>
+                                            <tbody>
+                                            {
+                                                data.recentEstates.map((user, index) =>
+                                                <tr key={index}>
+                                                    <th scope="row">{index + 1}</th>
+                                                    <td>{user.name}</td>
+                                                    <td>{user.estate}</td>
+                                                    <td>{user.email}</td>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">4</th>
-                                                    <td>Mark Johnson</td>
-                                                    <td>Apartment 2A</td>
-                                                    <td>markjohn@gmail.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">5</th>
-                                                    <td>Mark Ogundiji</td>
-                                                    <td>Apartment 2B</td>
-                                                    <td>markjohn@gmail.com</td>
-                                                </tr>
+                                                )
+                                            }
                                             </tbody>
                                         </table>
                                     </div>

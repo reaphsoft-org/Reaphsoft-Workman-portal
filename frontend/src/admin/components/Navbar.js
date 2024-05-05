@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
-    return ( 
-       
+    return (
         <div className="navbar-right">
             <ul className="navbar-nav">
                 <li>

@@ -13,10 +13,6 @@ const LeftSideBar = () => {
     date_joined: 'NA',
     last_visited: 'NA',
   });
-    const logout = () => {
-      userAuth.logoutAdmin();
-      window.location.href = "/admin/";
-    }
     useEffect(() => {
         fetch('http://localhost:3001/admin/m/', {
           method: 'GET',
@@ -26,8 +22,8 @@ const LeftSideBar = () => {
           }
         }).then(res =>{
             if (res.status === 401){
-                logout();
-                window.location.href = "/admin/dashboard/";
+                userAuth.logoutAdmin();
+                window.location.href = "/admin/";
                 return;
             }
             return res.json();
@@ -40,7 +36,7 @@ const LeftSideBar = () => {
         }).catch(reason => {
             showAlert(3, reason.message, 'Error');
         });
-    }, [logout, userAuth.admin.token]);
+    }, [userAuth, userAuth.admin.token]);
     return ( 
         <aside id="leftsidebar" className="sidebar">
             <div className="navbar-brand">
