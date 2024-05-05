@@ -15,14 +15,12 @@ import UpdateUser from "./pages/update_user";
 import Services from './components/Service';
 import AboutS from './components/about';
 import Contact from './components/contact';
-import AdminLogin from './admin/pages/login';
+import AdminLogin from './admin/pages/adminLogin';
 import Index from './admin/pages/index';
 import Layout from './admin/components/Layout';
 import Skill from './admin/pages/skill';
 import Estate from './admin/pages/estate';
 import Client from './admin/pages/client';
-import UserProvider from './components/UserContext';
-import AdminProvider from './components/AdminContext';
 import Houses from './pages/Houses';
 import {House} from "./pages/House";
 
