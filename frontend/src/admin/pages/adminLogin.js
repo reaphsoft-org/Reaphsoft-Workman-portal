@@ -60,13 +60,13 @@ function AdminLogin () {
                                 <img className="logo" src="../asset/image/001-removebg-preview.png" alt=""/>
                                 <h5>Admin Login</h5>
                             </div>
-                            <div className="input-group my-3 col-10 offset-1 col-md-6 offset-md-3">
+                            <div className="input-group my-3 col-10 offset-1 col-md-6 offset-md-3 col-lg-10 offset-lg-1">
                                 <input name="email" type="email" required={true} autoComplete="email" className="form-control" onChange={handleInputChange} placeholder="Admin Email"/>
                                 <div className="input-group-append">
                                     <span className="input-group-text"><i className="zmdi zmdi-account-circle"></i></span>
                                 </div>
                             </div>
-                            <div className="input-group mb-3 col-10 offset-1 col-md-6 offset-md-3">
+                            <div className="input-group mb-3 col-10 offset-1 col-md-6 offset-md-3 col-lg-10 offset-lg-1">
                                 <input type="password" required={true} className="form-control" autoComplete="current-password" name="password" onChange={handleInputChange} placeholder="Admin Password"/>
                                 <div className="input-group-append">
                                     <span className="input-group-text"><i className="zmdi zmdi-lock"></i></span>

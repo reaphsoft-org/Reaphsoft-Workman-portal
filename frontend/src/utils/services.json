@@ -1,8 +1,6 @@
-export const services = [
+[
     {
-        name: "Workman Portal",
-        description: "Workman Portal",
-        image: "workman.png",
-        url: "https://workmanportal.com/",
-    },
+        "name": "Workman Portal",
+        "description": "Workman Portal"
+    }
 ]
