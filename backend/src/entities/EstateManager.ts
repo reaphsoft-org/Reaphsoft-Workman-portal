@@ -7,7 +7,7 @@ import { EstateRequest } from './Request';
 
 const passwordManager = new PasswordManager();
 
-@Entity()
+@Entity({ orderBy: { date_created: 'DESC', fullname: 'ASC' } })
 export class EstateManager extends NonStaff {
     // Use only to create a new instance of EstateManager,
     // one which isn't stored in the database

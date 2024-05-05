@@ -67,7 +67,7 @@ const LeftSideBar = () => {
                         <Link to="/admin/users/"><i className="zmdi zmdi-folder"></i><span>Users</span></Link>
                     </li>
                     <li className="">
-                        <Link to="estate/"><i className="zmdi zmdi-flower"></i><span>Estates</span></Link>
+                        <Link to="/admin/estate/"><i className="zmdi zmdi-flower"></i><span>Estates</span></Link>
                     </li>
                     <li className="">
                         <a href=""><i className="zmdi zmdi-swap-alt"></i><span>Services</span></a>
