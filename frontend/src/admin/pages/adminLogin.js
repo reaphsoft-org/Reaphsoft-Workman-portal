@@ -1,8 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import SweetAlertComponent, {showAlert} from "../../utils/alert";
+import {useAuth} from "../../components/AuthContext";
 
 function AdminLogin () {
+    const userAuth = useAuth();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -35,9 +37,9 @@ function AdminLogin () {
                 return res.json();
         }).then(data => {
             if (data.status){
-                showSweetAlert(1, "Admin Login Successful", "success");
-                localStorage.setItem("adminData", JSON.stringify('result'));
-                // window.location.href = "http://localhost:3000/dashboard/";
+                showSweetAlert(1, "Login Successful", "Success");
+                userAuth.loginAdmin({ token: data.access_token });
+                window.location.href = "/admin/dashboard/";
             }else {
                 showAlert(3, data.resp, 'Error');
                 setDisableButton(false);

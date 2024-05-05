@@ -46,7 +46,6 @@ function Login() {
       const responseData = await response.json();
       if (responseData.status === true) {
         user.login({ token: responseData.access_token, account: data.account });
-        console.log(responseData);
         showSweetAlert(1, data.resp, "success");
         window.location.href = "/user/";
       } else {

@@ -23,6 +23,7 @@ import Estate from './admin/pages/estate';
 import Client from './admin/pages/client';
 import Houses from './pages/Houses';
 import {House} from "./pages/House";
+import {Admin} from "./admin/components/Admin";
 
 function App() {
   return (
@@ -44,11 +45,11 @@ function App() {
           <Route path="/work/request/service/" element={<User content={Request} />} />
           <Route path="/work/requests/" element={<User content={Job} />} />
           <Route path="/admin/" element={<AdminLogin />} />
-          <Route path="/dashboard" element={<Layout />} >
+          <Route path="/admin/dashboard/" element={<Admin content={Layout} />} >
             <Route index element={<Index />} />
-            <Route path="skill" element={<Skill />} />
-            <Route path="estate" element={<Estate />} />
-            <Route path="client" element={<Client />} />
+            <Route path="skill/" element={<Skill />} />
+            <Route path="estate/" element={<Estate />} />
+            <Route path="client/" element={<Client />} />
           </Route>
         </Routes>
     </AuthProvider>

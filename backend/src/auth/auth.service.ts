@@ -85,10 +85,19 @@ export class AuthService {
         const date = new Date();
         user.last_visited = date.toISOString();
         await this.adminRepo.save(user);
-        return {
-            status: true,
-            access_token: await this.jwtService.signAsync(payload),
-            resp: '',
-        };
+        try {
+            const accessToken = await this.jwtService.signAsync(payload);
+            return {
+                status: true,
+                access_token: accessToken,
+                resp: '',
+            };
+        } catch (e) {
+            return {
+                status: false,
+                access_token: '',
+                resp: 'Error at server. Code S-K-N-S', // secret key not set
+            };
+        }
     }
 }
