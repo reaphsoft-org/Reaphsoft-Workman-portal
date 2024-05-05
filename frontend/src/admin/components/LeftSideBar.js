@@ -41,8 +41,8 @@ const LeftSideBar = () => {
         <aside id="leftsidebar" className="sidebar">
             <div className="navbar-brand">
                 <button className="btn-menu ls-toggle-btn" type="button"><i className="zmdi zmdi-menu"></i></button>
-                <a href="">
-                    <img src="../../asset/image/001-removebg-preview.png" width="75" alt="Admin Image" />
+                <a href="/">
+                    <img src="../../asset/image/001-removebg-preview.png" width="75" alt="App Logo" />
                     <span className="m-l-10 text-decoration-none"></span></a>
             </div>
             <div className="menu">
@@ -59,25 +59,25 @@ const LeftSideBar = () => {
                         </div>
                     </li>
                     <li className="active open">
-                        <Link to="/admin/dashboard/">
+                        <Link to="/admin/">
                             <i className="zmdi zmdi-home"></i><span>Dashboard</span>
                         </Link>
                     </li>
-                    <li className="active open">
-                        <Link to="client"><i className="zmdi zmdi-folder"></i><span>Users</span></Link>
+                    <li className="">
+                        <Link to="/admin/users/"><i className="zmdi zmdi-folder"></i><span>Users</span></Link>
                     </li>
-                    <li className="active open">
+                    <li className="">
                         <Link to="estate/"><i className="zmdi zmdi-flower"></i><span>Estates</span></Link>
                     </li>
-                    <li className="active open">
+                    <li className="">
                         <a href=""><i className="zmdi zmdi-swap-alt"></i><span>Services</span></a>
                     </li>
-                    <li className="active open">
+                    <li className="">
                         <Link to="skill/">
                             <i className="zmdi zmdi-assignment"></i><span>Workmen</span>
                         </Link>
                     </li>
-                    <li className="active open">
+                    <li className="">
                         <a href=""><i className="zmdi zmdi-blogger"></i><span>Work Requests</span></a>
                     </li>
                 </ul>

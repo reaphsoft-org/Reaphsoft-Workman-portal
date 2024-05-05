@@ -20,7 +20,7 @@ import Index from './admin/pages/index';
 import Layout from './admin/components/Layout';
 import Skill from './admin/pages/skill';
 import Estate from './admin/pages/estate';
-import Client from './admin/pages/client';
+import Users from './admin/pages/users';
 import Houses from './pages/Houses';
 import {House} from "./pages/House";
 import {Admin} from "./admin/components/Admin";
@@ -44,12 +44,12 @@ function App() {
           <Route path="/estate/house/:id/" element={<User content={House} />} />
           <Route path="/work/request/service/" element={<User content={Request} />} />
           <Route path="/work/requests/" element={<User content={Job} />} />
-          <Route path="/admin/" element={<AdminLogin />} />
-          <Route path="/admin/dashboard/" element={<Admin content={Layout} />} >
+          <Route path="/admin/login/" element={<AdminLogin />} />
+          <Route path="/admin/" element={<Admin content={Layout} />} >
             <Route index element={<Index />} />
             <Route path="skill/" element={<Skill />} />
             <Route path="estate/" element={<Estate />} />
-            <Route path="client/" element={<Client />} />
+            <Route path="users/" element={<Users />} />
           </Route>
         </Routes>
     </AuthProvider>

@@ -39,7 +39,7 @@ function AdminLogin () {
             if (data.status){
                 showSweetAlert(1, "Login Successful", "Success");
                 userAuth.loginAdmin({ token: data.access_token });
-                window.location.href = "/admin/dashboard/";
+                window.location.href = "/admin/";
             }else {
                 showAlert(3, data.resp, 'Error');
                 setDisableButton(false);

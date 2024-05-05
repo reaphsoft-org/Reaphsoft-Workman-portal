@@ -5,5 +5,5 @@ export const logout = (user) => {
 
 export function logOutAdmin(adminAuth) {
     adminAuth.logoutAdmin();
-    window.location.href = "/admin/";
+    window.location.href = "/admin/login/";
 }
