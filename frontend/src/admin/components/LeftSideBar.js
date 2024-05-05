@@ -63,27 +63,27 @@ const LeftSideBar = () => {
                         </div>
                     </li>
                     <li className="active open">
-                        <Link to="">
+                        <Link to="/admin/dashboard/">
                             <i className="zmdi zmdi-home"></i><span>Dashboard</span>
                         </Link>
                     </li>
                     <li className="active open">
-                        <Link to="skill">
-                            <i className="zmdi zmdi-assignment"></i><span>Worker</span>
+                        <Link to="client"><i className="zmdi zmdi-folder"></i><span>Users</span></Link>
+                    </li>
+                    <li className="active open">
+                        <Link to="estate/"><i className="zmdi zmdi-flower"></i><span>Estates</span></Link>
+                    </li>
+                    <li className="active open">
+                        <a href=""><i className="zmdi zmdi-swap-alt"></i><span>Services</span></a>
+                    </li>
+                    <li className="active open">
+                        <Link to="skill/">
+                            <i className="zmdi zmdi-assignment"></i><span>Workmen</span>
                         </Link>
                     </li>
                     <li className="active open">
-                        <Link to="estate"><i className="zmdi zmdi-flower"></i><span>Estate</span></Link>
+                        <a href=""><i className="zmdi zmdi-blogger"></i><span>Work Requests</span></a>
                     </li>
-                    {/* <li className="active open">
-                        <Link to="client"><i className="zmdi zmdi-folder"></i><span>Clients</span></Link>
-                    </li> */}
-                    {/* <li className="active open">
-                        <a href=""><i className="zmdi zmdi-blogger"></i><span>Request</span></a>
-                    </li>
-                    <li className="active open">
-                        <a href=""><i className="zmdi zmdi-swap-alt"></i><span>Complients</span></a>
-                    </li> */}
                 </ul>
             </div>
         </aside>
