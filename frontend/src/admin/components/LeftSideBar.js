@@ -72,13 +72,13 @@ const LeftSideBar = () => {
                     <li className="">
                         <a href="/admin/services/"><i className="zmdi zmdi-swap-alt"></i><span>Services</span></a>
                     </li>
-                    <li className="">
-                        <Link to="workmen/">
+                    <li>
+                        <Link to="/admin/workmen/">
                             <i className="zmdi zmdi-assignment"></i><span>Workmen</span>
                         </Link>
                     </li>
-                    <li className="">
-                        <a href=""><i className="zmdi zmdi-blogger"></i><span>Work Requests</span></a>
+                    <li>
+                        <a href="/admin/requests/" className="link-offset-2"><i className="zmdi zmdi-blogger"></i><span>Work Requests</span></a>
                     </li>
                 </ul>
             </div>

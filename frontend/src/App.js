@@ -25,6 +25,7 @@ import Houses from './pages/Houses';
 import {House} from "./pages/House";
 import {Services as AdminServices} from "./admin/pages/services";
 import {Admin} from "./admin/components/Admin";
+import {WorkRequest} from "./admin/pages/work-request";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             <Route path="estate/" element={<Estate />} />
             <Route path="users/" element={<Users />} />
             <Route path="services/" element={<AdminServices />} />
+            <Route path="requests/" element={<WorkRequest />} />
           </Route>
         </Routes>
     </AuthProvider>
