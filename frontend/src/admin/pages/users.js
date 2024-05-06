@@ -210,7 +210,7 @@ const Users = () => {
                             </select>
                             </div>
                             <div className="col-12 mb-2">
-                                <label className="form-label">Estate Photo/Logo</label>
+                                <label className="form-label">Photo</label>
                                 <div>
                                   {selectedImage && (
                                     <div className="text-center my-3">

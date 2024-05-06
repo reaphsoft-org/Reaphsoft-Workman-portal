@@ -182,20 +182,24 @@ export class AdminService {
         const users = await repo.find({
             skip: start,
             take: end,
-            order: {
-                fullname: 'ASC',
-            },
         });
         // console.log(start, end, users.length);
         const count = await repo.count();
         let pages = Math.floor(count / 50);
         pages += count % this.paginateBy > 0 ? 1 : 0;
+        const flag =
+            Array.isArray(users) &&
+            users.length > 0 &&
+            users[0] instanceof User;
         return {
             pages: pages,
             data: users.map((user) => ({
                 email: user.email,
                 name: user.fullname,
                 address: user.address,
+                extra: flag
+                    ? (user as User).apartment
+                    : (user as EstateManager).estate,
             })),
         };
     }
@@ -213,7 +217,7 @@ export class AdminService {
         manager.setValues(true);
         await manager.saveFile(file);
         try {
-            await this.usersRepo.save(manager);
+            await this.estateManagersRepo.save(manager);
         } catch (e) {
             manager.deletePhoto();
             if (
@@ -232,8 +236,8 @@ export class AdminService {
                 status: false,
             };
         }
-        const email = new Email();
-        await email.sendAccountCreateMail(manager);
+        // const email = new Email();
+        // await email.sendAccountCreateMail(manager);
         return { resp: 'Account created successfully', status: true };
     }
 
