@@ -23,6 +23,7 @@ import Estate from './admin/pages/estate';
 import Users from './admin/pages/users';
 import Houses from './pages/Houses';
 import {House} from "./pages/House";
+import {Services as AdminServices} from "./admin/pages/services";
 import {Admin} from "./admin/components/Admin";
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
             <Route path="skill/" element={<Skill />} />
             <Route path="estate/" element={<Estate />} />
             <Route path="users/" element={<Users />} />
+            <Route path="services/" element={<AdminServices />} />
           </Route>
         </Routes>
     </AuthProvider>

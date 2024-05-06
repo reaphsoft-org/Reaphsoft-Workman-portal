@@ -565,7 +565,7 @@ export class AdminService {
         service.name = serviceDto.name;
         service.description = serviceDto.description;
         await this.serviceRepo.save(service);
-        return { resp: '', status: true };
+        return { resp: `${service.id}`, status: true };
     }
 
     async updateService(id: number, serviceDto: ServiceDto) {
