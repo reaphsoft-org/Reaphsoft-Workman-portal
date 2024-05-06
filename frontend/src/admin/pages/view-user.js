@@ -5,8 +5,9 @@
 import {useParams} from "react-router";
 import React, {useEffect, useState} from "react";
 import {useAuth} from "../../components/AuthContext";
-import {Button, Form, FormControl, InputGroup} from "react-bootstrap";
+import {Button, Form, FormControl, Image, InputGroup} from "react-bootstrap";
 import {showAlert} from "../../utils/alert";
+import fp29332702_7495554 from '../components/fp29332702_7495554.jpg'
 
 export const ViewUser = () => {
     const { email } = useParams();
@@ -43,6 +44,11 @@ export const ViewUser = () => {
             }
         })
      }, [email, userAuth.admin.token]);
+    function submitForm(event) {
+        event.preventDefault();
+    }
+
+    const [disableButton, setDisableButton] = useState(false)
     return (
       <section className="content">
           <div className="body_scroll">
@@ -65,7 +71,17 @@ export const ViewUser = () => {
               <div className="row">
                   <div className="col-lg-6">
                       <div className="card px-lg-3 py-lg-3">
-                          <Form>
+                          <div className="text-center my-3">
+                              <Image
+                                src={user.photoURL === '' ? fp29332702_7495554 : `http://localhost:3001/${user.photoURL}`}
+                              />
+                              <p className="mt-3">Current Photo: {user.photoURL === '' ? 'None' : user.photoURL }</p>
+                              <InputGroup className="col-10 offset-1">
+                                  <Form.Control type="file" className="" style={{margin: '5px 0', paddingTop: '7.5px'}}/>
+                                  <Button variant="outline-primary">Save</Button>
+                              </InputGroup>
+                          </div>
+                          <Form onSubmit={submitForm}>
                               <Form.Group className="col-10 offset-1 my-3">
                                   <Form.Label>Email</Form.Label>
                                   <FormControl value={user.email} readOnly={true}></FormControl>
@@ -105,7 +121,7 @@ export const ViewUser = () => {
                               </Form.Group>
                               <div className="col-10 offset-1 row my-3">
                                   <div className="col-lg-6 d-grid">
-                                    <Button>Update</Button>
+                                    <Button disabled={disableButton}>Update</Button>
                                   </div>
                                   <div className="col-lg-6 d-grid">
                                     <Button variant="danger">Delete</Button>
