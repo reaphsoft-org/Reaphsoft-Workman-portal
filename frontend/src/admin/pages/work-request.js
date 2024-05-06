@@ -3,7 +3,7 @@
 // github.com/kahlflekzy
 
 import {Button, Image, Modal} from "react-bootstrap";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {showAlert} from "../../utils/alert";
 import {useAuth} from "../../components/AuthContext";
 import fp9264828 from "../components/fp9264828.jpg";
@@ -69,6 +69,27 @@ export function WorkRequest({type}) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
     const [disableButton, setDisableButton] = useState(false);
+    const [page, setPage] = useState(1);
+    useEffect(() => {
+        fetch(`http://localhost:3001/admin/work/requests/${type}/${page}/`,{
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + userAuth.admin.token,
+            'Content-Type': 'application/json'
+          }
+        }).then(res => {
+                if (!res.ok){
+                    showAlert(3, 'Error while loading work requests', 'Error');
+                    return;
+                }
+                return res.json();
+            }
+        ).then(data => {
+            setWorkRequests(data);
+        }).catch(reason => {
+            showAlert(3, reason.message, 'Error');
+        })
+    }, [page, userAuth.admin.token]);
     return (
         <section className="content">
             <div className="body_scroll">
@@ -102,12 +123,13 @@ export function WorkRequest({type}) {
                                         </thead>
                                         <tbody>
                                         {
-                                            workRequests.data.map((service, index) =>
+                                            workRequests.data.map((workRequest, index) =>
                                             <tr>
                                                 <td><strong>{index + 1}</strong></td>
-                                                <td><strong>{service.name}</strong></td>
-                                                <td>{service.description}</td>
-                                                <td className="my-0"> {/* on click get service.id */}
+                                                <td><strong>{workRequest.client}</strong></td>
+                                                <td>{workRequest.service}</td>
+                                                <td>{(new Date(workRequest.created_at)).toLocaleString()}</td>
+                                                <td className="my-0">
                                                     <button className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></button>
                                                     <button className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></button>
                                                 </td>

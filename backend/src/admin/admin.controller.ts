@@ -148,7 +148,7 @@ export class AdminController {
         @Param('page') page: number,
         @Param('type') type: number,
     ) {
-        if (type !== 1 && type !== 2) return { pages: 0, data: [] };
+        if (type != 1 && type != 2) return { pages: 0, data: [] };
         return this.service.getWorkRequests(page, type);
     }
     @Put('work/request/:type/:id/')
