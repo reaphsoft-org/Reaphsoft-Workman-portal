@@ -57,7 +57,7 @@ function AdminLogin () {
                     <div className="col-lg-4 col-sm-12">
                         <form className="card auth_form" onSubmit={login}>
                             <div className="header">
-                                <img className="logo" src="../asset/image/001-removebg-preview.png" alt=""/>
+                                <img className="logo" src="../../asset/image/001-removebg-preview.png" alt=""/>
                                 <h5>Admin Login</h5>
                             </div>
                             <div className="input-group my-3 col-10 offset-1 col-md-6 offset-md-3 col-lg-10 offset-lg-1">
@@ -81,7 +81,7 @@ function AdminLogin () {
                     </div>
                     <div className="col-lg-8 col-sm-12">
                         <div className="card">
-                            <img src="../adminAssets/images/signin.svg" alt="Techie" />
+                            <img src="../../adminAssets/images/signin.svg" alt="Techie" />
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@ import { Entity, Column, OneToMany, Relation } from 'typeorm';
 import { NonStaff } from './BaseUser';
 import { UserRequest } from './Request';
 
-@Entity({ orderBy: { date_created: 'DESC', fullname: 'ASC' } })
+@Entity({ orderBy: { date_joined: 'DESC', fullname: 'ASC' } })
 export class User extends NonStaff {
     static accountType: number = 1;
 
