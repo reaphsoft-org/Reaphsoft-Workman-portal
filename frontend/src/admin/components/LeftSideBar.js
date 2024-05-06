@@ -60,21 +60,21 @@ const LeftSideBar = () => {
                         </div>
                     </li>
                     <li className="active open">
-                        <Link to="/admin/">
+                        <Link to="/admin/" className="link-offset-2">
                             <i className="zmdi zmdi-home"></i><span>Dashboard</span>
                         </Link>
                     </li>
                     <li className="">
-                        <Link to="/admin/users/"><i className="zmdi zmdi-folder"></i><span>Users</span></Link>
+                        <Link to="/admin/users/" className="link-offset-2"><i className="zmdi zmdi-folder"></i><span>Users</span></Link>
                     </li>
                     <li className="">
-                        <Link to="/admin/estate/"><i className="zmdi zmdi-flower"></i><span>Estates</span></Link>
+                        <Link to="/admin/estate/" className="link-offset-2"><i className="zmdi zmdi-flower"></i><span>Estates</span></Link>
                     </li>
                     <li className="">
-                        <a href="/admin/services/"><i className="zmdi zmdi-swap-alt"></i><span>Services</span></a>
+                        <a href="/admin/services/" className="link-offset-2"><i className="zmdi zmdi-swap-alt"></i><span>Services</span></a>
                     </li>
                     <li>
-                        <Link to="/admin/workmen/">
+                        <Link to="/admin/workmen/" className="link-offset-2">
                             <i className="zmdi zmdi-assignment"></i><span>Workmen</span>
                         </Link>
                     </li>
