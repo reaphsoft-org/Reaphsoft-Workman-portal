@@ -8,6 +8,7 @@ import { Service } from './Service';
 
 @Entity({
     orderBy: {
+        date_joined: 'DESC',
         fullname: 'ASC',
     },
 })

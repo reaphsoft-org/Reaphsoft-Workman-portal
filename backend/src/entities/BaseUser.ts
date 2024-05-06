@@ -53,14 +53,14 @@ export abstract class BaseUser {
         });
     }
 
-    async saveFile(file: any) {
+    async saveFile(file: any, prefix: string = 'user') {
         if (file != null && file.mimetype.startsWith('image/')) {
             // todo add test case for when a object posts a file which doesn't have an image mime type
             // todo test for jpegs, currently tests for png
             const extension: string = file.originalname.split('.').pop();
             const filename =
                 this.email.replace('@', '').replace('.', '-') + `.${extension}`;
-            this.photoURL = await this.savePhoto(file, filename);
+            this.photoURL = await this.savePhoto(file, `${prefix}_${filename}`);
         }
     }
 

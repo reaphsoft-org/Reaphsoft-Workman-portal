@@ -73,7 +73,7 @@ const LeftSideBar = () => {
                         <a href="/admin/services/"><i className="zmdi zmdi-swap-alt"></i><span>Services</span></a>
                     </li>
                     <li className="">
-                        <Link to="skill/">
+                        <Link to="workmen/">
                             <i className="zmdi zmdi-assignment"></i><span>Workmen</span>
                         </Link>
                     </li>

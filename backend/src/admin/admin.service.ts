@@ -3,7 +3,6 @@ import { AppDataSource } from '../data-source';
 import { SuperUser } from '../entities/SuperUser';
 import { User } from '../entities/User';
 import { CreateUserDto } from '../accounts/dto/create-user.dto';
-import { Email } from '../utilities/mailman';
 import {
     UpdateEstateManagerDto,
     UpdateUserDto,
@@ -215,7 +214,7 @@ export class AdminService {
         const check = manager.runValidations();
         if (!check.status) return check;
         manager.setValues(true);
-        await manager.saveFile(file);
+        await manager.saveFile(file, 'estate');
         try {
             await this.estateManagersRepo.save(manager);
         } catch (e) {
@@ -311,7 +310,7 @@ export class AdminService {
             return check;
         }
         workman.setValues(true);
-        await workman.saveFile(file);
+        await workman.saveFile(file, 'workman');
         try {
             await this.workmanRepo.save(workman);
         } catch (e) {
@@ -342,9 +341,6 @@ export class AdminService {
         const users = await this.workmanRepo.find({
             skip: start,
             take: end,
-            order: {
-                fullname: 'ASC',
-            },
             relations: {
                 service: true,
             },
@@ -357,7 +353,7 @@ export class AdminService {
             data: users.map((user) => ({
                 email: user.email,
                 name: user.fullname,
-                service: user.service,
+                service: user.service.name,
             })),
         };
     }
@@ -531,12 +527,12 @@ export class AdminService {
     }
 
     async getServices(page: number) {
-        if (page <= 0) return { pages: 0, data: [] };
+        if (page < 0) return { pages: 0, data: [] };
         const start = this.paginateBy * (page - 1);
         const end = this.paginateBy * page;
         const services = await this.serviceRepo.find({
-            skip: start,
-            take: end,
+            skip: page == 0 ? 0 : start,
+            take: page == 0 ? undefined : end,
         });
         const count = await this.serviceRepo.count();
         let pages = Math.floor(count / 50);
@@ -546,7 +542,7 @@ export class AdminService {
             data: services.map((service) => ({
                 id: service.id,
                 name: service.name,
-                description: service.description,
+                description: page === 0 ? '' : service.description,
             })),
         };
     }

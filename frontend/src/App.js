@@ -18,7 +18,7 @@ import Contact from './components/contact';
 import AdminLogin from './admin/pages/adminLogin';
 import Index from './admin/pages/index';
 import Layout from './admin/components/Layout';
-import Skill from './admin/pages/skill';
+import Workmen from './admin/pages/workmen';
 import Estate from './admin/pages/estate';
 import Users from './admin/pages/users';
 import Houses from './pages/Houses';
@@ -48,7 +48,7 @@ function App() {
           <Route path="/admin/login/" element={<AdminLogin />} />
           <Route path="/admin/" element={<Admin content={Layout} />} >
             <Route index element={<Index />} />
-            <Route path="skill/" element={<Skill />} />
+            <Route path="workmen/" element={<Workmen />} />
             <Route path="estate/" element={<Estate />} />
             <Route path="users/" element={<Users />} />
             <Route path="services/" element={<AdminServices />} />

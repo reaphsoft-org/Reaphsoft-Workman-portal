@@ -13,7 +13,7 @@ const NavBar = () => {
                     {/* <a href="#search" className="main_search" title="Search..."><i className="zmdi zmdi-search"></i></a> */}
                 </li>
                 <li>
-                    <Button variant="primary" onClick={()=>logOutAdmin(userAuth)} className="mega-menu" title="Sign Out"><i className="zmdi zmdi-power"></i></Button></li>
+                    <Button variant="danger" onClick={()=>logOutAdmin(userAuth)} className="mega-menu" title="Sign Out"><i className="zmdi zmdi-power"></i></Button></li>
             </ul>
         </div>
     );
