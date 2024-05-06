@@ -415,7 +415,7 @@ export class AdminService {
         const start = this.paginateBy * (page - 1);
         const end = this.paginateBy;
         const repo =
-            type === User.accountType
+            type == User.accountType
                 ? this.userRequestRepo
                 : this.estateRequestRepo;
         const requests = await repo.find({

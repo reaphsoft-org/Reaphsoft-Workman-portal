@@ -89,7 +89,7 @@ export function WorkRequest({type}) {
         }).catch(reason => {
             showAlert(3, reason.message, 'Error');
         })
-    }, [page, userAuth.admin.token]);
+    }, [page, type, userAuth.admin.token]);
     return (
         <section className="content">
             <div className="body_scroll">

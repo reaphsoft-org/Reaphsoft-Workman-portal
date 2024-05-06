@@ -99,7 +99,7 @@ export const ViewUser = () => {
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
-
+    const [selectedImage, setSelectedImage] = useState(null);
     const [disableButton, setDisableButton] = useState(false)
     return (
       <section className="content">
@@ -124,12 +124,14 @@ export const ViewUser = () => {
                   <div className="col-lg-6">
                       <div className="card px-lg-3 py-lg-3">
                           <div className="text-center my-3">
-                              <Image
-                                src={user.photoURL === '' ? fp29332702_7495554 : `http://localhost:3001/${user.photoURL}`}
-                              />
+                              {
+                                  selectedImage === null ?
+                                      <Image src={user.photoURL === '' ? fp29332702_7495554 : `http://localhost:3001/${user.photoURL}`} /> :
+                                      <Image src={URL.createObjectURL(selectedImage)} alt="selected" />
+                              }
                               <p className="mt-3">Current Photo: {user.photoURL === '' ? 'None' : user.photoURL }</p>
                               <InputGroup className="col-10 offset-1">
-                                  <Form.Control type="file" className="" style={{margin: '5px 0', paddingTop: '7.5px'}}/>
+                                  <Form.Control type="file" accept="image/*" className="" style={{margin: '5px 0', paddingTop: '7.5px'}} onChange={(e)=>{setSelectedImage(e.target.files[0])}}/>
                                   <Button variant="outline-primary">Save</Button>
                               </InputGroup>
                           </div>

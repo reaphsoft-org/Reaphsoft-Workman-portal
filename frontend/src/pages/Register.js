@@ -90,7 +90,6 @@ function Register() {
   const logoSize = 80;
  
   return (
-    
     <div className="vh-100">
       <div className="page-wraper">
         <div className="browse-job login-style3">
