@@ -41,11 +41,63 @@ export const ViewUser = () => {
                 showAlert(3, `Unable to get user: ${email}`, 'Error');
             }else {
                 setUser(data);
+                setFormData({
+                    apartment: data.apartment,
+                    address: data.address,
+                    fullname: data.fullname,
+                    serviceType: data.serviceType,
+                });
             }
         })
      }, [email, userAuth.admin.token]);
     function submitForm(event) {
         event.preventDefault();
+        if (formData.serviceType === user.serviceType &&
+            formData.address === user.address &&
+            formData.apartment === user.apartment &&
+            formData.fullname === user.fullname
+            // no change
+        ){
+            return;
+        }
+        setDisableButton(true);
+        fetch(`http://localhost:3001/admin/user/${email}/`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'Bearer ' + userAuth.admin.token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData),
+            }
+        ).then(r => {
+            if (!r.ok){
+                showAlert(3, 'Got a bad response from the server. Please contact the administrators.', 'Error');
+                setDisableButton(false);
+                return;
+            }
+            return r.json();
+        }).then(value => {
+            if (!value.status){
+                showAlert(3, value.resp, 'Error');
+            }else{
+                showAlert(1, 'Successfully updated profile', 'Success');
+            }
+            setDisableButton(false);
+        }).catch(reason => {
+            showAlert(3, reason.message, 'Error');
+            setDisableButton(false);
+        });
+    }
+    const [formData, setFormData] = useState({
+            apartment: '',
+            address: '',
+            fullname: '',
+            serviceType: "",
+        }
+    );
+    const handleInputChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
     const [disableButton, setDisableButton] = useState(false)
@@ -97,31 +149,30 @@ export const ViewUser = () => {
                               <div className="w-100"></div>
                               <Form.Group className="col-10 offset-1 my-3">
                                   <Form.Label>Fullname</Form.Label>
-                                  <FormControl value={user.fullname}></FormControl>
+                                  <FormControl name="fullname" value={formData.fullname} onChange={handleInputChange} required={true}></FormControl>
                               </Form.Group>
                               <div className="w-100"></div>
                               <Form.Group className="col-10 offset-1 my-3">
                                   <Form.Label>Apartment</Form.Label>
-                                  <FormControl value={user.apartment}></FormControl>
+                                  <FormControl name="apartment" value={formData.apartment} onChange={handleInputChange} required={true}></FormControl>
                               </Form.Group>
                               <div className="w-100"></div>
                               <Form.Group className="col-10 offset-1 my-3">
                                   <Form.Label>Address</Form.Label>
-                                  <FormControl value={user.address}></FormControl>
+                                  <FormControl name="address" value={formData.address} onChange={handleInputChange} required={true}></FormControl>
                               </Form.Group>
                               <div className="w-100"></div>
                               <Form.Group className="col-10 offset-1 my-3">
                                   <Form.Label>Service Type</Form.Label>
-                                  <Form.Select value={user.serviceType}>
+                                  <Form.Select name="serviceType" value={formData.serviceType} onChange={handleInputChange} required={true}>
                                       <option value="0">Select Service</option>
                                       <option value="1">Priority</option>
                                       <option value="2">Priority Plus</option>
                                   </Form.Select>
-
                               </Form.Group>
                               <div className="col-10 offset-1 row my-3">
                                   <div className="col-lg-6 d-grid">
-                                    <Button disabled={disableButton}>Update</Button>
+                                    <Button type="submit" disabled={disableButton}>Update</Button>
                                   </div>
                                   <div className="col-lg-6 d-grid">
                                     <Button variant="danger">Delete</Button>
