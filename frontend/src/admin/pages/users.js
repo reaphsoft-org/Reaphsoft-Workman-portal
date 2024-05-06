@@ -143,8 +143,8 @@ const Users = () => {
                                                 <td>{user.email}</td>
                                                 <td>{user.address}</td>
                                                 <td className="my-0">
-                                                    <Button className="my-0 btn-sm btn-default"><i className="zmdi zmdi-edit"></i></Button>
-                                                    <Button variant="danger" className="my-0 btn-sm btn-default"><i className="zmdi zmdi-delete"></i></Button>
+                                                    <a href={`/admin/users/user/${user.email}/`} className="myq-0 btn btn-light waves-float btn-sm"><i className="zmdi zmdi-eye"></i></a>
+                                                    <Button variant="danger" size="sm" className="btn"><i className="zmdi zmdi-delete"></i></Button>
                                                 </td>
                                             </tr>
                                             )
