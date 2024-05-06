@@ -143,8 +143,10 @@ const Users = () => {
                                                 <td>{user.email}</td>
                                                 <td>{user.address}</td>
                                                 <td className="my-0">
-                                                    <Button className="my-0 btn-sm btn-default"><i className="zmdi zmdi-edit"></i></Button>
-                                                    <Button variant="danger" className="my-0 btn-sm btn-default"><i className="zmdi zmdi-delete"></i></Button>
+                                                    <Button className="my-0 btn-sm btn-default">
+                                                        <i className="zmdi zmdi-edit"></i></Button>
+                                                    <Button variant="danger" className="my-0 btn-sm btn-default">
+                                                        <i className="zmdi zmdi-delete"></i></Button>
                                                 </td>
                                             </tr>
                                             )

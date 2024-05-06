@@ -44,7 +44,51 @@ class SweetAlertComponent extends Component {
             showConfirmButton: false,
             timer: 2000
         });
-    }
+    };
+
+    showDeleteModel = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+
+    
+    showDeleteModel = (title, text, icon, confirmDeletecallback) => ({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+        preConfirm: () => {
+            return confirmDelete();
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if (typeof confirmDeletecallback === "function") {
+                confirmDeletecallback();
+            }
+          showDeleteModel.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+
+        });
+        } else if (
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          showDeleteModel.fire({
+            title: "Cancelled",
+            text: "",
+            icon: "error"
+          });
+        }
+    });
+
+
 }
 
 
