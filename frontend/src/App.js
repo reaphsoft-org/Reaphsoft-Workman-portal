@@ -53,7 +53,8 @@ function App() {
             <Route path="estate/" element={<Estate />} />
             <Route path="users/" element={<Users />} />
             <Route path="services/" element={<AdminServices />} />
-            <Route path="requests/" element={<WorkRequest />} />
+            <Route path="users/work/requests/" element={<WorkRequest type={1}/>} />
+            <Route path="estates/work/requests/" element={<WorkRequest type={2}/>} />
           </Route>
         </Routes>
     </AuthProvider>

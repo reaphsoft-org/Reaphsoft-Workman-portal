@@ -78,7 +78,6 @@ export function Services() {
             showAlert(3, reason.message, 'Error');
         })
     }
-
     const [formData, setFormData] = useState(
         {
             name: '',

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import {useAuth} from "../../components/AuthContext";
 import {showAlert} from "../../utils/alert";
+import logo from "../components/logo.png"
 
 const LeftSideBar = () => {
     const userAuth = useAuth();
@@ -42,7 +43,7 @@ const LeftSideBar = () => {
             <div className="navbar-brand">
                 <button className="btn-menu ls-toggle-btn" type="button"><i className="zmdi zmdi-menu"></i></button>
                 <a href="/">
-                    <img src="../../asset/image/001-removebg-preview.png" width="75" alt="App Logo" />
+                    <img src={logo} width="75" alt="App Logo" />
                     <span className="m-l-10 text-decoration-none"></span></a>
             </div>
             <div className="menu">
@@ -78,7 +79,10 @@ const LeftSideBar = () => {
                         </Link>
                     </li>
                     <li>
-                        <a href="/admin/requests/" className="link-offset-2"><i className="zmdi zmdi-blogger"></i><span>Work Requests</span></a>
+                        <a href="/admin/users/work/requests/" className="link-offset-2"><i className="zmdi zmdi-blogger"></i><span>User Work Requests</span></a>
+                    </li>
+                    <li>
+                        <a href="/admin/estates/work/requests/" className="link-offset-2"><i className="zmdi zmdi-blogger"></i><span>Estate Work Requests</span></a>
                     </li>
                 </ul>
             </div>
