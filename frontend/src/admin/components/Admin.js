@@ -10,7 +10,7 @@ export const Admin = ({content}) => {
   const userAuth = useAuth();
   return (
       <>
-          {!userAuth.admin ? <Navigate to="/admin/"/> : content()}
+          {!userAuth.admin ? <Navigate to="/admin/login/"/> : content()}
       </>
   );
 }

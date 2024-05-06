@@ -26,6 +26,7 @@ import {House} from "./pages/House";
 import {Services as AdminServices} from "./admin/pages/services";
 import {Admin} from "./admin/components/Admin";
 import {WorkRequest} from "./admin/pages/work-request";
+import {ViewUser} from "./admin/pages/view-user";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             <Route path="workmen/" element={<Workmen />} />
             <Route path="estate/" element={<Estate />} />
             <Route path="users/" element={<Users />} />
+            <Route path="users/user/:email/" element={<ViewUser />} />
             <Route path="services/" element={<AdminServices />} />
             <Route path="users/work/requests/" element={<WorkRequest type={1}/>} />
             <Route path="estates/work/requests/" element={<WorkRequest type={2}/>} />
