@@ -138,15 +138,13 @@ const Users = () => {
                                         <tbody>
                                         {
                                             usersData.data.map((user, index) =>
-                                            <tr>
+                                            <tr key={index}>
                                                 <td>{user.name}</td>
                                                 <td>{user.email}</td>
                                                 <td>{user.address}</td>
                                                 <td className="my-0">
-                                                    <Button className="my-0 btn-sm btn-default">
-                                                        <i className="zmdi zmdi-edit"></i></Button>
-                                                    <Button variant="danger" className="my-0 btn-sm btn-default">
-                                                        <i className="zmdi zmdi-delete"></i></Button>
+                                                    <Button className="my-0 btn-sm btn-default"><i className="zmdi zmdi-edit"></i></Button>
+                                                    <Button variant="danger" className="my-0 btn-sm btn-default"><i className="zmdi zmdi-delete"></i></Button>
                                                 </td>
                                             </tr>
                                             )
@@ -158,10 +156,9 @@ const Users = () => {
                             <div className="card">
                                 <div className="body">
                                     <ul className="pagination pagination-primary m-b-0">
-                                        <li className="page-item"><a className="page-link" href="javascript:void(0);"><i className="zmdi zmdi-arrow-left"></i></a></li>
-                                        <li className="page-item active"><a className="page-link" href="javascript:void(0);">1</a></li>
-                                        <li className="page-item"><a className="page-link" href="javascript:void(0);">2</a></li>
-                                        <li className="page-item"><a className="page-link" href="javascript:void(0);"><i className="zmdi zmdi-arrow-right"></i></a></li>
+                                        <li className="page-item"><a className="page-link" href=""><i className="zmdi zmdi-arrow-left"></i></a></li>
+                                        <li className="page-item active"><a className="page-link" href="">1</a></li>
+                                        <li className="page-item"><a className="page-link" href=""><i className="zmdi zmdi-arrow-right"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
