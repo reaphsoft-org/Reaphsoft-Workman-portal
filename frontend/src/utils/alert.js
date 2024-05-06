@@ -7,8 +7,6 @@ class SweetAlertComponent extends Component {
     // 2 for info
     // 3 for error
 
-
-
     gettype = (type) => {
         switch (type) {
             case 1:
@@ -55,7 +53,7 @@ class SweetAlertComponent extends Component {
     });
 
     
-    showDeleteModel = (title, text, icon, confirmDeletecallback) => ({
+    showDeleteModel = (title, text, icon, confirmDeleteCallback) => ({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
         icon: "warning",
@@ -64,14 +62,14 @@ class SweetAlertComponent extends Component {
         cancelButtonText: "No, cancel!",
         reverseButtons: true,
         preConfirm: () => {
-            return confirmDelete();
+            // return confirmDelete();
         }
     }).then((result) => {
         if (result.isConfirmed) {
-            if (typeof confirmDeletecallback === "function") {
-                confirmDeletecallback();
+            if (typeof confirmDeleteCallback === "function") {
+                confirmDeleteCallback();
             }
-          showDeleteModel.fire({
+          Swal.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",
             icon: "success",
@@ -80,7 +78,7 @@ class SweetAlertComponent extends Component {
         } else if (
           result.dismiss === Swal.DismissReason.cancel
         ) {
-          showDeleteModel.fire({
+          Swal.fire({
             title: "Cancelled",
             text: "",
             icon: "error"
@@ -90,7 +88,6 @@ class SweetAlertComponent extends Component {
 
 
 }
-
 
 export const showAlert = (type, text, title) => {
     const component = new SweetAlertComponent();
