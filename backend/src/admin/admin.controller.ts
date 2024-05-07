@@ -29,7 +29,8 @@ import { ServiceDto } from '../workmen/dto/service.dto';
 import { Request as RequestDecorator } from '@nestjs/common/decorators/http/route-params.decorator';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { PasswordDto } from './dto/password.dto';
-import {EstateService} from "../estate/estate.service";
+import { EstateService } from '../estate/estate.service';
+import { HouseDto } from '../estate/dto/house.dto';
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
@@ -233,5 +234,16 @@ export class AdminController {
         @Param('page') page: number,
     ) {
         return this.estateService.getHouses(email, page, true);
+    }
+    @Post('estate/:email/house/')
+    async addEstateHouse(@Param('email') email: string, @Body() dto: HouseDto) {
+        if (
+            dto.vacancy === undefined ||
+            dto.number === undefined ||
+            dto.occupant_name === undefined
+        ) {
+            return { status: false, resp: 'Invalid Request' };
+        }
+        return this.estateService.addHouse(email, dto, true);
     }
 }

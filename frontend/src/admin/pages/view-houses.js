@@ -37,23 +37,69 @@ export function ViewHouses() {
             setHouses(data);
         }).catch(reason => {
             showAlert(3, reason.message, 'Error');
-        })
+        });
     }, [email, page, userAuth.admin.token]);
     const ADD = 1;
     const UPDATE = 2;
     const [modalData, setModalData] = useState({
-       heading: '',
-       button: '',
+        heading: '',
+        button: '',
         action: 0
     });
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
         number: '',
         occupant_name: '',
-        vacancy: '',
+        vacancy: 'true',
     });
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+    const submitForm = (event) => {
+        event.preventDefault();
+        setDisableButtons(true);
+        if (modalData.action === ADD){
+            fetch(`http://localhost:3001/admin/estate/${email}/house/`,{
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + userAuth.admin.token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            }).then(res => {
+                if (!res.ok){
+                    showAlert(3, `Error while posting data. ${res.statusMessage}`, 'Error');
+                    setDisableButtons(false);
+                    return;
+                }
+                return res.json();
+                }
+            ).then(data => {
+                if (!data.status){
+                    showAlert(3, data.resp, 'Error');
+                }else{
+                    showAlert(1, 'Successfully added house', 'Success');
+                    const houses0 = houses.data;
+                    houses0.unshift({
+                        id: data.resp,
+                        number: formData.number,
+                        name: formData.occupant_name,
+                        vacancy: formData.vacancy === 'true'
+                    });
+                    setHouses({ pages: houses.pages, data: houses0 });
+                    setFormData({
+                        number: '',
+                        occupant_name: '',
+                        vacancy: 0,
+                    });
+                    setShowModal(false);
+                }
+                setDisableButtons(false);
+            }).catch(reason => {
+                showAlert(3, reason.message, 'Error');
+                setDisableButtons(false);
+            });
+        }
     }
     const [disableButtons, setDisableButtons] = useState(false);
     return (
@@ -89,7 +135,7 @@ export function ViewHouses() {
                                                 <td><strong>{index + 1}</strong></td>
                                                 <td><strong>{house.name}</strong></td>
                                                 <td>{house.number}</td>
-                                                <td>{!house.vacancy ? 'Vacant' : 'Occupied'}</td>
+                                                <td>{house.vacancy ? 'Vacant' : 'Occupied'}</td>
                                                 <td>
                                                     <button className="btn btn-default waves-float btn-sm"><i
                                                         className="zmdi zmdi-edit"></i></button>
@@ -122,32 +168,44 @@ export function ViewHouses() {
             </div>
             <Modal
                 show={showModal}
-                // backdrop="static"
+                backdrop="static"
                 keyboard={false}
             >
                 <Modal.Header>
                   <h5>{modalData.heading} Estate House</h5>
                 </Modal.Header>
                 <Modal.Body>
-                  <Form onSubmit={null}>
+                  <Form onSubmit={submitForm}>
                       <FormGroup className="mb-3 col-lg-8 offset-lg-2">
                           <FormLabel>Occupant's Name</FormLabel>
-                          <FormControl required={true} type="password" autoComplete="new-password" name="password"
-                                       value={formData.occupant_name} onChange={handleInputChange}></FormControl>
+                          <FormControl required={true} type="text" name="occupant_name" value={formData.occupant_name}
+                                       onChange={handleInputChange}></FormControl>
                       </FormGroup>
                       <div className="w-100"></div>
                       <FormGroup className="mb-3 col-lg-8 offset-lg-2">
                           <FormLabel>Apartment Number</FormLabel>
-                          <FormControl required={true} name="password2" autoComplete="new-password" type="password"
-                                       value={formData.number} onChange={handleInputChange}></FormControl>
+                          <FormControl required={true} name="number" type="text" value={formData.number}
+                                       onChange={handleInputChange}></FormControl>
+                      </FormGroup>
+                      <div className="w-100"></div>
+                      <FormGroup className="mb-5 col-lg-8 offset-lg-2">
+                          <FormLabel>Vacancy</FormLabel>
+                          <Form.Select name="vacancy" value={formData.vacancy} onChange={handleInputChange} required={true}>
+                              <option value='true'>Vacant</option>
+                              <option value='false'>Occupied</option>
+                          </Form.Select>
                       </FormGroup>
                       <div className="w-100"></div>
                       <div className="row col-12 my-3">
-                          <div className="col-6 d-grid">
+                          <div className="col-lg-4 offset-lg-2 col-6 d-grid">
                               <Button variant="primary" type="submit" disabled={disableButtons}>Submit</Button>
                           </div>
-                          <div className="col-6 d-grid">
-                              <Button variant="secondary" disabled={disableButtons}>Cancel</Button>
+                          <div className="col-lg-4 col-6 d-grid">
+                              <Button variant="secondary" disabled={disableButtons}
+                                      onClick={()=>{
+                                          setShowModal(false);
+                                          setFormData({number: '', occupant_name: '', vacancy: 'true'})
+                                      }}>Cancel</Button>
                           </div>
                       </div>
                   </Form>

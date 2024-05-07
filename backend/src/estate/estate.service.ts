@@ -7,7 +7,7 @@ import { EstateManager } from '../entities/EstateManager';
 @Injectable()
 export class EstateService {
     private readonly houseRepo = AppDataSource.getRepository(House);
-    async addHouse(email: string, dto: HouseDto) {
+    async addHouse(email: string, dto: HouseDto, admin: boolean = false) {
         const userRepo = AppDataSource.getRepository(EstateManager);
         const manager = await userRepo.findOneBy({ email: email });
         if (!manager)
@@ -18,6 +18,7 @@ export class EstateService {
         house.manager = manager!;
         house.number = dto.number;
         house.name = dto.occupant_name;
+        if (admin) house.vacant = dto.vacancy;
         await this.houseRepo.save(house);
         return { status: true, resp: house.id };
     }

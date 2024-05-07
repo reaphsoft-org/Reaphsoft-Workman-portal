@@ -19,7 +19,11 @@ export class House {
     @Column({ type: 'varchar' })
     number: string;
 
-    @Column({ type: 'boolean', default: false })
+    @Column({
+        type: 'boolean',
+        default: false,
+        comment: 'if true house is vacant',
+    })
     vacant: boolean;
 
     @Column({

@@ -260,7 +260,7 @@ export const ViewEstate = () => {
                                       <Button type="submit" disabled={disableButton}>Update</Button>
                                   </div>
                                   <div className="col-lg-6 d-grid">
-                                      <a href={`/admin/estates/estate/houses/${email}/`} className="btn btn-outline-info">Houses</a>
+                                      <a href={`/admin/estates/estate/houses/${email}/`} className="btn btn-outline-primary">Houses</a>
                                   </div>
                               </div>
                               <div className="w-100"></div>
