@@ -48,9 +48,10 @@ export function ViewHouses() {
                 </div>
                 <div className="row">
                     <div className="col-12">
-                        <div className="table-responsive">
-                            <table className="table c_table">
-                                <thead>
+                        <div className="card px-lg-3 py-lg-4 text-bg-light">
+                            <div className="table-responsive">
+                                <table className="table c_table">
+                                    <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Occupant's Name</th>
@@ -58,37 +59,40 @@ export function ViewHouses() {
                                         <th>Vacancy</th>
                                         <th>Actions</th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    houses.data.map((house, index) =>
-                                        <tr key={index}>
-                                            <td><strong>{index + 1}</strong></td>
-                                            <td><strong>{house.name}</strong></td>
-                                            <td>{house.number}</td>
-                                            <td>{!house.vacancy ? 'Vacant' : 'Occupied'}</td>
-                                            <td>
-                                                <button className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-edit"></i></button>
-                                                <button className="btn btn-default waves-float btn-sm"><i className="zmdi text-danger zmdi-delete"></i></button>
+                                    </thead>
+                                    <tbody>
+                                    {
+                                        houses.data.map((house, index) =>
+                                            <tr key={index}>
+                                                <td><strong>{index + 1}</strong></td>
+                                                <td><strong>{house.name}</strong></td>
+                                                <td>{house.number}</td>
+                                                <td>{!house.vacancy ? 'Vacant' : 'Occupied'}</td>
+                                                <td>
+                                                    <button className="btn btn-default waves-float btn-sm"><i
+                                                        className="zmdi zmdi-edit"></i></button>
+                                                    <button className="btn btn-default waves-float btn-sm"><i
+                                                        className="zmdi text-danger zmdi-delete"></i></button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    }
+                                    {
+                                        houses.data.length === 0 &&
+                                        <tr>
+                                            <td colSpan={4}>
+                                                <div className="text-center my-5">
+                                                    <Image
+                                                        src={fp9264828}
+                                                    />
+                                                    <h6 className="mt-3">No houses found!</h6>
+                                                </div>
                                             </td>
                                         </tr>
-                                    )
-                                }
-                                {
-                                    houses.data.length === 0 &&
-                                    <tr>
-                                        <td colSpan={4}>
-                                            <div className="text-center my-5">
-                                                <Image
-                                                    src={fp9264828}
-                                                />
-                                                <h6 className="mt-3">No houses found!</h6>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                }
-                                </tbody>
-                            </table>
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <Paginator page={page} setPage={setPage} pages={houses.pages} />
                     </div>
