@@ -18,6 +18,7 @@ import { EstateRequest, UserRequest } from '../entities/Request';
 import { RequestUpdateDto } from '../workmen/dto/request-update.dto';
 import { ServiceDto } from '../workmen/dto/service.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
+import { PasswordDto } from './dto/password.dto';
 
 @Injectable()
 export class AdminService {
@@ -652,6 +653,18 @@ export class AdminService {
     }
 
     async changePhoto(file: any, code: string, email: string) {
+        const user = await this.getUserForUpdate(code, email);
+        if (!user) {
+            return {
+                status: false,
+                resp: `User not found ${email} (c#${code}#)`,
+            };
+        }
+        await user.saveFile(file);
+        return await this.saveUpdatedUser(code, user);
+    }
+
+    private async getUserForUpdate(code: string, email: string) {
         let user: SuperUser | User | EstateManager | Workman | null;
         switch (code) {
             case '00':
@@ -669,15 +682,36 @@ export class AdminService {
                 user = await this.workmanRepo.findOneBy({ email: email });
                 break;
             default:
-                user = null;
+                return null;
         }
+        return user;
+    }
+
+    async changePassword(
+        email: string,
+        code: string,
+        passwordDto: PasswordDto,
+    ) {
+        const user = await this.getUserForUpdate(code, email);
         if (!user) {
             return {
                 status: false,
                 resp: `User not found ${email} (c#${code}#)`,
             };
         }
-        await user.saveFile(file);
+        user.password = passwordDto.password;
+        const check = user.baseValidations();
+        if (!check.status) {
+            return check;
+        }
+        user.setValues(true);
+        return await this.saveUpdatedUser(code, user);
+    }
+
+    private async saveUpdatedUser(
+        code: string,
+        user: SuperUser | User | EstateManager | Workman,
+    ) {
         switch (code) {
             case '00':
                 await this.adminRepo.save(user as SuperUser);

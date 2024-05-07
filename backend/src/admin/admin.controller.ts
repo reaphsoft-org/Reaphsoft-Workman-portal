@@ -28,6 +28,7 @@ import { RequestUpdateDto } from '../workmen/dto/request-update.dto';
 import { ServiceDto } from '../workmen/dto/service.dto';
 import { Request as RequestDecorator } from '@nestjs/common/decorators/http/route-params.decorator';
 import { UpdateAdminDto } from './dto/update-admin.dto';
+import {PasswordDto} from "./dto/password.dto";
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
@@ -208,5 +209,19 @@ export class AdminController {
             return { status: false, resp: 'Invalid request' };
         }
         return this.service.changePhoto(file, code, email);
+    }
+    @Post('change/password/:code/:email/')
+    async changePassword(
+        @Param('code') code: string,
+        @Param('email') email: string,
+        @Body() passwordDto: PasswordDto,
+    ) {
+        if (code != '00' && code != '11' && code != '22' && code != '33') {
+            return { status: false, resp: 'Invalid request' };
+        }
+        if (passwordDto.password === undefined || passwordDto.password === ''){
+            return { status: false, resp: 'Invalid request' };
+        }
+        return this.service.changePassword(email, code, passwordDto);
     }
 }
