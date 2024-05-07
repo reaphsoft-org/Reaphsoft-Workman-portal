@@ -109,13 +109,12 @@ const Estate = () => {
                 <div className="block-header">
                     <div className="row">
                         <div className="col-lg-7 col-md-6 col-sm-12">
-                            <h2>Estate List</h2>
+                            <h2 className="pb-3">Estate List</h2>
                             <ul className="breadcrumb">
-                                <li className="breadcrumb-item"><a href="">
-                                    <i className="zmdi zmdi-home"></i> Reaphsoft Workman Portal</a>
+                                <li className="breadcrumb-item"><a href="/">
+                                    <i className="zmdi zmdi-home me-2"></i>Reaphsoft Workman Portal</a>
                                 </li>
-                                <li className="breadcrumb-item">Registered Estate</li>
-                                <li className="breadcrumb-item active">Estate List</li>
+                                <li className="breadcrumb-item active">Registered Estates</li>
                             </ul>
                         </div>
                     </div>
@@ -147,7 +146,7 @@ const Estate = () => {
                                                 <td>{user.email}</td>
                                                 <td>{user.name}</td>
                                                 <td className="my-0">
-                                                    <button className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-eye"></i></button>
+                                                    <a href={`/admin/estates/estate/${user.email}/`} className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-eye"></i></a>
                                                     <button className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></button>
                                                 </td>
                                             </tr>

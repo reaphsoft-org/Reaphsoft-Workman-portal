@@ -261,7 +261,7 @@ export class AdminService {
         const check = user.runValidations();
         if (!check.status) return check;
         user.setValues();
-        await this.usersRepo.save(user);
+        await this.estateManagersRepo.save(user);
         return { resp: '', status: true };
     }
 
