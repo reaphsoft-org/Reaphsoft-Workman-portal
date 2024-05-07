@@ -100,7 +100,14 @@ export const ViewUser = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
     const [selectedImage, setSelectedImage] = useState(null);
-    const [disableButton, setDisableButton] = useState(false)
+    const [disableButton, setDisableButton] = useState(false);
+    const [disableSavePhoto, setDisableSavePhoto] = useState(true);
+    const savePhoto = () => {
+        const postData = new FormData();
+        postData.append("photo", selectedImage);
+        // fetch();
+        setDisableSavePhoto(true);
+    }
     return (
       <section className="content">
           <div className="body_scroll">
@@ -126,13 +133,27 @@ export const ViewUser = () => {
                           <div className="text-center my-3">
                               {
                                   selectedImage === null ?
-                                      <Image src={user.photoURL === '' ? fp29332702_7495554 : `http://localhost:3001/${user.photoURL}`} /> :
-                                      <Image src={URL.createObjectURL(selectedImage)} alt="selected" />
+                                      <>
+                                          <Image
+                                              src={user.photoURL === '' ? fp29332702_7495554 : `http://localhost:3001/${user.photoURL}`}/>
+                                        <p className="mt-3">Current Photo: {user.photoURL === '' ? 'None' : user.photoURL }</p>
+                                      </>
+                                      :
+                                      <>
+                                          <Image src={URL.createObjectURL(selectedImage)} alt="selected"/>
+                                          <p className="mt-3">Current Photo: {selectedImage.name }</p>
+                                      </>
                               }
-                              <p className="mt-3">Current Photo: {user.photoURL === '' ? 'None' : user.photoURL }</p>
                               <InputGroup className="col-10 offset-1">
-                                  <Form.Control type="file" accept="image/*" className="" style={{margin: '5px 0', paddingTop: '7.5px'}} onChange={(e)=>{setSelectedImage(e.target.files[0])}}/>
-                                  <Button variant="outline-primary">Save</Button>
+                                  <Form.Control type="file" accept="image/*" className="" style={{margin: '5px 0', paddingTop: '7.5px'}} onChange={
+                                      (e)=>{
+                                          if (e.target.files[0]) {
+                                              setSelectedImage(e.target.files[0]);
+                                              setDisableSavePhoto(false);
+                                          }
+                                      }
+                                  }/>
+                                  <Button variant="outline-primary" onClick={savePhoto} disabled={disableSavePhoto}>Save</Button>
                               </InputGroup>
                           </div>
                           <Form onSubmit={submitForm}>
