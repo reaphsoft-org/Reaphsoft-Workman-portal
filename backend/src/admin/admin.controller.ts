@@ -246,4 +246,9 @@ export class AdminController {
         }
         return this.estateService.addHouse(email, dto, true);
     }
+
+    @Get('estate/:email/house/:id/')
+    async getHouse(@Param('email') email: string, @Param('id') id: string) {
+        return this.estateService.getHouse(email, id, true);
+    }
 }

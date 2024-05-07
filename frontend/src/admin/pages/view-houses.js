@@ -3,7 +3,7 @@
 // github.com/kahlflekzy
 
 import {ContentHeader} from "../components/content-header";
-import {Button, Form, FormControl, FormGroup, FormLabel, Image, Modal} from "react-bootstrap";
+import {Button, Form, FormControl, FormGroup, FormLabel, Image, Modal, Spinner} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router";
 import {useAuth} from "../../components/AuthContext";
@@ -102,6 +102,53 @@ export function ViewHouses() {
         }
     }
     const [disableButtons, setDisableButtons] = useState(false);
+    const getHouse = (id) => {
+        fetch(`http://localhost:3001/admin/estate/${email}/house/${id}/`,{
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + userAuth.admin.token,
+            'Content-Type': 'application/json'
+          }
+        }).then(res => {
+                if (!res.ok){
+                    showAlert(3, `Error while loading house. ${res.statusMessage}`, 'Error');
+                    setShowModal(false);
+                    setModalData({
+                        heading: '',
+                        button: '',
+                        action: 0
+                    });
+                    setDisableButtons(false);
+                    return;
+                }
+                return res.json();
+            }
+        ).then(data => {
+                if (!data.status){
+                    showAlert(3, data.resp, 'Error');
+                    setShowModal(false);
+                    setModalData({
+                        heading: '',
+                        button: '',
+                        action: 0
+                    });
+                    setDisableButtons(false);
+                }else {
+                    setFormData(data.data);
+                    setModalData({heading: 'Update', button: 'Update', action: UPDATE});
+                    setDisableButtons(false);
+                }
+        }).catch(reason => {
+            showAlert(3, reason.message, 'Error');
+            setShowModal(false);
+            setModalData({
+                heading: '',
+                button: '',
+                action: 0
+            });
+            setDisableButtons(false);
+        });
+    }
     return (
         <section className="content">
             <ContentHeader heading="Estate Houses" current="Estate House" />
@@ -109,7 +156,7 @@ export function ViewHouses() {
                 <div className="my-2">
                     <Button onClick={
                         ()=>{
-                            setModalData({heading: 'Add', button: 'Create', action: ADD});
+                            setModalData({heading: 'Add', button: 'Submit', action: ADD});
                             setShowModal(true);
                         }}
                     ><i className="zmdi zmdi-collection-add pe-2"></i>Add House</Button>
@@ -137,8 +184,15 @@ export function ViewHouses() {
                                                 <td>{house.number}</td>
                                                 <td>{house.vacancy ? 'Vacant' : 'Occupied'}</td>
                                                 <td>
-                                                    <button className="btn btn-default waves-float btn-sm"><i
-                                                        className="zmdi zmdi-edit"></i></button>
+                                                    <button className="btn btn-default waves-float btn-sm" onClick={
+                                                        () => {
+                                                            setModalData({heading: 'Update', button: 'Loading', action: UPDATE});
+                                                            setDisableButtons(true);
+                                                            setShowModal(true);
+                                                            getHouse(house.id);
+                                                        }
+                                                    }>
+                                                        <i className="zmdi zmdi-edit"></i></button>
                                                     <button className="btn btn-default waves-float btn-sm"><i
                                                         className="zmdi text-danger zmdi-delete"></i></button>
                                                 </td>
@@ -198,7 +252,16 @@ export function ViewHouses() {
                       <div className="w-100"></div>
                       <div className="row col-12 my-3">
                           <div className="col-lg-4 offset-lg-2 col-6 d-grid">
-                              <Button variant="primary" type="submit" disabled={disableButtons}>Submit</Button>
+                              <Button variant="primary" type="submit" disabled={disableButtons}>
+                                  {
+                                      modalData.button === 'Loading' ?
+                                          <>
+                                          <Spinner className="me-2" as="span" animation="grow" size="sm" role="status" aria-hidden="true"/>
+                                          {modalData.button}
+                                          </> :
+                                          modalData.button
+                                  }
+                              </Button>
                           </div>
                           <div className="col-lg-4 col-6 d-grid">
                               <Button variant="secondary" disabled={disableButtons}

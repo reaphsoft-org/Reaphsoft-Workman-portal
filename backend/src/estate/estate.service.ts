@@ -45,7 +45,7 @@ export class EstateService {
         return { status: true, resp: '' };
     }
 
-    async getHouse(email: string, id: string) {
+    async getHouse(email: string, id: string, admin: boolean = false) {
         const house = await this.houseRepo.findOneBy({
             manager: { email: email },
             id: id,
@@ -55,7 +55,13 @@ export class EstateService {
         return {
             status: true,
             resp: '',
-            data: { number: house.number, name: house.name },
+            data: admin
+                ? {
+                      number: house.number,
+                      occupant_name: house.name,
+                      vacancy: house.vacant,
+                  }
+                : { number: house.number, name: house.name },
         };
     }
 
