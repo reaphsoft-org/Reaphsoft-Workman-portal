@@ -6,6 +6,7 @@ import {useAuth} from "../../components/AuthContext";
 import React, {useEffect, useState} from "react";
 import {showAlert} from "../../utils/alert";
 import {Button, Modal} from "react-bootstrap";
+import {Paginator} from "../components/paginator";
 
 export function Services() {
     const userAuth = useAuth();
@@ -125,7 +126,7 @@ export function Services() {
                                         <tbody>
                                             {
                                             services.data.map((service, index) =>
-                                            <tr>
+                                            <tr key={index}>
                                                 <td><strong>{index + 1}</strong></td>
                                                 <td><strong>{service.name}</strong></td>
                                                 <td>{service.description}</td>
@@ -140,15 +141,7 @@ export function Services() {
                                     </table>
                                 </div>
                             </div>
-                            <div className="card">
-                                <div className="body">
-                                    <ul className="pagination pagination-primary m-b-0">
-                                        <li className="page-item"><a className="page-link" href="javascript:void(0);"><i className="zmdi zmdi-arrow-left"></i></a></li>
-                                        <li className="page-item active"><a className="page-link" href="javascript:void(0);">1</a></li>
-                                        <li className="page-item"><a className="page-link" href="javascript:void(0);"><i className="zmdi zmdi-arrow-right"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <Paginator page={page} setPage={setPage} pages={services.pages} />
                         </div>
                     </div>
                 </div>
