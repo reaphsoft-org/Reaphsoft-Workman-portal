@@ -31,7 +31,12 @@ export class EstateService {
         return { status: true, resp: '' };
     }
 
-    async updateHouse(email: string, id: string, dto: HouseDto) {
+    async updateHouse(
+        email: string,
+        id: string,
+        dto: HouseDto,
+        admin: boolean = false,
+    ) {
         const house = await this.houseRepo.findOneBy({
             manager: { email: email },
             id: id,
@@ -41,6 +46,7 @@ export class EstateService {
         if (!check.status) return check;
         house.number = dto.number;
         house.name = dto.occupant_name;
+        if (admin) house.vacant = dto.vacancy;
         await this.houseRepo.save(house);
         return { status: true, resp: '' };
     }

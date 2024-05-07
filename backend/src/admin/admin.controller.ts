@@ -246,9 +246,23 @@ export class AdminController {
         }
         return this.estateService.addHouse(email, dto, true);
     }
-
     @Get('estate/:email/house/:id/')
     async getHouse(@Param('email') email: string, @Param('id') id: string) {
         return this.estateService.getHouse(email, id, true);
+    }
+    @Put('estate/:email/house/:id/')
+    async updateEstateHouse(
+        @Param('email') email: string,
+        @Param('id') id: string,
+        @Body() dto: HouseDto,
+    ) {
+        if (
+            dto.vacancy === undefined ||
+            dto.number === undefined ||
+            dto.occupant_name === undefined
+        ) {
+            return { status: false, resp: 'Invalid Request' };
+        }
+        return this.estateService.updateHouse(email, id, dto, true);
     }
 }

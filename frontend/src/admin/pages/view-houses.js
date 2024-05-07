@@ -4,7 +4,7 @@
 
 import {ContentHeader} from "../components/content-header";
 import {Button, Form, FormControl, FormGroup, FormLabel, Image, Modal, Spinner} from "react-bootstrap";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useParams} from "react-router";
 import {useAuth} from "../../components/AuthContext";
 import fp9264828 from "../components/fp9264828.jpg";
@@ -99,54 +99,72 @@ export function ViewHouses() {
                 showAlert(3, reason.message, 'Error');
                 setDisableButtons(false);
             });
-        }
-    }
-    const [disableButtons, setDisableButtons] = useState(false);
-    const getHouse = (id) => {
-        fetch(`http://localhost:3001/admin/estate/${email}/house/${id}/`,{
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer ' + userAuth.admin.token,
-            'Content-Type': 'application/json'
-          }
-        }).then(res => {
+        }else if (modalData.action === UPDATE) {
+            const house = houses.data[houseId.current];
+            if (
+                formData.number === house.number &&
+                formData.occupant_name === house.name &&
+                formData.vacancy === house.vacancy
+            ){
+                setShowModal(false);
+                setFormData({
+                    number: '',
+                    occupant_name: '',
+                    vacancy: 0,
+                });
+                setDisableButtons(false);
+            }
+
+            fetch(`http://localhost:3001/admin/estate/${email}/house/${house.id}`,{
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'Bearer ' + userAuth.admin.token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            }).then(res => {
                 if (!res.ok){
-                    showAlert(3, `Error while loading house. ${res.statusMessage}`, 'Error');
-                    setShowModal(false);
-                    setModalData({
-                        heading: '',
-                        button: '',
-                        action: 0
-                    });
+                    showAlert(3, `Error while posting data. ${res.statusMessage}`, 'Error');
                     setDisableButtons(false);
                     return;
                 }
                 return res.json();
-            }
-        ).then(data => {
+                }
+            ).then(data => {
                 if (!data.status){
                     showAlert(3, data.resp, 'Error');
-                    setShowModal(false);
-                    setModalData({
-                        heading: '',
-                        button: '',
-                        action: 0
+                }else{
+                    showAlert(1, 'Successfully updated house', 'Success');
+                    houses.data[houseId.current] = {
+                        id: house.id,
+                        number: formData.number,
+                        name: formData.occupant_name,
+                        vacancy: formData.vacancy === 'true'
+                    }
+                    setHouses({ pages: houses.pages, data: houses.data });
+                    setFormData({
+                        number: '',
+                        occupant_name: '',
+                        vacancy: 0,
                     });
-                    setDisableButtons(false);
-                }else {
-                    setFormData(data.data);
-                    setModalData({heading: 'Update', button: 'Update', action: UPDATE});
-                    setDisableButtons(false);
+                    setShowModal(false);
                 }
-        }).catch(reason => {
-            showAlert(3, reason.message, 'Error');
-            setShowModal(false);
-            setModalData({
-                heading: '',
-                button: '',
-                action: 0
+                setDisableButtons(false);
+            }).catch(reason => {
+                showAlert(3, reason.message, 'Error');
+                setDisableButtons(false);
             });
-            setDisableButtons(false);
+        }
+    }
+    const [disableButtons, setDisableButtons] = useState(false);
+    const houseId = useRef(0);
+    const getHouse = (index) => {
+        const house = houses.data[index];
+        houseId.current = index;
+        setFormData({
+            occupant_name: house.name,
+            number: house.number,
+            vacancy: house.vacancy,
         });
     }
     return (
@@ -186,10 +204,9 @@ export function ViewHouses() {
                                                 <td>
                                                     <button className="btn btn-default waves-float btn-sm" onClick={
                                                         () => {
-                                                            setModalData({heading: 'Update', button: 'Loading', action: UPDATE});
-                                                            setDisableButtons(true);
+                                                            setModalData({heading: 'Update', button: 'Update', action: UPDATE});
                                                             setShowModal(true);
-                                                            getHouse(house.id);
+                                                            getHouse(index);
                                                         }
                                                     }>
                                                         <i className="zmdi zmdi-edit"></i></button>
@@ -254,7 +271,7 @@ export function ViewHouses() {
                           <div className="col-lg-4 offset-lg-2 col-6 d-grid">
                               <Button variant="primary" type="submit" disabled={disableButtons}>
                                   {
-                                      modalData.button === 'Loading' ?
+                                      modalData.button === 'Saving' ?
                                           <>
                                           <Spinner className="me-2" as="span" animation="grow" size="sm" role="status" aria-hidden="true"/>
                                           {modalData.button}
