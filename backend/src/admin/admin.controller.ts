@@ -29,13 +29,17 @@ import { ServiceDto } from '../workmen/dto/service.dto';
 import { Request as RequestDecorator } from '@nestjs/common/decorators/http/route-params.decorator';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { PasswordDto } from './dto/password.dto';
+import {EstateService} from "../estate/estate.service";
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
 @UseGuards(AuthGuard)
 @Controller('admin/')
 export class AdminController {
-    constructor(private readonly service: AdminService) {}
+    constructor(
+        private readonly service: AdminService,
+        private readonly estateService: EstateService,
+    ) {}
     // admin
     @Get('m/')
     async getAdmin(@RequestDecorator() req: Request) {
@@ -222,5 +226,12 @@ export class AdminController {
             return { status: false, resp: 'Invalid request' };
         }
         return this.service.changePassword(email, code, passwordDto);
+    }
+    @Get('estate/:email/houses/:page/')
+    async getEstateHouses(
+        @Param('email') email: string,
+        @Param('page') page: number,
+    ) {
+        return this.estateService.getHouses(email, page, true);
     }
 }

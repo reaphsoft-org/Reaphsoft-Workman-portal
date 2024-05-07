@@ -71,10 +71,10 @@ export class EstateService {
     // Return number of pages and the houses in the required page
     // Houses are paginated with 50 in each page and sorted by name.
     // Page should start from 1.
-    async getHouses(email: string, page: number) {
+    async getHouses(email: string, page: number, admin: boolean = false) {
         if (page <= 0) return { pages: 0, data: [] };
         const start = 50 * (page - 1);
-        const end = 50 * page;
+        const end = 50;
         const houses = await this.houseRepo.find({
             where: {
                 manager: {
@@ -95,13 +95,21 @@ export class EstateService {
         const count = await this.houseRepo.count();
         let pages = Math.floor(count / 50);
         pages += count % 50 > 0 ? 1 : 0;
+        const data = admin
+            ? houses.map((house) => ({
+                  id: house.id,
+                  number: house.number,
+                  name: house.name,
+                  vacancy: house.vacant,
+              }))
+            : houses.map((house) => ({
+                  id: house.id,
+                  number: house.number,
+                  name: house.name,
+              }));
         return {
             pages: pages,
-            data: houses.map((house) => ({
-                id: house.id,
-                number: house.number,
-                name: house.name,
-            })),
+            data: data,
         };
     }
 }

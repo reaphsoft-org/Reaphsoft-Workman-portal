@@ -7,6 +7,7 @@ import React, {useEffect, useState} from "react";
 import {showAlert} from "../../utils/alert";
 import {useAuth} from "../../components/AuthContext";
 import fp9264828 from "../components/fp9264828.jpg";
+import {ContentHeader} from "../components/content-header";
 
 export function WorkRequest({type}) {
     const userAuth = useAuth();
@@ -93,19 +94,7 @@ export function WorkRequest({type}) {
     return (
         <section className="content">
             <div className="body_scroll">
-                <div className="block-header">
-                    <div className="row">
-                        <div className="col-lg-7 col-md-6 col-sm-12">
-                            <h2 className="pb-3">{name} Work Requests</h2>
-                            <ul className="breadcrumb">
-                                <li className="breadcrumb-item"><a href="/admin/">
-                                    <i className="zmdi zmdi-home pe-2"></i>Reaphsoft Workman</a>
-                                </li>
-                                <li className="breadcrumb-item">Work Requests</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <ContentHeader heading={`${name} Work Requests`} current="Work Requests" />
                 <div className="container-fluid">
                     <div className="row clearfix">
                         <div className="col-lg-12">
@@ -124,7 +113,7 @@ export function WorkRequest({type}) {
                                         <tbody>
                                         {
                                             workRequests.data.map((workRequest, index) =>
-                                            <tr>
+                                            <tr key={index}>
                                                 <td><strong>{index + 1}</strong></td>
                                                 <td><strong>{workRequest.client}</strong></td>
                                                 <td>{workRequest.service}</td>

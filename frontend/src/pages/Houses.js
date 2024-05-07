@@ -3,14 +3,8 @@ import {Button, Form, FormControl} from "react-bootstrap";
 import {useAuth} from "../components/AuthContext";
 import SweetAlertComponent, {showAlert} from "../utils/alert";
 import { Modal } from "react-bootstrap";
+import {range} from "../utils/range";
 
-function range(stop) {
-    const items = [];
-    for (let i = 1; i <= stop; i++) {
-        items.push(i);
-    }
-    return items;
-}
 const Houses = ({user}) => {
     const userAuth = useAuth();
     const [houseToDelete, setHouseToDelete] = useState({
