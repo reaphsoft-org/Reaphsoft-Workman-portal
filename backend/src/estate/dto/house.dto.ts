@@ -5,4 +5,5 @@
 export class HouseDto {
     number: string;
     occupant_name: string;
+    vacancy: boolean;
 }

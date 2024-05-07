@@ -3,7 +3,7 @@
 // github.com/kahlflekzy
 
 import {ContentHeader} from "../components/content-header";
-import {Button, Image} from "react-bootstrap";
+import {Button, Form, FormControl, FormGroup, FormLabel, Image, Modal} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router";
 import {useAuth} from "../../components/AuthContext";
@@ -39,12 +39,34 @@ export function ViewHouses() {
             showAlert(3, reason.message, 'Error');
         })
     }, [email, page, userAuth.admin.token]);
+    const ADD = 1;
+    const UPDATE = 2;
+    const [modalData, setModalData] = useState({
+       heading: '',
+       button: '',
+        action: 0
+    });
+    const [showModal, setShowModal] = useState(false);
+    const [formData, setFormData] = useState({
+        number: '',
+        occupant_name: '',
+        vacancy: '',
+    });
+    const handleInputChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+    const [disableButtons, setDisableButtons] = useState(false);
     return (
         <section className="content">
             <ContentHeader heading="Estate Houses" current="Estate House" />
             <div className="container-fluid">
                 <div className="my-2">
-                    <Button><i className="zmdi zmdi-collection-add pe-2"></i>Add House</Button>
+                    <Button onClick={
+                        ()=>{
+                            setModalData({heading: 'Add', button: 'Create', action: ADD});
+                            setShowModal(true);
+                        }}
+                    ><i className="zmdi zmdi-collection-add pe-2"></i>Add House</Button>
                 </div>
                 <div className="row">
                     <div className="col-12">
@@ -98,6 +120,39 @@ export function ViewHouses() {
                     </div>
                 </div>
             </div>
+            <Modal
+                show={showModal}
+                // backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header>
+                  <h5>{modalData.heading} Estate House</h5>
+                </Modal.Header>
+                <Modal.Body>
+                  <Form onSubmit={null}>
+                      <FormGroup className="mb-3 col-lg-8 offset-lg-2">
+                          <FormLabel>Occupant's Name</FormLabel>
+                          <FormControl required={true} type="password" autoComplete="new-password" name="password"
+                                       value={formData.occupant_name} onChange={handleInputChange}></FormControl>
+                      </FormGroup>
+                      <div className="w-100"></div>
+                      <FormGroup className="mb-3 col-lg-8 offset-lg-2">
+                          <FormLabel>Apartment Number</FormLabel>
+                          <FormControl required={true} name="password2" autoComplete="new-password" type="password"
+                                       value={formData.number} onChange={handleInputChange}></FormControl>
+                      </FormGroup>
+                      <div className="w-100"></div>
+                      <div className="row col-12 my-3">
+                          <div className="col-6 d-grid">
+                              <Button variant="primary" type="submit" disabled={disableButtons}>Submit</Button>
+                          </div>
+                          <div className="col-6 d-grid">
+                              <Button variant="secondary" disabled={disableButtons}>Cancel</Button>
+                          </div>
+                      </div>
+                  </Form>
+              </Modal.Body>
+            </Modal>
         </section>
     );
 }
