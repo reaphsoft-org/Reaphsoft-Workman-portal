@@ -199,13 +199,13 @@ export class AdminController {
     async changePhoto(
         @UploadedFile() file: any,
         @Param('code') code: string,
-        @Param('code') email: string,
+        @Param('email') email: string,
     ) {
         if (!file) {
             return { status: false, resp: 'no file uploaded' };
         }
         if (code != '00' && code != '11' && code != '22' && code != '33') {
-            return { status: false, resp: 'invalid request' };
+            return { status: false, resp: 'Invalid request' };
         }
         return this.service.changePhoto(file, code, email);
     }

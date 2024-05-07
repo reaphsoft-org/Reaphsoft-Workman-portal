@@ -674,7 +674,7 @@ export class AdminService {
         if (!user) {
             return {
                 status: false,
-                resp: `user not found '${email}' c#${code}`,
+                resp: `User not found ${email} (c#${code}#)`,
             };
         }
         await user.saveFile(file);

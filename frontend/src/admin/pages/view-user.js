@@ -48,7 +48,10 @@ export const ViewUser = () => {
                     serviceType: data.serviceType,
                 });
             }
-        })
+        }).catch(reason => {
+            showAlert(3, reason.message, 'Error');
+            setDisableButton(false);
+        });
      }, [email, userAuth.admin.token]);
     function submitForm(event) {
         event.preventDefault();
@@ -103,10 +106,32 @@ export const ViewUser = () => {
     const [disableButton, setDisableButton] = useState(false);
     const [disableSavePhoto, setDisableSavePhoto] = useState(true);
     const savePhoto = () => {
+        setDisableSavePhoto(true);
         const postData = new FormData();
         postData.append("photo", selectedImage);
-        // fetch();
-        setDisableSavePhoto(true);
+        fetch(`http://localhost:3001/admin/change/photo/11/${email}/`, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + userAuth.admin.token,
+            },
+            body: postData,
+        }).then( r => {
+            if (!r.ok){
+                showAlert(3, `Error while making request, please contact the system administrators. ${r.statusText}`, 'Error');
+                return;
+            }
+            return r.json();
+        }).then(value => {
+            if (!value.status){
+                showAlert(3, value.resp, 'Error');
+                setDisableSavePhoto(false);
+            }else {
+                showAlert(1, 'Changed photo successfully', 'Success');
+            }
+        }).catch(reason => {
+            showAlert(3, reason.message, 'Error');
+            setDisableSavePhoto(false);
+        });
     }
     return (
       <section className="content">
