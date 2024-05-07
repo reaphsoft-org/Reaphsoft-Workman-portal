@@ -194,4 +194,19 @@ export class AdminController {
     async deleteService(@Param('id') id: number) {
         return this.service.deleteService(id);
     }
+    @Post('change/photo/:code/:email/')
+    @UseInterceptors(FileInterceptor('photo'))
+    async changePhoto(
+        @UploadedFile() file: any,
+        @Param('code') code: string,
+        @Param('code') email: string,
+    ) {
+        if (!file) {
+            return { status: false, resp: 'no file uploaded' };
+        }
+        if (code != '00' && code != '11' && code != '22' && code != '33') {
+            return { status: false, resp: 'invalid request' };
+        }
+        return this.service.changePhoto(file, code, email);
+    }
 }

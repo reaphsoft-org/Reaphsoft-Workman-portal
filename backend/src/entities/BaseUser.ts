@@ -64,7 +64,7 @@ export abstract class BaseUser {
         }
     }
 
-    async savePhoto(
+    private async savePhoto(
         photo: Express.Multer.File,
         filename: string,
     ): Promise<string> {

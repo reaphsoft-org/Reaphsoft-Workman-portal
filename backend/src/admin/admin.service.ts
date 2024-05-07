@@ -650,4 +650,48 @@ export class AdminService {
             })),
         };
     }
+
+    async changePhoto(file: any, code: string, email: string) {
+        let user: SuperUser | User | EstateManager | Workman | null;
+        switch (code) {
+            case '00':
+                user = await this.adminRepo.findOneBy({ email: email });
+                break;
+            case '11':
+                user = await this.usersRepo.findOneBy({ email: email });
+                break;
+            case '22':
+                user = await this.estateManagersRepo.findOneBy({
+                    email: email,
+                });
+                break;
+            case '33':
+                user = await this.workmanRepo.findOneBy({ email: email });
+                break;
+            default:
+                user = null;
+        }
+        if (!user) {
+            return {
+                status: false,
+                resp: `user not found '${email}' c#${code}`,
+            };
+        }
+        await user.saveFile(file);
+        switch (code) {
+            case '00':
+                await this.adminRepo.save(user as SuperUser);
+                break;
+            case '11':
+                await this.usersRepo.save(user as User);
+                break;
+            case '22':
+                await this.estateManagersRepo.save(user as EstateManager);
+                break;
+            case '33':
+                await this.workmanRepo.save(user as Workman);
+                break;
+        }
+        return { status: true, resp: '' };
+    }
 }
