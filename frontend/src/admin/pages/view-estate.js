@@ -6,7 +6,7 @@ import {useParams} from "react-router";
 import {useAuth} from "../../components/AuthContext";
 import React, {useEffect, useState} from "react";
 import {showAlert} from "../../utils/alert";
-import {Button, Form, FormControl, FormGroup, FormLabel, Image, InputGroup, Modal} from "react-bootstrap";
+import {Button, Form, FormControl, FormGroup, FormLabel, InputGroup, Modal} from "react-bootstrap";
 import {ImageComponent} from "../components/image-component";
 
 export const ViewEstate = () => {

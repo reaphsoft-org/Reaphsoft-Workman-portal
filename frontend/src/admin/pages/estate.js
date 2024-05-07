@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useAuth} from "../../components/AuthContext";
 import {showAlert} from "../../utils/alert";
 import {Button, Modal} from "react-bootstrap";
+import {ContentHeader} from "../components/content-header";
 
 const Estate = () => {
     const userAuth = useAuth();
@@ -106,19 +107,7 @@ const Estate = () => {
     return ( 
         <section className="content">
             <div className="body_scroll">
-                <div className="block-header">
-                    <div className="row">
-                        <div className="col-lg-7 col-md-6 col-sm-12">
-                            <h2 className="pb-3">Estate List</h2>
-                            <ul className="breadcrumb">
-                                <li className="breadcrumb-item"><a href="/">
-                                    <i className="zmdi zmdi-home me-2"></i>Reaphsoft Workman Portal</a>
-                                </li>
-                                <li className="breadcrumb-item active">Registered Estates</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <ContentHeader heading={"Registered Estates"} current={"Estates"} />
                 <div className="container-fluid">
                     <div className="my-2">
                         <Button onClick={() => {setShowModal(true)}}><i className="zmdi zmdi-home pe-2"></i>Add Estate</Button>
@@ -140,7 +129,7 @@ const Estate = () => {
                                         <tbody>
                                             {
                                             usersData.data.map((user, index) =>
-                                            <tr>
+                                            <tr key={index}>
                                                 <td><strong>{user.extra}</strong></td>
                                                 <td>{user.address}</td>
                                                 <td>{user.email}</td>
@@ -159,9 +148,9 @@ const Estate = () => {
                             <div className="card">
                                 <div className="body">
                                     <ul className="pagination pagination-primary m-b-0">
-                                        <li className="page-item"><a className="page-link" href="javascript:void(0);"><i className="zmdi zmdi-arrow-left"></i></a></li>
-                                        <li className="page-item active"><a className="page-link" href="javascript:void(0);">1</a></li>
-                                        <li className="page-item"><a className="page-link" href="javascript:void(0);"><i className="zmdi zmdi-arrow-right"></i></a></li>
+                                        <li className="page-item"><a className="page-link" href=""><i className="zmdi zmdi-arrow-left"></i></a></li>
+                                        <li className="page-item active"><a className="page-link" href="">1</a></li>
+                                        <li className="page-item"><a className="page-link" href=""><i className="zmdi zmdi-arrow-right"></i></a></li>
                                     </ul>
                                 </div>
                             </div>

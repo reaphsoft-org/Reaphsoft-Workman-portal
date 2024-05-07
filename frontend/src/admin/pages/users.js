@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Button, Modal} from "react-bootstrap";
 import {useAuth} from "../../components/AuthContext";
 import {showAlert} from "../../utils/alert";
+import {ContentHeader} from "../components/content-header";
 
 const Users = () => {
     const userAuth = useAuth();
@@ -105,25 +106,13 @@ const Users = () => {
     return ( 
         <section className="content">
             <div className="body_scroll">
-                <div className="block-header">
-                    <div className="row">
-                        <div className="col-lg-7 col-md-6 col-sm-12">
-                            <h2 className="pb-3">Users List</h2>
-                            <ul className="breadcrumb">
-                                <li className="breadcrumb-item"><a href="">
-                                    <i className="zmdi zmdi-home"></i> Reaphsoft Workman Portal</a>
-                                </li>
-                                <li className="breadcrumb-item">Users</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <ContentHeader current={"Users"} heading={"Registered Users"} />
                 <div className="container-fluid">
                     <div className="my-2">
                         <Button onClick={() => {setShowModal(true)}}><i className="zmdi zmdi-account-add pe-2"></i>Add User</Button>
                     </div>
                     <div className="row clearfix">
-                        <div className="col-lg-12">
+                        <div className="col-12">
                             <div className="card px-lg-3 py-4">
                                 <div className="table-responsive">
                                     <table className="table table-striped">
