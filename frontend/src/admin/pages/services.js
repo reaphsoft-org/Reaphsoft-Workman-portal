@@ -7,6 +7,7 @@ import React, {useEffect, useState} from "react";
 import {showAlert} from "../../utils/alert";
 import {Button, Modal} from "react-bootstrap";
 import {Paginator} from "../components/paginator";
+import {ContentHeader} from "../components/content-header";
 
 export function Services() {
     const userAuth = useAuth();
@@ -92,20 +93,7 @@ export function Services() {
     return (
         <section className="content">
             <div className="body_scroll">
-                <div className="block-header">
-                    <div className="row">
-                        <div className="col-lg-7 col-md-6 col-sm-12">
-                            <h2 className="pb-3">Services List</h2>
-                            <ul className="breadcrumb">
-                                <li className="breadcrumb-item"><a href="">
-                                    <i className="zmdi zmdi-home"></i> Reaphsoft Workman Portal</a>
-                                </li>
-                                <li className="breadcrumb-item">Services</li>
-                                <li className="breadcrumb-item active">Services List</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <ContentHeader heading="Services List" current="Services" />
                 <div className="container-fluid">
                     <div className="my-2">
                         <Button onClick={() => {setShowModal(true)}}><i className="zmdi zmdi-collection-add pe-2"></i>Add Service</Button>
