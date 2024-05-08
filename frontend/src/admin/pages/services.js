@@ -3,7 +3,7 @@
 // github.com/kahlflekzy
 
 import {useAuth} from "../../components/AuthContext";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {showAlert} from "../../utils/alert";
 import {Button, Modal} from "react-bootstrap";
 import {Paginator} from "../components/paginator";
@@ -37,11 +37,14 @@ export function Services() {
         })
     }, [page, userAuth.admin.token]);
     const [showModal, setShowModal] = useState(false);
+    const addServiceLink = '';
+    const POST = 'POST';
+    const PUT ='PUT';
     const submitForm = (event) => {
         event.preventDefault();
         setDisableButton(true);
-        fetch('http://localhost:3001/admin/service/',{
-            method: 'POST',
+        fetch(`http://localhost:3001/admin/service/${modalState.link}`,{
+            method: modalState.action,
             headers: {
                 'Authorization': 'Bearer ' + userAuth.admin.token,
                 'Content-Type': 'application/json',
@@ -57,48 +60,75 @@ export function Services() {
             if (!data.status){
                 showAlert(3, data.resp, 'Error');
             }else{
-                showAlert(1, 'Created New Service', 'Success');
                 setShowModal(false);
-                const data1 = services.data;
-                data1.unshift({
-                    id: Number.parseInt(data.resp),
-                    name: formData.name,
-                    description: formData.description,
-                });
-                // todo if exceeds 50 remove the last item
-                setServices({
-                    pages: services.pages,
-                    data: data1,
-                });
+                if (modalState.action === POST) {
+                    showAlert(1, 'Created New Service', 'Success');
+                    const data1 = services.data;
+                    data1.unshift({
+                        id: Number.parseInt(data.resp),
+                        name: formData.name,
+                        description: formData.description,
+                    });
+                    // todo if exceeds 50 remove the last item, simply set state for services and increase pages by 1, data would be reloaded
+                    setServices({
+                        pages: services.pages,
+                        data: data1,
+                    });
+                } else {
+                    showAlert(1, 'Successfully Updated Service', 'Success');
+                    const service = services.data[selectedService.current];
+                    services.data[selectedService.current] = {
+                        id: service.id,
+                        name: formData.name,
+                        description: formData.description,
+                    }
+                }
                 setFormData({
                     name: '',
                     description: '',
                 });
+                setModalState({header: '', button: '', link: addServiceLink, action: ''});
             }
             setDisableButton(false);
         }).catch(reason => {
             showAlert(3, reason.message, 'Error');
         })
     }
-    const [formData, setFormData] = useState(
-        {
+    const [formData, setFormData] = useState({
             name: '',
             description: '',
-        }
-    );
-    const handleInputChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
+        });
+    const handleInputChange = (e) => {setFormData({ ...formData, [e.target.name]: e.target.value });}
     const [disableButton, setDisableButton] = useState(false);
+    const selectedService = useRef(0);
+    const [modalState, setModalState] = useState({
+        header: '',
+        button: '',
+        link: addServiceLink,
+        action: ''
+    });
+    const getService = (index) => {
+        selectedService.current = index;
+        const service = services.data[index];
+        setFormData({
+            name: service.name,
+            description: service.description,
+        });
+    }
     return (
         <section className="content">
             <div className="body_scroll">
                 <ContentHeader heading="Services List" current="Services" />
                 <div className="container-fluid">
                     <div className="my-2">
-                        <Button onClick={() => {setShowModal(true)}}><i className="zmdi zmdi-collection-add pe-2"></i>Add Service</Button>
+                        <Button onClick={
+                            () => {
+                                setShowModal(true);
+                                setModalState({header: 'Create New', button: 'Create', link: addServiceLink, action: POST});
+                            }
+                        }><i className="zmdi zmdi-collection-add pe-2"></i>Add Service</Button>
                     </div>
-                    <div className="row clearfix">
+                    <div className="row">
                         <div className="col-lg-12">
                             <div className="card px-lg-3 py-lg-4">
                                 <div className="table-responsive">
@@ -118,9 +148,15 @@ export function Services() {
                                                 <td><strong>{index + 1}</strong></td>
                                                 <td><strong>{service.name}</strong></td>
                                                 <td>{service.description}</td>
-                                                <td className="my-0"> {/* on click get service.id */}
-                                                    <button className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></button>
-                                                    <button className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></button>
+                                                <td className="my-0">
+                                                    <button onClick={
+                                                        () => {
+                                                            getService(index);
+                                                            setShowModal(true);
+                                                            setModalState({header: 'Update', button: 'Update', link: `${service.id}/`, action: PUT })
+                                                        }
+                                                    } className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-edit text-primary"></i></button>
+                                                    <button className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-delete text-danger"></i></button>
                                                 </td>
                                             </tr>
                                             )
@@ -134,9 +170,15 @@ export function Services() {
                     </div>
                 </div>
             </div>
-            <Modal show={showModal} onHide={() => {setShowModal(false)}}>
+            <Modal
+                show={showModal}
+                onHide={() => {
+                    setShowModal(false);
+                    setModalState({header: '', button: '', link: addServiceLink, action: ''});
+                    setFormData({name: '', description: ''});
+                }}>
                 <Modal.Header closeButton>
-                    <h5 className="mb-3">Create New Service</h5>
+                    <h5 className="mb-3">{modalState.header} Service</h5>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={submitForm}>
@@ -154,7 +196,7 @@ export function Services() {
                                 <span className="form-text">Brief description of this service</span>
                             </div>
                             <div className="col-8 offset-2 d-grid my-4">
-                              <Button type="submit" disabled={disableButton}>Create</Button>
+                              <Button type="submit" disabled={disableButton}>{modalState.button}</Button>
                           </div>
                         </div>
                       </form>
