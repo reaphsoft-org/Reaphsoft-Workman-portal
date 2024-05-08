@@ -44,53 +44,53 @@ class SweetAlertComponent extends Component {
         });
     };
 
-    showDeleteModel = Swal.mixin({
+    deleteModal = Swal.mixin({
         customClass: {
-          confirmButton: "btn btn-success",
-          cancelButton: "btn btn-danger"
+          confirmButton: "btn btn-danger",
+          cancelButton: "btn btn-primary"
         },
         buttonsStyling: false
     });
 
     
-    showDeleteModel = (title, text, icon, confirmDeleteCallback) => ({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel!",
-        reverseButtons: true,
-        preConfirm: () => {
-            // return confirmDelete();
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            if (typeof confirmDeleteCallback === "function") {
-                confirmDeleteCallback();
+    showDeleteModal = ({title, text, icon, object, deleteCallback}) => {
+        this.deleteModal.fire({
+                title: title,
+                text: text,
+                icon: icon,
+                showCancelButton: true,
+                confirmButtonText: "Delete",
+                cancelButtonText: "Cancel",
+                reverseButtons: true,
             }
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success",
-
-        });
-        } else if (
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
-          Swal.fire({
-            title: "Cancelled",
-            text: "",
-            icon: "error"
-          });
-        }
-    });
-
-
+            ).then((result) => {
+                if (result.isConfirmed) {
+                    deleteCallback();
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: `${object} has been deleted.`,
+                        icon: "success",
+                    });
+                }
+            });
+    }
 }
 
 export const showAlert = (type, text, title) => {
     const component = new SweetAlertComponent();
     component.showSweetAlert(type, text, title);
 };
+
+export const showDeleteDialog = (
+    {
+       title = "Are you sure?",
+       text = "You won't be able to revert this!",
+       icon = "warning",
+       object = 'User',
+       deleteCallback = () => {}
+   }
+) => {
+    const component = new SweetAlertComponent();
+    component.showDeleteModal({title: title, text: text, icon: icon, object: object, deleteCallback: deleteCallback});
+}
 export default SweetAlertComponent;

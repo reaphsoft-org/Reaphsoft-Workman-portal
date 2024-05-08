@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Modal} from "react-bootstrap";
 import {useAuth} from "../../components/AuthContext";
-import {showAlert} from "../../utils/alert";
+import {showAlert, showDeleteDialog} from "../../utils/alert";
 import {ContentHeader} from "../components/content-header";
 import {Paginator} from "../components/paginator";
 
@@ -104,6 +104,9 @@ const Users = () => {
     }
     const [selectedImage, setSelectedImage] = useState(null);
     const [disableButton, setDisableButton] = useState(false);
+    const deleteUser = (email) => {
+
+    }
     return ( 
         <section className="content">
             <div className="body_scroll">
@@ -133,8 +136,11 @@ const Users = () => {
                                                 <td>{user.email}</td>
                                                 <td>{user.address}</td>
                                                 <td className="my-0">
-                                                    <a href={`/admin/users/user/${user.email}/`} className="myq-0 btn btn-light waves-float btn-sm"><i className="zmdi zmdi-eye"></i></a>
-                                                    <Button variant="danger" size="sm" className="btn"><i className="zmdi zmdi-delete"></i></Button>
+                                                    <a href={`/admin/users/user/${user.email}/`} className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-eye text-primary"></i></a>
+                                                    <button onClick={() => {
+                                                        showDeleteDialog({
+                                                            object: user.name, deleteCallback: () => {deleteUser(user.email)},
+                                                        })}} className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-delete text-danger"></i></button>
                                                 </td>
                                             </tr>
                                             )
