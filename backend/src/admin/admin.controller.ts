@@ -8,7 +8,7 @@ import {
     Put,
     UploadedFile,
     UseGuards,
-    UseInterceptors,
+    UseInterceptors, UsePipes, ValidationPipe,
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { AuthGuard } from '../auth/auth.guard';
@@ -264,5 +264,9 @@ export class AdminController {
             return { status: false, resp: 'Invalid Request' };
         }
         return this.estateService.updateHouse(email, id, dto, true);
+    }
+    @Get('/service/workmen/:service_id/')
+    async getWorkmenForService(@Param('service_id') id: number) {
+        return this.service.getWorkmenForService(id);
     }
 }

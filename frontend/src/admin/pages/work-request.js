@@ -3,11 +3,12 @@
 // github.com/kahlflekzy
 
 import {Button, Image, Modal} from "react-bootstrap";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {showAlert} from "../../utils/alert";
 import {useAuth} from "../../components/AuthContext";
 import fp9264828 from "../components/fp9264828.jpg";
 import {ContentHeader} from "../components/content-header";
+import {Paginator} from "../components/paginator";
 
 export function WorkRequest({type}) {
     const userAuth = useAuth();
@@ -91,12 +92,14 @@ export function WorkRequest({type}) {
             showAlert(3, reason.message, 'Error');
         })
     }, [page, type, userAuth.admin.token]);
+    const selectedRequest = useRef(0);
+    const getWorkRequest = (index) => {}
     return (
         <section className="content">
             <div className="body_scroll">
                 <ContentHeader heading={`${name} Work Requests`} current="Work Requests" />
                 <div className="container-fluid">
-                    <div className="row clearfix">
+                    <div className="row">
                         <div className="col-lg-12">
                             <div className="card px-lg-3 py-lg-4">
                                 <div className="table-responsive">
@@ -119,8 +122,8 @@ export function WorkRequest({type}) {
                                                 <td>{workRequest.service}</td>
                                                 <td>{(new Date(workRequest.created_at)).toLocaleString()}</td>
                                                 <td className="my-0">
-                                                    <button className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></button>
-                                                    <button className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></button>
+                                                    <a href={`/admin/view/work/request/${type}/${workRequest.id}/`} className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-eye text-primary"></i></a>
+                                                    <button className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-delete text-danger"></i></button>
                                                 </td>
                                             </tr>
                                             )
@@ -142,45 +145,11 @@ export function WorkRequest({type}) {
                                     </table>
                                 </div>
                             </div>
-                            <div className="card">
-                                <div className="body">
-                                    <ul className="pagination pagination-primary m-b-0">
-                                        <li className="page-item"><a className="page-link" href=""><i className="zmdi zmdi-arrow-left"></i></a></li>
-                                        <li className="page-item active"><a className="page-link" href="">1</a></li>
-                                        <li className="page-item"><a className="page-link" href=""><i className="zmdi zmdi-arrow-right"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <Paginator page={page} setPage={setPage} pages={workRequests.pages} />
                         </div>
                     </div>
                 </div>
             </div>
-            <Modal show={showModal} onHide={() => {setShowModal(false)}}>
-                <Modal.Header closeButton>
-                    <h5 className="mb-3">Create New Service</h5>
-                </Modal.Header>
-                <Modal.Body>
-                    <form onSubmit={submitForm}>
-                        <div className="my-3">
-                            <div className="col-12 mb-2">
-                            <label className="form-label">Service Name</label>
-                            <input type="text" className="form-control" name="name" value={formData.name}
-                                   onChange={handleInputChange} required />
-                          </div>
-                            <div className="col-12 mb-2">
-                                <label className="form-label">Description</label>
-                                <input type="text" className="form-control" name="description" required
-                                       value={formData.description} onChange={handleInputChange}
-                                />
-                                <span className="form-text">Brief description of this service</span>
-                            </div>
-                            <div className="col-8 offset-2 d-grid my-4">
-                              <Button type="submit" disabled={disableButton}>Create</Button>
-                          </div>
-                        </div>
-                      </form>
-                </Modal.Body>
-            </Modal>
         </section>
     );
 }

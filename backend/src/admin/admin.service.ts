@@ -464,7 +464,7 @@ export class AdminService {
         if (requestUpdateDto.date_required !== undefined)
             request.date_required = requestUpdateDto.date_required;
         if (requestUpdateDto.accepted !== undefined)
-            request.accepted = requestUpdateDto.accepted;
+            request.accepted = requestUpdateDto.accepted.toString() == '1';
         if (requestUpdateDto.worker !== undefined) {
             const worker = await this.workmanRepo.findOneBy({
                 id: id,
@@ -507,6 +507,7 @@ export class AdminService {
             client: request.client.fullname,
             client_email: request.client.email,
             service: request.worker.service.name,
+            service_id: request.worker.service.id,
             service_description: request.worker.service.description,
         };
     }
@@ -727,5 +728,27 @@ export class AdminService {
                 break;
         }
         return { status: true, resp: '' };
+    }
+
+    async getWorkmenForService(id: number) {
+        const workers = await this.workmanRepo.find({
+            select: {
+                email: true,
+                fullname: true,
+                availability: true,
+            },
+            where: {
+                service: {
+                    id: id,
+                },
+            },
+        });
+        return {
+            data: workers.map((workman) => ({
+                email: workman.email,
+                fullname: workman.fullname,
+                availability: workman.availability,
+            })),
+        };
     }
 }

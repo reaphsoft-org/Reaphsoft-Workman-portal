@@ -29,6 +29,7 @@ import {WorkRequest} from "./admin/pages/work-request";
 import {ViewUser} from "./admin/pages/view-user";
 import {ViewEstate} from "./admin/pages/view-estate";
 import {ViewHouses} from "./admin/pages/view-houses";
+import {ViewWorkRequest} from "./admin/pages/view-work-request";
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
             <Route path="services/" element={<AdminServices />} />
             <Route path="users/work/requests/" element={<WorkRequest type={1}/>} />
             <Route path="estates/work/requests/" element={<WorkRequest type={2}/>} />
+            <Route path="view/work/request/:type/:id/" element={<ViewWorkRequest />} />
           </Route>
         </Routes>
     </AuthProvider>
