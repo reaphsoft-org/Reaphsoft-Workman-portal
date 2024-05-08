@@ -1,0 +1,8 @@
+.yes {
+    background-image: url(../../public/asset/image/Blackman.png);
+    background-size: cover;
+}
+.siteButton {
+    background-color: #ffc107;
+    padding: 7px 50px;
+}
