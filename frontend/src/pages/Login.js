@@ -73,7 +73,7 @@ function Login() {
               <div className="section-full">
                 <div className="container">
                   <div className="row">
-                    <div className="col-lg-6 col-md-6 d-flex bg-light opacity-50 px-5">
+                    <div className="col-lg-6 col-md-6 d-flex bg-tpw8 opacity-50 px-5">
                       <div className="text-white max-w400 align-self-center">
                         <div className="logo reaphlogo">
                           <Link to="/" className="text-decoration-none">
@@ -124,9 +124,8 @@ function Login() {
                             <div className="form-text text-danger my-3 px-1">{errorText}</div>
                             <div className="text-center">
                               <button type="submit" className={customBtnClass + disableButton}>Login</button>
-                              <Link
-                              className="site-button-link forget-pass m-t15 float-right"
-                              to="/register/"> Sign up</Link></div>
+                              <a className="btn btn-outline-warning link-offset-3 float-right mt-0" href="/register/">
+                                <i className="ti ti-lock me-2"></i>Sign Up</a></div>
                           </form>
                         </div>
                       </div>

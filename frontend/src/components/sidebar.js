@@ -31,13 +31,11 @@ const Sidebar = ({user}) => {
                             </li>
                                 <li>
                                 <Link to="/user/profile/" className='text-decoration-none'>
-                                        
                                     <span>Profile</span>
                                 </Link>
                             </li>
                             <li>
                                 <Link to="/user/request/" className='text-decoration-none'>
-                                    
                                     <span>Workman Request</span>
                                 </Link>
                             </li>
