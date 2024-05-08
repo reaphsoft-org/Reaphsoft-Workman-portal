@@ -3,6 +3,7 @@ import {Button, Modal} from "react-bootstrap";
 import {useAuth} from "../../components/AuthContext";
 import {showAlert} from "../../utils/alert";
 import {ContentHeader} from "../components/content-header";
+import {Paginator} from "../components/paginator";
 
 const Users = () => {
     const userAuth = useAuth();
@@ -142,15 +143,7 @@ const Users = () => {
                                     </table>
                                 </div>
                             </div>
-                            <div className="card">
-                                <div className="body">
-                                    <ul className="pagination pagination-primary m-b-0">
-                                        <li className="page-item"><a className="page-link" href=""><i className="zmdi zmdi-arrow-left"></i></a></li>
-                                        <li className="page-item active"><a className="page-link" href="">1</a></li>
-                                        <li className="page-item"><a className="page-link" href=""><i className="zmdi zmdi-arrow-right"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <Paginator page={page} setPage={setPage} pages={usersData.pages} />
                         </div>
                     </div>
                 </div>

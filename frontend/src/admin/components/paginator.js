@@ -8,7 +8,7 @@ import React from "react";
 export function Paginator({page, setPage, pages}) {
     return (
         <div className="card">
-            <ul className="pagination pagination-primary mb-0 justify-content-center">
+            <ul className="pagination pagination-primary my-3 justify-content-center">
                 <li className={page > 1 ? "page-item" : `page-item disabled`}>
                     <button className='page-link' onClick={page <= 1 ? null : ()=> setPage(page - 1)}><i className="zmdi zmdi-arrow-left"></i></button></li>
                 {
