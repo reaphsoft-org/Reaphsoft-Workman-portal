@@ -467,7 +467,7 @@ export class AdminService {
             request.accepted = requestUpdateDto.accepted.toString() == '1';
         if (requestUpdateDto.worker !== undefined) {
             const worker = await this.workmanRepo.findOneBy({
-                id: id,
+                email: requestUpdateDto.worker,
             });
             if (!worker) {
                 return `workman with id: ${requestUpdateDto.worker} not found`;

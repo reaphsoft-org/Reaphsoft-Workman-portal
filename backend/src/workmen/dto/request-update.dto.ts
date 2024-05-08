@@ -5,5 +5,5 @@
 export class RequestUpdateDto {
     readonly date_required: Date;
     readonly accepted: boolean;
-    readonly worker: number;
+    readonly worker: string;
 }
