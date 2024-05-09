@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Toast, ToastContainer } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import SweetAlertComponent  from "../utils/alert";
+import logo from "../components/i/logo.png";
+import style from "./login.module.css";
 
 export function generateRandomString() {
   let result = '';
@@ -93,18 +95,17 @@ function Register() {
     <div className="vh-100">
       <div className="page-wraper">
         <div className="browse-job login-style3">
-          <div className="bg-img-fix yes" style={{ position: "relative", height: "auto", minHeight: "100vh" }}>
-            <div style={{ backgroundColor: "#f2f5f3", width: "100vw", position: "absolute", opacity: "0.5", height: "100%" }}></div>
+          <div className={`bg-img-fix ${style.yes}`} style={{ position: "relative", height: "auto", minHeight: "100vh" }}>
             <div className="row">
               <div
-                className="col-xl-4 col-lg-5 col-md-6 col-sm-12 bg-white z-index2 relative p-a0 content-scroll skew-section left-bottom">
+                className="col-xl-4 col-lg-5 col-md-6 col-sm-12 bg-body-secondary bg-opacity-75 vh-100 content-scroll left-bottom">
                 <div className="login-form style-2">
-                  <div className="logo-header text-center p-tb30"><Link to="/"><img
-                    src="../asset/image/001-removebg-preview.png"
-                    alt="" style={{ width: logoSize, height: logoSize }} /></Link></div>
+                  <div className="logo-header text-center py-1">
+                    <Link to="/"><img src={logo} alt="logo" style={{ width: logoSize, height: logoSize }} /></Link>
+                  </div>
                   <div className="clearfix"></div>
-                  <div className="tab-content nav p-b30 tab">
-                    <div id="login" className="tab-pane active ">
+                  <div>
+                    <div id="login">
                       <div className="my-3 mx-2">
                         <h3 className="text-secondary my-3">Select Account Type</h3>
                         <div className="row gap-0">
@@ -244,8 +245,13 @@ function Register() {
                       </div>
                     </div>
                   </div>
-                  <div className="text-center">
-                    <Link className="site-button button-md btn-block text-white" to="/login/">Sign In</Link>
+                  <div className="text-center my-3">
+                    <Link className="site-button button-md btn-block text-white text-decoration-none" to="/login/">
+                      <i className="ti ti-user me-3"></i>
+                      Sign In</Link>
+                  </div>
+                  <div className="bottom-footer clearfix m-t10 m-b20 row text-center">
+                    <div className="col-lg-12 text-center"><span>© <a href="/" className="text-decoration-none">Reaphsoft Limited </a></span></div>
                   </div>
                   <ToastContainer className="p-3" position="bottom-center" style={{ zIndex: 1 }}>
                     <Toast show={showToast.show} onClose={() => { setShowToast({ message: "", show: false }) }}>
@@ -256,10 +262,6 @@ function Register() {
                       <Toast.Body>{showToast.message}</Toast.Body>
                     </Toast>
                   </ToastContainer>
-                  <div className="bottom-footer clearfix m-t10 m-b20 row text-center">
-                    <div className="col-lg-12 text-center"><span> © Copyright by<a
-                      href="#" className="text-decoration-none">Reaphsoft Limited </a></span></div>
-                  </div>
                 </div>
               </div>
             </div>
