@@ -57,16 +57,17 @@ export const ViewWorkman = () => {
      }, [email, userAuth.admin.token]);
     function submitForm(event) {
         event.preventDefault();
-        if (formData.serviceType === workman.serviceType &&
+        if (formData.service === workman.service &&
             formData.address === workman.address &&
-            formData.apartment === workman.apartment &&
-            formData.fullname === workman.fullname
+            formData.availability === workman.availability &&
+            formData.fullname === workman.fullname &&
+            formData.phone === workman.phone
             // no change
         ){
             return;
         }
         setDisableButton(true);
-        fetch(`http://localhost:3001/admin/user/${email}/`,
+        fetch(`http://localhost:3001/admin/workman/${email}/`,
             {
                 method: 'PUT',
                 headers: {
@@ -77,7 +78,8 @@ export const ViewWorkman = () => {
             }
         ).then(r => {
             if (!r.ok){
-                showAlert(3, 'Got a bad response from the server. Please contact the administrators.', 'Error');
+                showAlert(3, `Got a bad response from the server. 
+                Please contact the administrators. ${r.statusText}`, 'Error');
                 setDisableButton(false);
                 return;
             }
