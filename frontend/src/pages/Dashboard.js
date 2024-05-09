@@ -34,12 +34,10 @@ const Dashboard = ({user}) => {
     return ( 
         <div className="col-xl-9 col-lg-8 m-b30 text-black">
             <div id="personal_details_bx" className="job-bx bg-white m-b30">
-                
                 <div className="d-flex">
                     <h5 className="m-b30">Personal Details</h5>
-                    <Link className="site-button add-btn button-sm text-decoration-none"
-                        to="/user/update/"><i className="ti-pencil m-r5"></i>
-                        Edit Account</Link>
+                    <Link className="site-button add-btn btn-sm text-decoration-none"
+                        to="/user/update/"><i className="ti-pencil me-2"></i>Edit Account</Link>
                 </div>
                 <div className="row text-black">
                     <div className="col-lg-9 col-md-9 col-sm-9">
