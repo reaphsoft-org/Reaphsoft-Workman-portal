@@ -2,6 +2,9 @@ import React from "react";
 import { useState } from "react";
 import SweetAlertComponent, {showAlert} from "../../utils/alert";
 import {useAuth} from "../../components/AuthContext";
+import logo from "../components/logo.png";
+import fp81855 from "../components/fp81855.jpg";
+import {Image} from "react-bootstrap";
 
 function AdminLogin () {
     const userAuth = useAuth();
@@ -54,10 +57,10 @@ function AdminLogin () {
         <div className="authentication">
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-4 col-sm-12">
+                    <div className="col-lg-4 col-12">
                         <form className="card auth_form" onSubmit={login}>
                             <div className="header">
-                                <img className="logo" src="../../asset/image/001-removebg-preview.png" alt=""/>
+                                <Image width={210} src={logo} alt=""/>
                                 <h5>Admin Login</h5>
                             </div>
                             <div className="input-group my-3 col-10 offset-1 col-md-6 offset-md-3 col-lg-10 offset-lg-1">
@@ -79,9 +82,9 @@ function AdminLogin () {
                             </div>
                         </form>
                     </div>
-                    <div className="col-lg-8 col-sm-12">
+                    <div className="col-lg-8 col-12">
                         <div className="card">
-                            <img src="../../adminAssets/images/signin.svg" alt="Techie" />
+                            <img src={fp81855} alt="Admin" />
                         </div>
                     </div>
                 </div>
