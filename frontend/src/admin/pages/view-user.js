@@ -189,7 +189,7 @@ export const ViewUser = () => {
             setDisablePasswordButtons(false);
         });
     }
-    const [passwordErrorText, setPasswordErrorText] = useState('')
+    const [passwordErrorText, setPasswordErrorText] = useState('');
     return (
       <section className="content">
           <div className="body_scroll">

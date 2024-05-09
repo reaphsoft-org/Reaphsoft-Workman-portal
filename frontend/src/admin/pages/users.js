@@ -4,6 +4,7 @@ import {useAuth} from "../../components/AuthContext";
 import {showAlert, showDeleteDialog} from "../../utils/alert";
 import {ContentHeader} from "../components/content-header";
 import {Paginator} from "../components/paginator";
+import {deleteModel} from "../utils/utils";
 
 const Users = () => {
     const userAuth = useAuth();
@@ -104,31 +105,15 @@ const Users = () => {
     }
     const [selectedImage, setSelectedImage] = useState(null);
     const [disableButton, setDisableButton] = useState(false);
-    const deleteUser = async (email, resolve) => {
-        fetch(`http://localhost:3001/admin/user/${email}/`,{
-          method: 'DELETE',
-          headers: {
-            'Authorization': 'Bearer ' + userAuth.admin.token,
-            'Content-Type': 'application/json'
-          }
-        }).then(res => {
-                if (!res.ok){
-                    resolve({ status: false, resp: `Error while deleting User.\n${res.statusText}` });
-                }
-                return res.json();
-            }
-        ).then(data => {
-            resolve(data);
-            if (data.status){
-                const data0 = usersData.data;
-                data0.splice(deletedUser.current, 1);
-                setUsersData({
-                    pages: usersData.pages, data: data0
-                });
-            }
-        }).catch(reason => {
-            resolve({ status: false, resp: reason.message });
-        })
+    const deleteUser = (email, resolve) => {
+        deleteModel(
+            resolve,
+            `http://localhost:3001/admin/user/${email}/`,
+            userAuth.admin.token,
+            deletedUser.current,
+            usersData,
+            setUsersData
+            );
     }
 
     return ( 
@@ -165,7 +150,7 @@ const Users = () => {
                                                         showDeleteDialog({
                                                             object: user.name, deleteCallback: new Promise(( resolve, _) => {
                                                                 deletedUser.current = index;
-                                                                deleteUser(user.email, resolve).then(r => {});
+                                                                deleteUser(user.email, resolve);
                                                             }),
                                                         })}} className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-delete text-danger"></i></button>
                                                 </td>
