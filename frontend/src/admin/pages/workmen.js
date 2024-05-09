@@ -2,7 +2,10 @@ import React, {useRef, useState} from "react";
 import { Modal } from "react-bootstrap";
 import { useEffect } from "react";
 import {useAuth} from "../../components/AuthContext";
-import {showAlert} from "../../utils/alert";
+import {showAlert, showDeleteDialog} from "../../utils/alert";
+import {deleteModel} from "../utils/utils";
+import {Paginator} from "../components/paginator";
+import {ContentHeader} from "../components/content-header";
 
 const Workmen = () => {
     const userAuth = useAuth();
@@ -17,6 +20,17 @@ const Workmen = () => {
     };
     let servicesHasBeenSet = useRef(false);
     const [services, setServices] = useState([]);
+    const deletedWorkman = useRef(0);
+    const deleteWorkman = (email, resolve) => {
+        deleteModel(
+            resolve,
+            `http://localhost:3001/admin/workman/${email}/`,
+            userAuth.admin.token,
+            deletedWorkman.current,
+            workmen,
+            setWorkmen
+        );
+    }
     useEffect(() => {
         fetch(`http://localhost:3001/admin/workmen/${page}/`, {
             method: 'GET',
@@ -134,7 +148,7 @@ const Workmen = () => {
                 <div className="block-header">
                     <div className="row">
                         <div className="col-lg-7 col-md-6 col-sm-12">
-                            <h2 className="pb-3">Workmen List</h2>
+                            <h2 className="pb-3">Registered Workmen</h2>
                             <ul className="breadcrumb">
                                 <li className="breadcrumb-item"><a href="/admin/">
                                     <i className="zmdi zmdi-home"></i> Reaphsoft Workman</a>
@@ -143,10 +157,10 @@ const Workmen = () => {
                                 <li className="breadcrumb-item active">Workmen List</li>
                             </ul>
                         </div>
-                        <div className="col-lg-5 col-md-6 col-sm-12">                
+                        <div className="col-lg-5 col-md-6 col-sm-12">
                             <button className="btn btn-primary btn-icon float-right" onClick={handleEditClick} type="button"><i className="zmdi zmdi-plus"></i></button>
                         </div>
-                        
+
                     </div>
                 </div>
                 <div className="container-fluid">
@@ -173,7 +187,19 @@ const Workmen = () => {
                                                     <td>{workman.service}</td>
                                                     <td>
                                                         <button onClick={handleEditClick} className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></button>
-                                                        <button className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></button>
+                                                        <button
+                                                            className="btn btn-default waves-float btn-sm"
+                                                            onClick={() => {
+                                                                showDeleteDialog({
+                                                                    object: `Workman ${workman.name}`,
+                                                                    deleteCallback: () => {
+                                                                        return new Promise(( resolve, _) => {
+                                                                            deletedWorkman.current = index;
+                                                                            deleteWorkman(workman.email, resolve);
+                                                                    })
+                                                                    },
+                                                            })}}
+                                                        ><i className="zmdi zmdi-delete text-danger"></i></button>
                                                     </td>
                                                 </tr>
                                                 ))}
@@ -191,15 +217,7 @@ const Workmen = () => {
                                     </table>
                                 </div>
                             </div>
-                            <div className="card">
-                                <div className="body">
-                                    <ul className="pagination pagination-primary m-b-0">
-                                        <li className="page-item"><a className="page-link" href=""><i className="zmdi zmdi-arrow-left"></i></a></li>
-                                        <li className="page-item active"><a className="page-link" href="">1</a></li>
-                                        <li className="page-item"><a className="page-link" href=""><i className="zmdi zmdi-arrow-right"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <Paginator page={page} pages={workmen.pages} setPage={setPage} />
                         </div>
                     </div>
                 </div>
