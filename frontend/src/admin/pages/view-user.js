@@ -8,7 +8,7 @@ import {useAuth} from "../../components/AuthContext";
 import {Button, Form, FormControl, FormGroup, FormLabel, Image, InputGroup, Modal} from "react-bootstrap";
 import {showAlert, showDeleteDialog} from "../../utils/alert";
 import fp29332702_7495554 from '../components/fp29332702_7495554.jpg'
-import {deleteModel, savePhoto} from "../utils/utils";
+import {changePassword, deleteModel, savePhoto} from "../utils/utils";
 
 export const ViewUser = () => {
     const { email } = useParams();
@@ -120,50 +120,8 @@ export const ViewUser = () => {
     const [disablePasswordButtons, setDisablePasswordButtons] = useState(false);
     const changePassword = (event) => {
         event.preventDefault();
-        setDisablePasswordButtons(true);
-        if (passwordForm.password.length < 4 ){
-            setDisablePasswordButtons(false);
-            setPasswordErrorText('Password length should be more than 4');
-            return;
-        }
-        if (passwordForm.password !== passwordForm.password2){
-            setDisablePasswordButtons(false);
-            setPasswordErrorText('Passwords should be the same');
-            return;
-        }
-        setPasswordErrorText('');
-        fetch(`http://localhost:3001/admin/change/password/11/${email}/`, {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + userAuth.admin.token,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(passwordForm),
-        }).then( r => {
-            if (!r.ok){
-                showAlert(3, `Error while making request, please contact the system administrators. ${r.statusText}`, 'Error');
-                setPasswordForm({password2: '', password: ''});
-                setShowModal(false);
-                setDisablePasswordButtons(false);
-                return;
-            }
-            return r.json();
-        }).then(value => {
-            if (!value.status){
-                showAlert(3, value.resp, 'Error');
-                setDisablePasswordButtons(false);
-            }else {
-                showAlert(1, 'Password was changed successfully', 'Success');
-                setPasswordForm({password2: '', password: ''});
-                setShowModal(false);
-                setDisablePasswordButtons(false);
-            }
-        }).catch(reason => {
-            showAlert(3, reason.message, 'Error');
-            setPasswordForm({password2: '', password: ''});
-            setShowModal(false);
-            setDisablePasswordButtons(false);
-        });
+        changePassword(passwordForm, '11', email, userAuth.admin.token, setDisablePasswordButtons,
+            setPasswordErrorText, setPasswordForm, setShowModal);
     }
     const [passwordErrorText, setPasswordErrorText] = useState('');
     const deleteUser = (email, resolve) => {

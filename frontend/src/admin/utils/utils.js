@@ -57,3 +57,50 @@ export function savePhoto(token, code, email, selectedImage, disableFunction) {
         disableFunction(false);
     });
 }
+
+export function changePassword(passwordForm, code, email, token, setDisablePasswordButtons, setPasswordErrorText, setPasswordForm, setShowModal) {
+        setDisablePasswordButtons(true);
+        if (passwordForm.password.length < 4 ){
+            setDisablePasswordButtons(false);
+            setPasswordErrorText('Password length should be more than 4');
+            return;
+        }
+        if (passwordForm.password !== passwordForm.password2){
+            setDisablePasswordButtons(false);
+            setPasswordErrorText('Passwords should be the same');
+            return;
+        }
+        setPasswordErrorText('');
+        fetch(`http://localhost:3001/admin/change/password/${code}/${email}/`, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(passwordForm),
+        }).then( r => {
+            if (!r.ok){
+                showAlert(3, `Error while making request, please contact the system administrators. ${r.statusText}`, 'Error');
+                setPasswordForm({password2: '', password: ''});
+                setShowModal(false);
+                setDisablePasswordButtons(false);
+                return;
+            }
+            return r.json();
+        }).then(value => {
+            if (!value.status){
+                showAlert(3, value.resp, 'Error');
+                setDisablePasswordButtons(false);
+            }else {
+                showAlert(1, 'Password was changed successfully', 'Success');
+                setPasswordForm({password2: '', password: ''});
+                setShowModal(false);
+                setDisablePasswordButtons(false);
+            }
+        }).catch(reason => {
+            showAlert(3, reason.message, 'Error');
+            setPasswordForm({password2: '', password: ''});
+            setShowModal(false);
+            setDisablePasswordButtons(false);
+        });
+}
