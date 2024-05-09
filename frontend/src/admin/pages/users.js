@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Button, Modal} from "react-bootstrap";
 import {useAuth} from "../../components/AuthContext";
 import {showAlert, showDeleteDialog} from "../../utils/alert";
@@ -87,7 +87,6 @@ const Users = () => {
             showAlert(3, reason.message, 'Error');
         })
     }
-
     const [formData, setFormData] = useState(
         {
             email: '',
@@ -99,14 +98,39 @@ const Users = () => {
             serviceType: "1",
         }
     );
+    const deletedUser = useRef(0);
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
     const [selectedImage, setSelectedImage] = useState(null);
     const [disableButton, setDisableButton] = useState(false);
-    const deleteUser = (email) => {
-
+    const deleteUser = async (email, resolve) => {
+        fetch(`http://localhost:3001/admin/user/${email}/`,{
+          method: 'DELETE',
+          headers: {
+            'Authorization': 'Bearer ' + userAuth.admin.token,
+            'Content-Type': 'application/json'
+          }
+        }).then(res => {
+                if (!res.ok){
+                    resolve({ status: false, resp: `Error while deleting User.\n${res.statusText}` });
+                }
+                return res.json();
+            }
+        ).then(data => {
+            resolve(data);
+            if (data.status){
+                const data0 = usersData.data;
+                data0.splice(deletedUser.current, 1);
+                setUsersData({
+                    pages: usersData.pages, data: data0
+                });
+            }
+        }).catch(reason => {
+            resolve({ status: false, resp: reason.message });
+        })
     }
+
     return ( 
         <section className="content">
             <div className="body_scroll">
@@ -132,14 +156,17 @@ const Users = () => {
                                         {
                                             usersData.data.map((user, index) =>
                                             <tr key={index}>
-                                                <td>{user.name}</td>
+                                                <td><strong>{user.name}</strong></td>
                                                 <td>{user.email}</td>
                                                 <td>{user.address}</td>
                                                 <td className="my-0">
                                                     <a href={`/admin/users/user/${user.email}/`} className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-eye text-primary"></i></a>
                                                     <button onClick={() => {
                                                         showDeleteDialog({
-                                                            object: user.name, deleteCallback: () => {deleteUser(user.email)},
+                                                            object: user.name, deleteCallback: new Promise(( resolve, _) => {
+                                                                deletedUser.current = index;
+                                                                deleteUser(user.email, resolve).then(r => {});
+                                                            }),
                                                         })}} className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-delete text-danger"></i></button>
                                                 </td>
                                             </tr>

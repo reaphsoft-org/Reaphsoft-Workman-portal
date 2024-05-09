@@ -163,7 +163,7 @@ export class AdminService {
 
     async deleteUser(email: string) {
         const user = await this.usersRepo.findOneBy({ email: email });
-        if (!user) return { status: false, resp: 'user not found' };
+        if (!user) return { status: false, resp: 'User not found' };
         await this.usersRepo.remove(user);
         return { status: true, resp: '' };
     }
