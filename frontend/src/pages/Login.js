@@ -72,19 +72,21 @@ function Login() {
             <div className={`login-style2 ${styles.yes}`}>
               <div className="section-full">
                 <div className="container">
-                  <div className="row">
-                    <div className="col-lg-6 col-md-6 d-flex bg-tpw8 opacity-50 px-5">
-                      <div className="text-white max-w400 align-self-center">
-                        <div className="logo reaphlogo">
+                  <div className="row gy-2 gy-md-0">
+                    <div className="col-md-5 col-11 bg-tpw4 px-3 px-md-5 ms-md-0 ms-3">
+                      <div className="max-w4001 align-self-center py-5">
+                        <div className="logo">
                           <Link to="/" className="text-decoration-none">
                             <img src={logo} alt="logo" />
                           </Link>
                         </div>
-                        <h3 className="text-black">Reaphsoft Workmen</h3>
-                        <h6 className="text-black">Welcome to the Reaphsoft Workman Login Page</h6>
+                        <div className="text-dark text-center">
+                          <h3>Reaphsoft Workmen</h3>
+                          <h6>Welcome to the Reaphsoft Workman Login Page</h6>
+                        </div>
                       </div>
                     </div>
-                    <div className="col-lg-6 col-md-6">
+                    <div className="col-12 col-md-6 ms-auto">
                       <div className="login-2 submit-resume p-a30 seth">
                         <div className="nav">
                             <p className="text-body">Please log in if you have an account with us.</p>
@@ -136,7 +138,7 @@ function Login() {
               <footer className="login-footer">
                 <div className="container">
                   <div className="row">
-                    <div className="col-lg-12 text-center"><span className="float-left">© <a href="/" className="text-decoration-none">Reaphsoft</a></span></div>
+                    <div className="col-lg-12 text-center"><span className="float-left">© <a href="/" className="link-offset-2">Reaphsoft Limited</a></span></div>
                   </div>
                 </div>
               </footer>
