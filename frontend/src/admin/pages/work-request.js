@@ -2,75 +2,22 @@
 // reaphsoft-workman
 // github.com/kahlflekzy
 
-import {Button, Image, Modal} from "react-bootstrap";
+import {Image} from "react-bootstrap";
 import React, {useEffect, useRef, useState} from "react";
-import {showAlert} from "../../utils/alert";
+import {showAlert, showDeleteDialog} from "../../utils/alert";
 import {useAuth} from "../../components/AuthContext";
 import fp9264828 from "../components/fp9264828.jpg";
 import {ContentHeader} from "../components/content-header";
 import {Paginator} from "../components/paginator";
+import {deleteModel} from "../utils/utils";
 
 export function WorkRequest({type}) {
     const userAuth = useAuth();
     const name = type === 1 ? "Users" : "Estates";
-    const [showModal, setShowModal] = useState(false);
     const [workRequests, setWorkRequests] = useState({
         pages: 0,
         data: []
     });
-    const submitForm = (event) => {
-        event.preventDefault();
-        setDisableButton(true);
-        fetch('http://localhost:3001/admin/service/',{
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + userAuth.admin.token,
-                'Content-Type': 'application/json',
-              },
-            body: JSON.stringify(formData),
-            })
-            .then(res => {
-            if (!res.ok){
-                showAlert(3, 'Error while posting data', 'Error');
-            }
-            return res.json();
-        }).then( data => {
-            if (!data.status){
-                showAlert(3, data.resp, 'Error');
-            }else{
-                showAlert(1, 'Created New Service', 'Success');
-                setShowModal(false);
-                const data1 = WorkRequest.data;
-                data1.unshift({
-                    id: Number.parseInt(data.resp),
-                    name: formData.name,
-                    description: formData.description,
-                });
-                // todo if exceeds 50 remove the last item
-                setWorkRequests({
-                    pages: workRequests.pages,
-                    data: data1,
-                });
-                setFormData({
-                    name: '',
-                    description: '',
-                });
-            }
-            setDisableButton(false);
-        }).catch(reason => {
-            showAlert(3, reason.message, 'Error');
-        })
-    }
-    const [formData, setFormData] = useState(
-        {
-            name: '',
-            description: '',
-        }
-    );
-    const handleInputChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
-    const [disableButton, setDisableButton] = useState(false);
     const [page, setPage] = useState(1);
     useEffect(() => {
         fetch(`http://localhost:3001/admin/work/requests/${type}/${page}/`,{
@@ -92,8 +39,17 @@ export function WorkRequest({type}) {
             showAlert(3, reason.message, 'Error');
         })
     }, [page, type, userAuth.admin.token]);
-    const selectedRequest = useRef(0);
-    const getWorkRequest = (index) => {}
+    const deletedRequest = useRef(0);
+    const deleteRequest = (id, resolve) => {
+        deleteModel(
+            resolve,
+            `http://localhost:3001/admin/work/request/${type}/${id}/`,
+            userAuth.admin.token,
+            deletedRequest.current,
+            workRequests,
+            setWorkRequests
+        );
+    }
     return (
         <section className="content">
             <div className="body_scroll">
@@ -123,7 +79,19 @@ export function WorkRequest({type}) {
                                                 <td>{(new Date(workRequest.created_at)).toLocaleString()}</td>
                                                 <td className="my-0">
                                                     <a href={`/admin/view/work/request/${type}/${workRequest.id}/`} className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-eye text-primary"></i></a>
-                                                    <button className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-delete text-danger"></i></button>
+                                                    <button
+                                                        className="btn btn-default waves-float btn-sm"
+                                                        onClick={() => {
+                                                        showDeleteDialog({
+                                                            object: `${workRequest.service} service request`,
+                                                            deleteCallback: () => {
+                                                                return new Promise(( resolve, _) => {
+                                                                    deletedRequest.current = index;
+                                                                    deleteRequest(workRequest.id, resolve);
+                                                            })
+                                                            },
+                                                        })}}
+                                                    ><i className="zmdi zmdi-delete text-danger"></i></button>
                                                 </td>
                                             </tr>
                                             )

@@ -5,7 +5,6 @@ import {useAuth} from "../../components/AuthContext";
 import {showAlert, showDeleteDialog} from "../../utils/alert";
 import {deleteModel} from "../utils/utils";
 import {Paginator} from "../components/paginator";
-import {ContentHeader} from "../components/content-header";
 
 const Workmen = () => {
     const userAuth = useAuth();
