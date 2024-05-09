@@ -8,7 +8,7 @@ export default function Body() {
                 <div className="sticky-header main-bar-wraper navbar-expand-lg">
                     <div className="main-bar clearfix">
                         <div className="container clearfix">
-                            <div className="logo-header mostion"><a href="">
+                            <div className="logo-header mostion"><a href="/">
                                 <img src="asset/image/001-removebg-preview.png" style={{ width: 80, height: 80 }} className="logo" alt="img" /></a>
                             </div>
                             
@@ -469,11 +469,11 @@ export default function Body() {
                                             </form>
                                         </div>
                                         <ul className="list-inline m-a0">
-                                            <li><a className="site-button white facebook circle " href=""><i className="fa fa-facebook"></i></a></li>
-                                            <li><a className="site-button white google-plus circle " href=""><i className="fa fa-google-plus"></i></a></li>
-                                            <li><a className="site-button white linkedin circle " href=""><i className="fa fa-linkedin"></i></a></li>
-                                            <li><a className="site-button white instagram circle " href=""><i className="fa fa-instagram"></i></a></li>
-                                            <li><a className="site-button white twitter circle " href=""><i className="fa fa-twitter"></i></a></li>
+                                            <li><a className="site-button white facebook circle text-decoration-none" href=""><i className="ti ti-facebook"></i></a></li>
+                                            <li><a className="site-button white google-plus circle text-decoration-none" href=""><i className="ti ti-google"></i></a></li>
+                                            <li><a className="site-button white linkedin circle text-decoration-none" href=""><i className="ti ti-linkedin"></i></a></li>
+                                            <li><a className="site-button white instagram circle text-decoration-none" href=""><i className="ti ti-instagram"></i></a></li>
+                                            <li><a className="site-button white twitter circle text-decoration-none" href=""><i className="ti ti-twitter"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -483,7 +483,7 @@ export default function Body() {
                     <div className="footer-bottom">
                         <div className="container">
                             <div className="row">
-                                <div className="col-lg-12 text-center"><span> © Copyright by <i className="m-lr5 text-decoration-none"></i><a href="">Reaphsoft Limited</a></span></div>
+                                <div className="col-lg-12 text-center"><span>© <a className="link-offset-2" href="/">Reaphsoft Limited</a></span></div>
                             </div>
                         </div>
                     </div>
