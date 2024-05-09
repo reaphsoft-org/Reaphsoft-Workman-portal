@@ -166,18 +166,18 @@ export const ViewUser = () => {
         });
     }
     const [passwordErrorText, setPasswordErrorText] = useState('');
-    const deleteUser = (email, resolve) => {
-        new Promise((internalResolve, reject) => {
+    const deleteWorkman = (email, resolve) => {
+        new Promise((internalResolve, _) => {
             deleteModel(
                 internalResolve,
-                `http://localhost:3001/admin/user/${email}/`,
+                `http://localhost:3001/admin/workman/${email}/`,
                 userAuth.admin.token,
             );
         }).then(
             (value) => {
                 resolve(value);
                 if (value.status){
-                    window.location.href = '/admin/users/';
+                    window.location.href = '/admin/workmen/';
                 }
             }
         );
@@ -277,10 +277,12 @@ export const ViewUser = () => {
                                         variant="danger"
                                         onClick={() => {
                                                 showDeleteDialog({
-                                                    object: workman.fullname,
-                                                    deleteCallback: () => { return new Promise((resolve, _) => {
-                                                        deleteUser(workman.email, resolve);
-                                                    })}
+                                                    deleteCallback: () => {
+                                                        return new Promise((resolve, _) => {
+                                                            deleteWorkman(workman.email, resolve);
+                                                        })
+                                                    },
+                                                    object: `Workman ${workman.fullname}`
                                                 })
                                             }}
                                     >Delete</Button>
