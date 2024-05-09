@@ -6,8 +6,9 @@ import {useParams} from "react-router";
 import React, {useEffect, useState} from "react";
 import {useAuth} from "../../components/AuthContext";
 import {Button, Form, FormControl, FormGroup, FormLabel, Image, InputGroup, Modal} from "react-bootstrap";
-import {showAlert} from "../../utils/alert";
+import {showAlert, showDeleteDialog} from "../../utils/alert";
 import fp29332702_7495554 from '../components/fp29332702_7495554.jpg'
+import {deleteModel} from "../utils/utils";
 
 export const ViewUser = () => {
     const { email } = useParams();
@@ -190,6 +191,22 @@ export const ViewUser = () => {
         });
     }
     const [passwordErrorText, setPasswordErrorText] = useState('');
+    const deleteUser = (email, resolve) => {
+        new Promise((internalResolve, reject) => {
+            deleteModel(
+                internalResolve,
+                `http://localhost:3001/admin/user/${email}/`,
+                userAuth.admin.token,
+            );
+        }).then(
+            (value) => {
+                resolve(value);
+                if (value.status){
+                    window.location.href = '/admin/users/';
+                }
+            }
+        );
+    }
     return (
       <section className="content">
           <div className="body_scroll">
@@ -280,7 +297,18 @@ export const ViewUser = () => {
                                     <Button type="submit" disabled={disableButton}>Update</Button>
                                   </div>
                                   <div className="col-lg-6 d-grid">
-                                    <Button variant="danger">Delete</Button>
+                                    <Button
+                                        disabled={disableButton}
+                                        variant="danger"
+                                        onClick={() => {
+                                                showDeleteDialog({
+                                                    object: user.fullname,
+                                                    deleteCallback: () => { return new Promise((resolve, _) => {
+                                                        deleteUser(user.email, resolve);
+                                                    })}
+                                                })
+                                            }}
+                                    >Delete</Button>
                                   </div>
                               </div>
                           </Form>
