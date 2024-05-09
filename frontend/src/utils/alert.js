@@ -65,7 +65,7 @@ class SweetAlertComponent extends Component {
             }
             ).then((result) => {
                 if (result.isConfirmed) {
-                    deleteCallback.then(
+                    deleteCallback().then(
                         (result) => {
                             if (result.status) Swal.fire({
                                 title: "Deleted!",

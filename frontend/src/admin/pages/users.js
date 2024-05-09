@@ -148,10 +148,13 @@ const Users = () => {
                                                     <a href={`/admin/users/user/${user.email}/`} className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-eye text-primary"></i></a>
                                                     <button onClick={() => {
                                                         showDeleteDialog({
-                                                            object: user.name, deleteCallback: new Promise(( resolve, _) => {
+                                                            object: user.name,
+                                                            deleteCallback: () => {
+                                                                return new Promise(( resolve, _) => {
                                                                 deletedUser.current = index;
                                                                 deleteUser(user.email, resolve);
-                                                            }),
+                                                            })
+                                                            },
                                                         })}} className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-delete text-danger"></i></button>
                                                 </td>
                                             </tr>
