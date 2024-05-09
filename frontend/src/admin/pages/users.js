@@ -115,7 +115,6 @@ const Users = () => {
             setUsersData
             );
     }
-
     return ( 
         <section className="content">
             <div className="body_scroll">

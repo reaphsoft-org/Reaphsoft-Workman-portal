@@ -4,10 +4,11 @@
 
 import {useAuth} from "../../components/AuthContext";
 import React, {useEffect, useRef, useState} from "react";
-import {showAlert} from "../../utils/alert";
+import {showAlert, showDeleteDialog} from "../../utils/alert";
 import {Button, Modal} from "react-bootstrap";
 import {Paginator} from "../components/paginator";
 import {ContentHeader} from "../components/content-header";
+import {deleteModel} from "../utils/utils";
 
 export function Services() {
     const userAuth = useAuth();
@@ -115,6 +116,18 @@ export function Services() {
             description: service.description,
         });
     }
+
+    const deletedService = useRef(0);
+    const deleteService = (id, resolve) => {
+        deleteModel(
+            resolve,
+            `http://localhost:3001/admin/service/${id}/`,
+            userAuth.admin.token,
+            deletedService.current,
+            services,
+            setServices
+        );
+    }
     return (
         <section className="content">
             <div className="body_scroll">
@@ -156,7 +169,19 @@ export function Services() {
                                                             setModalState({header: 'Update', button: 'Update', link: `${service.id}/`, action: PUT })
                                                         }
                                                     } className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-edit text-primary"></i></button>
-                                                    <button className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-delete text-danger"></i></button>
+                                                    <button
+                                                        className="btn btn-default waves-float btn-sm"
+                                                        onClick={() => {
+                                                        showDeleteDialog({
+                                                            object: `${service.name} service`,
+                                                            deleteCallback: () => {
+                                                                return new Promise(( resolve, _) => {
+                                                                    deletedService.current = index;
+                                                                    deleteService(service.id, resolve);
+                                                            })
+                                                            },
+                                                        })}}
+                                                    ><i className="zmdi zmdi-delete text-danger"></i></button>
                                                 </td>
                                             </tr>
                                             )
