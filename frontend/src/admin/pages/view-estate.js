@@ -8,7 +8,7 @@ import React, {useEffect, useState} from "react";
 import {showAlert, showDeleteDialog} from "../../utils/alert";
 import {Button, Form, FormControl, FormGroup, FormLabel, InputGroup, Modal} from "react-bootstrap";
 import {ImageComponent} from "../components/image-component";
-import {deleteModel} from "../utils/utils";
+import {deleteModel, savePhoto} from "../utils/utils";
 
 export const ViewEstate = () => {
     const { email } = useParams();
@@ -106,33 +106,8 @@ export const ViewEstate = () => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [disableButton, setDisableButton] = useState(false);
     const [disableSavePhoto, setDisableSavePhoto] = useState(true);
-    const savePhoto = () => {
-        setDisableSavePhoto(true);
-        const postData = new FormData();
-        postData.append("photo", selectedImage);
-        fetch(`http://localhost:3001/admin/change/photo/22/${email}/`, {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + userAuth.admin.token,
-            },
-            body: postData,
-        }).then( r => {
-            if (!r.ok){
-                showAlert(3, `Error while making request, please contact the system administrators. ${r.statusText}`, 'Error');
-                return;
-            }
-            return r.json();
-        }).then(value => {
-            if (!value.status){
-                showAlert(3, value.resp, 'Error');
-                setDisableSavePhoto(false);
-            }else {
-                showAlert(1, 'Changed photo successfully', 'Success');
-            }
-        }).catch(reason => {
-            showAlert(3, reason.message, 'Error');
-            setDisableSavePhoto(false);
-        });
+    const saveEstatePhoto = () => {
+        savePhoto(userAuth.admin.token, '22', email, selectedImage, setDisableSavePhoto);
     }
     const [showModal, setShowModal] = useState(false);
     const [passwordForm, setPasswordForm] = useState({
@@ -229,7 +204,7 @@ export const ViewEstate = () => {
               <div className="row">
                   <div className="col-lg-6">
                       <div className="card px-lg-3 py-lg-3">
-                          {ImageComponent(selectedImage, user, setSelectedImage, setDisableSavePhoto, savePhoto, disableSavePhoto)}
+                          {ImageComponent(selectedImage, user, setSelectedImage, setDisableSavePhoto, saveEstatePhoto, disableSavePhoto)}
                           <Form onSubmit={submitForm}>
                               <Form.Group className="col-10 offset-1 my-3">
                                   <Form.Label>Email</Form.Label>

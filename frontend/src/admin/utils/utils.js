@@ -2,6 +2,8 @@
 // reaphsoft-workman
 // github.com/kahlflekzy
 
+import {showAlert} from "../../utils/alert";
+
 export function deleteModel(resolve, link, token, itemIndex = 0, modelData = null, setModelData= null) {
         fetch(link,{
             method: 'DELETE',
@@ -25,4 +27,33 @@ export function deleteModel(resolve, link, token, itemIndex = 0, modelData = nul
         }).catch(reason => {
             resolve({ status: false, resp: reason.message });
         })
+}
+
+export function savePhoto(token, code, email, selectedImage, disableFunction) {
+    disableFunction(true);
+    const postData = new FormData();
+    postData.append("photo", selectedImage);
+    fetch(`http://localhost:3001/admin/change/photo/${code}/${email}/`, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        },
+        body: postData,
+    }).then( r => {
+        if (!r.ok){
+            showAlert(3, `Error while making request, please contact the system administrators. ${r.statusText}`, 'Error');
+            return;
+        }
+        return r.json();
+    }).then(value => {
+        if (!value.status){
+            showAlert(3, value.resp, 'Error');
+            disableFunction(false);
+        }else {
+            showAlert(1, 'Changed photo successfully', 'Success');
+        }
+    }).catch(reason => {
+        showAlert(3, reason.message, 'Error');
+        disableFunction(false);
+    });
 }

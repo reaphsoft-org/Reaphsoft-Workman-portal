@@ -1,4 +1,4 @@
-// 06/05/2024 11:56
+// 09/05/2024 20:16
 // reaphsoft-workman
 // github.com/kahlflekzy
 
@@ -13,7 +13,7 @@ import {deleteModel, savePhoto} from "../utils/utils";
 export const ViewUser = () => {
     const { email } = useParams();
     const userAuth = useAuth();
-    const [user, setUser] = useState({
+    const [workman, setWorkman] = useState({
         apartment: '',
         address: '',
         email: '',
@@ -41,7 +41,7 @@ export const ViewUser = () => {
             if (!data){
                 showAlert(3, `Unable to get user: ${email}`, 'Error');
             }else {
-                setUser(data);
+                setWorkman(data);
                 setFormData({
                     apartment: data.apartment,
                     address: data.address,
@@ -56,10 +56,10 @@ export const ViewUser = () => {
      }, [email, userAuth.admin.token]);
     function submitForm(event) {
         event.preventDefault();
-        if (formData.serviceType === user.serviceType &&
-            formData.address === user.address &&
-            formData.apartment === user.apartment &&
-            formData.fullname === user.fullname
+        if (formData.serviceType === workman.serviceType &&
+            formData.address === workman.address &&
+            formData.apartment === workman.apartment &&
+            formData.fullname === workman.fullname
             // no change
         ){
             return;
@@ -106,8 +106,8 @@ export const ViewUser = () => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [disableButton, setDisableButton] = useState(false);
     const [disableSavePhoto, setDisableSavePhoto] = useState(true);
-    const saveUserPhoto = () => {
-        savePhoto(userAuth.admin.token, '11', email, selectedImage, setDisableSavePhoto);
+    const saveWorkmanPhoto = () => {
+        savePhoto(userAuth.admin.token, '33', email, selectedImage, setDisableSavePhoto);
     }
     const [showModal, setShowModal] = useState(false);
     const [passwordForm, setPasswordForm] = useState({
@@ -188,7 +188,7 @@ export const ViewUser = () => {
                 <div className="block-header">
                     <div className="row">
                         <div className="col-lg-7 col-md-6 col-sm-12">
-                            <h2 className="pb-3">User: {user.fullname}</h2>
+                            <h2 className="pb-3">User: {workman.fullname}</h2>
                             <ul className="breadcrumb">
                                 <li className="breadcrumb-item"><a href="/admin/">
                                     <i className="zmdi zmdi-home me-2"></i>Reaphsoft Workman</a>
@@ -209,8 +209,8 @@ export const ViewUser = () => {
                                   selectedImage === null ?
                                       <>
                                           <Image
-                                              src={user.photoURL === '' ? fp29332702_7495554 : `http://localhost:3001/${user.photoURL}`}/>
-                                        <p className="mt-3">Current Photo: {user.photoURL === '' ? 'None' : user.photoURL }</p>
+                                              src={workman.photoURL === '' ? fp29332702_7495554 : `http://localhost:3001/${workman.photoURL}`}/>
+                                        <p className="mt-3">Current Photo: {workman.photoURL === '' ? 'None' : workman.photoURL }</p>
                                       </>
                                       :
                                       <>
@@ -227,13 +227,13 @@ export const ViewUser = () => {
                                           }
                                       }
                                   }/>
-                                  <Button variant="outline-primary" onClick={saveUserPhoto} disabled={disableSavePhoto}>Save</Button>
+                                  <Button variant="outline-primary" onClick={saveWorkmanPhoto} disabled={disableSavePhoto}>Save</Button>
                               </InputGroup>
                           </div>
                           <Form onSubmit={submitForm}>
                               <Form.Group className="col-10 offset-1 my-3">
                                   <Form.Label>Email</Form.Label>
-                                  <FormControl value={user.email} readOnly={true}></FormControl>
+                                  <FormControl value={workman.email} readOnly={true}></FormControl>
                               </Form.Group>
                               <div className="w-100"></div>
                               <Form.Group className="col-10 offset-1 my-3">
@@ -277,9 +277,9 @@ export const ViewUser = () => {
                                         variant="danger"
                                         onClick={() => {
                                                 showDeleteDialog({
-                                                    object: user.fullname,
+                                                    object: workman.fullname,
                                                     deleteCallback: () => { return new Promise((resolve, _) => {
-                                                        deleteUser(user.email, resolve);
+                                                        deleteUser(workman.email, resolve);
                                                     })}
                                                 })
                                             }}
