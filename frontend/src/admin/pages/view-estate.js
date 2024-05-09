@@ -5,9 +5,10 @@
 import {useParams} from "react-router";
 import {useAuth} from "../../components/AuthContext";
 import React, {useEffect, useState} from "react";
-import {showAlert} from "../../utils/alert";
+import {showAlert, showDeleteDialog} from "../../utils/alert";
 import {Button, Form, FormControl, FormGroup, FormLabel, InputGroup, Modal} from "react-bootstrap";
 import {ImageComponent} from "../components/image-component";
+import {deleteModel} from "../utils/utils";
 
 export const ViewEstate = () => {
     const { email } = useParams();
@@ -189,7 +190,23 @@ export const ViewEstate = () => {
             setDisablePasswordButtons(false);
         });
     }
-    const [passwordErrorText, setPasswordErrorText] = useState('')
+    const [passwordErrorText, setPasswordErrorText] = useState('');
+    const deleteUser = (email, resolve) => {
+        new Promise((internalResolve, _) => {
+            deleteModel(
+                internalResolve,
+                `http://localhost:3001/admin/estate/manager/${email}/`,
+                userAuth.admin.token,
+            );
+        }).then(
+            (value) => {
+                resolve(value);
+                if (value.status){
+                    window.location.href = '/admin/estates/';
+                }
+            }
+        );
+    }
     return (
       <section className="content">
           <div className="body_scroll">
@@ -265,7 +282,18 @@ export const ViewEstate = () => {
                               </div>
                               <div className="w-100"></div>
                               <div className="col-lg-6 offset-lg-3 my-2 d-grid">
-                                  <Button variant="outline-danger">Delete</Button>
+                                  <Button
+                                      variant="outline-danger"
+                                      disabled={disableButton}
+                                      onClick={() => {
+                                          showDeleteDialog({
+                                              object: user.estate,
+                                              deleteCallback: () => { return new Promise((resolve, _) => {
+                                                    deleteUser(user.email, resolve);
+                                                })}
+                                          })
+                                      }}
+                                  >Delete</Button>
                               </div>
                           </Form>
                       </div>
