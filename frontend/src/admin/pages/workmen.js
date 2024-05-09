@@ -5,6 +5,7 @@ import {useAuth} from "../../components/AuthContext";
 import {showAlert, showDeleteDialog} from "../../utils/alert";
 import {deleteModel} from "../utils/utils";
 import {Paginator} from "../components/paginator";
+import fp9264828 from "../components/fp9264828.jpg"
 
 const Workmen = () => {
     const userAuth = useAuth();
@@ -185,7 +186,7 @@ const Workmen = () => {
                                                     <td><span className="text-muted">{workman.email}</span></td>
                                                     <td>{workman.service}</td>
                                                     <td>
-                                                        <button onClick={handleEditClick} className="btn btn-default waves-effect waves-float btn-sm waves-green"><i className="zmdi zmdi-edit"></i></button>
+                                                        <a href={`/admin/workmen/workman/${workman.email}/`} className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-eye"></i></a>
                                                         <button
                                                             className="btn btn-default waves-float btn-sm"
                                                             onClick={() => {
@@ -206,7 +207,7 @@ const Workmen = () => {
                                                     <tr>
                                                         <td colSpan={5}>
                                                             <div className="text-center my-5" >
-                                                                <img src="../../asset/image/empty.png" alt="no workman" />
+                                                                <img src={fp9264828} alt="no workman" />
                                                                 <h5 className="text-black mt-2 text-center"> No Workman Yet</h5>
                                                             </div>
                                                         </td>

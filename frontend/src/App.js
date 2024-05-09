@@ -30,6 +30,7 @@ import {ViewUser} from "./admin/pages/view-user";
 import {ViewEstate} from "./admin/pages/view-estate";
 import {ViewHouses} from "./admin/pages/view-houses";
 import {ViewWorkRequest} from "./admin/pages/view-work-request";
+import {ViewWorkman} from "./admin/pages/view-workman";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
           <Route path="/admin/" element={<Admin content={Layout} />} >
             <Route index element={<Index />} />
             <Route path="workmen/" element={<Workmen />} />
+            <Route path="workmen/workman/:email/" element={<ViewWorkman />} />
             <Route path="estates/" element={<Estate />} />
             <Route path="estates/estate/:email/" element={<ViewEstate />} />
             <Route path="estates/estate/houses/:email/" element={<ViewHouses />} />

@@ -5,29 +5,29 @@
 import {useParams} from "react-router";
 import React, {useEffect, useState} from "react";
 import {useAuth} from "../../components/AuthContext";
-import {Button, Form, FormControl, FormGroup, FormLabel, Image, InputGroup, Modal} from "react-bootstrap";
+import {Button, Form, FormControl, FormGroup, FormLabel, FormText, Image, InputGroup, Modal} from "react-bootstrap";
 import {showAlert, showDeleteDialog} from "../../utils/alert";
 import fp29332702_7495554 from '../components/fp29332702_7495554.jpg'
 import {changePassword, deleteModel, savePhoto} from "../utils/utils";
 
-export const ViewUser = () => {
+export const ViewWorkman = () => {
     const { email } = useParams();
     const userAuth = useAuth();
     const [workman, setWorkman] = useState({
-        apartment: '',
-        address: '',
         email: '',
         fullname: '',
+        address: '',
+        phone: '',
+        service: '',
+        availability: '',
         photoURL: '',
-        serviceType: '',
-        }
-    );
+    });
     useEffect(() => {
-        fetch(`http://localhost:3001/admin/user/${email}/`,
+        fetch(`http://localhost:3001/admin/workman/${email}/`,
             {
                 method: 'GET',
                 headers: {
-                    'Authorization': 'Bearer ' + userAuth.admin.token,
+                    'Authorization': `Bearer ${userAuth.admin.token}`,
                     'Content-Type': 'application/json'
                 }
             }
@@ -43,10 +43,11 @@ export const ViewUser = () => {
             }else {
                 setWorkman(data);
                 setFormData({
-                    apartment: data.apartment,
-                    address: data.address,
                     fullname: data.fullname,
-                    serviceType: data.serviceType,
+                    address: data.address,
+                    phone: data.phone,
+                    service: data.service,
+                    availability: data.availability,
                 });
             }
         }).catch(reason => {
@@ -94,12 +95,12 @@ export const ViewUser = () => {
         });
     }
     const [formData, setFormData] = useState({
-            apartment: '',
-            address: '',
-            fullname: '',
-            serviceType: "",
-        }
-    );
+        fullname: '',
+        address: '',
+        phone: '',
+        service: 0,
+        availability: '',
+    });
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
@@ -208,8 +209,14 @@ export const ViewUser = () => {
                               </Form.Group>
                               <div className="w-100"></div>
                               <Form.Group className="col-10 offset-1 my-3">
+                                  <Form.Label>Phone</Form.Label>
+                                  <FormControl name="phone" value={formData.phone} onChange={handleInputChange}></FormControl>
+                                  <FormText>Phone Number is optional</FormText>
+                              </Form.Group>
+                              <div className="w-100"></div>
+                              <Form.Group className="col-10 offset-1 my-3">
                                   <Form.Label>Apartment</Form.Label>
-                                  <FormControl name="apartment" value={formData.apartment} onChange={handleInputChange} required={true}></FormControl>
+                                  <FormControl name="availability" value={formData.availability} onChange={handleInputChange} required={true}></FormControl>
                               </Form.Group>
                               <div className="w-100"></div>
                               <Form.Group className="col-10 offset-1 my-3">
@@ -218,8 +225,8 @@ export const ViewUser = () => {
                               </Form.Group>
                               <div className="w-100"></div>
                               <Form.Group className="col-10 offset-1 my-3">
-                                  <Form.Label>Service Type</Form.Label>
-                                  <Form.Select name="serviceType" value={formData.serviceType} onChange={handleInputChange} required={true}>
+                                  <Form.Label>Service</Form.Label>
+                                  <Form.Select name="service" value={formData.service} onChange={handleInputChange} required={true}>
                                       <option value="0">Select Service</option>
                                       <option value="1">Priority</option>
                                       <option value="2">Priority Plus</option>
