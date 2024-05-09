@@ -1,20 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { logout } from '../utils/auth';
-import { useAuth } from './AuthContext';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import logo from "./i/logo.png";
 
 const Navbar = () => {
-  const user = useAuth();
   return (
     <header className="site-header mo-left header border-bottom fullwidth">
       <div className="sticky-header main-bar-wraper navbar-expand-lg">
         <div className="main-bar clearfix">
           <div className="container clearfix">
             <div className="logo-header mostion">
-              <Link to="/user/">
-                <img src="../asset/image/001-removebg-preview.png" style={{ width: 80, height: 80 }}
-                  alt="" />
+              <Link to="/">
+                <img src={logo} style={{ width: 80, height: 80 }} alt="logo" />
               </Link>
             </div>
             <button
