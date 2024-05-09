@@ -596,9 +596,9 @@ export class AdminService {
     }
 
     async deleteService(id: number) {
-        const service = await this.workmanRepo.findOneBy({ id: id });
+        const service = await this.serviceRepo.findOneBy({ id: id });
         if (!service) return { status: false, resp: 'service not found' };
-        await this.workmanRepo.remove(service);
+        await this.serviceRepo.remove(service);
         return { status: true, resp: '' };
     }
 
