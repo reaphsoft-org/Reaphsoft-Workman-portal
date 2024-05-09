@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../components/AuthContext";
-import {showAlert} from "../../utils/alert";
+import {showAlert, showDeleteDialog} from "../../utils/alert";
 import {Button, Modal} from "react-bootstrap";
 import {ContentHeader} from "../components/content-header";
+import {Paginator} from "../components/paginator";
+import {deleteModel} from "../utils/utils";
 
 const Estate = () => {
     const userAuth = useAuth();
@@ -104,6 +106,17 @@ const Estate = () => {
     }
     const [selectedImage, setSelectedImage] = useState(null);
     const [disableButton, setDisableButton] = useState(false);
+    const deletedUser = useRef(0);
+    const deleteUser = (email, resolve) => {
+        deleteModel(
+            resolve,
+            `http://localhost:3001/admin/estate/manager/${email}/`,
+            userAuth.admin.token,
+            deletedUser.current,
+            usersData,
+            setUsersData
+        );
+    }
     return ( 
         <section className="content">
             <div className="body_scroll">
@@ -136,7 +149,23 @@ const Estate = () => {
                                                 <td>{user.name}</td>
                                                 <td className="my-0">
                                                     <a href={`/admin/estates/estate/${user.email}/`} className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-eye"></i></a>
-                                                    <button className="btn btn-default waves-effect waves-float btn-sm waves-red"><i className="zmdi zmdi-delete"></i></button>
+                                                    <button
+                                                        className="btn btn-default waves-float btn-sm"
+                                                        onClick={() => {
+                                                            showDeleteDialog({
+                                                                object: user.name,
+                                                                deleteCallback: () => {
+                                                                    return new Promise(( resolve, _) => {
+                                                                        deletedUser.current = index;
+                                                                        deleteUser(user.email, resolve);
+                                                                    })
+                                                                },}
+                                                            )
+                                                        }
+                                                    }
+                                                    >
+                                                        <i className="zmdi zmdi-delete text-danger"></i>
+                                                    </button>
                                                 </td>
                                             </tr>
                                             )
@@ -145,15 +174,7 @@ const Estate = () => {
                                     </table>
                                 </div>
                             </div>
-                            <div className="card">
-                                <div className="body">
-                                    <ul className="pagination pagination-primary m-b-0">
-                                        <li className="page-item"><a className="page-link" href=""><i className="zmdi zmdi-arrow-left"></i></a></li>
-                                        <li className="page-item active"><a className="page-link" href="">1</a></li>
-                                        <li className="page-item"><a className="page-link" href=""><i className="zmdi zmdi-arrow-right"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <Paginator page={page} pages={usersData.pages} setPage={setPage} />
                         </div>
                     </div>
                 </div>

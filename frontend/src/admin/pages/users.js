@@ -151,8 +151,8 @@ const Users = () => {
                                                             object: user.name,
                                                             deleteCallback: () => {
                                                                 return new Promise(( resolve, _) => {
-                                                                deletedUser.current = index;
-                                                                deleteUser(user.email, resolve);
+                                                                    deletedUser.current = index;
+                                                                    deleteUser(user.email, resolve);
                                                             })
                                                             },
                                                         })}} className="btn btn-default waves-float btn-sm"><i className="zmdi zmdi-delete text-danger"></i></button>
