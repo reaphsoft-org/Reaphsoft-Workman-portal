@@ -20,8 +20,9 @@ export const ViewEstate = () => {
         address: '',
         serviceType: '',
         photoURL: '',
-        }
-    );
+        last_login: '',
+        date_joined: ''
+        });
     useEffect(() => {
         fetch(`http://localhost:3001/admin/estate/manager/${email}/`,
             {
@@ -98,8 +99,7 @@ export const ViewEstate = () => {
             address: '',
             fullname: '',
             serviceType: "",
-        }
-    );
+        });
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
@@ -176,6 +176,16 @@ export const ViewEstate = () => {
                                       <Form.Control value="hashedpassword" className="my-1"
                                                     readOnly={true}></Form.Control>
                                   </InputGroup>
+                              </Form.Group>
+                              <div className="w-100"></div>
+                              <Form.Group className="col-10 offset-1 my-3">
+                                  <Form.Label>Date Joined</Form.Label>
+                                  <FormControl value={(new Date(user.date_joined)).toLocaleString()} readOnly={true}></FormControl>
+                              </Form.Group>
+                              <div className="w-100"></div>
+                              <Form.Group className="col-10 offset-1 my-3">
+                                  <Form.Label>Last Login</Form.Label>
+                                  <FormControl value={(new Date(user.last_login)).toLocaleString()} readOnly={true}></FormControl>
                               </Form.Group>
                               <div className="w-100"></div>
                               <Form.Group className="col-10 offset-1 my-3">
