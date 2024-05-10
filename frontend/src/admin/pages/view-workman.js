@@ -269,6 +269,15 @@ export const ViewWorkman = () => {
                           </Form>
                       </div>
                   </div>
+                  <div className="col-lg-6">
+                      <div className="card px-lg-3 py-lg-3">
+                          <div className="col-10 offset-1 row my-3">
+                                  <div className="col-lg-6 offset-3 d-grid">
+                                    <Button variant="outline-info">Work Requests</Button>
+                                  </div>
+                              </div>
+                      </div>
+                  </div>
               </div>
           </div>
           <Modal
