@@ -158,6 +158,8 @@ export class AdminService {
             address: user.address,
             serviceType: user.serviceType,
             photoURL: user.photoURL,
+            last_login: user.last_visited,
+            date_joined: user.date_joined,
         };
     }
 

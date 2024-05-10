@@ -20,8 +20,9 @@ export const ViewUser = () => {
         fullname: '',
         photoURL: '',
         serviceType: '',
-        }
-    );
+        last_login: '',
+        date_joined: ''
+    });
     useEffect(() => {
         fetch(`http://localhost:3001/admin/user/${email}/`,
             {
@@ -98,17 +99,12 @@ export const ViewUser = () => {
             address: '',
             fullname: '',
             serviceType: "",
-        }
-    );
-    const handleInputChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
+        });
+    const handleInputChange = (e) => {setFormData({ ...formData, [e.target.name]: e.target.value });}
     const [selectedImage, setSelectedImage] = useState(null);
     const [disableButton, setDisableButton] = useState(false);
     const [disableSavePhoto, setDisableSavePhoto] = useState(true);
-    const saveUserPhoto = () => {
-        savePhoto(userAuth.admin.token, '11', email, selectedImage, setDisableSavePhoto);
-    }
+    const saveUserPhoto = () => {savePhoto(userAuth.admin.token, '11', email, selectedImage, setDisableSavePhoto);}
     const [showModal, setShowModal] = useState(false);
     const [passwordForm, setPasswordForm] = useState({
         password: '',
@@ -118,7 +114,7 @@ export const ViewUser = () => {
       setPasswordForm({...passwordForm, [e.target.name]: e.target.value });
     }
     const [disablePasswordButtons, setDisablePasswordButtons] = useState(false);
-    const changePassword = (event) => {
+    const changeUserPassword = (event) => {
         event.preventDefault();
         changePassword(passwordForm, '11', email, userAuth.admin.token, setDisablePasswordButtons,
             setPasswordErrorText, setPasswordForm, setShowModal);
@@ -203,6 +199,16 @@ export const ViewUser = () => {
                               </Form.Group>
                               <div className="w-100"></div>
                               <Form.Group className="col-10 offset-1 my-3">
+                                  <Form.Label>Date Joined</Form.Label>
+                                  <FormControl value={(new Date(user.date_joined)).toLocaleString()} readOnly={true}></FormControl>
+                              </Form.Group>
+                              <div className="w-100"></div>
+                              <Form.Group className="col-10 offset-1 my-3">
+                                  <Form.Label>Last Login</Form.Label>
+                                  <FormControl value={(new Date(user.last_login)).toLocaleString()} readOnly={true}></FormControl>
+                              </Form.Group>
+                              <div className="w-100"></div>
+                              <Form.Group className="col-10 offset-1 my-3">
                                   <Form.Label>Fullname</Form.Label>
                                   <FormControl name="fullname" value={formData.fullname} onChange={handleInputChange} required={true}></FormControl>
                               </Form.Group>
@@ -258,7 +264,7 @@ export const ViewUser = () => {
                   <h5>Change Password</h5>
               </Modal.Header>
               <Modal.Body>
-                  <Form onSubmit={ changePassword }>
+                  <Form onSubmit={ changeUserPassword }>
                       <FormGroup className="mb-3 col-lg-8 offset-lg-2">
                           <FormLabel>New Password</FormLabel>
                           <FormControl required={true} type="password" autoComplete="new-password" name="password" value={passwordForm.password} onChange={ handlePasswordChange }></FormControl>
