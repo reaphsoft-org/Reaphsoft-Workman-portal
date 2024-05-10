@@ -21,6 +21,8 @@ export const ViewWorkman = () => {
         service: '',
         availability: '',
         photoURL: '',
+        last_login: '',
+        date_joined: ''
     });
     useEffect(() => {
         fetch(`http://localhost:3001/admin/workman/${email}/`,
@@ -232,6 +234,16 @@ export const ViewWorkman = () => {
                               <Form.Group className="col-10 offset-1 my-3">
                                   <Form.Label>Service</Form.Label>
                                   <Form.Control name="service" className="disabled" value={formData.service} readOnly={true}></Form.Control>
+                              </Form.Group>
+                              <div className="w-100"></div>
+                              <Form.Group className="col-10 offset-1 my-3">
+                                  <Form.Label>Date Joined</Form.Label>
+                                  <FormControl value={(new Date(workman.date_joined)).toLocaleString()} readOnly={true}></FormControl>
+                              </Form.Group>
+                              <div className="w-100"></div>
+                              <Form.Group className="col-10 offset-1 my-3">
+                                  <Form.Label>Last Login</Form.Label>
+                                  <FormControl value={(new Date(workman.last_login)).toLocaleString()} readOnly={true}></FormControl>
                               </Form.Group>
                               <div className="col-10 offset-1 row my-3">
                                   <div className="col-lg-6 d-grid">

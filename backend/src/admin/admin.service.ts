@@ -405,6 +405,8 @@ export class AdminService {
             service: workman.service.name,
             availability: workman.availability,
             photoURL: workman.photoURL,
+            last_login: workman.last_visited,
+            date_joined: workman.date_joined,
         };
     }
 
