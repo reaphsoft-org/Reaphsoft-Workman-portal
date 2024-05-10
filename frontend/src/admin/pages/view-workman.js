@@ -57,8 +57,7 @@ export const ViewWorkman = () => {
      }, [email, userAuth.admin.token]);
     function submitForm(event) {
         event.preventDefault();
-        if (formData.service === workman.service &&
-            formData.address === workman.address &&
+        if (formData.address === workman.address &&
             formData.availability === workman.availability &&
             formData.fullname === workman.fullname &&
             formData.phone === workman.phone
@@ -89,6 +88,10 @@ export const ViewWorkman = () => {
                 showAlert(3, value.resp, 'Error');
             }else{
                 showAlert(1, 'Successfully updated profile', 'Success');
+                workman.address = formData.address;
+                workman.availability = formData.availability;
+                workman.fullname = formData.fullname;
+                workman.phone = formData.phone;
             }
             setDisableButton(false);
         }).catch(reason => {
@@ -228,11 +231,7 @@ export const ViewWorkman = () => {
                               <div className="w-100"></div>
                               <Form.Group className="col-10 offset-1 my-3">
                                   <Form.Label>Service</Form.Label>
-                                  <Form.Select name="service" value={formData.service} onChange={handleInputChange} required={true}>
-                                      <option value="0">Select Service</option>
-                                      <option value="1">Priority</option>
-                                      <option value="2">Priority Plus</option>
-                                  </Form.Select>
+                                  <Form.Control name="service" className="disabled" value={formData.service} readOnly={true}></Form.Control>
                               </Form.Group>
                               <div className="col-10 offset-1 row my-3">
                                   <div className="col-lg-6 d-grid">

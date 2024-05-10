@@ -6,6 +6,5 @@ export class UpdateWorkmanDto {
     readonly fullname: string;
     readonly address: string;
     readonly phone: string;
-    readonly service: number;
     readonly availability: string;
 }
