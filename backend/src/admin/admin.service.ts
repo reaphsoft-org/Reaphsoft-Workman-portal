@@ -360,6 +360,7 @@ export class AdminService {
     }
 
     async updateWorkman(email: string, updateWorkmanDto: UpdateWorkmanDto) {
+        // todo don't change the service type of a workman who has completed a task or has pending tasks.
         const workman = await this.workmanRepo.findOneBy({
             email: email,
         });

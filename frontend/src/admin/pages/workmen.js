@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 import { useEffect } from "react";
 import {useAuth} from "../../components/AuthContext";
 import {showAlert, showDeleteDialog} from "../../utils/alert";
-import {deleteModel} from "../utils/utils";
+import {deleteModel, getServices} from "../utils/utils";
 import {Paginator} from "../components/paginator";
 import fp9264828 from "../components/fp9264828.jpg"
 
@@ -49,25 +49,7 @@ const Workmen = () => {
             .then((data) => setWorkmen(data))
             .catch((err) => showAlert(3, err.message, 'Error'));
         if (!servicesHasBeenSet.current){
-            servicesHasBeenSet.current = true;
-            fetch(`http://localhost:3001/admin/services/0/`,{
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer ' + userAuth.admin.token,
-            'Content-Type': 'application/json'
-          }
-        }).then(res => {
-                if (!res.ok){
-                    showAlert(3, 'Error while loading services, please refresh the page and try again', 'Error');
-                    return;
-                }
-                return res.json();
-            }
-        ).then(data => {
-            setServices(data.data);
-        }).catch(reason => {
-            showAlert(3, reason.message, 'Error');
-        })
+            getServices(userAuth.admin.token, setServices, servicesHasBeenSet);
         }
     }, [page, servicesHasBeenSet, userAuth.admin.token]);
     const [formData, setFormData] = useState(

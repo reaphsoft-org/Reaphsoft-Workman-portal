@@ -104,3 +104,25 @@ export function changePassword(passwordForm, code, email, token, setDisablePassw
             setDisablePasswordButtons(false);
         });
 }
+
+export function getServices(token, setServices, servicesHasBeenSet) {
+        fetch(`http://localhost:3001/admin/services/0/`,{
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }).then(res => {
+                if (!res.ok){
+                    showAlert(3, 'Error while loading services, please refresh the page and try again', 'Error');
+                    return;
+                }
+                return res.json();
+            }
+        ).then(data => {
+            setServices(data.data);
+            servicesHasBeenSet.current = true;
+        }).catch(reason => {
+            showAlert(3, reason.message, 'Error');
+        });
+}
