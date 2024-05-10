@@ -249,6 +249,18 @@ export function ViewWorkRequest() {
                           </Form>
                       </div>
                   </div>
+                  <div className="col-lg-6">
+                      <div className="card py-lg-3">
+                          <div className="col-10 offset-1 row my-4">
+                                  <div className="col-lg-6 d-grid">
+                                      <Button variant="outline-info">Client Comment</Button>
+                                  </div>
+                                  <div className="col-lg-6 d-grid">
+                                      <Button variant="outline-info">Workman Comment</Button>
+                                  </div>
+                          </div>
+                      </div>
+                  </div>
               </div>
           </div>
       </section>
