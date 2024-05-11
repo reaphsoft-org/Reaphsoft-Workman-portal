@@ -4,8 +4,8 @@ import {useAuth} from "../components/AuthContext";
 import {showAlert} from "../utils/alert";
 
 const Dashboard = ({user}) => {
-    const [workRequests, setWorkRequests] = useState([]);
     const userAuth = useAuth();
+    const [workRequests, setWorkRequests] = useState([]);
     useEffect(() => {
         try {
              fetch('http://localhost:3001/workmen/requested/services/?recent=true', {

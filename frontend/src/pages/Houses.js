@@ -5,8 +5,32 @@ import SweetAlertComponent, {showAlert} from "../utils/alert";
 import { Modal } from "react-bootstrap";
 import {range} from "../utils/range";
 
-const Houses = ({user}) => {
+const Houses = ({_}) => {
     const userAuth = useAuth();
+    const [page, setPage] = useState(1);
+    useEffect(() => {
+        fetch(`http://localhost:3001/estate/houses/${page}/`, {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer ' + userAuth.user.token,
+                'Content-Type': 'application/json'
+              }
+            }
+            )
+            .then((res) => {
+                if (!res.ok){
+                    alert(3,
+                        "Got a bad response from the server. Please contact the administrators.",
+                        "Error");
+                    return;
+                }
+                return res.json();
+            })
+            .then((result) => {setHouses(result)})
+            .catch((reason) => {
+                alert(3, reason.message, "Error");
+            });
+    }, [page, userAuth.user.token]);
     const [houseToDelete, setHouseToDelete] = useState({
         id: '',
         index: 0,
@@ -19,7 +43,6 @@ const Houses = ({user}) => {
         occupant_name: '',
     });
     const [newHouse, setNewHouse] = useState(0);
-    const [page, setPage] = useState(1);
     const [houses, setHouses] = useState({ pages: 0, data: []});
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -104,29 +127,6 @@ const Houses = ({user}) => {
       const component = new SweetAlertComponent();
       component.showSweetAlert(type, text, title);
     };
-    useEffect(() => {
-        fetch(`http://localhost:3001/estate/houses/${page}/`, {
-              method: 'GET',
-              headers: {
-                'Authorization': 'Bearer ' + userAuth.user.token,
-                'Content-Type': 'application/json'
-              }
-            }
-            )
-            .then((res) => {
-                if (!res.ok){
-                    alert(3,
-                        "Got a bad response from the server. Please contact the administrators.",
-                        "Error");
-                    return;
-                }
-                return res.json();
-            })
-            .then((result) => {setHouses(result)})
-            .catch((reason) => {
-                alert(3, reason.message, "Error");
-            });
-    }, [page, userAuth.user.token]);
     let count = houses.pages >= 5 ? 5 : houses.pages;
     return (
         <>

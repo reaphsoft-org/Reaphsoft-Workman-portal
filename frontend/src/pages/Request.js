@@ -77,9 +77,7 @@ const Request = ({ _ }) => {
         const workerName = selectedOption.getAttribute('data-name');
         setWorkman({id: workerID, name: workerName});
     }
-
     const [disableButton, setDisableButton] = useState(false);
-
     const submitRequest = () => {
       setDisableButton(true);
       if (!workman){
@@ -131,7 +129,6 @@ const Request = ({ _ }) => {
             setDisableButton(false);
         }
     }
-    
     return (
         <div className="col-xl-9 col-lg-8 m-b30">
             <div className="col-xl-10 col-lg-10 m-b30">

@@ -58,7 +58,7 @@ const User = ({content}) => {
   );
 };
 
-function AuthenticatedUser({user, content}) {
+function AuthenticatedUser({user, content: Content}) {
   return (
       <div className="page-wrapper">
       <Navbar />
@@ -68,7 +68,7 @@ function AuthenticatedUser({user, content}) {
             <div className="container">
               <div className="row">
                 <Sidebar user={user} />
-                  { content({user: user}) }
+                <Content user={user} />
               </div>
             </div>
           </div>
