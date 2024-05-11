@@ -12,6 +12,15 @@ export function ClientWorkRequest() {
     const { id } = useParams();
     const userAuth = useAuth();
     const [workRequest, setWorkRequest] = useState(null);
+    const notSelected = 'outline-secondary';
+    const selected = 'secondary';
+    const [ratings, setRatings] = useState({
+        one: notSelected,
+        two: notSelected,
+        three: notSelected,
+        four: notSelected,
+        five: notSelected,
+    });
     useEffect(() => {
         fetch(`http://localhost:3001/workmen/request/service/${id}/`, {
                  method: 'GET',
@@ -96,11 +105,37 @@ export function ClientWorkRequest() {
                             <Form.Group className="mb-3">
                                 <Form.Label>Rate Worker</Form.Label>
                                 <br/>
-                                <Button variant="outline-secondary" className="btn-sm"><i className="ti-star"></i></Button>
-                                <Button variant="outline-secondary" className="btn-sm"><i className="ti-star"></i></Button>
-                                <Button variant="outline-secondary" className="btn-sm"><i className="ti-star"></i></Button>
-                                <Button variant="outline-secondary" className="btn-sm"><i className="ti-star"></i></Button>
-                                <Button variant="outline-secondary" className="btn-sm"><i className="ti-star"></i></Button>
+                                <Button variant={ratings.one}
+                                        onClick={()=>{setRatings({
+                                            one: selected, two: notSelected, three: notSelected, four: notSelected, five: notSelected,
+                                        })}}
+                                        className="btn-sm"><i className="ti-star"></i>
+                                </Button>
+                                <Button variant={ratings.two}
+                                        onClick={()=>{setRatings({
+                                            one: selected, two: selected, three: notSelected, four: notSelected, five: notSelected,
+                                        })}}
+                                        className="btn-sm"><i className="ti-star"></i>
+                                </Button>
+                                <Button variant={ratings.three}
+                                        onClick={()=>{setRatings({
+                                            one: selected, two: selected, three: selected, four: notSelected, five: notSelected,
+                                        })}}
+                                        className="btn-sm"><i className="ti-star"></i>
+                                </Button>
+                                <Button variant={ratings.four}
+                                        onClick={()=>{setRatings({
+                                            one: selected, two: selected, three: selected, four: selected, five: notSelected,
+                                        })}}
+                                        className="btn-sm"><i className="ti-star"></i>
+                                </Button>
+                                <Button variant={ratings.five}
+                                        onClick={()=>{setRatings({
+                                            one: selected, two: selected, three: selected, four: selected, five: selected,
+                                        })}}
+                                        className="btn-sm"><i className="ti-star"></i>
+                                </Button>
+                            {/*    todo when submitting form show an alert when this form is submitted before work has been accepted. */}
                             </Form.Group>
                             <div className={"w-100"}></div>
                             <Form.Group className="mb-3 col-md-6">
