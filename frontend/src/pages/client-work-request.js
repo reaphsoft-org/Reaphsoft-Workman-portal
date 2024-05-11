@@ -6,7 +6,7 @@ import {useParams} from "react-router";
 import {useAuth} from "../components/AuthContext";
 import React, {useEffect, useState} from "react";
 import {showAlert} from "../utils/alert";
-import {Form, FormControl, Spinner} from "react-bootstrap";
+import {Button, Form, FormControl, FormText, Spinner} from "react-bootstrap";
 
 export function ClientWorkRequest() {
     const { id } = useParams();
@@ -38,40 +38,81 @@ export function ClientWorkRequest() {
                  });
     }, [id, userAuth.user.token]);
     return (
-        <div className="col-lg-8 my-2">
+        <div className="col-lg-8 mb-2">
             {
                 !workRequest ?
-                    <div className="text-center">
+                    <div className="my-3 text-center">
                         <Spinner animation="border" role="status" variant="primary">
                             <span className="visually-hidden">Loading...</span>
                         </Spinner>
                         <p className="my-2 text-dark">Loading</p>
                     </div> :
-                    <div className="row">
-                        <Form.Group className="mb-3 col-md-6">
-                            <Form.Label>Worker</Form.Label>
-                            <FormControl name="worker" value={workRequest.worker} type="name" readOnly={true}></FormControl>
-                        </Form.Group>
-                        <Form.Group className="mb-3 col-md-6">
-                            <Form.Label>Accepted</Form.Label>
-                            <FormControl name="accepted" value={workRequest.accepted ? 'Accepted' : 'Pending'} type="name" readOnly={true}></FormControl>
-                        </Form.Group>
-                        <Form.Group className="mb-3 col-md-6">
-                            <Form.Label>Date Created</Form.Label>
-                            <FormControl name="created" value={new Date(workRequest.date_created).toLocaleString()} type="text" readOnly={true}></FormControl>
-                        </Form.Group>
-                        <Form.Group className="mb-3 col-md-6">
-                            <Form.Label>Date Required</Form.Label>
-                            <FormControl name="required" value={new Date(workRequest.date_required).toLocaleString()} type="text" readOnly={true}></FormControl>
-                        </Form.Group>
-                        <Form.Group className="mb-3 col-md-6">
-                            <Form.Label>Date Accepted</Form.Label>
-                            <FormControl name="accepted" value={!workRequest.date_accepted ? 'NA' : new Date(workRequest.date_accepted).toLocaleString()} type="text" readOnly={true}></FormControl>
-                        </Form.Group>
-                        <Form.Group className="mb-3 col-md-6">
-                            <Form.Label>Date Completed</Form.Label>
-                            <FormControl name="completed" value={!workRequest.date_completed ? 'NA' : new Date(workRequest.date_completed).toLocaleString()} type="text" readOnly={true}></FormControl>
-                        </Form.Group>
+                    <div>
+                        <Form className="row">
+                            <Form.Group className="mb-3 col-md-6">
+                                <Form.Label>Worker</Form.Label>
+                                <FormControl name="worker" value={workRequest.worker} type="name"
+                                             readOnly={true}></FormControl>
+                            </Form.Group>
+                            <Form.Group className="mb-3 col-md-6">
+                                <Form.Label>Accepted</Form.Label>
+                                <FormControl name="accepted" value={workRequest.accepted ? 'Accepted' : 'Pending'}
+                                             type="name" readOnly={true}></FormControl>
+                            </Form.Group>
+                            <Form.Group className="mb-3 col-md-6">
+                                <Form.Label>Date Created</Form.Label>
+                                <FormControl name="created"
+                                             value={new Date(workRequest.date_created).toLocaleString()}
+                                             type="text" readOnly={true}></FormControl>
+                            </Form.Group>
+                            <Form.Group className="mb-3 col-md-6">
+                                <Form.Label>Date Accepted</Form.Label>
+                                <FormControl name="accepted"
+                                             value={!workRequest.date_accepted ? 'NA' : new Date(workRequest.date_accepted).toLocaleString()}
+                                             type="text" readOnly={true}></FormControl>
+                            </Form.Group>
+                            <Form.Group className="mb-3 col-md-6">
+                                <Form.Label>Date Completed</Form.Label>
+                                <FormControl name="completed"
+                                             value={!workRequest.date_completed ? 'NA' : new Date(workRequest.date_completed).toLocaleString()}
+                                             type="text" readOnly={true}></FormControl>
+                            </Form.Group>
+                            <Form.Group className="mb-3 col-md-6">
+                                <Form.Label>Date Required</Form.Label>
+                                <FormControl name="required"
+                                             value={new Date(workRequest.date_required).toLocaleString()}
+                                             type="text"
+                                             readOnly={true}></FormControl>
+                            </Form.Group>
+                            <div className="my-3 col-md-6 d-grid">
+                                <Button>Update</Button>
+                            </div>
+                        </Form>
+                        <div className="row my-4">
+                            <hr className="border border-secondary border-1 opacity-75" />
+                        </div>
+                        <Form className="row">
+                            <h6 className="text-dark mb-4">Rate Worker and mark job as completed</h6>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Rate Worker</Form.Label>
+                                <br/>
+                                <Button variant="outline-secondary" className="btn-sm"><i className="ti-star"></i></Button>
+                                <Button variant="outline-secondary" className="btn-sm"><i className="ti-star"></i></Button>
+                                <Button variant="outline-secondary" className="btn-sm"><i className="ti-star"></i></Button>
+                                <Button variant="outline-secondary" className="btn-sm"><i className="ti-star"></i></Button>
+                                <Button variant="outline-secondary" className="btn-sm"><i className="ti-star"></i></Button>
+                            </Form.Group>
+                            <div className={"w-100"}></div>
+                            <Form.Group className="mb-3 col-md-6">
+                                <Form.Label>Comment on service</Form.Label>
+                                <FormControl aria-describedby="commentFormText" rows={3} as="textarea" name="comment"></FormControl>
+                                <FormText id="commentFormText">Comment will be publicly available</FormText>
+                            </Form.Group>
+                            <div className={"w-100"}></div>
+                            <div className="my-3 col-md-6 d-grid">
+                                <Button variant="secondary">Submit</Button>
+                            </div>
+                        </Form>
                     </div>
             }
         </div>
