@@ -3,7 +3,7 @@ import { useState } from "react";
 import {useAuth} from "../components/AuthContext";
 import {showAlert} from "../utils/alert";
 
-const Request = ({ user }) => {
+const Request = ({ _ }) => {
     const userAuth = useAuth();
     const [services, setServices] = useState([]);
     const [workers, setWorkers] = useState([]);

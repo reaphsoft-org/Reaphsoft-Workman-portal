@@ -124,11 +124,9 @@ const Houses = ({user}) => {
             })
             .then((result) => {setHouses(result)})
             .catch((reason) => {
-                alert(3,
-                    reason.message,
-                    "Error");
+                alert(3, reason.message, "Error");
             });
-    }, [page, user, userAuth.user.token, newHouse]);
+    }, [page, userAuth.user.token]);
     let count = houses.pages >= 5 ? 5 : houses.pages;
     return (
         <>
