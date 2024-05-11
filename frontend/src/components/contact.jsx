@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {AnonFooter} from "./anon-footer";
 
 const Contact = () => {
     return ( 
@@ -125,39 +126,7 @@ const Contact = () => {
                         </div>
                     </div>
                 </div>
-                <footer className="site-footer">
-                    <div className="footer-top">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-xl-5 col-lg-4 col-md-12 col-sm-12">
-                                    <div className="widget"><img src="../asset/image/001-removebg-preview.png" style={{ width: 80, height: 80 }} className="m-b15" alt="" />
-                                        <p className="text-capitalize m-b20">Whether you need a one-time deep clean, regular maintenance, or emergency repairs, we've got you covered. Our flexible service options cater to your unique needs and schedule, ensuring convenience and peace of mind.</p>
-                                        <div className="subscribe-form m-b20">
-                                            <form className="dzSubscribe" action="script/mailchamp.php" method="post">
-                                                <div className="dzSubscribeMsg"></div>
-                                                <div className="input-group"><input name="dzEmail" required="" className="form-control" placeholder="Your Email Address" type="email" /><span className="input-group-btn"><button name="submit" value="Submit" type="submit" className="site-button radius-xl">Subscribe</button></span></div>
-                                            </form>
-                                        </div>
-                                        <ul className="list-inline m-a0">
-                                            <li><a className="site-button white facebook circle " href=""><i className="fa fa-facebook"></i></a></li>
-                                            <li><a className="site-button white google-plus circle " href=""><i className="fa fa-google-plus"></i></a></li>
-                                            <li><a className="site-button white linkedin circle " href=""><i className="fa fa-linkedin"></i></a></li>
-                                            <li><a className="site-button white instagram circle " href=""><i className="fa fa-instagram"></i></a></li>
-                                            <li><a className="site-button white twitter circle " href=""><i className="fa fa-twitter"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="footer-bottom">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-lg-12 text-center"><span> © Copyright by <i className="m-lr5 text-decoration-none"></i><a href="">Reaphsoft Limited</a></span></div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                <AnonFooter />
             </div>
         </div>
     );
