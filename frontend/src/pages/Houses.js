@@ -18,10 +18,12 @@ const Houses = ({user}) => {
         number: '',
         occupant_name: '',
     });
+    const [newHouse, setNewHouse] = useState(0);
+    const [page, setPage] = useState(1);
+    const [houses, setHouses] = useState({ pages: 0, data: []});
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
-    const [newHouse, setNewHouse] = useState(0);
     const addHouse = () => {
         setDisableAddHouse(true);
         handleCloseModal();
@@ -97,15 +99,11 @@ const Houses = ({user}) => {
             setDisableAddHouse(false);
         }
     }
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
-    const [page, setPage] = useState(1);
+    const handleCloseModal = () => {setShowModal(false);};
     const alert = (type, text, title) => {
       const component = new SweetAlertComponent();
       component.showSweetAlert(type, text, title);
     };
-    const [houses, setHouses] = useState({ pages: 0, data: []});
     useEffect(() => {
         fetch(`http://localhost:3001/estate/houses/${page}/`, {
               method: 'GET',
