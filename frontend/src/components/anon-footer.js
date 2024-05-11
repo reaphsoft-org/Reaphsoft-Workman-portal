@@ -3,6 +3,7 @@
 // github.com/kahlflekzy
 
 import React from "react";
+import logo from "./i/logo.png"
 
 export function AnonFooter() {
     return (
@@ -11,7 +12,7 @@ export function AnonFooter() {
                 <div className="container">
                     <div className="row">
                         <div className="col-xl-5 col-lg-4 col-md-12 col-sm-12">
-                        <div className="widget"><img src="asset/image/001-removebg-preview.png" style={{ width: 80, height: 80 }} className="m-b15" alt=""/>
+                        <div className="widget"><img src={logo} style={{ width: 80, height: 80 }} className="m-b15" alt=""/>
                             <p className="text-capitalize m-b20">Whether you need a one-time deep clean, regular maintenance, or emergency repairs, we've got you covered. Our flexible service options cater to your unique needs and schedule, ensuring convenience and peace of mind.</p>
                                 <div className="subscribe-form m-b20">
                                     <form className="dzSubscribe" action="script/mailchamp.php" method="post">
