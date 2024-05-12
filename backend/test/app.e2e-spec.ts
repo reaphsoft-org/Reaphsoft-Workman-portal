@@ -8,6 +8,7 @@ import { AppDataSource } from '../src/data-source';
 import { User } from '../src/entities/User';
 import { EstateManager } from '../src/entities/EstateManager';
 import { PasswordManager } from '../src/utilities/passwordmanager';
+import { login } from './utils/utils';
 
 const passwordManager = new PasswordManager();
 
@@ -345,26 +346,6 @@ async function partialPostDataTest(app: INestApplication<any>, api: string) {
     const data = resp.body;
     expect(data.status).toBe(false);
     expect(data.resp.includes('Invalid'));
-}
-
-async function login(
-    user: User | EstateManager,
-    password: string,
-    app: INestApplication,
-    account: number,
-) {
-    let token: string = '';
-    await request(app.getHttpServer())
-        .post('/auth/login/')
-        .send({ email: user.email, password: password, account: account })
-        .expect(201)
-        .then((resp) => {
-            const data = resp.body;
-            expect(data.status).toBe(true);
-            expect(data.access_token).toBeTruthy();
-            token = data.access_token;
-        });
-    return token;
 }
 
 describe('Accounts Estate Manager Tests', () => {

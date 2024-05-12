@@ -8,7 +8,7 @@ import {
     Put,
     UploadedFile,
     UseGuards,
-    UseInterceptors, UsePipes, ValidationPipe,
+    UseInterceptors,
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { AuthGuard } from '../auth/auth.guard';

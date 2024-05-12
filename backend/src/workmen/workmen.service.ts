@@ -6,6 +6,8 @@ import { ServiceRequestDto } from './dto/service-request.dto';
 import { User } from '../entities/User';
 import { EstateManager } from '../entities/EstateManager';
 import { EstateRequest, UserRequest } from '../entities/Request';
+import { RatingDto } from './dto/rating.dto';
+import { ClientRating } from '../entities/rating';
 
 @Injectable()
 export class WorkmenService {
@@ -16,6 +18,7 @@ export class WorkmenService {
     private readonly userRequestRepo = AppDataSource.getRepository(UserRequest);
     private readonly estateRequestRepo =
         AppDataSource.getRepository(EstateRequest);
+    private readonly ratingRepo = AppDataSource.getRepository(ClientRating);
 
     async getServices() {
         const services = await this.serviceRepo.find({
@@ -163,5 +166,50 @@ export class WorkmenService {
             date_created: request.date_created,
             worker: request.worker.service.name,
         }));
+    }
+
+    async addClientRating(
+        email: string,
+        type: number,
+        id: number,
+        dto: RatingDto,
+    ) {
+        const request: UserRequest | EstateRequest | null =
+            type == User.accountType
+                ? await this.userRequestRepo.findOne({
+                      where: {
+                          client: {
+                              email: email,
+                          },
+                          id: id,
+                      },
+                  })
+                : await this.estateRequestRepo.findOne({
+                      where: {
+                          client: {
+                              email: email,
+                          },
+                          id: id,
+                      },
+                  });
+        if (!request) return { status: false, resp: 'request not found' };
+        const stars = Number(dto.stars);
+        if (stars < 1 || stars > 5)
+            return { status: false, resp: 'stars should be between 1 & 5' };
+        if (dto.comment === '')
+            return { status: false, resp: 'please write a comment' };
+        if (request.date_completed)
+            return { status: false, resp: 'request has been completed' };
+        const clientRating = new ClientRating();
+        clientRating.stars = stars;
+        clientRating.comment = dto.comment;
+        request.client_rating = await this.ratingRepo.save(clientRating);
+        request.date_completed = new Date();
+        if (type == User.accountType) {
+            await this.userRequestRepo.save(request);
+        } else {
+            await this.estateRequestRepo.save(request);
+        }
+        return { status: false, resp: '' };
     }
 }

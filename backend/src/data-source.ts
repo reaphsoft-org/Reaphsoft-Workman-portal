@@ -7,6 +7,7 @@ import { SuperUser } from './entities/SuperUser';
 import { Service } from './entities/Service';
 import { EstateRequest, UserRequest } from './entities/Request';
 import { Workman } from './entities/Workman';
+import { ClientRating, WorkmanRating } from './entities/rating';
 
 let dbName: string;
 let dropOption: boolean;
@@ -37,6 +38,8 @@ export const AppDataSource = new DataSource({
         Workman,
         EstateRequest,
         UserRequest,
+        ClientRating,
+        WorkmanRating,
     ],
     migrations: ['./migrations/*.ts'],
     subscribers: ['./subscribers/*.ts'],

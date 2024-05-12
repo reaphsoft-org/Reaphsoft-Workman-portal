@@ -6,13 +6,16 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinColumn,
     ManyToOne,
+    OneToOne,
     PrimaryGeneratedColumn,
     Relation,
 } from 'typeorm';
 import { User } from './User';
 import { EstateManager } from './EstateManager';
 import { Workman } from './Workman';
+import { ClientRating, WorkmanRating } from './rating';
 
 abstract class RequestBase {
     @PrimaryGeneratedColumn()
@@ -38,6 +41,14 @@ abstract class RequestBase {
 
     @ManyToOne(() => Workman, { onDelete: 'SET NULL' })
     worker: Relation<Workman>;
+
+    @OneToOne(() => ClientRating)
+    @JoinColumn()
+    client_rating: Relation<ClientRating>;
+
+    @OneToOne(() => WorkmanRating)
+    @JoinColumn()
+    worker_rating: Relation<WorkmanRating>;
 }
 
 @Entity({

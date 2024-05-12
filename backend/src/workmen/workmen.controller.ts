@@ -4,6 +4,7 @@ import {
     Get,
     Param,
     Post,
+    Put,
     Query,
     UseGuards,
 } from '@nestjs/common';
@@ -11,6 +12,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { WorkmenService } from './workmen.service';
 import { ServiceRequestDto } from './dto/service-request.dto';
 import { Request as RequestDecorator } from '@nestjs/common/decorators/http/route-params.decorator';
+import { RatingDto } from './dto/rating.dto';
 
 @UseGuards(AuthGuard)
 @Controller('workmen/')
@@ -75,5 +77,23 @@ export class WorkmenController {
         // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
         const type = req.user.type;
         return this.service.getRequestedServices(email, type, recent);
+    }
+
+    @Put('request/service/rating/:id/')
+    async addClientRating(
+        @RequestDecorator() req: Request,
+        @Param('id') id: number,
+        @Body() dto: RatingDto,
+    ) {
+        if (Object.keys(dto).length === 0) {
+            return { status: false, resp: 'invalid request' };
+        }
+        if (dto.stars == undefined || dto.comment == undefined)
+            return { status: false, resp: 'invalid request, missing fields' };
+        // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
+        const email = req.user.email;
+        // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
+        const type = req.user.type;
+        return this.service.addClientRating(email, type, id, dto);
     }
 }
