@@ -38,6 +38,7 @@ export function ClientWorkRequest() {
                  .then(data => {
                     if (data.status === true){
                         setWorkRequest(data.data);
+                        setDisableButton(data.data.completed);
                     }else {
                         showAlert(3, data.resp, "Error");
                     }
@@ -46,6 +47,26 @@ export function ClientWorkRequest() {
                      showAlert(3, reason.message, "Error");
                  });
     }, [id, userAuth.user.token]);
+    const completeWorkRequest = (event) => {
+        event.preventDefault();
+        setDisableButton(true);
+        if(!workRequest.accepted){
+            showAlert(2, 'This can only be done after work has been accepted and completed', 'Work Acceptance Pending');
+            setDisableButton(false);
+            return;
+        }
+        if (completionForm.stars === 0){
+            showAlert(2, 'Please rate the service', 'Rate Worker');
+            setDisableButton(false);
+            return;
+        }
+        console.log(completionForm)
+    }
+    const [disableButton, setDisableButton] = useState(true);
+    const [completionForm, setCompletionForm] = useState({
+        stars: 0,
+        comment: ""
+    });
     return (
         <div className="col-lg-8 mb-2">
             {
@@ -94,43 +115,53 @@ export function ClientWorkRequest() {
                                              readOnly={true}></FormControl>
                             </Form.Group>
                             <div className="my-3 col-md-6 d-grid">
-                                <Button>Update</Button>
+                                <Button disabled={disableButton}>Update</Button>
                             </div>
                         </Form>
                         <div className="row my-4">
                             <hr className="border border-secondary border-1 opacity-75" />
                         </div>
-                        <Form className="row">
+                        <Form className="row" onSubmit={completeWorkRequest}>
                             <h6 className="text-dark mb-4">Rate Worker and mark job as completed</h6>
                             <Form.Group className="mb-3">
                                 <Form.Label>Rate Worker</Form.Label>
                                 <br/>
                                 <Button variant={ratings.one}
-                                        onClick={()=>{setRatings({
-                                            one: selected, two: notSelected, three: notSelected, four: notSelected, five: notSelected,
+                                        onClick={()=>{
+                                            setCompletionForm({ ...completionForm, 'stars': 1 });
+                                            setRatings({
+                                                one: selected, two: notSelected, three: notSelected, four: notSelected, five: notSelected,
                                         })}}
                                         className="btn-sm"><i className="ti-star"></i>
                                 </Button>
                                 <Button variant={ratings.two}
-                                        onClick={()=>{setRatings({
+                                        onClick={()=>{
+                                            setCompletionForm({ ...completionForm, 'stars': 2 });
+                                            setRatings({
                                             one: selected, two: selected, three: notSelected, four: notSelected, five: notSelected,
                                         })}}
                                         className="btn-sm"><i className="ti-star"></i>
                                 </Button>
                                 <Button variant={ratings.three}
-                                        onClick={()=>{setRatings({
+                                        onClick={()=>{
+                                            setCompletionForm({ ...completionForm, 'stars': 3 });
+                                            setRatings({
                                             one: selected, two: selected, three: selected, four: notSelected, five: notSelected,
                                         })}}
                                         className="btn-sm"><i className="ti-star"></i>
                                 </Button>
                                 <Button variant={ratings.four}
-                                        onClick={()=>{setRatings({
+                                        onClick={()=>{
+                                            setCompletionForm({ ...completionForm, 'stars': 4 });
+                                            setRatings({
                                             one: selected, two: selected, three: selected, four: selected, five: notSelected,
                                         })}}
                                         className="btn-sm"><i className="ti-star"></i>
                                 </Button>
                                 <Button variant={ratings.five}
-                                        onClick={()=>{setRatings({
+                                        onClick={()=>{
+                                            setCompletionForm({ ...completionForm, 'stars': 5 });
+                                            setRatings({
                                             one: selected, two: selected, three: selected, four: selected, five: selected,
                                         })}}
                                         className="btn-sm"><i className="ti-star"></i>
@@ -140,12 +171,22 @@ export function ClientWorkRequest() {
                             <div className={"w-100"}></div>
                             <Form.Group className="mb-3 col-md-6">
                                 <Form.Label>Comment on service</Form.Label>
-                                <FormControl aria-describedby="commentFormText" rows={3} as="textarea" name="comment"></FormControl>
+                                <FormControl
+                                    aria-describedby="commentFormText"
+                                    rows={3} as="textarea"
+                                    name="comment"
+                                    value={completionForm.comment}
+                                    required={true}
+                                    onChange={
+                                    (e)=> {
+                                        setCompletionForm({ ...completionForm, [e.target.name]: e.target.value })
+                                    }}>
+                                </FormControl>
                                 <FormText id="commentFormText">Comment will be publicly available</FormText>
                             </Form.Group>
                             <div className={"w-100"}></div>
                             <div className="my-3 col-md-6 d-grid">
-                                <Button variant="secondary">Submit</Button>
+                                <Button type="submit" variant="secondary" disabled={disableButton}>Submit</Button>
                             </div>
                         </Form>
                     </div>
