@@ -154,7 +154,9 @@ export class WorkmenService {
                           },
                       },
                       relations: {
-                          worker: true,
+                          worker: {
+                              service: true,
+                          },
                       },
                       take: recent ? 5 : undefined,
                   })

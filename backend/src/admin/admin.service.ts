@@ -469,8 +469,11 @@ export class AdminService {
         }
         if (requestUpdateDto.date_required !== undefined)
             request.date_required = requestUpdateDto.date_required;
-        if (requestUpdateDto.accepted !== undefined)
+        if (requestUpdateDto.accepted !== undefined) {
             request.accepted = requestUpdateDto.accepted.toString() == '1';
+            if (request.accepted) request.date_accepted = new Date();
+            else request.date_accepted = null;
+        }
         if (requestUpdateDto.worker !== undefined) {
             const worker = await this.workmanRepo.findOneBy({
                 email: requestUpdateDto.worker,
