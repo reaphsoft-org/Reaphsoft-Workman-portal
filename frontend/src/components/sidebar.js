@@ -25,65 +25,36 @@ const Sidebar = ({user}) => {
                                     <span>Dashboard</span>
                                 </Link>
                             </li>
-                    {user.accountType === 1 &&
-                        <>
-                            <li>
-                                <Link to="/user/profile/" className='text-decoration-none'>
-                                    <span>Profile</span>
+                        <li>
+                            <Link to="/user/profile/" className='text-decoration-none'>
+                                <span>Profile</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/user/update/" className='text-decoration-none'>
+                                <span>Update Profile</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/user/change/password/" className='text-decoration-none'>
+                                <span>Change Password</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/work/request/service/" className='text-decoration-none'>
+                                <span>Request Workman</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/work/requests/" className='text-decoration-none'>
+                                    <span>Work Request History</span>
                                 </Link>
-                            </li>
-                            <li>
-                                <Link to="/user/request/" className='text-decoration-none'>
-                                    <span>Workman Request</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/user/job/" className='text-decoration-none'>
-                                    <span>Request History</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/user/update/" className='text-decoration-none'>
-                                    <span>Update Profile</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/user/change/password/" className='text-decoration-none'>
-                                    <span>Change Password</span>
-                                </Link>
-                            </li>
-                        </>
-                    }
+                        </li>
                     {user.accountType === 2  &&
                         <>
                             <li>
-                                <Link to="/user/profile/" className='text-decoration-none'>
-                                    <span>Estate Profile</span>
-                                </Link>
-                            </li>
-                            <li>
                                 <Link to="/estate/houses/" className='text-decoration-none'>
                                     <span>Estate Houses</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/work/request/service/" className='text-decoration-none'>
-                                    <span>Request Workman</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/work/requests/" className='text-decoration-none'>
-                                    <span>Work Request History</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/user/update/" className='text-decoration-none'>
-                                    <span>Update Estate Profile</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/user/change/password/" className='text-decoration-none'>
-                                    <span>Change Estate Password</span>
                                 </Link>
                             </li>
                         </>
