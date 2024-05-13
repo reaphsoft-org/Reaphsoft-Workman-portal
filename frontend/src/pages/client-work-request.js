@@ -38,7 +38,7 @@ export function ClientWorkRequest() {
                  .then(data => {
                     if (data.status === true){
                         setWorkRequest(data.data);
-                        setDisableButton(data.data.completed);
+                        setDisableButton(data.data.completed !== null);
                     }else {
                         showAlert(3, data.resp, "Error");
                     }
@@ -60,7 +60,31 @@ export function ClientWorkRequest() {
             setDisableButton(false);
             return;
         }
-        console.log(completionForm)
+        fetch(`http://localhost:3001/workmen/request/service/rating/${id}/`, {
+            method: 'PUT',
+            headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userAuth.user.token}`
+                 },
+            body: JSON.stringify(completionForm),
+            }).then((res) => {
+                if (!res.ok) {
+                    showAlert(3, "Received a bad response from the server.", "Error");
+                    return;
+                }
+                return res.json();
+             })
+                 .then(data => {
+                    if (data.status === true){
+                        showAlert(1, 'Successfully sent rating and marked job as completed', "Success");
+                    }else {
+                        showAlert(3, data.resp, "Error");
+                        setDisableButton(false);
+                    }
+                 })
+                 .catch((reason) => {
+                     showAlert(3, reason.message, "Error");
+                 });
     }
     const [disableButton, setDisableButton] = useState(true);
     const [completionForm, setCompletionForm] = useState({

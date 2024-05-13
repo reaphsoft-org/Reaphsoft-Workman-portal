@@ -99,8 +99,17 @@ describe('Workmen (e2e)', () => {
             .auth(token, { type: 'bearer' })
             .send(data)
             .expect(200)
-            .then((res) => {
-                console.log(res.body);
+            .then(async (res) => {
+                expect(res.body.status).toBe(true);
+                const request = await uRequestRepo.findOne({
+                    where: { id: userWorkRequest.id },
+                    relations: {
+                        client_rating: true,
+                    },
+                });
+                expect(request?.date_completed).toBeTruthy();
+                expect(request?.client_rating.stars).toBe(Number(data.stars));
+                expect(request?.client_rating.comment).toBe(data.comment);
             });
     });
 });
