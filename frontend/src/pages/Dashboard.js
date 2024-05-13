@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import {useAuth} from "../components/AuthContext";
 import {showAlert} from "../utils/alert";
+import {Image} from "react-bootstrap";
+import fp5464326_2808307 from "../components/i/fp5464326_2808307.jpg";
 
 const Dashboard = ({user}) => {
     const userAuth = useAuth();
@@ -47,7 +49,6 @@ const Dashboard = ({user}) => {
                             <div className="clearfix m-b20"><label className="m-b0">Estate</label><span className="clearfix font-13 text-black">{user.estate}</span></div>}
                         <div className="clearfix m-b20"><label className="m-b0">Service Type</label><span className="clearfix font-13 text-black">{user.serviceType === 1 ? 'Priority' : 'Priority Plus'}</span></div>
                     </div>
-                    
                 </div>
             </div>
             <div className="job-bx table-job-bx browse-job clearfix">
@@ -71,6 +72,14 @@ const Dashboard = ({user}) => {
                         </tr>
                     ))}
                         {/*Electrician, Cleaner*/}
+                    {workRequests.length === 0 &&
+                        <tr>
+                            <td colSpan={3}>
+                                <Image src={fp5464326_2808307}/>
+                                <h6 className="text-center">No recent requests</h6>
+                            </td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             </div>
