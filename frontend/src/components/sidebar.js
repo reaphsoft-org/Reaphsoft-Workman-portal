@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { logout } from '../utils/auth';
 import { useAuth } from './AuthContext';
+import {Button} from "react-bootstrap";
+
 const Sidebar = ({user}) => {
     const userAuth = useAuth();
     return (
@@ -13,23 +15,19 @@ const Sidebar = ({user}) => {
                             <img alt={user.fullname} className="img-fluid" src={ user.photoURL !== '' ? "http://localhost:3001/" + user.photoURL : null} style={{width: '150px', height: '150px'}}/>
                         </div>
                         <div className="candidate-title">
-                            <div className="">
-                                <h5 className="m-b5"><a className="link-offset-2 link-underline-primary text-decoration-none text-black">{user.fullname}</a>
-                                </h5>
-                                <p className="m-b0"><a className="link-offset-2 link-underline-secondary text-black">{user.address}</a>
-                                </p>
-                            </div>
+                            <h5 className="mb-2 text-dark">{user.fullname}</h5>
+                            <p className="mb-0 text-dark">{user.address}</p>
                         </div>
                     </div>
                     <ul>
-                    {user.accountType === 1 &&
-                        <div >
-                            <li >
+                        <li>
                                 <Link to="/user/" className='text-decoration-none'>
                                     <span>Dashboard</span>
                                 </Link>
                             </li>
-                                <li>
+                    {user.accountType === 1 &&
+                        <>
+                            <li>
                                 <Link to="/user/profile/" className='text-decoration-none'>
                                     <span>Profile</span>
                                 </Link>
@@ -54,21 +52,11 @@ const Sidebar = ({user}) => {
                                     <span>Change Password</span>
                                 </Link>
                             </li>
-                            <li>
-                                <Link variant="link" className="link-offset-3 text-decoration-none" onClick={() => logout(userAuth)}>
-                                    <span>Log Out</span>
-                                </Link>
-                            </li>
-                        </div>
+                        </>
                     }
                     {user.accountType === 2  &&
                         <>
-                            <li >
-                                <Link to="/user/" className='text-decoration-none'>
-                                    <span> Estate Dashboard</span>
-                                </Link>
-                            </li>
-                                <li>
+                            <li>
                                 <Link to="/user/profile/" className='text-decoration-none'>
                                     <span>Estate Profile</span>
                                 </Link>
@@ -98,13 +86,12 @@ const Sidebar = ({user}) => {
                                     <span>Change Estate Password</span>
                                 </Link>
                             </li>
-                            <li>
-                                <Link variant="link" className="link-offset-3 text-decoration-none" onClick={() => logout(userAuth)}>
-                                    <span>Log Out</span>
-                                </Link>
-                            </li>
                         </>
                     }
+                        <li>
+                            <hr className= "border border-secondary my-0 border-1 opacity-25" />
+                            <Button variant='link' className='text-decoration-none' onClick={() => logout(userAuth)}><i className="ti ti-power-off px-2 "></i>Log Out</Button>
+                        </li>
                     </ul>
                 </div>
             </div>
