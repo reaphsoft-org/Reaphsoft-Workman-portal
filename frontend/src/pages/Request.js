@@ -1,7 +1,8 @@
-import React, {useEffect} from "react";
-import { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {useAuth} from "../components/AuthContext";
 import {showAlert} from "../utils/alert";
+import {Alert, Button} from "react-bootstrap";
+import mStyle from "./register.module.css";
 
 const Request = ({ _ }) => {
     const userAuth = useAuth();
@@ -34,6 +35,8 @@ const Request = ({ _ }) => {
     }, [userAuth.user.token]);
     const [date, setDate] = useState(null);
     const [workman, setWorkman] = useState(null);
+    const [workmanOverview, setWorkmanOverview] = useState([]);
+    const [showOverView, setShowOverView] = useState(false);
     const handleSelectServiceChange = (event) => {
         const selectedOption = event.target.options[event.target.selectedIndex];
         const serviceName = selectedOption.value;
@@ -42,6 +45,7 @@ const Request = ({ _ }) => {
             return;
         }
         const serviceId = selectedOption.getAttribute('data-id');
+        setShowOverView(false);
         // todo disable services select while fetching
         try {
             fetch(`http://localhost:3001/workmen/services/workers/?id=${serviceId}&name=${serviceName}`, {
@@ -76,6 +80,28 @@ const Request = ({ _ }) => {
         const workerID = selectedOption.value;
         const workerName = selectedOption.getAttribute('data-name');
         setWorkman({id: workerID, name: workerName});
+        if (workerID === 'Select Worker') return;
+
+        fetch(`http://localhost:3001/workmen/worker/b/rating/${workerID}/`, {
+            method: 'GET',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userAuth.user.token}`
+        },
+        }).then((res) => {
+            if (!res.ok) {
+                showAlert(3, `Error trying to get workman overview. ${res.statusText}`, "Error");
+                return;
+            }
+            return res.json();
+        })
+         .then(data => {
+            setWorkmanOverview(data);
+            setShowOverView(true);
+         })
+         .catch((reason) => {
+             showAlert(3, reason.message, "Error");
+         });
     }
     const [disableButton, setDisableButton] = useState(false);
     const submitRequest = () => {
@@ -159,6 +185,9 @@ const Request = ({ _ }) => {
                                 </div>
                             </div>
                             <div className="col-12">
+                                <WorkmanOverviewAlert data={workmanOverview} showOverview={showOverView} setShowOverview={setShowOverView} />
+                            </div>
+                            <div className="col-12">
                                 <div className="form-group text-black">
                                     <label>Date & Time Needed:</label>
                                     <input type="datetime-local" className="form-control" onChange={handleDateChange} placeholder="2020-01-01" spellCheck="false" data-ms-editor="true" />
@@ -176,3 +205,25 @@ const Request = ({ _ }) => {
     );
 }
 export default Request;
+
+function WorkmanOverviewAlert({data, showOverview, setShowOverview}) {
+    // todo, on slow networks show a spinner
+    if (showOverview) {
+        return (
+          <Alert variant="light" onClose={() => setShowOverview(false)} dismissible>
+            <Alert.Heading>Workman Rating Overview</Alert.Heading>
+              {
+                  data.map((r, index) =>
+                    <div key={index} className="my-3">
+                        <p className="m-0"><strong>Rating</strong>: {r.stars}/5</p>
+                        <p><strong>Comment</strong>: {r.comment}</p>
+                    </div>
+                  )
+              }
+              {
+                  data.length === 0 ? <p>No ratings found for this worker.</p> : <Button href={'#'} variant='outline-primary' className={`btn-sm ${mStyle.alertA}`}>See More</Button>
+              }
+          </Alert>
+        );
+    }
+}

@@ -1,0 +1,5 @@
+.alertA{
+    font-weight: var(--bs-btn-font-weight) !important;
+    color: var(--bs-btn-color) !important;
+    text-decoration: none !important;
+}

@@ -98,7 +98,10 @@ export class WorkmenController {
     }
     // get top two and bottom two ratings for a workman, input is his/her id
     @Get('worker/b/rating/:id/')
-    async getOverviewRatings(@RequestDecorator() req: Request, @Param('id') id: number) {
+    async getOverviewRatings(
+        @RequestDecorator() req: Request,
+        @Param('id') id: number,
+    ) {
         return this.service.getOverviewRatings(id);
     }
 }
