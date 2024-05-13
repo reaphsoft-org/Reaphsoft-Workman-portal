@@ -14,6 +14,7 @@ import { EstateRequest, UserRequest } from '../src/entities/Request';
 import { Service } from '../src/entities/Service';
 import { Workman } from '../src/entities/Workman';
 import { login } from './utils/utils';
+import { ClientRating } from '../src/entities/rating';
 
 describe('Workmen (e2e)', () => {
     let app: INestApplication;
@@ -23,12 +24,14 @@ describe('Workmen (e2e)', () => {
     let eRequestRepo: Repository<EstateRequest>;
     let serviceRepo: Repository<Service>;
     let workmanRepo: Repository<Workman>;
+    let clientRatingRepo: Repository<ClientRating>;
     let cUser: User;
     let cEstate: EstateManager;
     const defaultPassword = '1234xx%%%%12@';
     let service: Service;
     let workman: Workman;
     let userWorkRequest: UserRequest;
+    let token: string;
 
     beforeAll(async () => {
         const moduleRef = await Test.createTestingModule({
@@ -59,6 +62,7 @@ describe('Workmen (e2e)', () => {
         serviceRepo = AppDataSource.getRepository(Service);
         workmanRepo = AppDataSource.getRepository(Workman);
         uRequestRepo = AppDataSource.getRepository(UserRequest);
+        clientRatingRepo = AppDataSource.getRepository(ClientRating);
 
         service = new Service();
         service.name = 'Cleaner';
@@ -79,17 +83,12 @@ describe('Workmen (e2e)', () => {
         userWorkRequest.accepted = true;
         userWorkRequest.worker = workman;
         userWorkRequest.date_required = new Date();
-
         userWorkRequest = await uRequestRepo.save(userWorkRequest);
+
+        token = await login(cUser, defaultPassword, app, User.accountType);
     });
 
     it('working case', async () => {
-        const token = await login(
-            cUser,
-            defaultPassword,
-            app,
-            User.accountType,
-        );
         const data = {
             stars: '4',
             comment: 'a comment',
@@ -110,6 +109,21 @@ describe('Workmen (e2e)', () => {
                 expect(request?.date_completed).toBeTruthy();
                 expect(request?.client_rating.stars).toBe(Number(data.stars));
                 expect(request?.client_rating.comment).toBe(data.comment);
+            });
+    });
+    it('should get ratings for worker', async () => {
+        const rating = new ClientRating();
+        rating.comment = 'some comment';
+        rating.stars = 5;
+        await clientRatingRepo.save(rating);
+        userWorkRequest.client_rating = rating;
+        await uRequestRepo.save(userWorkRequest);
+        return request(app.getHttpServer())
+            .get(`/workmen/worker/b/rating/${workman.id}/`)
+            .auth(token, { type: 'bearer' })
+            .expect(200)
+            .then(async (r) => {
+                expect(r.body.length).toBeGreaterThan(0);
             });
     });
 });

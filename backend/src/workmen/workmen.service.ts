@@ -8,6 +8,7 @@ import { EstateManager } from '../entities/EstateManager';
 import { EstateRequest, UserRequest } from '../entities/Request';
 import { RatingDto } from './dto/rating.dto';
 import { ClientRating } from '../entities/rating';
+import { IsNull, Not } from 'typeorm';
 
 @Injectable()
 export class WorkmenService {
@@ -221,5 +222,133 @@ export class WorkmenService {
             await this.estateRequestRepo.save(request);
         }
         return { status: true, resp: '' };
+    }
+
+    async getOverviewRatings(workerId: number) {
+        const topTwoUserRequestsRating = await this.userRequestRepo.find({
+            select: {
+                client_rating: {
+                    stars: true,
+                    comment: true,
+                },
+            },
+            where: {
+                worker: {
+                    id: workerId,
+                },
+                client_rating: Not(IsNull()),
+            },
+            relations: {
+                client_rating: true,
+            },
+            take: 2,
+            order: {
+                client_rating: {
+                    stars: 'DESC',
+                },
+            },
+        });
+        const bottomTwoUserRequestsRating = await this.userRequestRepo.find({
+            select: {
+                client_rating: {
+                    stars: true,
+                    comment: true,
+                },
+            },
+            where: {
+                worker: {
+                    id: workerId,
+                },
+                client_rating: Not(IsNull()),
+            },
+            relations: {
+                client_rating: true,
+            },
+            take: 2,
+            order: {
+                client_rating: {
+                    stars: 'ASC',
+                },
+            },
+        });
+        const topTwoEstateRequestsRating = await this.estateRequestRepo.find({
+            select: {
+                client_rating: {
+                    stars: true,
+                    comment: true,
+                },
+            },
+            where: {
+                worker: {
+                    id: workerId,
+                },
+                client_rating: Not(IsNull()),
+            },
+            relations: {
+                client_rating: true,
+            },
+            take: 2,
+            order: {
+                client_rating: {
+                    stars: 'DESC',
+                },
+            },
+        });
+        const bottomTwoEstateRequestsRating = await this.estateRequestRepo.find(
+            {
+                select: {
+                    client_rating: {
+                        stars: true,
+                        comment: true,
+                    },
+                },
+                where: {
+                    worker: {
+                        id: workerId,
+                    },
+                    client_rating: Not(IsNull()),
+                },
+                relations: {
+                    client_rating: true,
+                },
+                take: 2,
+                order: {
+                    client_rating: {
+                        stars: 'ASC',
+                    },
+                },
+            },
+        );
+        const res: { stars: number; comment: string }[] = [];
+        res.push(
+            ...topTwoUserRequestsRating.map((r) => ({
+                stars: r.client_rating.stars,
+                comment: r.client_rating.comment,
+            })),
+        );
+        res.push(
+            ...bottomTwoUserRequestsRating.map((r) => ({
+                stars: r.client_rating.stars,
+                comment: r.client_rating.comment,
+            })),
+        );
+        res.push(
+            ...topTwoEstateRequestsRating.map((r) => ({
+                stars: r.client_rating.stars,
+                comment: r.client_rating.comment,
+            })),
+        );
+
+        res.push(
+            ...bottomTwoEstateRequestsRating.map((r) => ({
+                stars: r.client_rating.stars,
+                comment: r.client_rating.comment,
+            })),
+        );
+        const uniqueRes: { stars: number; comment: string }[] = [
+            ...new Set(res.map((a) => JSON.stringify(a))),
+        ].map((a) => JSON.parse(a));
+        uniqueRes.sort((a, b) => b.stars - a.stars);
+        return uniqueRes;
     }
 }

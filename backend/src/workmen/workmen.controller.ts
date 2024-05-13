@@ -96,4 +96,9 @@ export class WorkmenController {
         const type = req.user.type;
         return this.service.addClientRating(email, type, id, dto);
     }
+    // get top two and bottom two ratings for a workman, input is his/her id
+    @Get('worker/b/rating/:id/')
+    async getOverviewRatings(@RequestDecorator() req: Request, @Param('id') id: number) {
+        return this.service.getOverviewRatings(id);
+    }
 }
