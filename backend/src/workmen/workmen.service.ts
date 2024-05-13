@@ -104,6 +104,7 @@ export class WorkmenService {
                       },
                       relations: {
                           worker: true,
+                          client_rating: true,
                       },
                   })
                 : await this.estateRequestRepo.findOne({
@@ -115,6 +116,7 @@ export class WorkmenService {
                       },
                       relations: {
                           worker: true,
+                          client_rating: true,
                       },
                   });
         if (!request)
@@ -129,6 +131,14 @@ export class WorkmenService {
                 date_accepted: request.date_accepted,
                 date_completed: request.date_completed,
                 worker: request.worker.fullname,
+                stars:
+                    request.client_rating !== null
+                        ? request.client_rating.stars
+                        : 0,
+                comment:
+                    request.client_rating !== null
+                        ? request.client_rating.comment
+                        : '',
             },
         };
     }

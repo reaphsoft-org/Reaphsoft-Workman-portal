@@ -12,8 +12,8 @@ export function ClientWorkRequest() {
     const { id } = useParams();
     const userAuth = useAuth();
     const [workRequest, setWorkRequest] = useState(null);
-    const notSelected = 'outline-secondary';
-    const selected = 'secondary';
+    const notSelected = 'outline-primary';
+    const selected = 'primary';
     const [ratings, setRatings] = useState({
         one: notSelected,
         two: notSelected,
@@ -39,6 +39,11 @@ export function ClientWorkRequest() {
                     if (data.status === true){
                         setWorkRequest(data.data);
                         setDisableButton(data.data.completed !== null);
+                        setCompletionForm({
+                            stars: data.data.stars,
+                            comment: data.data.comment,
+                        });
+                        setRatingButtons(data.data.stars);
                     }else {
                         showAlert(3, data.resp, "Error");
                     }
@@ -91,6 +96,31 @@ export function ClientWorkRequest() {
         stars: 0,
         comment: ""
     });
+    const setRatingButtons = (selection) => {
+      switch (selection) {
+          case 1:
+              setRatings({
+                  one: selected, two: notSelected, three: notSelected, four: notSelected, five: notSelected});
+              break;
+          case 2:
+              setRatings({
+                  one: selected, two: selected, three: notSelected, four: notSelected, five: notSelected});
+              break;
+          case 3:
+              setRatings({one: selected, two: selected, three: selected, four: notSelected, five: notSelected});
+              break;
+          case 4:
+              setRatings({one: selected, two: selected, three: selected, four: selected, five: notSelected});
+              break;
+          case 5:
+              setRatings({one: selected, two: selected, three: selected, four: selected, five: selected});
+              break;
+          default:
+              setRatings({
+                  one: notSelected, two: notSelected, three: notSelected, four: notSelected, five: notSelected});
+              break;
+      }
+    }
     return (
         <div className="col-lg-8 mb-2">
             {
@@ -190,7 +220,7 @@ export function ClientWorkRequest() {
                                         })}}
                                         className="btn-sm"><i className="ti-star"></i>
                                 </Button>
-                            {/*    todo when submitting form show an alert when this form is submitted before work has been accepted. */}
+                                <FormText>{completionForm.stars}/5</FormText>
                             </Form.Group>
                             <div className={"w-100"}></div>
                             <Form.Group className="mb-3 col-md-6">
