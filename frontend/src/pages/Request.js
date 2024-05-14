@@ -3,6 +3,7 @@ import {useAuth} from "../components/AuthContext";
 import {showAlert} from "../utils/alert";
 import {Alert, Button} from "react-bootstrap";
 import mStyle from "./register.module.css";
+import {range} from "../utils/range";
 
 const Request = ({ _ }) => {
     const userAuth = useAuth();
@@ -215,7 +216,7 @@ function WorkmanOverviewAlert({data, showOverview, setShowOverview}) {
               {
                   data.map((r, index) =>
                     <div key={index} className="my-3">
-                        <p className="m-0"><strong>Rating</strong>: {r.stars}/5</p>
+                        <p className="m-0"><strong>Rating</strong>: <Stars stars={r.stars} /></p>
                         <p><strong>Comment</strong>: {r.comment}</p>
                     </div>
                   )
@@ -226,4 +227,17 @@ function WorkmanOverviewAlert({data, showOverview, setShowOverview}) {
           </Alert>
         );
     }
+}
+
+function Stars({stars}) {
+    return (
+        <>
+            {
+                range(stars).map((i) => <i key={i} className="zmdi zmdi-star text-primary"></i>)
+            }
+            {
+                range(5 - stars).map((i) => <i key={i} className="ti ti-star text-primary"></i>)
+            }
+        </>
+    );
 }
