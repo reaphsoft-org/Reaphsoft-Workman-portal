@@ -38,7 +38,7 @@ export function ClientWorkRequest() {
                  .then(data => {
                     if (data.status === true){
                         setWorkRequest(data.data);
-                        setDisableButton(data.data.completed !== null);
+                        setDisableButton(data.data.date_completed !== null);
                         setCompletionForm({
                             stars: data.data.stars,
                             comment: data.data.comment,

@@ -455,7 +455,7 @@ export class AdminService {
         requestUpdateDto: RequestUpdateDto,
     ) {
         const repo =
-            type === User.accountType
+            Number(type) === User.accountType
                 ? this.userRequestRepo
                 : this.estateRequestRepo;
         const request = await repo.findOneBy({
@@ -490,7 +490,7 @@ export class AdminService {
 
     async getWorkRequest(id: number, type: number) {
         const repo =
-            type === User.accountType
+            Number(type) === User.accountType
                 ? this.userRequestRepo
                 : this.estateRequestRepo;
         const request = await repo.findOne({
