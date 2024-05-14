@@ -211,18 +211,26 @@ function WorkmanOverviewAlert({data, showOverview, setShowOverview}) {
     // todo, on slow networks show a spinner
     if (showOverview) {
         return (
-          <Alert variant="light" onClose={() => setShowOverview(false)} dismissible>
+          <Alert variant="primary" className="text-light" onClose={() => setShowOverview(false)} dismissible>
             <Alert.Heading>Workman Rating Overview</Alert.Heading>
+              <div className="row">
+                  <div className="col-lg-9">
+                  {
+                      data.map((r, index) =>
+                        <div key={index} className="my-3">
+                            <p className="m-0"><strong>Rating</strong>: <Stars stars={r.stars} /></p>
+                            <p><strong>Comment</strong>: {r.comment}</p>
+                        </div>
+                      )
+                  }
+                  </div>
+                  <div className="col-lg-3 ms-auto">
+                      {/* https://icons8.com/icon/set/certified/group-filled--static--white */}
+                      <img alt="certified" className="float-end" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAACdklEQVR4nO2aPU8UQRiAx1xigoYCNQp/gQIhJFZ+JBIKSWzEToIfhfTGWGhC7OQvWJyxsPCUDhQKSims+AMEaPQKo4UFFiiPmeQ9M26WYw/2453ZeZLN7e28++ad5272ZnfOmEgkEolEMgNcA1aAH+jA1vERuGqKBngC/EEntq7HRXb+NrCPbmx900V0/hTQxg++An15C7iHLprAednsfpLZvAUsooeVlPrsRdnlfd4CdtDD9ZT6JhIx23kL2EUPZ1PqO5eI2a2VAEsyyAQ8BCYOqLFQAYvowV7wTpQt4C66eAVcKFNAn0wwVFGaAAtwS9tU2Dh0a8sN4JGmm6HSBViAK8AH4Hs13U7vZLe2WkAU8D+VWNdEFFAGKCYKKAOqtH/IN7DSAkzdBWggCigDFFOpAJNjrijgiOT/caeAYkwZoJjQBLwAFrwRYI4n7Ruw5bx/aZ8Cy2b3O2xJbHACmhI3IH/GaACnZWvIsQGJaaoUAJwBLgF3gOfAG+Bzxsdo85L7ZOcVWJXt3zF5ndcq4DjMSO51YBPYcNo25Ni6xMyEJOATcLOz6nPIOsQXp4bLwFLykb1vAlpOzhEZMt3WIPYlZsQ5763PAvaAYcm51sN5a3LOsOTwVoBlWXJezLj4YmPG5Ry7ToHvApYk5+gRBCz7LmCv7kOglcNFsOWzAOr+M+gy2cNEaJID8FnAWA9T4bEQBQz1cDM0FJqA39LJhuxbXqfcDqfFBSGgLXkHE8cXUh6IDEpsuzIBRdFtbDuMmlABpjIIuGFCBXiQQcB9EyrAM+nkL+CdTHbG5SL4U9qemlAB5oCHQH9KW7+0zVVTXSQSMQHxF1iWeXhuLGitAAAAAElFTkSuQmCC" />
+                  </div>
+              </div>
               {
-                  data.map((r, index) =>
-                    <div key={index} className="my-3">
-                        <p className="m-0"><strong>Rating</strong>: <Stars stars={r.stars} /></p>
-                        <p><strong>Comment</strong>: {r.comment}</p>
-                    </div>
-                  )
-              }
-              {
-                  data.length === 0 ? <p>No ratings found for this worker.</p> : <Button href={'#'} variant='outline-primary' className={`btn-sm ${mStyle.alertA}`}>See More</Button>
+                  data.length === 0 ? <p>No ratings found for this worker.</p> : <Button href={'#'} variant='outline-light' className={`btn-sm ${mStyle.alertA}`}>See More</Button>
               }
           </Alert>
         );
@@ -233,10 +241,10 @@ function Stars({stars}) {
     return (
         <>
             {
-                range(stars).map((i) => <i key={i} className="zmdi zmdi-star text-primary"></i>)
+                range(stars).map((i) => <i key={i} className="zmdi zmdi-star"></i>)
             }
             {
-                range(5 - stars).map((i) => <i key={i} className="ti ti-star text-primary"></i>)
+                range(5 - stars).map((i) => <i key={i} className="ti ti-star"></i>)
             }
         </>
     );
