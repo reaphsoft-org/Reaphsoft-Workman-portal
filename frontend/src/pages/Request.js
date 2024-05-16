@@ -183,6 +183,7 @@ const Request = ({ _ }) => {
                                         <option>Select Worker</option>
                                         {workers?.map((worker) => (<option key={worker.id} value={worker.id} data-name={worker.fullname}>{worker.fullname} ({worker.availability})</option>))}
                                     </select>
+                                    <p className="form-text">Please note that you can only see the skilled workmen for the service you selected</p>
                                 </div>
                             </div>
                             <div className="col-12">
@@ -195,7 +196,7 @@ const Request = ({ _ }) => {
                                 </div>
                             </div>
                             <div className="col-12 text-black">
-                                <p>Please note that the selected services are concordant with the skilled workmen</p>
+
                             </div>
                         </div>
                         <button type="button" className="site-button m-b30 mt-4 align-center" onClick={submitRequest} disabled={disableButton}>Request Worker</button>
