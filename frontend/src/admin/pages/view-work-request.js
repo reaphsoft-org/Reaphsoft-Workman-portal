@@ -6,7 +6,8 @@ import {useParams} from "react-router";
 import {useAuth} from "../../components/AuthContext";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {Button, Form, FormControl, FormSelect} from "react-bootstrap";
-import {showAlert} from "../../utils/alert";
+import {showAlert, showDeleteDialog} from "../../utils/alert";
+import {deleteModel} from "../utils/utils";
 
 export function ViewWorkRequest() {
     const { type } = useParams();
@@ -14,8 +15,7 @@ export function ViewWorkRequest() {
     const userAuth = useAuth();
     const fetchWorkers = useRef(true);
     const workerEmail = useRef('');
-    const getServices = useCallback(
-        (service_id) => {
+    const getServices = useCallback((service_id) => {
         fetch(`http://localhost:3001/admin/service/workmen/${service_id}/`,
             {
                 method: 'GET',
@@ -41,8 +41,7 @@ export function ViewWorkRequest() {
         }).catch(reason => {
         showAlert(3, reason.message, 'Error');
     });
-        }, [userAuth.admin.token]
-    );
+        }, [userAuth.admin.token]);
     useEffect(() => {
         fetch(`http://localhost:3001/admin/work/request/${type}/${id}/`,
             {
@@ -142,6 +141,22 @@ export function ViewWorkRequest() {
         });
     }
     const [disableButton, setDisableButton] = useState(false);
+    const deleteRequest = (resolve) => {
+        new Promise((internalResolve, _) => {
+            deleteModel(
+                internalResolve,
+                `http://localhost:3001/admin/work/request/${type}/${id}/`,
+                userAuth.admin.token,
+            );
+        }).then(
+            (value) => {
+                resolve(value);
+                if (value.status){
+                    window.location.href = `/admin/${ type === '1' ? 'users' : 'estates' }/work/requests/`;
+                }
+            }
+        );
+    }
     return (
       <section className="content">
           <div className="body_scroll">
@@ -243,7 +258,20 @@ export function ViewWorkRequest() {
                                       <Button type="submit" disabled={disableButton}>Update</Button>
                                   </div>
                                   <div className="col-lg-6 d-grid">
-                                      <Button variant="outline-danger" disabled={disableButton}>Delete</Button>
+                                      <Button
+                                          onClick={() => {
+                                                showDeleteDialog({
+                                                    deleteCallback: () => {
+                                                        return new Promise((resolve, _) => {
+                                                            deleteRequest(resolve);
+                                                        })
+                                                    },
+                                                    object: `Work Request`
+                                                })
+                                            }}
+                                          variant="outline-danger"
+                                          disabled={disableButton}
+                                      >Delete</Button>
                                   </div>
                               </div>
                           </Form>
