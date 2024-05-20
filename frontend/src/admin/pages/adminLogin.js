@@ -83,7 +83,7 @@ function AdminLogin () {
                         </form>
                     </div>
                     <div className="col-lg-8 col-12">
-                        <div className="card">
+                        <div className="card d-lg-block d-none">
                             <img src={fp81855} alt="Admin" />
                         </div>
                     </div>
