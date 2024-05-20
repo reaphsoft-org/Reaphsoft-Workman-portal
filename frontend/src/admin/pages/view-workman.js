@@ -159,8 +159,8 @@ export const ViewWorkman = () => {
                                 <li className="breadcrumb-item"><a href="/admin/">
                                     <i className="zmdi zmdi-home me-2"></i>Reaphsoft Workman</a>
                                 </li>
-                                <li className="breadcrumb-item"><a href="/admin/users/">Users</a></li>
-                                <li className="breadcrumb-item">User</li>
+                                <li className="breadcrumb-item"><a href="/admin/workmen/">Reaphsoft Workmen</a></li>
+                                <li className="breadcrumb-item">Reaphsoft Workman</li>
                             </ul>
                         </div>
                     </div>
