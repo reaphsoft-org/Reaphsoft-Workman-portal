@@ -1,7 +1,7 @@
 # Reaphsoft Workmen Backend
 ## Database
 ### Setup
-1. Download and install [PostgreSQL](https://www.postgresql.org/download/windows/) on your machine (or server)
+1. Download and install [PostgreSQL Windows](https://www.postgresql.org/download/windows/)/[PostgresSQL Ubuntu](https://www.postgresql.org/download/linux/ubuntu/) on your machine (or server)
 2. While installing, you would be prompted to input a password for a default `postgres` superuser.
 3. After installing, start `pg_ctl` by running
     ```
@@ -634,6 +634,25 @@ Paginated by 50
 #### Output
 `{ status: boolean, resp: string }` A `status` of `true` indicates success, else check the `resp` for the particular issue.
 
+## [Firebase Admin SDK](https://firebase.google.com/docs/admin/setup?authuser=0)
+```
+npm install firebase-admin --save
+```
+### TMP
+```
+SPostgreSQL login
+
+username: postgres
+password: Sihitshuwam@
+
+Reaphsoft-Workmen admin login
+felixsigit@gmail.com
+##terraByte@
+
+https://sweetalert2.github.io/
+
+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
+```
 
 # NestJS
 
