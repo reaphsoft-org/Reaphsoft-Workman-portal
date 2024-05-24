@@ -37,7 +37,7 @@ export abstract class BaseUser {
     @UpdateDateColumn()
     last_visited: string;
 
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255, default: '' })
     registrationToken: string;
 
     private readonly passwordManager = new PasswordManager();
