@@ -25,7 +25,7 @@ export abstract class BaseUser {
     @Column({ type: 'varchar', length: 40 })
     fullname: string;
 
-    @Column({ type: 'varchar', length: 256 })
+    @Column({ type: 'varchar', length: 255 })
     password: string;
 
     @Column({ type: 'varchar', length: 150, default: '' })
@@ -36,6 +36,9 @@ export abstract class BaseUser {
 
     @UpdateDateColumn()
     last_visited: string;
+
+    @Column({ type: 'varchar', length: 255 })
+    registrationToken: string;
 
     private readonly passwordManager = new PasswordManager();
     private readonly uploadPath = 'media/u';
