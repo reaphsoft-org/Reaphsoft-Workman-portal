@@ -644,7 +644,8 @@ Then
 ```
 npm install firebase-admin --save
 ```
-
+See [initialize](https://firebase.google.com/docs/admin/setup?authuser=0#initialize_the_sdk_in_non-google_environments) 
+for initializing the SDK in non-Google environments.
 
 # NestJS
 
