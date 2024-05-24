@@ -639,21 +639,6 @@ Paginated by 50
 ```
 npm install firebase-admin --save
 ```
-### TMP
-```
-SPostgreSQL login
-
-username: postgres
-password: Sihitshuwam@
-
-Reaphsoft-Workmen admin login
-felixsigit@gmail.com
-##terraByte@
-
-https://sweetalert2.github.io/
-
-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
-```
 
 # NestJS
 
