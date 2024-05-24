@@ -795,6 +795,7 @@ for initializing the SDK in non-Google environments.
 Download the sdk keys and keep it private, don't commit it.
 
 [See Link](https://firebase.google.com/docs/cloud-messaging/send-message?authuser=0) for building and sending messages.
+[See Link](https://firebase.google.com/docs/reference/admin/node/firebase-admin.messaging?authuser=0) for message package reference.
 
 ## Deployment
 1. Copy credential file to a location on the server and set its path below
