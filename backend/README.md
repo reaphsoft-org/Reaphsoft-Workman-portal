@@ -646,8 +646,10 @@ npm install firebase-admin --save
 ```
 See [initialize](https://firebase.google.com/docs/admin/setup?authuser=0#initialize_the_sdk_in_non-google_environments) 
 for initializing the SDK in non-Google environments.
+
 Download the sdk keys and keep it private, don't commit it.
-Set
+
+[See Link](https://firebase.google.com/docs/cloud-messaging/send-message?authuser=0) for building and sending messages.
 
 ## Deployment
 1. Copy credential file to a location on the server and set its path below
