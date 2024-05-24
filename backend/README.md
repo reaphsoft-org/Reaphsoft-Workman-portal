@@ -33,6 +33,7 @@
    ```
    dropdb -e -U reaphsoft reaphsoft_workmen.db
    ```
+10. See [StackOverflow link](https://stackoverflow.com/a/26735105) when working on linux for initial setup.
 
 ### Packages
 [TypeORM](https://github.com/typeorm/typeorm?tab=readme-ov-file#step-by-step-guide)
