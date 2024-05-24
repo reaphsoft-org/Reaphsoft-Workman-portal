@@ -646,6 +646,13 @@ npm install firebase-admin --save
 ```
 See [initialize](https://firebase.google.com/docs/admin/setup?authuser=0#initialize_the_sdk_in_non-google_environments) 
 for initializing the SDK in non-Google environments.
+Download the sdk keys and keep it private, don't commit it.
+Set
+
+## Deployment
+1. Copy credential file to a location on the server and set its path below
+2. Set GOOGLE_APPLICATION_CREDENTIALS path 
+3. Set JWT_SECRET
 
 # NestJS
 
