@@ -636,9 +636,15 @@ Paginated by 50
 `{ status: boolean, resp: string }` A `status` of `true` indicates success, else check the `resp` for the particular issue.
 
 ## [Firebase Admin SDK](https://firebase.google.com/docs/admin/setup?authuser=0)
+On linux, install make and g++
+```
+sudo apt install make && sudo apt install g++
+```
+Then
 ```
 npm install firebase-admin --save
 ```
+
 
 # NestJS
 
