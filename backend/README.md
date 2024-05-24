@@ -1,7 +1,7 @@
 # Reaphsoft Workmen Backend
 ## Database
 ### Setup
-1. Download and install [PostgreSQL Windows](https://www.postgresql.org/download/windows/)/[PostgresSQL Ubuntu](https://www.postgresql.org/download/linux/ubuntu/) on your machine (or server)
+1. Download and install PostgreSQL [Windows](https://www.postgresql.org/download/windows/)/[Ubuntu](https://www.postgresql.org/download/linux/ubuntu/) on your machine (or server)
 2. While installing, you would be prompted to input a password for a default `postgres` superuser.
 3. After installing, start `pg_ctl` by running
     ```
