@@ -9,6 +9,7 @@ import { EstateRequest, UserRequest } from '../entities/Request';
 import { RatingDto } from './dto/rating.dto';
 import { ClientRating } from '../entities/rating';
 import { IsNull, Not } from 'typeorm';
+import { Messenger } from '../utilities/messenger';
 
 @Injectable()
 export class WorkmenService {
@@ -20,6 +21,8 @@ export class WorkmenService {
     private readonly estateRequestRepo =
         AppDataSource.getRepository(EstateRequest);
     private readonly ratingRepo = AppDataSource.getRepository(ClientRating);
+
+    private readonly messenger = new Messenger();
 
     async getServices() {
         const services = await this.serviceRepo.find({
@@ -69,6 +72,7 @@ export class WorkmenService {
         if (!worker) return { resp: 'worker not found', status: false };
 
         let client: User | EstateManager | null;
+        let requestId: number;
         if (type == User.accountType) {
             client = await this.userRepo.findOneBy({
                 email: email,
@@ -78,6 +82,7 @@ export class WorkmenService {
             request.worker = worker;
             request.client = client!;
             await this.userRequestRepo.save(request);
+            requestId = request.id;
         } else {
             client = await this.managerRepo.findOneBy({
                 email: email,
@@ -87,9 +92,19 @@ export class WorkmenService {
             request.worker = worker;
             request.client = client!;
             await this.estateRequestRepo.save(request);
+            requestId = request.id;
         }
         // if (!client)
         //     return { resp: `user "${email}" not found`, status: false };
+        if (worker.registrationToken) {
+            await this.messenger.sendMessage(
+                worker.registrationToken,
+                {
+                    id: requestId.toString(),
+                },
+                `You have a work request scheduled for ${dto.date}\n\nPlease tap to open the app and accept (or decline) this work request.`,
+            );
+        }
         return { resp: '', status: true };
     }
 
