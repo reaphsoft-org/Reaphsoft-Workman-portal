@@ -402,8 +402,20 @@ export class AccountsService {
         }));
     }
 
-    setRegistrationToken(tokenDto: TokenDto, email: string, code: string) {
-        return Promise.resolve(undefined);
+    async setRegistrationToken(
+        tokenDto: TokenDto,
+        email: string,
+        code: string,
+    ) {
+        const user = await this.getUserForUpdate(code, email);
+        if (!user) {
+            return {
+                status: false,
+                resp: `User not found ${email} (c#${code}#)`,
+            };
+        }
+        user.registrationToken = tokenDto.token;
+        return await this.saveUpdatedUser(code, user);
     }
 
     private async getUserForUpdate(code: string, email: string) {

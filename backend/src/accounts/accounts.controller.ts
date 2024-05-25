@@ -108,6 +108,9 @@ export class AccountsController {
         if (tokenDto.token === undefined || tokenDto.token === '') {
             return { status: false, resp: 'Invalid request' };
         }
+        if (tokenDto.token.length > 255) {
+            return { status: false, resp: 'Token length is greater than 255' };
+        }
         // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
         const email = req.user.email;
         return this.accountsService.setRegistrationToken(tokenDto, email, code);
