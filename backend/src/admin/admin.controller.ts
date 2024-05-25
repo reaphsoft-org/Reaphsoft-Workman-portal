@@ -31,6 +31,7 @@ import { UpdateAdminDto } from './dto/update-admin.dto';
 import { PasswordDto } from './dto/password.dto';
 import { EstateService } from '../estate/estate.service';
 import { HouseDto } from '../estate/dto/house.dto';
+import { AccountsService } from '../accounts/accounts.service';
 
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
@@ -40,6 +41,7 @@ export class AdminController {
     constructor(
         private readonly service: AdminService,
         private readonly estateService: EstateService,
+        private readonly accountsService: AccountsService,
     ) {}
     // admin
     @Get('m/')
@@ -212,7 +214,7 @@ export class AdminController {
         if (code != '00' && code != '11' && code != '22' && code != '33') {
             return { status: false, resp: 'Invalid request' };
         }
-        return this.service.changePhoto(file, code, email);
+        return this.accountsService.changePhoto(file, code, email);
     }
     @Post('change/password/:code/:email/')
     async changePassword(
@@ -226,7 +228,11 @@ export class AdminController {
         if (passwordDto.password === undefined || passwordDto.password === '') {
             return { status: false, resp: 'Invalid request' };
         }
-        return this.service.changePassword(email, code, passwordDto);
+        return this.accountsService.changePasswordAdmin(
+            email,
+            code,
+            passwordDto,
+        );
     }
     @Get('estate/:email/houses/:page/')
     async getEstateHouses(

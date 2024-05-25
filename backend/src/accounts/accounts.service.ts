@@ -8,19 +8,25 @@ import { MEDIA_DIR } from '../app.module';
 import { Email } from '../utilities/mailman';
 import { UserDto } from './dto/user.dto';
 import { PasswordDto } from './dto/password.dto';
+import { PasswordDto as AdminPasswordDto } from '../admin/dto/password.dto';
 import { CreateEstateDto } from './dto/create-estate.dto';
 import { EstateManager } from '../entities/EstateManager';
 import { PasswordManager } from '../utilities/passwordmanager';
 import { UpdateEstateManagerDto, UpdateUserDto } from './dto/update.dto';
 import { EstateDto } from './dto/estate.dto';
 import { House } from '../entities/House';
+import { TokenDto } from './dto/token.dto';
+import { SuperUser } from '../entities/SuperUser';
+import { Workman } from '../entities/Workman';
 
 @Injectable()
 export class AccountsService {
     private readonly uploadPath = 'media/u';
-    private readonly userRepository = AppDataSource.getRepository(User);
-    private readonly estateRepository =
+    private readonly usersRepo = AppDataSource.getRepository(User);
+    private readonly estateManagersRepo =
         AppDataSource.getRepository(EstateManager);
+    private readonly adminRepo = AppDataSource.getRepository(SuperUser);
+    private readonly workmanRepo = AppDataSource.getRepository(Workman);
     private readonly passwordManager = new PasswordManager();
     async createIndividualAccount(createUserDto: CreateUserDto, file: any) {
         return this.createAccount(createUserDto, file, User.accountType);
@@ -121,7 +127,7 @@ export class AccountsService {
         type: number,
     ): Promise<UserDto | EstateDto | null> {
         if (type === User.accountType) {
-            const user = await this.userRepository.findOneBy({
+            const user = await this.usersRepo.findOneBy({
                 email: email,
             });
             if (!user) {
@@ -137,7 +143,7 @@ export class AccountsService {
             userDto.serviceType = user.serviceType;
             return userDto;
         } else {
-            const user = await this.estateRepository.findOneBy({
+            const user = await this.estateManagersRepo.findOneBy({
                 email: email,
             });
             if (!user) {
@@ -167,7 +173,7 @@ export class AccountsService {
         if (!check.status) {
             return check;
         }
-        const user = await this.userRepository.findOneBy({
+        const user = await this.usersRepo.findOneBy({
             email: email,
         });
         if (!user) {
@@ -180,7 +186,7 @@ export class AccountsService {
         user.address = updateUserDto.address;
         user.fullname = this.toTitleCase(updateUserDto.fullname);
         user.serviceType = updateUserDto.serviceType;
-        await this.userRepository.save(user);
+        await this.usersRepo.save(user);
         return { resp: '', status: true };
     }
 
@@ -215,11 +221,11 @@ export class AccountsService {
     async changePassword(email: string, type: 1 | 2, passwordDto: PasswordDto) {
         let user: User | EstateManager | null;
         if (type == 1) {
-            user = await this.userRepository.findOneBy({
+            user = await this.usersRepo.findOneBy({
                 email: email,
             });
         } else {
-            user = await this.estateRepository.findOneBy({
+            user = await this.estateManagersRepo.findOneBy({
                 email: email,
             });
         }
@@ -254,8 +260,8 @@ export class AccountsService {
             return { status: false, resp: 'Invalid new password' };
         }
         this.setPassword(user, passwordDto.new_password);
-        if (type == User.accountType) await this.userRepository.save(user);
-        else await this.estateRepository.save(user);
+        if (type == User.accountType) await this.usersRepo.save(user);
+        else await this.estateManagersRepo.save(user);
         return { resp: '', status: true };
     }
 
@@ -314,9 +320,8 @@ export class AccountsService {
             object.photoURL = await this.savePhoto(file, filename);
         }
         try {
-            if (type == User.accountType)
-                await this.userRepository.save(object);
-            else await this.estateRepository.save(object);
+            if (type == User.accountType) await this.usersRepo.save(object);
+            else await this.estateManagersRepo.save(object);
         } catch (e) {
             if (
                 e.name === 'QueryFailedError' &&
@@ -350,7 +355,7 @@ export class AccountsService {
     ) {
         const check = this.validateEstateUpdateDto(updateEstateManagerDto);
         if (!check.status) return check;
-        const user = await this.estateRepository.findOneBy({
+        const user = await this.estateManagersRepo.findOneBy({
             email: email,
         });
         if (!user) {
@@ -363,7 +368,7 @@ export class AccountsService {
         user.address = updateEstateManagerDto.address;
         user.fullname = this.toTitleCase(updateEstateManagerDto.fullname);
         user.serviceType = updateEstateManagerDto.serviceType;
-        await this.estateRepository.save(user);
+        await this.estateManagersRepo.save(user);
         return { resp: '', status: true };
     }
 
@@ -395,5 +400,86 @@ export class AccountsService {
             number: house.number,
             name: house.name,
         }));
+    }
+
+    setRegistrationToken(tokenDto: TokenDto, email: string, code: string) {
+        return Promise.resolve(undefined);
+    }
+
+    private async getUserForUpdate(code: string, email: string) {
+        let user: SuperUser | User | EstateManager | Workman | null;
+        switch (code) {
+            case '00':
+                user = await this.adminRepo.findOneBy({ email: email });
+                break;
+            case '11':
+                user = await this.usersRepo.findOneBy({ email: email });
+                break;
+            case '22':
+                user = await this.estateManagersRepo.findOneBy({
+                    email: email,
+                });
+                break;
+            case '33':
+                user = await this.workmanRepo.findOneBy({ email: email });
+                break;
+            default:
+                return null;
+        }
+        return user;
+    }
+
+    async changePhoto(file: any, code: string, email: string) {
+        const user = await this.getUserForUpdate(code, email);
+        if (!user) {
+            return {
+                status: false,
+                resp: `User not found ${email} (c#${code}#)`,
+            };
+        }
+        await user.saveFile(file);
+        return await this.saveUpdatedUser(code, user);
+    }
+
+    async changePasswordAdmin(
+        email: string,
+        code: string,
+        passwordDto: AdminPasswordDto,
+    ) {
+        const user = await this.getUserForUpdate(code, email);
+        if (!user) {
+            return {
+                status: false,
+                resp: `User not found ${email} (c#${code}#)`,
+            };
+        }
+        user.password = passwordDto.password;
+        const check = user.baseValidations();
+        if (!check.status) {
+            return check;
+        }
+        user.setValues(true);
+        return await this.saveUpdatedUser(code, user);
+    }
+
+    private async saveUpdatedUser(
+        code: string,
+        user: SuperUser | User | EstateManager | Workman,
+    ) {
+        switch (code) {
+            case '00':
+                await this.adminRepo.save(user as SuperUser);
+                break;
+            case '11':
+                await this.usersRepo.save(user as User);
+                break;
+            case '22':
+                await this.estateManagersRepo.save(user as EstateManager);
+                break;
+            case '33':
+                await this.workmanRepo.save(user as Workman);
+                break;
+        }
+        return { status: true, resp: '' };
     }
 }

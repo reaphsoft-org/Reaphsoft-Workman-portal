@@ -1,7 +1,7 @@
 import {
     Body,
     Controller,
-    Get,
+    Get, Param,
     Post,
     Put,
     Request as RequestDecorator,
@@ -18,6 +18,7 @@ import { CreateEstateDto } from './dto/create-estate.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { UpdateEstateManagerDto, UpdateUserDto } from './dto/update.dto';
 import { EstateDto } from './dto/estate.dto';
+import {TokenDto} from "./dto/token.dto";
 
 @Controller('account/')
 export class AccountsController {
@@ -92,5 +93,23 @@ export class AccountsController {
         @Body() createEstateDto: CreateEstateDto,
     ) {
         return this.accountsService.createEstateAccount(createEstateDto, file);
+    }
+
+    @UseGuards(AuthGuard)
+    @Post('registration/token/:code/')
+    async setRegistrationToken(
+        @RequestDecorator() req: Request,
+        @Param('code') code: string,
+        @Body() tokenDto: TokenDto,
+    ) {
+        if (code != '00' && code != '11' && code != '22' && code != '33') {
+            return { status: false, resp: 'Invalid request' };
+        }
+        if (tokenDto.token === undefined || tokenDto.token === '') {
+            return { status: false, resp: 'Invalid request' };
+        }
+        // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
+        const email = req.user.email;
+        return this.accountsService.setRegistrationToken(tokenDto, email, code);
     }
 }
