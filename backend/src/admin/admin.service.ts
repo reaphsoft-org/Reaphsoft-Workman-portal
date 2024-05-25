@@ -18,7 +18,6 @@ import { EstateRequest, UserRequest } from '../entities/Request';
 import { RequestUpdateDto } from '../workmen/dto/request-update.dto';
 import { ServiceDto } from '../workmen/dto/service.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
-import { PasswordDto } from './dto/password.dto';
 
 @Injectable()
 export class AdminService {
