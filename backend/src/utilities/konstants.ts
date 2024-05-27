@@ -1,6 +1,6 @@
-// 27/05/2024 07:00
+// 27/05/2024 07:53
 // reaphsoft-workman
 // github.com/kahlflekzy
 
 const DOMAIN = process.env.HOSTING === 'local' ? 'http://localhost' : '';
-export const BACKEND_DOMAIN = `${DOMAIN}:3001`
+export const FRONTEND_DOMAIN = `${DOMAIN}:3000`;

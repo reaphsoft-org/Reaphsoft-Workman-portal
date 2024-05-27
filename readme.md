@@ -1,6 +1,11 @@
 # Reaphsoft Workmen Mono Repo
-Now you can run the code below from the root of the project and it will start both the front and backend server at 
+Now you can run the code below from the root of the project, and it will start both the front and backend server at 
 the same time.
+Set the environment variable below
+```
+HOSTING = local
+```
+Then run
 ```
 npm start
 ```
