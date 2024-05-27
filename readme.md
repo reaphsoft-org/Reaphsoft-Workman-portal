@@ -1,11 +1,14 @@
 # Reaphsoft Workmen Mono Repo
-Now you can run the code below from the root of the project, and it will start both the front and backend server at 
-the same time.
-Set the environment variable below
+When running locally, set the environment variable below (for the backend)
 ```
 HOSTING = local
 ```
-Then run
+For the frontend, create a `.env` file and add below
+```
+REACT_APP_HOSTING = local
+```
+Now you can run the code below from the root of the project, and it will start both the front and backend server at 
+the same time.
 ```
 npm start
 ```

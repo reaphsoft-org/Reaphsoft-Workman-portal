@@ -54,7 +54,7 @@ function Register() {
       });
       if (!response.ok) {
         setShowToast({
-          message: "Got a bad response from the server. Please contact the administrators.",
+          message: `Got a bad response from the server. Please contact the administrators. <${response.statusText}>`,
           show: true
         });
         setDisableButton("");
