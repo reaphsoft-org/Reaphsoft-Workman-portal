@@ -4,6 +4,7 @@ import { useAuth } from "../components/AuthContext";
 import SweetAlertComponent  from "../utils/alert";
 import logo from "../components/i/logo.png";
 import styles from "./login.module.css";
+import {BACKEND_DOMAIN} from "../utils/konstants";
 
 function Login() {
   const user = useAuth();
@@ -41,7 +42,7 @@ function Login() {
         },
       });
       if (!response.ok) {
-        showSweetAlert(3, "Received a bad response from the server.", "Error");
+        showSweetAlert(3, `Received a bad response from the server <${response.statusText}>`, "Error");
         // setShowToast({ message: "Received a bad response from the server.", show: true });
         setDisableButton("");
         return;

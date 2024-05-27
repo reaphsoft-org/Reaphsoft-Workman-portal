@@ -30,7 +30,7 @@ export class Messenger {
         };
         getMessaging()
             .send(message)
-            .then((_) => {})
+            .then(() => {})
             .catch((e: any) => console.log(`Error sending message: ${e}`));
     }
 }
