@@ -6,5 +6,5 @@ export enum Role {
     User = 'user',
     EstateManager = 'estate',
     Admin = 'admin',
-    Worker = 'worker',
+    Workman = 'worker',
 }
