@@ -9,6 +9,7 @@ import {
 import { PasswordManager } from '../utilities/passwordmanager';
 import * as path from 'path';
 import * as fs from 'fs';
+import { BASE_MEDIA_DIR } from '../utilities/konstants';
 
 const MEDIA_DIR = path.join(__dirname, '..', '..', 'media/u');
 if (!fs.existsSync(MEDIA_DIR)) {
@@ -41,7 +42,7 @@ export abstract class BaseUser {
     registrationToken: string;
 
     private readonly passwordManager = new PasswordManager();
-    private readonly uploadPath = 'media/u';
+    private readonly uploadPath = BASE_MEDIA_DIR;
 
     setValues(hashPassword: boolean = false) {
         if (hashPassword) {

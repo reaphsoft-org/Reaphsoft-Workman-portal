@@ -16,13 +16,14 @@ import { User } from './User';
 import { EstateManager } from './EstateManager';
 import { Workman } from './Workman';
 import { ClientRating, WorkmanRating } from './rating';
-import { MEDIA_DIR } from '../utilities/konstants';
+import { BASE_MEDIA_DIR, MEDIA_DIR } from '../utilities/konstants';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const Upload_Dir = path.join(MEDIA_DIR, 'r');
-if (!fs.existsSync(Upload_Dir)) {
-    fs.mkdirSync(Upload_Dir, { recursive: true });
+const UPLOAD_DIR = path.join(MEDIA_DIR, 'r');
+const uploadPath = `${BASE_MEDIA_DIR}/r`;
+if (!fs.existsSync(UPLOAD_DIR)) {
+    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 }
 
 abstract class RequestBase {
@@ -63,6 +64,29 @@ abstract class RequestBase {
 
     @Column({ type: 'varchar', length: 150, default: '' })
     afterPhoto: string;
+
+    async uploadPhoto(file: Express.Multer.File | any, before: boolean = true) {
+        if (file != null && file.mimetype.startsWith('image/')) {
+            const extension: string = file.originalname.split('.').pop();
+            const filename = `${before ? 'b' : 'a'}_${this.id}.${extension}`;
+            if (before) this.beforePhoto = await this.savePhoto(file, filename);
+            else this.afterPhoto = await this.savePhoto(file, filename);
+        }
+    }
+
+    private async savePhoto(
+        photo: Express.Multer.File,
+        filename: string,
+    ): Promise<string> {
+        const fullPath = path.join(UPLOAD_DIR, filename);
+        let imgPath = path.join(uploadPath, filename);
+        fs.writeFile(fullPath, photo.buffer, (err) => {
+            if (err) {
+                imgPath = '';
+            }
+        });
+        return imgPath;
+    }
 }
 
 @Entity({
