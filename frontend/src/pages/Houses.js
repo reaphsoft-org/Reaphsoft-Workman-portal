@@ -21,7 +21,7 @@ const Houses = ({_}) => {
             .then((res) => {
                 if (!res.ok){
                     alert(3,
-                        "Got a bad response from the server. Please contact the administrators.",
+                        `Got a bad response from the server. Please contact the administrators. <${res.statusText}>`,
                         "Error");
                     return;
                 }
@@ -39,15 +39,9 @@ const Houses = ({_}) => {
     const [showModal, setShowModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [disableAddHouse, setDisableAddHouse] = useState(false);
-    const [formData, setFormData] = useState({
-        number: '',
-        occupant_name: '',
-    });
-    const [newHouse, setNewHouse] = useState(0);
+    const [formData, setFormData] = useState({ number: '', occupant_name: '' });
     const [houses, setHouses] = useState({ pages: 0, data: []});
-    const handleInputChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
+    const handleInputChange = (e) => {setFormData({ ...formData, [e.target.name]: e.target.value });};
     const addHouse = () => {
         setDisableAddHouse(true);
         handleCloseModal();
@@ -65,7 +59,7 @@ const Houses = ({_}) => {
                  body: JSON.stringify(formData),
             }).then((res) => {
                 if (!res.ok) {
-                    showAlert(3, "Received a bad response from the server.", "Error");
+                    showAlert(3, `Received a bad response from the server. ${res.statusText}`, "Error");
                     return;
                 }
                 return res.json();
@@ -74,11 +68,17 @@ const Houses = ({_}) => {
                     if (data.status === true){
                         showAlert(1, "House added successfully", "Success");
                         const houseObjects = houses.data;
-                        houseObjects.splice(houseToDelete.index, 1);
+                        houseObjects.unshift({
+                            id: data.resp,
+                            number: formData.number,
+                            name: formData.occupant_name,
+                        });
                         setHouses({pages: houses.pages, data: houseObjects});
+                        setFormData({number: '', occupant_name: ''});
                     }else {
                         showAlert(3, data.resp, "Error");
                     }
+                    setDisableAddHouse(false);
                  })
                  .catch((reason) => {
                      showAlert(3, reason.message, "Error");
@@ -101,7 +101,7 @@ const Houses = ({_}) => {
                  body: JSON.stringify(formData),
             }).then((res) => {
                 if (!res.ok) {
-                    showAlert(3, "Received a bad response from the server.", "Error");
+                    showAlert(3, `Received a bad response from the server. ${res.statusText}`, "Error");
                     return;
                 }
                 return res.json();
@@ -109,7 +109,9 @@ const Houses = ({_}) => {
                  .then(data => {
                     if (data.status === true){
                         showAlert(1, "House was deleted successfully", "Success");
-                        setNewHouse(newHouse + 1);
+                        const houseObjects = houses.data;
+                        houseObjects.splice(houseToDelete.index, 1);
+                        setHouses({pages: houses.pages, data: houseObjects});
                     }else {
                         showAlert(3, data.resp, "Error");
                     }
