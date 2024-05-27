@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppDataSource } from './data-source';
-import { FRONTEND_DOMAIN } from './utilities/konstants';
+import { FRONTEND_DOMAIN, HOST_IP } from './utilities/konstants';
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -18,6 +18,6 @@ async function bootstrap() {
             // here you can start to work with your database
         })
         .catch((error) => console.log(error));
-    await app.listen(3001);
+    await app.listen(3001, HOST_IP);
 }
 bootstrap().then(() => {});

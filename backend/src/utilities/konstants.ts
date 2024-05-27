@@ -5,7 +5,11 @@
 import * as path from 'path';
 import * as fs from 'fs';
 
-const DOMAIN = process.env.HOSTING === 'local' ? 'http://localhost' : '';
+const DOMAIN =
+    process.env.HOSTING === 'local'
+        ? 'http://localhost'
+        : 'http://194.164.125.126';
+export const HOST_IP = process.env.HOSTING === 'local' ? 'localhost' : '0.0.0.0';
 export const FRONTEND_DOMAIN = `${DOMAIN}`;
 export const BASE_MEDIA_DIR = 'media/u';
 export const MEDIA_DIR = path.join(__dirname, '..', '..', BASE_MEDIA_DIR);
