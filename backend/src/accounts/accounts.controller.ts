@@ -1,7 +1,8 @@
 import {
     Body,
     Controller,
-    Get, Param,
+    Get,
+    Param,
     Post,
     Put,
     Request as RequestDecorator,
@@ -18,7 +19,7 @@ import { CreateEstateDto } from './dto/create-estate.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { UpdateEstateManagerDto, UpdateUserDto } from './dto/update.dto';
 import { EstateDto } from './dto/estate.dto';
-import {TokenDto} from "./dto/token.dto";
+import { TokenDto } from './dto/token.dto';
 
 @Controller('account/')
 export class AccountsController {
