@@ -10,6 +10,7 @@ import {useAuth} from "../../components/AuthContext";
 import fp9264828 from "../components/fp9264828.jpg";
 import {showAlert} from "../../utils/alert";
 import {Paginator} from "../components/paginator";
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 export function ViewHouses() {
     const { email } = useParams();
@@ -20,7 +21,7 @@ export function ViewHouses() {
         data: []
     });
     useEffect(() => {
-        fetch(`http://localhost:3001/admin/estate/${email}/houses/${page}/`,{
+        fetch(`${BACKEND_DOMAIN}/admin/estate/${email}/houses/${page}/`,{
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + userAuth.admin.token,
@@ -59,7 +60,7 @@ export function ViewHouses() {
         event.preventDefault();
         setDisableButtons(true);
         if (modalData.action === ADD){
-            fetch(`http://localhost:3001/admin/estate/${email}/house/`,{
+            fetch(`${BACKEND_DOMAIN}/admin/estate/${email}/house/`,{
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + userAuth.admin.token,
@@ -115,7 +116,7 @@ export function ViewHouses() {
                 setDisableButtons(false);
             }
 
-            fetch(`http://localhost:3001/admin/estate/${email}/house/${house.id}`,{
+            fetch(`${BACKEND_DOMAIN}/admin/estate/${email}/house/${house.id}`,{
                 method: 'PUT',
                 headers: {
                     'Authorization': 'Bearer ' + userAuth.admin.token,

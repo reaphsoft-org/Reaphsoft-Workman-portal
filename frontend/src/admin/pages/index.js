@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import {useAuth} from "../../components/AuthContext";
 import {showAlert} from "../../utils/alert";
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 const Index = () => {
     const userAuth = useAuth();
@@ -15,7 +16,7 @@ const Index = () => {
         recentEstates: []
     });
     useEffect(() => {
-        fetch('http://localhost:3001/admin/dashboard/', {
+        fetch(`${BACKEND_DOMAIN}/admin/dashboard/`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + userAuth.admin.token,

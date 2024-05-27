@@ -9,6 +9,7 @@ import {Button, Form, FormControl, FormGroup, FormLabel, FormText, Image, InputG
 import {showAlert, showDeleteDialog} from "../../utils/alert";
 import fp29332702_7495554 from '../components/fp29332702_7495554.jpg'
 import {changePassword, deleteModel, savePhoto} from "../utils/utils";
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 export const ViewWorkman = () => {
     const { email } = useParams();
@@ -25,7 +26,7 @@ export const ViewWorkman = () => {
         date_joined: ''
     });
     useEffect(() => {
-        fetch(`http://localhost:3001/admin/workman/${email}/`,
+        fetch(`${BACKEND_DOMAIN}/admin/workman/${email}/`,
             {
                 method: 'GET',
                 headers: {
@@ -68,7 +69,7 @@ export const ViewWorkman = () => {
             return;
         }
         setDisableButton(true);
-        fetch(`http://localhost:3001/admin/workman/${email}/`,
+        fetch(`${BACKEND_DOMAIN}/admin/workman/${email}/`,
             {
                 method: 'PUT',
                 headers: {
@@ -136,7 +137,7 @@ export const ViewWorkman = () => {
         new Promise((internalResolve, _) => {
             deleteModel(
                 internalResolve,
-                `http://localhost:3001/admin/workman/${email}/`,
+                `${BACKEND_DOMAIN}/admin/workman/${email}/`,
                 userAuth.admin.token,
             );
         }).then(
@@ -175,7 +176,7 @@ export const ViewWorkman = () => {
                                   selectedImage === null ?
                                       <>
                                           <Image
-                                              src={workman.photoURL === '' ? fp29332702_7495554 : `http://localhost:3001/${workman.photoURL}`}/>
+                                              src={workman.photoURL === '' ? fp29332702_7495554 : `${BACKEND_DOMAIN}/${workman.photoURL}`}/>
                                         <p className="mt-3">Current Photo: {workman.photoURL === '' ? 'None' : workman.photoURL }</p>
                                       </>
                                       :

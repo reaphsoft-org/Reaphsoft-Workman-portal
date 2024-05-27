@@ -5,6 +5,7 @@ import {useAuth} from "../../components/AuthContext";
 import logo from "../components/logo.png";
 import fp81855 from "../components/fp81855.jpg";
 import {Image} from "react-bootstrap";
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 function AdminLogin () {
     const userAuth = useAuth();
@@ -25,7 +26,7 @@ function AdminLogin () {
     function login(event){
         setDisableButton(true);
         event.preventDefault();
-        fetch("http://localhost:3001/auth/admin/login/", {
+        fetch(`${BACKEND_DOMAIN}/auth/admin/login/`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

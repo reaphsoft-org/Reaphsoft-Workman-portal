@@ -9,6 +9,7 @@ import {showAlert, showDeleteDialog} from "../../utils/alert";
 import {Button, Form, FormControl, FormGroup, FormLabel, InputGroup, Modal} from "react-bootstrap";
 import {ImageComponent} from "../components/image-component";
 import {changePassword, deleteModel, savePhoto} from "../utils/utils";
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 export const ViewEstate = () => {
     const { email } = useParams();
@@ -24,7 +25,7 @@ export const ViewEstate = () => {
         date_joined: ''
         });
     useEffect(() => {
-        fetch(`http://localhost:3001/admin/estate/manager/${email}/`,
+        fetch(`${BACKEND_DOMAIN}/admin/estate/manager/${email}/`,
             {
                 method: 'GET',
                 headers: {
@@ -66,7 +67,7 @@ export const ViewEstate = () => {
             return;
         }
         setDisableButton(true);
-        fetch(`http://localhost:3001/admin/estate/manager/${email}/`,
+        fetch(`${BACKEND_DOMAIN}/admin/estate/manager/${email}/`,
             {
                 method: 'PUT',
                 headers: {
@@ -128,7 +129,7 @@ export const ViewEstate = () => {
         new Promise((internalResolve, _) => {
             deleteModel(
                 internalResolve,
-                `http://localhost:3001/admin/estate/manager/${email}/`,
+                `${BACKEND_DOMAIN}/admin/estate/manager/${email}/`,
                 userAuth.admin.token,
             );
         }).then(

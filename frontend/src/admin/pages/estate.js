@@ -5,6 +5,7 @@ import {Button, Modal} from "react-bootstrap";
 import {ContentHeader} from "../components/content-header";
 import {Paginator} from "../components/paginator";
 import {deleteModel} from "../utils/utils";
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 const Estate = () => {
     const userAuth = useAuth();
@@ -14,7 +15,7 @@ const Estate = () => {
         data: []
     });
     useEffect(() => {
-        fetch(`http://localhost:3001/admin/estate/managers/${page}/`,{
+        fetch(`${BACKEND_DOMAIN}/admin/estate/managers/${page}/`,{
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + userAuth.admin.token,
@@ -44,7 +45,7 @@ const Estate = () => {
         if (selectedImage != null) {
             postData.append("photo", selectedImage);
         }
-        fetch('http://localhost:3001/admin/estate/manager/',{
+        fetch(`${BACKEND_DOMAIN}/admin/estate/manager/`,{
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + userAuth.admin.token,
@@ -110,7 +111,7 @@ const Estate = () => {
     const deleteUser = (email, resolve) => {
         deleteModel(
             resolve,
-            `http://localhost:3001/admin/estate/manager/${email}/`,
+            `${BACKEND_DOMAIN}/admin/estate/manager/${email}/`,
             userAuth.admin.token,
             deletedUser.current,
             usersData,

@@ -6,6 +6,7 @@ import {showAlert, showDeleteDialog} from "../../utils/alert";
 import {deleteModel, getServices} from "../utils/utils";
 import {Paginator} from "../components/paginator";
 import fp9264828 from "../components/fp9264828.jpg"
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 const Workmen = () => {
     const userAuth = useAuth();
@@ -24,7 +25,7 @@ const Workmen = () => {
     const deleteWorkman = (email, resolve) => {
         deleteModel(
             resolve,
-            `http://localhost:3001/admin/workman/${email}/`,
+            `${BACKEND_DOMAIN}/admin/workman/${email}/`,
             userAuth.admin.token,
             deletedWorkman.current,
             workmen,
@@ -32,7 +33,7 @@ const Workmen = () => {
         );
     }
     useEffect(() => {
-        fetch(`http://localhost:3001/admin/workmen/${page}/`, {
+        fetch(`${BACKEND_DOMAIN}/admin/workmen/${page}/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -78,7 +79,7 @@ const Workmen = () => {
         if (selectedImage != null) {
             postData.append("photo", selectedImage);
         }
-        fetch('http://localhost:3001/admin/workman/',{
+        fetch(`${BACKEND_DOMAIN}/admin/workman/`,{
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + userAuth.admin.token,

@@ -9,6 +9,7 @@ import {Button, Modal} from "react-bootstrap";
 import {Paginator} from "../components/paginator";
 import {ContentHeader} from "../components/content-header";
 import {deleteModel} from "../utils/utils";
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 export function Services() {
     const userAuth = useAuth();
@@ -18,7 +19,7 @@ export function Services() {
         data: []
     });
     useEffect(() => {
-        fetch(`http://localhost:3001/admin/services/${page}/`,{
+        fetch(`${BACKEND_DOMAIN}/admin/services/${page}/`,{
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + userAuth.admin.token,
@@ -44,7 +45,7 @@ export function Services() {
     const submitForm = (event) => {
         event.preventDefault();
         setDisableButton(true);
-        fetch(`http://localhost:3001/admin/service/${modalState.link}`,{
+        fetch(`${BACKEND_DOMAIN}/admin/service/${modalState.link}`,{
             method: modalState.action,
             headers: {
                 'Authorization': 'Bearer ' + userAuth.admin.token,
@@ -121,7 +122,7 @@ export function Services() {
     const deleteService = (id, resolve) => {
         deleteModel(
             resolve,
-            `http://localhost:3001/admin/service/${id}/`,
+            `${BACKEND_DOMAIN}/admin/service/${id}/`,
             userAuth.admin.token,
             deletedService.current,
             services,

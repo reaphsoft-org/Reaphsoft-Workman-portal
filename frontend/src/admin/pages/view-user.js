@@ -9,6 +9,7 @@ import {Button, Form, FormControl, FormGroup, FormLabel, Image, InputGroup, Moda
 import {showAlert, showDeleteDialog} from "../../utils/alert";
 import fp29332702_7495554 from '../components/fp29332702_7495554.jpg'
 import {changePassword, deleteModel, savePhoto} from "../utils/utils";
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 export const ViewUser = () => {
     const { email } = useParams();
@@ -24,7 +25,7 @@ export const ViewUser = () => {
         date_joined: ''
     });
     useEffect(() => {
-        fetch(`http://localhost:3001/admin/user/${email}/`,
+        fetch(`${BACKEND_DOMAIN}/admin/user/${email}/`,
             {
                 method: 'GET',
                 headers: {
@@ -66,7 +67,7 @@ export const ViewUser = () => {
             return;
         }
         setDisableButton(true);
-        fetch(`http://localhost:3001/admin/user/${email}/`,
+        fetch(`${BACKEND_DOMAIN}/admin/user/${email}/`,
             {
                 method: 'PUT',
                 headers: {
@@ -124,7 +125,7 @@ export const ViewUser = () => {
         new Promise((internalResolve, reject) => {
             deleteModel(
                 internalResolve,
-                `http://localhost:3001/admin/user/${email}/`,
+                `${BACKEND_DOMAIN}/admin/user/${email}/`,
                 userAuth.admin.token,
             );
         }).then(
@@ -163,7 +164,7 @@ export const ViewUser = () => {
                                   selectedImage === null ?
                                       <>
                                           <Image
-                                              src={user.photoURL === '' ? fp29332702_7495554 : `http://localhost:3001/${user.photoURL}`}/>
+                                              src={user.photoURL === '' ? fp29332702_7495554 : `${BACKEND_DOMAIN}/${user.photoURL}`}/>
                                         <p className="mt-3">Current Photo: {user.photoURL === '' ? 'None' : user.photoURL }</p>
                                       </>
                                       :

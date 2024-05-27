@@ -10,6 +10,7 @@ import fp9264828 from "../components/fp9264828.jpg";
 import {ContentHeader} from "../components/content-header";
 import {Paginator} from "../components/paginator";
 import {deleteModel} from "../utils/utils";
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 export function WorkRequest({type}) {
     const userAuth = useAuth();
@@ -20,7 +21,7 @@ export function WorkRequest({type}) {
     });
     const [page, setPage] = useState(1);
     useEffect(() => {
-        fetch(`http://localhost:3001/admin/work/requests/${type}/${page}/`,{
+        fetch(`${BACKEND_DOMAIN}/admin/work/requests/${type}/${page}/`,{
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + userAuth.admin.token,
@@ -43,7 +44,7 @@ export function WorkRequest({type}) {
     const deleteRequest = (id, resolve) => {
         deleteModel(
             resolve,
-            `http://localhost:3001/admin/work/request/${type}/${id}/`,
+            `${BACKEND_DOMAIN}/admin/work/request/${type}/${id}/`,
             userAuth.admin.token,
             deletedRequest.current,
             workRequests,

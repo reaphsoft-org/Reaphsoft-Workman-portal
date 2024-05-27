@@ -8,6 +8,7 @@ import React, {useCallback, useEffect, useRef, useState} from "react";
 import {Button, Form, FormControl, FormSelect} from "react-bootstrap";
 import {showAlert, showDeleteDialog} from "../../utils/alert";
 import {deleteModel} from "../utils/utils";
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 export function ViewWorkRequest() {
     const { type } = useParams();
@@ -16,7 +17,7 @@ export function ViewWorkRequest() {
     const fetchWorkers = useRef(true);
     const workerEmail = useRef('');
     const getServices = useCallback((service_id) => {
-        fetch(`http://localhost:3001/admin/service/workmen/${service_id}/`,
+        fetch(`${BACKEND_DOMAIN}/admin/service/workmen/${service_id}/`,
             {
                 method: 'GET',
                 headers: {
@@ -43,7 +44,7 @@ export function ViewWorkRequest() {
     });
         }, [userAuth.admin.token]);
     useEffect(() => {
-        fetch(`http://localhost:3001/admin/work/request/${type}/${id}/`,
+        fetch(`${BACKEND_DOMAIN}/admin/work/request/${type}/${id}/`,
             {
                 method: 'GET',
                 headers: {
@@ -110,7 +111,7 @@ export function ViewWorkRequest() {
             setDisableButton(false);
             return;
         }
-        fetch(`http://localhost:3001/admin/work/request/${type}/${id}/`,
+        fetch(`${BACKEND_DOMAIN}/admin/work/request/${type}/${id}/`,
             {
                 method: 'PUT',
                 headers: {
@@ -145,7 +146,7 @@ export function ViewWorkRequest() {
         new Promise((internalResolve, _) => {
             deleteModel(
                 internalResolve,
-                `http://localhost:3001/admin/work/request/${type}/${id}/`,
+                `${BACKEND_DOMAIN}/admin/work/request/${type}/${id}/`,
                 userAuth.admin.token,
             );
         }).then(

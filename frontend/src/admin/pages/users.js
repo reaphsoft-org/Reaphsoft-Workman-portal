@@ -5,6 +5,7 @@ import {showAlert, showDeleteDialog} from "../../utils/alert";
 import {ContentHeader} from "../components/content-header";
 import {Paginator} from "../components/paginator";
 import {deleteModel} from "../utils/utils";
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 const Users = () => {
     const userAuth = useAuth();
@@ -14,7 +15,7 @@ const Users = () => {
         data: []
     });
     useEffect(() => {
-        fetch(`http://localhost:3001/admin/users/${page}/`,{
+        fetch(`${BACKEND_DOMAIN}/admin/users/${page}/`,{
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + userAuth.admin.token,
@@ -44,7 +45,7 @@ const Users = () => {
         if (selectedImage != null) {
             postData.append("photo", selectedImage);
         }
-        fetch('http://localhost:3001/admin/user/',{
+        fetch(`${BACKEND_DOMAIN}/admin/user/`,{
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + userAuth.admin.token,
@@ -108,7 +109,7 @@ const Users = () => {
     const deleteUser = (email, resolve) => {
         deleteModel(
             resolve,
-            `http://localhost:3001/admin/user/${email}/`,
+            `${BACKEND_DOMAIN}/admin/user/${email}/`,
             userAuth.admin.token,
             deletedUser.current,
             usersData,
