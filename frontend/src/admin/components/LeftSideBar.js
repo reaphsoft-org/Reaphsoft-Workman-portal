@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {useAuth} from "../../components/AuthContext";
 import {showAlert} from "../../utils/alert";
 import logo from "../components/logo.png"
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 const LeftSideBar = () => {
     const userAuth = useAuth();
@@ -15,7 +16,7 @@ const LeftSideBar = () => {
     last_visited: 'NA',
   });
     useEffect(() => {
-        fetch('http://localhost:3001/admin/m/', {
+        fetch(`${BACKEND_DOMAIN}/admin/m/`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + userAuth.admin.token,

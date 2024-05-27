@@ -5,6 +5,7 @@
 import {Button, Form, Image, InputGroup} from "react-bootstrap";
 import fp29332702_7495554 from "./fp29332702_7495554.jpg";
 import React from "react";
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 export function ImageComponent(selectedImage, user, setSelectedImage, setDisableSavePhoto, savePhoto, disableSavePhoto) {
     return <div className="text-center my-3">
@@ -12,7 +13,7 @@ export function ImageComponent(selectedImage, user, setSelectedImage, setDisable
             selectedImage === null ?
                 <>
                     <Image
-                        src={user.photoURL === '' ? fp29332702_7495554 : `http://localhost:3001/${user.photoURL}`}/>
+                        src={user.photoURL === '' ? fp29332702_7495554 : `${BACKEND_DOMAIN}/${user.photoURL}`}/>
                     <p className="mt-3">Current Photo: {user.photoURL === '' ? 'None' : user.photoURL}</p>
                 </>
                 :
