@@ -7,13 +7,14 @@ import {useAuth} from "../components/AuthContext";
 import React, {useEffect, useState} from "react";
 import {Button, Form, FormControl, Spinner} from "react-bootstrap";
 import {showAlert} from "../utils/alert";
+import {BACKEND_DOMAIN} from "../utils/konstants";
 
 export function House({_}) {
     const { id } = useParams();
     const userAuth = useAuth();
     const [house, setHouse] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:3001/estate/house/${id}/`, {
+        fetch(`${BACKEND_DOMAIN}/estate/house/${id}/`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + userAuth.user.token,
@@ -56,7 +57,7 @@ export function House({_}) {
             return;
         }
         try {
-             fetch(`http://localhost:3001/estate/house/${id}/`, {
+             fetch(`${BACKEND_DOMAIN}/estate/house/${id}/`, {
                  method: 'PUT',
                  headers: {
                     'Content-Type': 'application/json',

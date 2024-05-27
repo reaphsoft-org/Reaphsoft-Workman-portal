@@ -1,16 +1,11 @@
 import React from 'react';
-import { useAuth } from '../components/AuthContext';
-import { Link } from 'react-router-dom';
-import { logout } from '../utils/auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from '../components/sidebar';
 import Navbar from '../components/Navbar';
 import Footer from '../components/footer';
 
-
 const UserDetails = () => {
-    const user = useAuth();
-    return ( 
+    return (
         <div className="page-wrapper">
             <Navbar />
             <div className="page-content bg-white">

@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/footer';
 import {Navigate} from "react-router-dom";
 import {logout} from "../utils/auth";
+import {BACKEND_DOMAIN} from "../utils/konstants";
 
 const User = ({content}) => {
   const userAuth = useAuth();
@@ -29,7 +30,7 @@ const User = ({content}) => {
   });
   useEffect(() => {
     if (userAuth.user)
-    fetch(`http://localhost:3001/account/user/`, {
+    fetch(`${BACKEND_DOMAIN}/account/user/`, {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + userAuth.user.token,

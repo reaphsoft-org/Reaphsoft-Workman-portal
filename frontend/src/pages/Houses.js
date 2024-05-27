@@ -4,12 +4,13 @@ import {useAuth} from "../components/AuthContext";
 import SweetAlertComponent, {showAlert} from "../utils/alert";
 import { Modal } from "react-bootstrap";
 import {range} from "../utils/range";
+import {BACKEND_DOMAIN} from "../utils/konstants";
 
 const Houses = ({_}) => {
     const userAuth = useAuth();
     const [page, setPage] = useState(1);
     useEffect(() => {
-        fetch(`http://localhost:3001/estate/houses/${page}/`, {
+        fetch(`${BACKEND_DOMAIN}/estate/houses/${page}/`, {
               method: 'GET',
               headers: {
                 'Authorization': 'Bearer ' + userAuth.user.token,
@@ -55,7 +56,7 @@ const Houses = ({_}) => {
             return;
         }
         try {
-             fetch('http://localhost:3001/estate/add/house/', {
+             fetch(`${BACKEND_DOMAIN}/estate/add/house/`, {
                  method: 'POST',
                  headers: {
                     'Content-Type': 'application/json',
@@ -91,7 +92,7 @@ const Houses = ({_}) => {
       // remove from houses data
         setShowDeleteModal(false);
         try {
-             fetch(`http://localhost:3001/estate/house/${houseToDelete.id}/`, {
+             fetch(`${BACKEND_DOMAIN}/estate/house/${houseToDelete.id}/`, {
                  method: 'DELETE',
                  headers: {
                     'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useAuth} from "../components/AuthContext";
 import SweetAlertComponent from "../utils/alert";
+import {BACKEND_DOMAIN} from "../utils/konstants";
 const UpdateUser = ({user}) => {
   const userAuth = useAuth();
   const handleSubmit = (event) => {
@@ -21,7 +22,7 @@ const UpdateUser = ({user}) => {
       component.showSweetAlert(type, text, title);
       setDisableButton(false);
     };
-    fetch(`http://localhost:3001/account/update/user/${link}`, {
+    fetch(`${BACKEND_DOMAIN}/account/update/user/${link}`, {
       method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + userAuth.user.token,

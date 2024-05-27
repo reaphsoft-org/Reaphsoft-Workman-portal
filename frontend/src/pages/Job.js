@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {showAlert} from "../utils/alert";
 import {useAuth} from "../components/AuthContext";
+import {BACKEND_DOMAIN} from "../utils/konstants";
+import empty from "../components/i/fp5464326_2808307.jpg";
 
 const Job = ({_}) => {
     const [workRequests, setWorkRequests] = useState([]);
     const userAuth = useAuth();
     useEffect(() => {
         try {
-             fetch('http://localhost:3001/workmen/requested/services/', {
+             fetch(`${BACKEND_DOMAIN}/workmen/requested/services/`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,7 +38,7 @@ const Job = ({_}) => {
                 <h3 className="mb-3 text-black">Workman Requests</h3>
                 {workRequests.length === 0 &&
                     <div className="my-5 text-center">
-                        <img src="../../../asset/image/empty.png" className="img-fluid mb-4" alt="work"/>
+                        <img src={empty} className="img-fluid mb-4" alt="work"/>
                         <h3 className="text-black m-b5 text-center"> No Workman Request Yet</h3>
                     </div>}
                 <table className="table table-striped">

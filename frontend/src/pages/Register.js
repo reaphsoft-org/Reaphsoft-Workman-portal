@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import SweetAlertComponent  from "../utils/alert";
 import logo from "../components/i/logo.png";
 import style from "./login.module.css";
+import {BACKEND_DOMAIN} from "../utils/konstants";
 
 export function generateRandomString() {
   let result = '';
@@ -47,7 +48,7 @@ function Register() {
     }
     try {
       const link = accountTypeValues.accountType === 1 ? "account/sign/up/i/" : "account/sign/up/e/";
-      const response = await fetch(`http://localhost:3001/${link}`, {
+      const response = await fetch(`${BACKEND_DOMAIN}/${link}`, {
         method: 'POST',
         body: postData,
       });

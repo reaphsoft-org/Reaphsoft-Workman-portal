@@ -4,6 +4,7 @@ import {showAlert} from "../utils/alert";
 import {Alert, Button} from "react-bootstrap";
 import mStyle from "./register.module.css";
 import {range} from "../utils/range";
+import {BACKEND_DOMAIN} from "../utils/konstants";
 
 const Request = ({ _ }) => {
     const userAuth = useAuth();
@@ -11,7 +12,7 @@ const Request = ({ _ }) => {
     const [workers, setWorkers] = useState([]);
     useEffect(() => {
         try {
-             fetch('http://localhost:3001/workmen/services/', {
+             fetch(`${BACKEND_DOMAIN}/workmen/services/`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,7 +50,7 @@ const Request = ({ _ }) => {
         setShowOverView(false);
         // todo disable services select while fetching
         try {
-            fetch(`http://localhost:3001/workmen/services/workers/?id=${serviceId}&name=${serviceName}`, {
+            fetch(`${BACKEND_DOMAIN}/workmen/services/workers/?id=${serviceId}&name=${serviceName}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,7 +84,7 @@ const Request = ({ _ }) => {
         setWorkman({id: workerID, name: workerName});
         if (workerID === 'Select Worker') return;
 
-        fetch(`http://localhost:3001/workmen/worker/b/rating/${workerID}/`, {
+        fetch(`${BACKEND_DOMAIN}/workmen/worker/b/rating/${workerID}/`, {
             method: 'GET',
             headers: {
             'Content-Type': 'application/json',
@@ -124,7 +125,7 @@ const Request = ({ _ }) => {
           date: date
       }
       try {
-             fetch('http://localhost:3001/workmen/request/service/', {
+             fetch(`${BACKEND_DOMAIN}/workmen/request/service/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
