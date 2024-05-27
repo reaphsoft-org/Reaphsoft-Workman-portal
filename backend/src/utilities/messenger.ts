@@ -19,7 +19,6 @@ export class Messenger {
         payload: { id: string },
         messageContent: string,
     ) {
-        // fixme input title below
         const message = {
             notification: {
                 title: 'Workman Request',
