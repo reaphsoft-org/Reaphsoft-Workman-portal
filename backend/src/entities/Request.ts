@@ -16,6 +16,14 @@ import { User } from './User';
 import { EstateManager } from './EstateManager';
 import { Workman } from './Workman';
 import { ClientRating, WorkmanRating } from './rating';
+import { MEDIA_DIR } from '../utilities/konstants';
+import * as fs from 'fs';
+import * as path from 'path';
+
+const Upload_Dir = path.join(MEDIA_DIR, 'r');
+if (!fs.existsSync(Upload_Dir)) {
+    fs.mkdirSync(Upload_Dir, { recursive: true });
+}
 
 abstract class RequestBase {
     @PrimaryGeneratedColumn()
@@ -49,6 +57,12 @@ abstract class RequestBase {
     @OneToOne(() => WorkmanRating)
     @JoinColumn()
     worker_rating: Relation<WorkmanRating>;
+
+    @Column({ type: 'varchar', length: 150, default: '' })
+    beforePhoto: string;
+
+    @Column({ type: 'varchar', length: 150, default: '' })
+    afterPhoto: string;
 }
 
 @Entity({
