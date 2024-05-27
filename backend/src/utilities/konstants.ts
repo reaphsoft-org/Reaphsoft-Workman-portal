@@ -6,7 +6,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 const DOMAIN = process.env.HOSTING === 'local' ? 'http://localhost' : '';
-export const FRONTEND_DOMAIN = `${DOMAIN}:80`;
+export const FRONTEND_DOMAIN = `${DOMAIN}`;
 export const BASE_MEDIA_DIR = 'media/u';
 export const MEDIA_DIR = path.join(__dirname, '..', '..', BASE_MEDIA_DIR);
 if (!fs.existsSync(MEDIA_DIR)) {
