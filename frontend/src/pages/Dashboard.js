@@ -4,13 +4,14 @@ import {useAuth} from "../components/AuthContext";
 import {showAlert} from "../utils/alert";
 import {Image} from "react-bootstrap";
 import fp5464326_2808307 from "../components/i/fp5464326_2808307.jpg";
+import {BACKEND_DOMAIN} from "../utils/konstants";
 
 const Dashboard = ({user}) => {
     const userAuth = useAuth();
     const [workRequests, setWorkRequests] = useState([]);
     useEffect(() => {
         try {
-             fetch('http://localhost:3001/workmen/requested/services/?recent=true', {
+             fetch(`${BACKEND_DOMAIN}/workmen/requested/services/?recent=true`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
