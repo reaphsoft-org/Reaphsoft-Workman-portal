@@ -3,6 +3,7 @@ import { Col } from 'react-bootstrap';
 import {showAlert} from "../utils/alert";
 import {useAuth} from "../components/AuthContext";
 import {logout} from "../utils/auth";
+import {BACKEND_DOMAIN} from "../utils/konstants";
 
 const ChangePassword = ({_}) => {
     const userAuth = useAuth();
@@ -15,7 +16,7 @@ const ChangePassword = ({_}) => {
         }
         setDisableButton(true);
         try {
-             fetch('http://localhost:3001/account/change/password/', {
+             fetch(`${BACKEND_DOMAIN}/account/change/password/`, {
                  method: 'POST',
                  headers: {
                     'Content-Type': 'application/json',
