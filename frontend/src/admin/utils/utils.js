@@ -3,6 +3,7 @@
 // github.com/kahlflekzy
 
 import {showAlert} from "../../utils/alert";
+import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 export function deleteModel(resolve, link, token, itemIndex = 0, modelData = null, setModelData= null) {
         fetch(link,{
@@ -33,7 +34,7 @@ export function savePhoto(token, code, email, selectedImage, disableFunction) {
     disableFunction(true);
     const postData = new FormData();
     postData.append("photo", selectedImage);
-    fetch(`http://localhost:3001/admin/change/photo/${code}/${email}/`, {
+    fetch(`${BACKEND_DOMAIN}/admin/change/photo/${code}/${email}/`, {
         method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -71,7 +72,7 @@ export function changePassword(passwordForm, code, email, token, setDisablePassw
             return;
         }
         setPasswordErrorText('');
-        fetch(`http://localhost:3001/admin/change/password/${code}/${email}/`, {
+        fetch(`${BACKEND_DOMAIN}/admin/change/password/${code}/${email}/`, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -106,7 +107,7 @@ export function changePassword(passwordForm, code, email, token, setDisablePassw
 }
 
 export function getServices(token, setServices, servicesHasBeenSet) {
-        fetch(`http://localhost:3001/admin/services/0/`,{
+        fetch(`${BACKEND_DOMAIN}/admin/services/0/`,{
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
