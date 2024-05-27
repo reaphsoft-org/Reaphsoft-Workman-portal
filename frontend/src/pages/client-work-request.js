@@ -7,6 +7,7 @@ import {useAuth} from "../components/AuthContext";
 import React, {useEffect, useState} from "react";
 import {showAlert} from "../utils/alert";
 import {Button, Form, FormControl, FormText, Spinner} from "react-bootstrap";
+import {BACKEND_DOMAIN} from "../utils/konstants";
 
 export function ClientWorkRequest() {
     const { id } = useParams();
@@ -22,7 +23,7 @@ export function ClientWorkRequest() {
         five: notSelected,
     });
     useEffect(() => {
-        fetch(`http://localhost:3001/workmen/request/service/${id}/`, {
+        fetch(`${BACKEND_DOMAIN}/workmen/request/service/${id}/`, {
                  method: 'GET',
                  headers: {
                     'Content-Type': 'application/json',
@@ -65,7 +66,7 @@ export function ClientWorkRequest() {
             setDisableButton(false);
             return;
         }
-        fetch(`http://localhost:3001/workmen/request/service/rating/${id}/`, {
+        fetch(`${BACKEND_DOMAIN}/workmen/request/service/rating/${id}/`, {
             method: 'PUT',
             headers: {
                     'Content-Type': 'application/json',
