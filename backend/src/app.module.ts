@@ -15,6 +15,7 @@ import { AdminController } from './admin/admin.controller';
 import { AdminService } from './admin/admin.service';
 import { WorkmenController } from './workmen/workmen.controller';
 import { WorkmenService } from './workmen/workmen.service';
+import { WorkmanController } from './workman/workman.controller';
 
 export const MEDIA_DIR = path.join(__dirname, '..', 'media/u');
 export const ASSETS_DIR = path.join(__dirname, '..', 'assets');
@@ -40,6 +41,7 @@ if (!fs.existsSync(MEDIA_DIR)) {
         EstateController,
         AdminController,
         WorkmenController,
+        WorkmanController,
     ],
     providers: [
         AppService,
