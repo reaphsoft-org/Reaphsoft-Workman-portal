@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {AnonFooter} from "./anon-footer";
+import {Button} from "react-bootstrap";
+import logo from "../components/i/logo.png";
 
 export default function Body() {
     return (
@@ -9,17 +11,19 @@ export default function Body() {
                 <div className="sticky-header main-bar-wraper navbar-expand-lg">
                     <div className="main-bar clearfix">
                         <div className="container clearfix">
-                            <div className="logo-header mostion"><a href="/">
-                                <img src="asset/image/001-removebg-preview.png" style={{ width: 80, height: 80 }} className="logo" alt="img" /></a>
+                            <div className="logo-header mostion">
+                                <a href="/">
+                                    <img src={logo} style={{ width: 80, height: 80 }} className="logo" alt="logo" />
+                                </a>
                             </div>
-                            
                             <div className="extra-nav">
                                 <div className="extra-cell">
                                     <Link className="site-button text-decoration-none" to="/login/">Log In</Link>
                                     <Link className="site-button text-decoration-none" to="/register/">Register</Link>
+                                    {/*<Button variant="warning" className="mx-2 d-lg-none d-block" style={{padding: '10px 20px'}}><i className="ti ti-menu-alt"></i></Button>*/}
                                 </div>
                             </div>
-                            <div className="header-nav navbar-collapse collapse myNavbar justify-content-end" id="navbarNavDropdown">
+                            <div className="header-nav navbar-collapse collapse justify-content-end" id="navbarNavDropdown">
                                 <ul className="nav navbar-nav">
                                     <li><Link className="text-decoration-none" to="/">Home </Link></li>
                                     <li><Link className="text-decoration-none" to="/service/">Services </Link></li>
