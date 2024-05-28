@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {AnonFooter} from "./anon-footer";
-import {Button} from "react-bootstrap";
 import logo from "../components/i/logo.png";
 
 export default function Body() {

@@ -7,6 +7,7 @@ import { PasswordManager } from '../utilities/passwordmanager';
 import { EstateManager } from '../entities/EstateManager';
 import { SuperUser } from '../entities/SuperUser';
 import { Role } from '../roles/enum/role.enum';
+import { Workman } from '../entities/Workman';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +16,7 @@ export class AuthService {
     private readonly estateRepo: Repository<EstateManager> =
         AppDataSource.getRepository(EstateManager);
     private readonly adminRepo = AppDataSource.getRepository(SuperUser);
+    private readonly workmanRepo = AppDataSource.getRepository(Workman);
     private readonly passwordManager = new PasswordManager();
     constructor(private jwtService: JwtService) {}
 
@@ -67,24 +69,33 @@ export class AuthService {
         }
         return user;
     }
+    /*
+     * Passing an admin value of false will attempt to log in as a worker.
+     * Default is true.
+     * */
     async login(
         email: string,
         password: string,
+        admin: boolean = true,
     ): Promise<{ status: boolean; access_token: string; resp: string }> {
-        const user = await this.adminRepo.findOneBy({ email: email });
+        const user = admin
+            ? await this.adminRepo.findOneBy({ email: email })
+            : await this.workmanRepo.findOneBy({ email: email });
         if (!user)
-            return { status: false, access_token: '', resp: 'user not found' };
+            return { status: false, access_token: '', resp: 'User not found' };
         if (!this.passwordManager.comparePassword(password, user.password)) {
             return {
                 status: false,
                 access_token: '',
-                resp: 'invalid password',
+                resp: 'Invalid password',
             };
         }
-        const payload = { email: user.email, roles: [Role.Admin] };
+        const role = admin ? Role.Admin : Role.Workman;
+        const payload = { email: user.email, roles: [role] };
         const date = new Date();
         user.last_visited = date.toISOString();
-        await this.adminRepo.save(user);
+        if (admin) await this.adminRepo.save(user);
+        else await this.workmanRepo.save(user);
         try {
             const accessToken = await this.jwtService.signAsync(payload);
             return {

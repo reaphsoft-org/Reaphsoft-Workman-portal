@@ -37,4 +37,16 @@ export class AuthController {
             };
         return this.authService.login(email, password);
     }
+
+    @Post('workman/login/')
+    async workmanLogin(@Body() dto: AdminLoginDto) {
+        const { email, password } = dto;
+        if (email == undefined || password == undefined)
+            return {
+                status: false,
+                access_token: '',
+                resp: 'invalid request',
+            };
+        return this.authService.login(email, password, false);
+    }
 }
