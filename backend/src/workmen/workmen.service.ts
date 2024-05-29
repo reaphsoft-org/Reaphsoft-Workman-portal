@@ -7,7 +7,7 @@ import { User } from '../entities/User';
 import { EstateManager } from '../entities/EstateManager';
 import { EstateRequest, UserRequest } from '../entities/Request';
 import { RatingDto } from './dto/rating.dto';
-import { ClientRating } from '../entities/rating';
+import {ClientRating, WorkmanRating} from '../entities/rating';
 import { IsNull, Not } from 'typeorm';
 import { Messenger } from '../utilities/messenger';
 
@@ -367,5 +367,57 @@ export class WorkmenService {
         ].map((a) => JSON.parse(a));
         uniqueRes.sort((a, b) => b.stars - a.stars);
         return uniqueRes;
+    }
+
+    async addWorkmanRating(
+        email: string,
+        type: number,
+        id: number,
+        dto: RatingDto,
+        beforePhoto: Express.Multer.File,
+        afterPhoto: Express.Multer.File,
+    ) {
+        const request: UserRequest | EstateRequest | null =
+            type == User.accountType
+                ? await this.userRequestRepo.findOne({
+                      where: {
+                          worker: {
+                              email: email,
+                          },
+                          id: id,
+                      },
+                  })
+                : await this.estateRequestRepo.findOne({
+                      where: {
+                          worker: {
+                              email: email,
+                          },
+                          id: id,
+                      },
+                  });
+        if (!request) return { status: false, resp: 'Request not found' };
+        const stars = Number(dto.stars);
+        if (stars < 1 || stars > 5)
+            return { status: false, resp: 'Stars should be between 1 & 5' };
+        if (dto.comment === '')
+            return { status: false, resp: 'Please write a comment' };
+        if (request.worker_rating !== null) {
+            return {
+                status: false,
+                resp: 'You have already submitted a review.',
+            };
+        }
+        const workmanRating = new WorkmanRating();
+        workmanRating.stars = stars;
+        workmanRating.comment = dto.comment;
+        request.worker_rating = await this.ratingRepo.save(workmanRating);
+        await request.uploadPhoto(beforePhoto);
+        await request.uploadPhoto(afterPhoto, false);
+        if (type == User.accountType) {
+            await this.userRequestRepo.save(request);
+        } else {
+            await this.estateRequestRepo.save(request);
+        }
+        return { status: true, resp: '' };
     }
 }

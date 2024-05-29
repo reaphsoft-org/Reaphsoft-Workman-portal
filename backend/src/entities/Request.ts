@@ -65,9 +65,11 @@ abstract class RequestBase {
     @Column({ type: 'varchar', length: 150, default: '' })
     afterPhoto: string;
 
-    async uploadPhoto(file: Express.Multer.File | any, before: boolean = true) {
-        if (file != null && file.mimetype.startsWith('image/')) {
-            const extension: string = file.originalname.split('.').pop();
+    async uploadPhoto(file: Express.Multer.File, before: boolean = true) {
+        if (file.mimetype.startsWith('image/')) {
+            const extension: string = <string>(
+                file.originalname.split('.').pop()
+            );
             const filename = `${before ? 'b' : 'a'}_${this.id}.${extension}`;
             if (before) this.beforePhoto = await this.savePhoto(file, filename);
             else this.afterPhoto = await this.savePhoto(file, filename);
