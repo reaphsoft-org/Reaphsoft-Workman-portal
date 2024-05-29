@@ -1,4 +1,5 @@
 import {
+    BadRequestException,
     Body,
     Controller,
     Get,
@@ -97,20 +98,20 @@ export class AccountsController {
     }
 
     @UseGuards(AuthGuard)
-    @Post('registration/token/:code/')
+    @Put('registration/token/:code/')
     async setRegistrationToken(
         @RequestDecorator() req: Request,
         @Param('code') code: string,
         @Body() tokenDto: TokenDto,
     ) {
         if (code != '00' && code != '11' && code != '22' && code != '33') {
-            return { status: false, resp: 'Invalid request' };
+            throw new BadRequestException('Invalid request.');
         }
         if (tokenDto.token === undefined || tokenDto.token === '') {
-            return { status: false, resp: 'Invalid request' };
+            throw new BadRequestException('Invalid request, no token.');
         }
         if (tokenDto.token.length > 255) {
-            return { status: false, resp: 'Token length is greater than 255' };
+            throw new BadRequestException('Token length is greater than 255.');
         }
         // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
         const email = req.user.email;

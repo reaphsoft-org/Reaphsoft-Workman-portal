@@ -268,6 +268,45 @@ describe('Workman (e2e)', () => {
         fs.rmSync(before);
         fs.rmSync(after);
     });
+
+    it('set registration token: invalid code', async () => {
+        const res = await request(app.getHttpServer())
+            .put('/account/registration/token/44/')
+            .auth(token, { type: 'bearer' })
+            .expect(400);
+        expect(res.body.message).toBe('Invalid request.');
+    });
+    it('set registration token: no token', async () => {
+        const res = await request(app.getHttpServer())
+            .put('/account/registration/token/33/')
+            .auth(token, { type: 'bearer' })
+            .expect(400);
+        expect(res.body.message).toBe('Invalid request, no token.');
+    });
+    it('set registration token: no token', async () => {
+        const res = await request(app.getHttpServer())
+            .put('/account/registration/token/33/')
+            .auth(token, { type: 'bearer' })
+            .send({
+                token: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
+            })
+            .expect(400);
+        expect(res.body.message).toBe('Token length is greater than 255.');
+    });
+    it('should set registration token', async () => {
+        const regToken = 'a-valid-token-0';
+        const res = await request(app.getHttpServer())
+            .put('/account/registration/token/33/')
+            .auth(token, { type: 'bearer' })
+            .send({
+                token: regToken,
+            })
+            .expect(200);
+        expect(res.body.resp).toBe('');
+        expect(res.body.status).toBe(true);
+        const worker = await workmanRepo.findOneBy({ id: workman.id });
+        expect(worker?.registrationToken).toBe(regToken);
+    });
 });
 
 async function login(user: Workman, password: string, app: INestApplication) {
