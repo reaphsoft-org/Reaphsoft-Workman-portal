@@ -2,7 +2,7 @@ import {
     Body,
     Controller,
     Param,
-    Put,
+    Post,
     UploadedFiles,
     UseGuards,
     UseInterceptors,
@@ -23,7 +23,7 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 export class WorkmanController {
     constructor(private readonly service: WorkmenService) {}
 
-    @Put('/service/rating/:id/:type/')
+    @Post('/service/rating/:id/:type/')
     @UseInterceptors(
         FileFieldsInterceptor([
             { name: 'beforePhoto', maxCount: 1 },
@@ -48,6 +48,8 @@ export class WorkmanController {
             return { status: false, resp: 'Invalid request, missing fields' };
         // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
         const email = req.user.email;
+        if (!files)
+            return { status: false, resp: 'Invalid request, missing photos' };
         const beforePhoto = files.beforePhoto ? files.beforePhoto[0] : null;
         const afterPhoto = files.afterPhoto ? files.afterPhoto[0] : null;
         if (!beforePhoto || !afterPhoto) {
