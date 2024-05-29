@@ -53,6 +53,9 @@ export class WorkmanController {
         if (!beforePhoto || !afterPhoto) {
             return { status: false, resp: 'Invalid request, missing photos' };
         }
+        if (type < 1 || type > 2) {
+            return { status: false, resp: 'Invalid request type' };
+        }
         return this.service.addWorkmanRating(
             email,
             Number(type),
