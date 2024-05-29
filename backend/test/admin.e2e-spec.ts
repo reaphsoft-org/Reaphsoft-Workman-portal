@@ -440,7 +440,7 @@ describe('Admin (e2e)', () => {
             .auth(authToken, { type: 'bearer' })
             .expect(200);
         expect(resp.body.status).toBeFalsy();
-        expect(resp.body.resp).toBe('user not found');
+        expect(resp.body.resp).toBe('User not found');
     });
 });
 

@@ -14,7 +14,7 @@ import { EstateRequest, UserRequest } from '../src/entities/Request';
 import { Service } from '../src/entities/Service';
 import { Workman } from '../src/entities/Workman';
 import { ClientRating, WorkmanRating } from '../src/entities/rating';
-import { BASE_MEDIA_DIR, MEDIA_DIR } from '../src/utilities/konstants';
+import { MEDIA_DIR } from '../src/utilities/konstants';
 import * as fs from 'fs';
 import * as path from 'path';
 

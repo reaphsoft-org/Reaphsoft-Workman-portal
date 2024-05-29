@@ -69,7 +69,7 @@ describe('AdminAuth (e2e)', () => {
         const data = resp.body;
         expect(data.status).toBe(false);
         expect(data.access_token).toBeFalsy();
-        expect(data.resp).toBe('user not found');
+        expect(data.resp).toBe('User not found');
     });
     it('should not login (wrong password)', async () => {
         const resp = await request(app.getHttpServer())
@@ -82,6 +82,6 @@ describe('AdminAuth (e2e)', () => {
         const data = resp.body;
         expect(data.status).toBe(false);
         expect(data.access_token).toBeFalsy();
-        expect(data.resp).toBe('invalid password');
+        expect(data.resp).toBe('Invalid password');
     });
 });
