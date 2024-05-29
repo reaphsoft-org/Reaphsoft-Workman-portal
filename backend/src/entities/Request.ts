@@ -55,7 +55,7 @@ abstract class RequestBase {
     @JoinColumn()
     client_rating: Relation<ClientRating>;
 
-    @OneToOne(() => WorkmanRating)
+    @OneToOne(() => WorkmanRating, { cascade: true })
     @JoinColumn()
     worker_rating: Relation<WorkmanRating>;
 

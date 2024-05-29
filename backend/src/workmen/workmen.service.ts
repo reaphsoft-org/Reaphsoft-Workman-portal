@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+    BadRequestException,
+    ForbiddenException,
+    Injectable,
+} from '@nestjs/common';
 import { AppDataSource } from '../data-source';
 import { Service } from '../entities/Service';
 import { Workman } from '../entities/Workman';
@@ -380,6 +384,10 @@ export class WorkmenService {
         const request: UserRequest | EstateRequest | null =
             type == User.accountType
                 ? await this.userRequestRepo.findOne({
+                      relations: {
+                          worker: true,
+                          worker_rating: true,
+                      },
                       where: {
                           worker: {
                               email: email,
@@ -388,6 +396,10 @@ export class WorkmenService {
                       },
                   })
                 : await this.estateRequestRepo.findOne({
+                      relations: {
+                          worker: true,
+                          worker_rating: true,
+                      },
                       where: {
                           worker: {
                               email: email,
@@ -408,10 +420,9 @@ export class WorkmenService {
             throw new BadRequestException('Please write a comment.');
         }
         if (request.worker_rating !== null) {
-            return {
-                status: false,
-                resp: 'You have already submitted a review.',
-            };
+            throw new ForbiddenException(
+                'You have already submitted a review.',
+            );
         }
         const workmanRating = new WorkmanRating();
         workmanRating.stars = stars;
