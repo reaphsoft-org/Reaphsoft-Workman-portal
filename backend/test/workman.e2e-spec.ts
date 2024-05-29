@@ -146,6 +146,34 @@ describe('Workman (e2e)', () => {
             .expect(400);
         expect(res.body.message).toBe('Invalid request, missing photos.');
     });
+    it('should go through, invalid request type.', async () => {
+        const res = await request(app.getHttpServer())
+            .post(
+                `/workman/service/rating/${userWorkRequest.id}/${User.accountType}1/`,
+            )
+            .auth(token, { type: 'bearer' })
+            .set('Content-Type', 'multipart/form-data')
+            .attach('beforePhoto', 'test/icons8-iris-scan-48.png')
+            .attach('afterPhoto', 'test/icons8-iris-scan-48.png')
+            .field('stars', 1)
+            .field('comment', 'a comment')
+            .expect(400);
+        expect(res.body.message).toBe('Invalid request type.');
+    });
+    it('should go through, request not found.', async () => {
+        const res = await request(app.getHttpServer())
+            .post(
+                `/workman/service/rating/${userWorkRequest.id}/${User.accountType}1/`,
+            )
+            .auth(token, { type: 'bearer' })
+            .set('Content-Type', 'multipart/form-data')
+            .attach('beforePhoto', 'test/icons8-iris-scan-48.png')
+            .attach('afterPhoto', 'test/icons8-iris-scan-48.png')
+            .field('stars', 1)
+            .field('comment', 'a comment')
+            .expect(400);
+        expect(res.body.message).toBe('Invalid request type.');
+    });
 });
 
 async function login(user: Workman, password: string, app: INestApplication) {

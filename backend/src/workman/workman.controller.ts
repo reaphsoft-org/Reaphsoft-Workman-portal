@@ -57,7 +57,7 @@ export class WorkmanController {
             throw new BadRequestException('Invalid request, missing photos.');
         }
         if (type < 1 || type > 2) {
-            return { status: false, resp: 'Invalid request type' };
+            throw new BadRequestException('Invalid request type.');
         }
         return this.service.addWorkmanRating(
             email,
