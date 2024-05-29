@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { AppDataSource } from '../data-source';
 import { Service } from '../entities/Service';
 import { Workman } from '../entities/Workman';
@@ -7,7 +7,7 @@ import { User } from '../entities/User';
 import { EstateManager } from '../entities/EstateManager';
 import { EstateRequest, UserRequest } from '../entities/Request';
 import { RatingDto } from './dto/rating.dto';
-import {ClientRating, WorkmanRating} from '../entities/rating';
+import { ClientRating, WorkmanRating } from '../entities/rating';
 import { IsNull, Not } from 'typeorm';
 import { Messenger } from '../utilities/messenger';
 
@@ -395,12 +395,18 @@ export class WorkmenService {
                           id: id,
                       },
                   });
-        if (!request) return { status: false, resp: 'Work request not found.' };
+        if (!request) {
+            throw new BadRequestException(
+                `Work request not found. Error Code: ${id}-${type}`,
+            );
+        }
         const stars = Number(dto.stars);
-        if (stars < 1 || stars > 5)
-            return { status: false, resp: 'Stars should be between 1 & 5' };
-        if (dto.comment === '')
-            return { status: false, resp: 'Please write a comment' };
+        if (stars < 1 || stars > 5) {
+            throw new BadRequestException('Stars should be between 1 and 5.');
+        }
+        if (dto.comment === '') {
+            throw new BadRequestException('Please write a comment.');
+        }
         if (request.worker_rating !== null) {
             return {
                 status: false,

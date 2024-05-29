@@ -163,7 +163,7 @@ describe('Workman (e2e)', () => {
     it('should go through, request not found.', async () => {
         const res = await request(app.getHttpServer())
             .post(
-                `/workman/service/rating/${userWorkRequest.id}/${User.accountType}1/`,
+                `/workman/service/rating/${userWorkRequest.id + 1000}/${User.accountType}/`,
             )
             .auth(token, { type: 'bearer' })
             .set('Content-Type', 'multipart/form-data')
@@ -172,7 +172,37 @@ describe('Workman (e2e)', () => {
             .field('stars', 1)
             .field('comment', 'a comment')
             .expect(400);
-        expect(res.body.message).toBe('Invalid request type.');
+        expect(res.body.message).toBe(
+            'Work request not found. Error Code: 1001-1',
+        );
+    });
+    it('should go through, stars out of range.', async () => {
+        const res = await request(app.getHttpServer())
+            .post(
+                `/workman/service/rating/${userWorkRequest.id}/${User.accountType}/`,
+            )
+            .auth(token, { type: 'bearer' })
+            .set('Content-Type', 'multipart/form-data')
+            .attach('beforePhoto', 'test/icons8-iris-scan-48.png')
+            .attach('afterPhoto', 'test/icons8-iris-scan-48.png')
+            .field('stars', 6)
+            .field('comment', 'a comment')
+            .expect(400);
+        expect(res.body.message).toBe('Stars should be between 1 and 5.');
+    });
+    it('should go through, but, empty comment.', async () => {
+        const res = await request(app.getHttpServer())
+            .post(
+                `/workman/service/rating/${userWorkRequest.id}/${User.accountType}/`,
+            )
+            .auth(token, { type: 'bearer' })
+            .set('Content-Type', 'multipart/form-data')
+            .attach('beforePhoto', 'test/icons8-iris-scan-48.png')
+            .attach('afterPhoto', 'test/icons8-iris-scan-48.png')
+            .field('stars', 4)
+            .field('comment', '')
+            .expect(400);
+        expect(res.body.message).toBe('Please write a comment.');
     });
 });
 
