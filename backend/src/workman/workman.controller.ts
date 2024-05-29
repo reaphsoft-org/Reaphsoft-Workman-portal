@@ -1,4 +1,5 @@
 import {
+    BadRequestException,
     Body,
     Controller,
     Param,
@@ -42,18 +43,18 @@ export class WorkmanController {
         },
     ) {
         if (Object.keys(dto).length === 0) {
-            return { status: false, resp: 'Invalid request' };
+            throw new BadRequestException('Invalid request.');
         }
         if (dto.stars == undefined || dto.comment == undefined)
-            return { status: false, resp: 'Invalid request, missing fields' };
+            throw new BadRequestException('Invalid request, missing fields.');
         // @ts-expect-error the user variable below will be set, otherwise authorization error will occur.
         const email = req.user.email;
         if (!files)
-            return { status: false, resp: 'Invalid request, missing photos' };
+            throw new BadRequestException('Invalid request, missing photos.');
         const beforePhoto = files.beforePhoto ? files.beforePhoto[0] : null;
         const afterPhoto = files.afterPhoto ? files.afterPhoto[0] : null;
         if (!beforePhoto || !afterPhoto) {
-            return { status: false, resp: 'Invalid request, missing photos' };
+            throw new BadRequestException('Invalid request, missing photos.');
         }
         if (type < 1 || type > 2) {
             return { status: false, resp: 'Invalid request type' };

@@ -100,9 +100,8 @@ describe('Workman (e2e)', () => {
                 `/workman/service/rating/${userWorkRequest.id}/${User.accountType}/`,
             )
             .auth(token, { type: 'bearer' })
-            .expect(201);
-        expect(res.body.status).toBe(false);
-        expect(res.body.resp).toBe('Invalid request');
+            .expect(400);
+        expect(res.body.message).toBe('Invalid request.');
     });
     it('should go through, incomplete/no defined data: stars', async () => {
         const res = await request(app.getHttpServer())
@@ -111,9 +110,8 @@ describe('Workman (e2e)', () => {
             )
             .auth(token, { type: 'bearer' })
             .send({ stars: 5 })
-            .expect(201);
-        expect(res.body.status).toBe(false);
-        expect(res.body.resp).toBe('Invalid request, missing fields');
+            .expect(400);
+        expect(res.body.message).toBe('Invalid request, missing fields.');
     });
     it('should go through, incomplete/no defined data: comment', async () => {
         const res = await request(app.getHttpServer())
@@ -122,9 +120,8 @@ describe('Workman (e2e)', () => {
             )
             .auth(token, { type: 'bearer' })
             .send({ comment: 'a comment' })
-            .expect(201);
-        expect(res.body.status).toBe(false);
-        expect(res.body.resp).toBe('Invalid request, missing fields');
+            .expect(400);
+        expect(res.body.message).toBe('Invalid request, missing fields.');
     });
     it('should go through, no photos', async () => {
         const res = await request(app.getHttpServer())
@@ -133,9 +130,8 @@ describe('Workman (e2e)', () => {
             )
             .auth(token, { type: 'bearer' })
             .send(data)
-            .expect(201);
-        expect(res.body.status).toBe(false);
-        expect(res.body.resp).toBe('Invalid request, missing photos');
+            .expect(400);
+        expect(res.body.message).toBe('Invalid request, missing photos.');
     });
     it('should go through, incomplete/no photos', async () => {
         const res = await request(app.getHttpServer())
@@ -144,12 +140,11 @@ describe('Workman (e2e)', () => {
             )
             .auth(token, { type: 'bearer' })
             .set('Content-Type', 'multipart/form-data')
-            .attach('photo', 'test/icons8-iris-scan-48.png')
+            .attach('beforePhoto', 'test/icons8-iris-scan-48.png')
             .field('stars', 5)
             .field('comment', 'a comment')
-            .expect(201);
-        expect(res.body.status).toBe(false);
-        expect(res.body.resp).toBe('Invalid request, missing photos');
+            .expect(400);
+        expect(res.body.message).toBe('Invalid request, missing photos.');
     });
 });
 
