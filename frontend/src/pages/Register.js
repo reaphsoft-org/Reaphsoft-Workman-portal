@@ -180,7 +180,7 @@ function Register() {
                                 />
                               </div>
                               <div className="col-8 offset-2 d-grid my-2">
-                                <button className={"btn btn-primary" + disableButton} type="submit">Sign Me</button>
+                                <button className={"btn btn-primary" + disableButton} type="submit">Sign Up</button>
                               </div>
                             </div>
                           </form> :
