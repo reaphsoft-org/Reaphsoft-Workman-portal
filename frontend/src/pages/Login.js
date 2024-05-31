@@ -5,8 +5,8 @@ import SweetAlertComponent  from "../utils/alert";
 import logo from "../components/i/logo.png";
 import styles from "./login.module.css";
 import {BACKEND_DOMAIN} from "../utils/konstants";
-import {InputGroup, Form, Button, FormGroup, FormLabel} from "react-bootstrap";
-import { IoEye, IoEyeOff, IoEyeOutline } from "react-icons/io5";
+import {InputGroup, Form, Button, FormGroup, FormLabel, Modal, FormControl} from "react-bootstrap";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 
 function Login() {
   const user = useAuth();
@@ -15,14 +15,11 @@ function Login() {
     password: "",
     account: "1"
   });
-
   const [disableButton, setDisableButton] = useState('');
-
   const [errorText, setErrorText] = useState("");
   const handleInputChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   }
-
   const showSweetAlert = (type, text, title = "") => {
     let initializer = new SweetAlertComponent();
     initializer.showSweetAlert(type, text, title);
@@ -64,10 +61,10 @@ function Login() {
       setDisableButton("");
     }
   }
-
   const [accountType, setAccountType] = useState({type: 1});
   const customBtnClass = `${styles.siteButton} site-button float-left`;
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
   return (
     <>
       {user.user !== null ? <Navigate to="/user/" /> :
@@ -97,7 +94,7 @@ function Login() {
                             <div className="my-2">
                               <strong className="text-black form-label">Account Type</strong>
                             </div>
-                          <form className="col-12 p-a0 " onSubmit={handleSubmit}>
+                          <form className="col-12 p-a0" onSubmit={handleSubmit}>
                             <div className="row mb-3">
                                 <div className="col-6 p-0 pe-1 d-grid">
                                   <button
@@ -122,7 +119,7 @@ function Login() {
                             </div>
                             <FormGroup>
                               <FormLabel>Password</FormLabel>
-                              <InputGroup className="mb-3">
+                              <InputGroup>
                               <Button variant="outline-secondary" disabled={true}><i className="ti ti-lock"></i></Button>
                               <Form.Control
                                   type={showPassword ? "text" : "password"}
@@ -139,17 +136,24 @@ function Login() {
                                   showPassword ?
                                   <IoEyeOff/>
                                       :
-                                  <IoEyeOutline/>
+                                  <IoEye/>
                                 }
                               </Button>
                             </InputGroup>
                             </FormGroup>
-                            <div className="form-text text-danger my-3 px-1">{errorText}</div>
+                            <div className="form-text text-danger my-1 px-1">{errorText}</div>
+                            <div className="d-flex flex-row-reverse my-2">
+                              <Button variant={"link"} className="link-offset-3" onClick={()=>{setModalShow(true)}}>Forgot Password ?</Button>
+                            </div>
                             <div className="text-center">
                               <button type="submit" className={customBtnClass + disableButton}>Login</button>
                               <a className="btn btn-outline-warning link-offset-3 float-right mt-0" href="/register/">
                                 <i className="ti ti-lock me-2"></i>Sign Up</a></div>
                           </form>
+                          <MyVerticallyCenteredModal
+                            show={modalShow}
+                            onHide={() => setModalShow(false)}
+                          />
                         </div>
                       </div>
                     </div>
@@ -172,3 +176,49 @@ function Login() {
 }
 
 export default Login;
+
+function MyVerticallyCenteredModal(props) {
+  const [disableButton, setDisableButton] = useState(false);
+
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      backdrop="static"
+      keyboard={false}
+      centered
+      className="forgot-password-modal"
+    >
+      <Modal.Header>
+        <Modal.Title id="contained-modal-title-vcenter">Forgot Password</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="container">
+          <div className="row">
+            <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+              <p className={"text-center"}><strong>Please enter your email address.</strong></p>
+              <p className={"text-center"}>We'll send a password reset link to you at that email address.</p>
+              <form>
+                <FormGroup>
+                  <InputGroup>
+                    <InputGroup.Text>@</InputGroup.Text>
+                    <FormControl type={"email"} autoComplete={"email"}/>
+                  </InputGroup>
+                </FormGroup>
+                <div className="text-center my-3">
+                  <Button type={"submit"} disabled={disableButton}>
+                    {disableButton ? "Sending. . ." : "Submit" }
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button disabled={disableButton} onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
