@@ -5,6 +5,8 @@ import SweetAlertComponent  from "../utils/alert";
 import logo from "../components/i/logo.png";
 import styles from "./login.module.css";
 import {BACKEND_DOMAIN} from "../utils/konstants";
+import {InputGroup, Form, Button, FormGroup, FormLabel} from "react-bootstrap";
+import { IoEye, IoEyeOff, IoEyeOutline } from "react-icons/io5";
 
 function Login() {
   const user = useAuth();
@@ -65,6 +67,7 @@ function Login() {
 
   const [accountType, setAccountType] = useState({type: 1});
   const customBtnClass = `${styles.siteButton} site-button float-left`;
+  const [showPassword, setShowPassword] = useState(false)
   return (
     <>
       {user.user !== null ? <Navigate to="/user/" /> :
@@ -113,17 +116,34 @@ function Login() {
                               </div>
                             <div className="form-group "><label>Email Address</label>
                               <div className="input-group">
-                                <input type="email" required placeholder='johndoe123@gmail.com' className="form-control"
-                                  autoComplete="email" name="email" value={data.email} onChange={handleInputChange} />
+                                <input type="email" required placeholder=' ' className="form-control"
+                                       autoComplete="email" name="email" value={data.email} onChange={handleInputChange} />
                               </div>
                             </div>
-                            <div className="form-group"><label>Password</label>
-                              <div className="input-group">
-                                <input type="password" required placeholder='*********' className="form-control"
-                                  autoComplete="current-password" name="password" value={data.password}
-                                  onChange={handleInputChange} />
-                              </div>
-                            </div>
+                            <FormGroup>
+                              <FormLabel>Password</FormLabel>
+                              <InputGroup className="mb-3">
+                              <Button variant="outline-secondary" disabled={true}><i className="ti ti-lock"></i></Button>
+                              <Form.Control
+                                  type={showPassword ? "text" : "password"}
+                                  required={true}
+                                  autoComplete="current-password"
+                                  name="password"
+                                  value={data.password}
+                                  onChange={handleInputChange}
+                              />
+                              <Button variant="outline-secondary" onClick={ () => {
+                                setShowPassword(!showPassword)
+                              } }>
+                                {
+                                  showPassword ?
+                                  <IoEyeOff/>
+                                      :
+                                  <IoEyeOutline/>
+                                }
+                              </Button>
+                            </InputGroup>
+                            </FormGroup>
                             <div className="form-text text-danger my-3 px-1">{errorText}</div>
                             <div className="text-center">
                               <button type="submit" className={customBtnClass + disableButton}>Login</button>
