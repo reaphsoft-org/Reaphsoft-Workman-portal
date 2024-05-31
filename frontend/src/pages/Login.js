@@ -5,7 +5,7 @@ import SweetAlertComponent  from "../utils/alert";
 import logo from "../components/i/logo.png";
 import styles from "./login.module.css";
 import {BACKEND_DOMAIN} from "../utils/konstants";
-import {InputGroup, Form, Button, FormGroup, FormLabel, Modal, FormControl} from "react-bootstrap";
+import {InputGroup, Form, Button, FormGroup, FormLabel, Modal, FormControl, Spinner} from "react-bootstrap";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 
 function Login() {
@@ -179,7 +179,16 @@ export default Login;
 
 function MyVerticallyCenteredModal(props) {
   const [disableButton, setDisableButton] = useState(false);
-
+  const [sentResetRequest, setSentResetRequest] = useState(false);
+  const [email, setEmail] = useState("");
+  const submitForm = (e) => {
+    e.preventDefault();
+    setDisableButton(true);
+    new Promise((resolve) => setTimeout(resolve, 2000)).then(()=>{
+      setDisableButton(false);
+      setSentResetRequest(true);
+    })
+  }
   return (
     <Modal
       {...props}
@@ -191,33 +200,55 @@ function MyVerticallyCenteredModal(props) {
       className="forgot-password-modal"
     >
       <Modal.Header>
-        <Modal.Title id="contained-modal-title-vcenter">Forgot Password</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Reset Password</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="container">
           <div className="row">
-            <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-              <p className={"text-center"}><strong>Please enter your email address.</strong></p>
-              <p className={"text-center"}>We'll send a password reset link to you at that email address.</p>
-              <form>
-                <FormGroup>
-                  <InputGroup>
-                    <InputGroup.Text>@</InputGroup.Text>
-                    <FormControl type={"email"} autoComplete={"email"}/>
-                  </InputGroup>
-                </FormGroup>
-                <div className="text-center my-3">
-                  <Button type={"submit"} disabled={disableButton}>
-                    {disableButton ? "Sending. . ." : "Submit" }
-                  </Button>
-                </div>
-              </form>
+            <div className="col-12 col-md-10 offset-md-1 col-lg-6 offset-lg-3">
+              {
+                sentResetRequest ?
+                    <>
+                    <p className={"text-center"}><strong>If you had an account with us, please check your email address <i>{email}</i>. We would have sent you a password reset link.</strong></p>
+                    </>
+                    :
+                    <>
+                      <p className={"text-center"}><strong>Please enter your email address.</strong></p>
+                      <p className={"text-center"}>We'll send a password reset link to you at that email address.</p>
+                      <form onSubmit={submitForm}>
+                        <FormGroup>
+                          <InputGroup>
+                            <InputGroup.Text>@</InputGroup.Text>
+                            <FormControl name="email" value={email} onChange={(e) => setEmail(e.target.value)} type={"email"} autoComplete={"email"} required={true} disabled={disableButton}/>
+                          </InputGroup>
+                        </FormGroup>
+                        <div className="text-center my-3">
+                          <Button type={"submit"} disabled={disableButton}>
+                            {disableButton ?
+                                <>
+                                  <Spinner
+                                    as="span"
+                                    animation="grow"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                    className="me-3"
+                                  />
+                                  Sending. . .
+                                </>
+                                :
+                                "Submit" }
+                          </Button>
+                        </div>
+                      </form>
+                    </>
+              }
             </div>
           </div>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button disabled={disableButton} onClick={props.onHide}>Close</Button>
+        <Button disabled={disableButton} onClick={() => {props.onHide();setEmail("");setSentResetRequest(false)}}>Close</Button>
       </Modal.Footer>
     </Modal>
   );
