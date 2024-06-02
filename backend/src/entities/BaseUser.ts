@@ -6,7 +6,8 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     Entity,
-    OneToOne, Relation,
+    OneToOne,
+    Relation,
 } from 'typeorm';
 import { PasswordManager } from '../utilities/passwordmanager';
 import * as path from 'path';
