@@ -5,6 +5,8 @@ import {
     Column,
     CreateDateColumn,
     UpdateDateColumn,
+    Entity,
+    OneToOne, Relation,
 } from 'typeorm';
 import { PasswordManager } from '../utilities/passwordmanager';
 import * as path from 'path';
@@ -43,6 +45,9 @@ export abstract class BaseUser {
 
     @Column({ type: 'boolean', default: false })
     active: boolean;
+
+    @OneToOne(() => VerificationToken, { onDelete: 'CASCADE', cascade: true })
+    verificationToken: Relation<VerificationToken>;
 
     private readonly passwordManager = new PasswordManager();
     private readonly uploadPath = BASE_MEDIA_DIR;
@@ -139,4 +144,16 @@ export abstract class NonStaff extends BaseUser {
         }
         return { status: true, resp: '' };
     }
+}
+
+@Entity()
+export class VerificationToken {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column({ type: 'varchar', length: 255 })
+    token: string;
+
+    @UpdateDateColumn()
+    timestamp: string;
 }
