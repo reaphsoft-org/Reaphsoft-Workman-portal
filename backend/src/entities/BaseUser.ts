@@ -41,6 +41,9 @@ export abstract class BaseUser {
     @Column({ type: 'varchar', length: 255, default: '' })
     registrationToken: string;
 
+    @Column({ type: 'boolean', default: false })
+    active: boolean;
+
     private readonly passwordManager = new PasswordManager();
     private readonly uploadPath = BASE_MEDIA_DIR;
 
