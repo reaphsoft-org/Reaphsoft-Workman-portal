@@ -418,26 +418,42 @@ export class AccountsService {
         return await this.saveUpdatedUser(code, user);
     }
 
-    private async getUserForUpdate(code: string, email: string) {
+    private async getUserForUpdate(
+        code: string,
+        email: string,
+        active: boolean = false,
+        relations: object = {},
+    ) {
         let user: SuperUser | User | EstateManager | Workman | null;
         switch (code) {
             case '00':
-                user = await this.adminRepo.findOneBy({ email: email });
+                user = await this.adminRepo.findOne({
+                    where: { email: email },
+                    relations: relations,
+                });
                 break;
             case '11':
-                user = await this.usersRepo.findOneBy({ email: email });
+                user = await this.usersRepo.findOne({
+                    where: { email: email },
+                    relations: relations,
+                });
                 break;
             case '22':
-                user = await this.estateManagersRepo.findOneBy({
-                    email: email,
+                user = await this.estateManagersRepo.findOne({
+                    where: { email: email },
+                    relations: relations,
                 });
                 break;
             case '33':
-                user = await this.workmanRepo.findOneBy({ email: email });
+                user = await this.workmanRepo.findOne({
+                    where: { email: email },
+                    relations: relations,
+                });
                 break;
             default:
                 return null;
         }
+        if (active && !user?.active) return null;
         return user;
     }
 
@@ -493,5 +509,26 @@ export class AccountsService {
                 break;
         }
         return { status: true, resp: '' };
+    }
+
+    /*
+     * User must be active, ie, user.active is true
+     * */
+    async requestPasswordReset(
+        tokenDto: TokenDto,
+        email: string,
+        code: string,
+    ) {
+        const user = await this.getUserForUpdate(code, email, true, {
+            verificationToken: true,
+        });
+        if (!user) {
+            return {
+                status: false,
+                resp: `User not found ${email} (c#${code}#at#)`,
+            };
+        }
+        user.registrationToken = tokenDto.token;
+        return await this.saveUpdatedUser(code, user);
     }
 }

@@ -117,4 +117,17 @@ export class AccountsController {
         const email = req.user.email;
         return this.accountsService.setRegistrationToken(tokenDto, email, code);
     }
+
+    @Put('reset/password/:code/:email/')
+    async requestPasswordReset(
+        @RequestDecorator() req: Request,
+        @Param('code') code: string,
+        @Param('email') email: string,
+        @Body() tokenDto: TokenDto,
+    ) {
+        if (code != '00' && code != '11' && code != '22' && code != '33') {
+            throw new BadRequestException('Invalid request.');
+        }
+        return this.accountsService.requestPasswordReset(tokenDto, email, code);
+    }
 }
