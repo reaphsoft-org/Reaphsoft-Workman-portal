@@ -7,7 +7,7 @@ import {
     UpdateDateColumn,
     Entity,
     OneToOne,
-    Relation,
+    Relation, JoinColumn,
 } from 'typeorm';
 import { PasswordManager } from '../utilities/passwordmanager';
 import * as path from 'path';
@@ -48,6 +48,7 @@ export abstract class BaseUser {
     active: boolean;
 
     @OneToOne(() => VerificationToken, { onDelete: 'CASCADE', cascade: true })
+    @JoinColumn()
     verificationToken: Relation<VerificationToken>;
 
     private readonly passwordManager = new PasswordManager();

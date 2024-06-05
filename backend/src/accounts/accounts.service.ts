@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AppDataSource } from '../data-source';
 import { User } from '../entities/User';
@@ -520,10 +520,9 @@ export class AccountsService {
             verificationToken: true,
         });
         if (!user) {
-            return {
-                status: false,
-                resp: `User not found ${email} (c#${code}#at#)`,
-            };
+            throw new BadRequestException(
+                `User not found ${email} (c#${code}#at#)`,
+            );
         }
         const verificationToken =
             user.verificationToken ?? new VerificationToken();

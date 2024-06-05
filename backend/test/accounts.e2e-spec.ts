@@ -41,4 +41,12 @@ describe('Accounts (e2e)', () => {
             .expect(400);
         expect(resp.body.message).toBe('Invalid request.');
     });
+    it('requestPasswordReset:#userNotFound', async () => {
+        const resp = await request(app.getHttpServer())
+            .put(`/account/reset/password/11/test0123@reaphsoft.com/`)
+            .expect(400);
+        expect(resp.body.message).toBe(
+            'User not found test0123@reaphsoft.com (c#11#at#)',
+        );
+    });
 });
