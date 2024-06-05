@@ -26,3 +26,16 @@ export async function login(
         });
     return token;
 }
+
+export function createUser(prefix: string, password: string) {
+    const user = new User();
+    user.email = `user${prefix}@reaphsoft.com`;
+    user.password = password;
+    user.fullname = 'Full Name';
+    user.apartment = '18C';
+    user.address = '404 Ok Street';
+    user.serviceType = 1;
+    user.photoURL = '';
+    user.setValues(true);
+    return user;
+}

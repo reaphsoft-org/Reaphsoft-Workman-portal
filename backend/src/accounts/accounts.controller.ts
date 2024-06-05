@@ -120,7 +120,6 @@ export class AccountsController {
 
     @Put('reset/password/:code/:email/')
     async requestPasswordReset(
-        @RequestDecorator() req: Request,
         @Param('code') code: string,
         @Param('email') email: string,
     ) {

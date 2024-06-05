@@ -10,6 +10,7 @@ import { AppModule } from '../src/app.module';
 import { AppDataSource } from '../src/data-source';
 import { PasswordManager } from '../src/utilities/passwordmanager';
 import { EstateManager } from '../src/entities/EstateManager';
+import { createUser } from './utils/utils';
 
 describe('Auth (e2e)', () => {
     let app: INestApplication;
@@ -31,14 +32,7 @@ describe('Auth (e2e)', () => {
             });
         }
         const repo = AppDataSource.getRepository(User);
-        user = new User();
-        user.email = 'user@reaphsoft.com';
-        user.password = passwordManager.getHashedKey(password);
-        user.fullname = 'Full Name';
-        user.apartment = '18C';
-        user.address = '404 Ok Street';
-        user.serviceType = 1;
-        user.photoURL = '';
+        user = createUser('auth0individual', password);
         user = await repo.save(user);
     });
 

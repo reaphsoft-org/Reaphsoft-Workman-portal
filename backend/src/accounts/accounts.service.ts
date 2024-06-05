@@ -526,9 +526,7 @@ export class AccountsService {
             };
         }
         const verificationToken =
-            user.verificationToken !== null
-                ? user.verificationToken
-                : new VerificationToken();
+            user.verificationToken ?? new VerificationToken();
         const token = verificationToken.generateRandomString();
         // todo sent the above token via email.
         verificationToken.setToken(token);
