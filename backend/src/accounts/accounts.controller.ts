@@ -2,8 +2,11 @@ import {
     BadRequestException,
     Body,
     Controller,
+    FileTypeValidator,
     Get,
+    MaxFileSizeValidator,
     Param,
+    ParseFilePipe,
     Post,
     Put,
     Request as RequestDecorator,
@@ -29,7 +32,15 @@ export class AccountsController {
     @Post('sign/up/i/')
     @UseInterceptors(FileInterceptor('photo'))
     async createIndividualAccount(
-        @UploadedFile() file: any,
+        @UploadedFile(
+            new ParseFilePipe({
+                validators: [
+                    new MaxFileSizeValidator({ maxSize: 512000 }), // 500KB
+                    new FileTypeValidator({ fileType: 'image/*' }),
+                ],
+            }),
+        )
+        file: any,
         @Body() createUserDto: CreateUserDto,
     ) {
         return this.accountsService.createIndividualAccount(
