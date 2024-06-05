@@ -18,6 +18,7 @@ import { House } from '../entities/House';
 import { TokenDto } from './dto/token.dto';
 import { SuperUser } from '../entities/SuperUser';
 import { Workman } from '../entities/Workman';
+import { VerificationToken } from '../entities/BaseUser';
 
 @Injectable()
 export class AccountsService {
@@ -514,11 +515,7 @@ export class AccountsService {
     /*
      * User must be active, ie, user.active is true
      * */
-    async requestPasswordReset(
-        tokenDto: TokenDto,
-        email: string,
-        code: string,
-    ) {
+    async requestPasswordReset(email: string, code: string) {
         const user = await this.getUserForUpdate(code, email, true, {
             verificationToken: true,
         });
@@ -528,7 +525,13 @@ export class AccountsService {
                 resp: `User not found ${email} (c#${code}#at#)`,
             };
         }
-        user.registrationToken = tokenDto.token;
+        const verificationToken =
+            user.verificationToken !== null
+                ? user.verificationToken
+                : new VerificationToken();
+        const token = verificationToken.generateRandomString();
+        // todo sent the above token via email.
+        verificationToken.setToken(token);
         return await this.saveUpdatedUser(code, user);
     }
 }

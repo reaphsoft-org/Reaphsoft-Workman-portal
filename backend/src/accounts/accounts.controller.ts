@@ -123,11 +123,10 @@ export class AccountsController {
         @RequestDecorator() req: Request,
         @Param('code') code: string,
         @Param('email') email: string,
-        @Body() tokenDto: TokenDto,
     ) {
         if (code != '00' && code != '11' && code != '22' && code != '33') {
             throw new BadRequestException('Invalid request.');
         }
-        return this.accountsService.requestPasswordReset(tokenDto, email, code);
+        return this.accountsService.requestPasswordReset(email, code);
     }
 }
