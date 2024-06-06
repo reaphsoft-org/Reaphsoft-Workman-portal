@@ -54,8 +54,9 @@ function Register() {
         body: postData,
       });
       if (!response.ok) {
+        const errorData = await response.json();
         setShowToast({
-          message: `Got a bad response from the server. Please contact the administrators. <${response.statusText}>`,
+          message: `Got a bad response from the server. Please contact the administrators.\n${errorData.message}`,
           show: true
         });
         setDisableButton("");

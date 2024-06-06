@@ -32,17 +32,27 @@ export class AccountsController {
     @Post('sign/up/i/')
     @UseInterceptors(FileInterceptor('photo'))
     async createIndividualAccount(
-        @UploadedFile(
-            new ParseFilePipe({
-                validators: [
-                    new MaxFileSizeValidator({ maxSize: 512000 }), // 500KB
-                    new FileTypeValidator({ fileType: 'image/*' }),
-                ],
-            }),
-        )
+        @UploadedFile()
         file: any,
         @Body() createUserDto: CreateUserDto,
     ) {
+        if (file) {
+            const parseFilePipe = new ParseFilePipe({
+                validators: [
+                    new MaxFileSizeValidator({
+                        maxSize: 1024000,
+                        message:
+                            'Please choose a photo with a lesser size (not exceeding 1.5MB).',
+                    }), // 1MB
+                    new FileTypeValidator({ fileType: 'image/*' }),
+                ],
+                exceptionFactory: (error) => {
+                    throw new BadRequestException(error);
+                },
+            });
+
+            await parseFilePipe.transform(file);
+        }
         return this.accountsService.createIndividualAccount(
             createUserDto,
             file,
