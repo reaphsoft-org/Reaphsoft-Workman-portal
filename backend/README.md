@@ -305,6 +305,8 @@ node dist/loaddata test/services.json
 npm run create_superuser <email> <password> <firstname> <lastnam>
 ```
 
+## Image Resizing
+1. [Magic Number](https://www.ibm.com/support/pages/what-magic-number)
 ## Endpoints
 | No | Description                            | Form                                   | Example                                       | Method |
 |----|----------------------------------------|----------------------------------------|-----------------------------------------------|--------|
