@@ -6,6 +6,7 @@ import SweetAlertComponent  from "../utils/alert";
 import logo from "../components/i/logo.png";
 import style from "./login.module.css";
 import {BACKEND_DOMAIN} from "../utils/konstants";
+import ImageUploadAndCrop from "../components/ImageUploadAndCrop";
 
 export function generateRandomString() {
   let result = '';
@@ -178,6 +179,9 @@ function Register() {
                                   accept="image/*"
                                   onChange={handleImageChange}
                                 />
+                              </div>
+                              <div className="col-12 my-2">
+                                <ImageUploadAndCrop />
                               </div>
                               <div className="col-8 offset-2 d-grid my-2">
                                 <button className={"btn btn-primary" + disableButton} type="submit">Sign Up</button>
