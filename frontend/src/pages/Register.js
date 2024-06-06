@@ -1,6 +1,6 @@
 import { IoAnalyticsSharp } from "react-icons/io5";
 import React, { useState } from 'react';
-import { Toast, ToastContainer } from "react-bootstrap";
+import {Image, Toast, ToastContainer} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import SweetAlertComponent  from "../utils/alert";
 import logo from "../components/i/logo.png";
@@ -128,7 +128,6 @@ function Register() {
                         <h4 className="text-secondary">{accountTypeValues.description} Information</h4>
                         {accountTypeValues.individual ?
                           <form onSubmit={handleSubmit}>
-                            {/* Above would be dynamically set subsequently */}
                             <div className="my-3">
                               <div className="col-12 mb-2">
                                 <label className="form-label">Individual Email</label>
@@ -166,22 +165,20 @@ function Register() {
                                 </select>
                               </div>
                               <div className="col-12 mb-2">
-                                <label className="form-label text-center">House Photo</label>
+                                <label className="form-label">House Photo</label>
                                 <div>
                                   {selectedImage && (
                                     <div className="text-center my-2">
-                                      <img src={URL.createObjectURL(selectedImage)} alt="Selected" />
+                                      <Image
+                                          src={URL.createObjectURL(selectedImage)}
+                                          width={150}
+                                          alt="Selected" />
                                     </div>
                                   )}
                                 </div>
-                                <input
-                                  type="file" id="imageInput" className="form-control"
-                                  accept="image/*"
-                                  onChange={handleImageChange}
-                                />
                               </div>
                               <div className="col-12 my-2">
-                                <ImageUploadAndCrop />
+                                <ImageUploadAndCrop setCroppedImage={setSelectedImage} />
                               </div>
                               <div className="col-8 offset-2 d-grid my-2">
                                 <button className={"btn btn-primary" + disableButton} type="submit">Sign Up</button>
@@ -189,7 +186,6 @@ function Register() {
                             </div>
                           </form> :
                           <form onSubmit={handleSubmit}>
-                            <input type="hidden" name="accountType" value={accountTypeValues.accountType} onChange={handleInputChange} />
                             <div className="my-3">
                               <div className="col-12 mb-2">
                                 <label className="form-label">Estate Email Address</label>

@@ -13,12 +13,10 @@ const createImage = (url) =>
     image.src = url;
   });
 
-const getCroppedImg = async (imageSrc, pixelCrop, shape) => {
+const getCroppedImg = async (imageSrc, pixelCrop, shape, maxSize = 768) => {
   const image = await createImage(imageSrc);
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
-
-  const { width, height } = image;
 
   canvas.width = pixelCrop.width;
   canvas.height = pixelCrop.height;
@@ -34,8 +32,7 @@ const getCroppedImg = async (imageSrc, pixelCrop, shape) => {
     pixelCrop.width,
     pixelCrop.height
   );
-
-  if (shape === 'circle') {
+  if (shape === 'round') {
     ctx.globalCompositeOperation = 'destination-in';
     ctx.beginPath();
     ctx.arc(
@@ -49,11 +46,28 @@ const getCroppedImg = async (imageSrc, pixelCrop, shape) => {
     ctx.fill();
   }
 
-  return new Promise((resolve) => {
-    canvas.toBlob((blob) => {
-      resolve(URL.createObjectURL(blob));
-    }, 'image/jpeg');
-  });
+  if (canvas.width > maxSize || canvas.height > maxSize) {
+    const resizeCanvas = document.createElement('canvas');
+    const resizeCtx = resizeCanvas.getContext('2d');
+
+    const scaleFactor = Math.min(maxSize / canvas.width, maxSize / canvas.height);
+    resizeCanvas.width = canvas.width * scaleFactor;
+    resizeCanvas.height = canvas.height * scaleFactor;
+
+    resizeCtx.drawImage(canvas, 0, 0, resizeCanvas.width, resizeCanvas.height);
+
+    return new Promise((resolve) => {
+      resizeCanvas.toBlob((blob) => {
+        resolve(blob);
+      }, 'image/png');
+    });
+  } else {
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        resolve(blob);
+      }, 'image/png');
+    });
+  }
 };
 
 export default getCroppedImg;

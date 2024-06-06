@@ -8,12 +8,10 @@ import React, { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
 import { useDropzone } from 'react-dropzone';
 import getCroppedImg from './cropImage'; // Helper function to crop the image
-import './ImageUploadAndCrop.css';
-import {Button} from "react-bootstrap";
-import {BsCrop} from "react-icons/bs"; // Custom styles for the component
+import './ImageUploadAndCrop.css'; // Custom styles for the component
 import { Form  } from "react-bootstrap";
 
-const ImageUploadAndCrop = () => {
+const ImageUploadAndCrop = ({setCroppedImage}) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -34,13 +32,20 @@ const ImageUploadAndCrop = () => {
     accept: 'image/*',
   });
 
-  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+  const onCropComplete = useCallback(async (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
-  }, []);
+    try {
+      const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels, shape);
+      setCroppedImage(croppedImage);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [imageSrc, setCroppedImage, shape]);
 
   const showCroppedImage = useCallback(async () => {
     try {
       const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels, shape);
+      // todo continue, set the cropped image when size is also changed.
       console.log('Cropped image:', croppedImage);
       // You can do something with the cropped image (e.g., upload to server)
     } catch (e) {
@@ -71,9 +76,6 @@ const ImageUploadAndCrop = () => {
       </div>
       {imageSrc && (
         <div className="d-flex flex-row my-1">
-          <Button onClick={showCroppedImage} type="button" variant="outline-secondary" className="me-3">
-            <BsCrop />
-          </Button>
           <Form.Select value={shape} onChange={(e) => {setShape(e.target.value)}}>
             <option value="rect">Square</option>
             <option value="round">Circle</option>
