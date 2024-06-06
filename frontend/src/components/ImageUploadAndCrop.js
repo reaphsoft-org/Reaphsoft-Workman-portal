@@ -11,6 +11,7 @@ import getCroppedImg from './cropImage'; // Helper function to crop the image
 import './ImageUploadAndCrop.css';
 import {Button} from "react-bootstrap";
 import {BsCrop} from "react-icons/bs"; // Custom styles for the component
+import { Form  } from "react-bootstrap";
 
 const ImageUploadAndCrop = () => {
   const [imageSrc, setImageSrc] = useState(null);
@@ -69,20 +70,14 @@ const ImageUploadAndCrop = () => {
         )}
       </div>
       {imageSrc && (
-        <div className="controls my-1">
-          <Button onClick={showCroppedImage} type="button" variant="outline-primary" className="icon-box-btn">
+        <div className="d-flex flex-row my-1">
+          <Button onClick={showCroppedImage} type="button" variant="outline-secondary" className="me-3">
             <BsCrop />
           </Button>
-          <label>
-            Crop Shape:
-            <select value={shape} onChange={(e) => {
-              setShape(e.target.value);
-              console.log(shape);
-            }}>
-              <option value="rect">Square</option>
-              <option value="round">Circle</option>
-            </select>
-          </label>
+          <Form.Select value={shape} onChange={(e) => {setShape(e.target.value)}}>
+            <option value="rect">Square</option>
+            <option value="round">Circle</option>
+          </Form.Select>
         </div>
       )}
     </div>

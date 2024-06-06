@@ -1,7 +1,7 @@
 # Reaphsoft Workman
 ## References
 1. [React Bootstrap](https://react-bootstrap.github.io/)
-2. 
+2. [React Icons](https://react-icons.github.io/react-icons/icons/bs/)
 
 # Getting Started with Create React App
 
