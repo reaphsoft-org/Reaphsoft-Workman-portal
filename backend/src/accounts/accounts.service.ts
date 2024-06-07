@@ -312,12 +312,30 @@ export class AccountsService {
             f(<EstateManager>object, <CreateEstateDto>dto);
         }
         try {
+            /*
+             * Unfortunately, I have to save object twice
+             * Case 1
+             * Attempt to save the object.
+             * If successful, attempt to save the photo,
+             * If successful, save the object again, this time setting the photoURL
+             *
+             * Case 2
+             * Attempt to save the object, if unsuccessful, simply exit
+             *
+             * Case 3 Attempt to save object,
+             * If successful, attempt to save photo
+             * If unsuccessful, simply exit.
+             * */
             if (type == User.accountType) await this.usersRepo.save(object);
             else await this.estateManagersRepo.save(object);
             await object.saveFile(
                 file,
                 type == User.accountType ? 'user' : 'estate',
             );
+            if (object.photoURL !== '') {
+                if (type == User.accountType) await this.usersRepo.save(object);
+                else await this.estateManagersRepo.save(object);
+            }
         } catch (e) {
             if (
                 e.name === 'QueryFailedError' &&

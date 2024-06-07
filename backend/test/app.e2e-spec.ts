@@ -89,15 +89,17 @@ describe('Accounts Individual User Tests', () => {
                 const data = resp.body;
                 expect(data.status).toBe(true);
                 expect(data.resp).toBe('Account created successfully');
-                const imgPath = path.join(MEDIA_DIR, 'test1reaphsoft-com.png');
+                const imgPath = path.join(
+                    MEDIA_DIR,
+                    'user_test1reaphsoft-com.png',
+                );
                 expect(fs.existsSync(imgPath)).toBe(true);
                 const repo = AppDataSource.getRepository(User);
                 const user = await repo.findOne({ where: { email } });
                 expect(user !== null);
                 expect(user?.password !== 'password');
-                expect(
-                    user?.photoURL ===
-                        path.join('media/u', 'test1reaphsoft-com.png'),
+                expect(user?.photoURL).toBe(
+                    path.join('media/u', 'user_test1reaphsoft-com.png'),
                 );
                 fs.rmSync(imgPath);
                 expect(fs.existsSync(imgPath)).toBe(false);
@@ -355,6 +357,8 @@ describe('Accounts Estate Manager Tests', () => {
     const api = '/account/sign/up/e/';
     const repo = AppDataSource.getRepository(EstateManager);
 
+    // todo test for when a user creates an account with a photo, the account already exists, so existing photo isn't modified.
+
     beforeAll(async () => {
         app = await initializeTesting(app);
         estateManager = new EstateManager();
@@ -404,13 +408,15 @@ describe('Accounts Estate Manager Tests', () => {
                 const data = resp.body;
                 expect(data.status).toBe(true);
                 expect(data.resp).toBe('Account created successfully');
-                const imgPath = path.join(MEDIA_DIR, 'test1reaphsoft-com.png');
+                const imgPath = path.join(
+                    MEDIA_DIR,
+                    'estate_test1reaphsoft-com.png',
+                );
                 expect(fs.existsSync(imgPath)).toBe(true);
                 const user = await repo.findOne({ where: { email } });
                 expect(user !== null);
-                expect(
-                    user?.photoURL ===
-                        path.join('media/u', 'test1reaphsoft-com.png'),
+                expect(user?.photoURL).toBe(
+                    path.join('media/u', 'estate_test1reaphsoft-com.png'),
                 );
                 fs.rmSync(imgPath);
                 expect(user?.password !== 'password'); // should be hashed
