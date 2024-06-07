@@ -311,18 +311,13 @@ export class AccountsService {
             };
             f(<EstateManager>object, <CreateEstateDto>dto);
         }
-        if (file != null && file.mimetype.startsWith('image/')) {
-            // todo add test case for when a object posts a file which doesn't have an image mime type
-            // todo test for jpegs, currently tests for png
-            const extension: string = file.originalname.split('.').pop();
-            const filename =
-                object.email.replace('@', '').replace('.', '-') +
-                `.${extension}`;
-            object.photoURL = await this.savePhoto(file, filename);
-        }
         try {
             if (type == User.accountType) await this.usersRepo.save(object);
             else await this.estateManagersRepo.save(object);
+            await object.saveFile(
+                file,
+                type == User.accountType ? 'user' : 'estate',
+            );
         } catch (e) {
             if (
                 e.name === 'QueryFailedError' &&

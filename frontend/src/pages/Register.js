@@ -7,6 +7,7 @@ import logo from "../components/i/logo.png";
 import style from "./login.module.css";
 import {BACKEND_DOMAIN} from "../utils/konstants";
 import ImageUploadAndCrop from "../components/ImageUploadAndCrop";
+import blobToFile from "../utils/blobToFile";
 
 export function generateRandomString() {
   let result = '';
@@ -48,7 +49,8 @@ function Register() {
       postData.append(key, formData[key]);
     });
     if (selectedImage != null) {
-      postData.append("photo", selectedImage);
+      const croppedImageFile = blobToFile(selectedImage, 'user_image.png');
+      postData.append("photo", croppedImageFile);
     }
     try {
       const link = accountTypeValues.accountType === 1 ? "account/sign/up/i/" : "account/sign/up/e/";
