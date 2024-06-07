@@ -7,7 +7,7 @@ import React, {useEffect, useState} from "react";
 import {useAuth} from "../../components/AuthContext";
 import {Button, Form, FormControl, FormGroup, FormLabel, Image, InputGroup, Modal} from "react-bootstrap";
 import {showAlert, showDeleteDialog} from "../../utils/alert";
-import fp29332702_7495554 from '../components/fp29332702_7495554.jpg'
+import default_profile_image from '../../components/i/145857007_307ce493-b254-4b2d-8ba4-d12c080d6651.jpg'
 import {changePassword, deleteModel, savePhoto} from "../utils/utils";
 import {BACKEND_DOMAIN} from "../../utils/konstants";
 
@@ -163,13 +163,15 @@ export const ViewUser = () => {
                               {
                                   selectedImage === null ?
                                       <>
-                                          <Image
-                                              src={user.photoURL === '' ? fp29332702_7495554 : `${BACKEND_DOMAIN}/${user.photoURL}`}/>
+                                          <Image width={200}
+                                              src={user.photoURL === '' ? default_profile_image : `${BACKEND_DOMAIN}/${user.photoURL}`}/>
                                         <p className="mt-3">Current Photo: {user.photoURL === '' ? 'None' : user.photoURL }</p>
                                       </>
                                       :
                                       <>
-                                          <Image src={URL.createObjectURL(selectedImage)} alt="selected"/>
+                                          <Image
+                                              width={200}
+                                              src={URL.createObjectURL(selectedImage)} alt="selected"/>
                                           <p className="mt-3">Current Photo: {selectedImage.name }</p>
                                       </>
                               }
