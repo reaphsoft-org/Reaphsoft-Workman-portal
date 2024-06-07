@@ -4,14 +4,14 @@
 
 // src/components/ImageUploadAndCrop.js
 
-import React, { useState, useCallback } from 'react';
+import React, {useState, useCallback, useImperativeHandle, forwardRef} from 'react';
 import Cropper from 'react-easy-crop';
 import { useDropzone } from 'react-dropzone';
 import getCroppedImg from './cropImage'; // Helper function to crop the image
 import './ImageUploadAndCrop.css'; // Custom styles for the component
 import { Form  } from "react-bootstrap";
 
-const ImageUploadAndCrop = ({setCroppedImage}) => {
+const ImageUploadAndCrop = forwardRef(({setCroppedImage}, ref) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -32,15 +32,22 @@ const ImageUploadAndCrop = ({setCroppedImage}) => {
     accept: 'image/*',
   });
 
-  const onCropComplete = useCallback(async (croppedArea, croppedAreaPixels) => {
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
+
+  const showCroppedImage = useCallback(async () => {
     try {
       const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels, shape);
       setCroppedImage(croppedImage);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
-  }, [imageSrc, setCroppedImage, shape]);
+  }, [imageSrc, croppedAreaPixels, shape, setCroppedImage]);
+
+  useImperativeHandle(ref, () => ({
+    showCroppedImage,
+  }));
 
   return (
     <div className="">
@@ -52,7 +59,7 @@ const ImageUploadAndCrop = ({setCroppedImage}) => {
               image={imageSrc}
               crop={crop}
               zoom={zoom}
-              aspect={shape === 'square' ? 1 : 1}
+              aspect={shape === 'rect' ? 1 : 1}
               onCropChange={setCrop}
               onZoomChange={setZoom}
               cropShape={shape}
@@ -73,6 +80,6 @@ const ImageUploadAndCrop = ({setCroppedImage}) => {
       )}
     </div>
   );
-};
+});
 
 export default ImageUploadAndCrop;

@@ -1,5 +1,5 @@
 import { IoAnalyticsSharp } from "react-icons/io5";
-import React, { useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {Image, Toast, ToastContainer} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import SweetAlertComponent  from "../utils/alert";
@@ -25,20 +25,24 @@ function Register() {
   const [accountTypeValues, setAccountTypeValues] = useState({
     individual: true, description: 'Personal', accountType: 1
   });
+  const cropperRef = useRef(null);
 
   const showAlert = (type, text, page ,title = "") => {
     let initializer = new SweetAlertComponent();
     initializer.showAlert(type, text, page ,title);
-  }
+  };
 
-  // Function to handle when a new image is selected
-  const handleImageChange = (event) => {
-    setSelectedImage(event.target.files[0]);
+  const handleCroppedImage = (croppedImage) => {
+    setSelectedImage(croppedImage);
   };
 
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (cropperRef.current){
+      await cropperRef.current.showCroppedImage();
+    }
+    return;
     setDisableButton(" disabled");
     const postData = new FormData();
     Object.keys(formData).forEach(key => {
@@ -166,20 +170,9 @@ function Register() {
                                 </select>
                               </div>
                               <div className="col-12 mb-2">
-                                <label className="form-label">House Photo</label>
-                                <div>
-                                  {selectedImage && (
-                                    <div className="text-center my-2">
-                                      <Image
-                                          src={URL.createObjectURL(selectedImage)}
-                                          width={150}
-                                          alt="Selected" />
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                              <div className="col-12 my-2">
-                                <ImageUploadAndCrop setCroppedImage={setSelectedImage} />
+                                <label className="form-label">Photo</label>
+                                <ImageUploadAndCrop setCroppedImage={handleCroppedImage} ref={cropperRef} />
+                                <div className="form-text">(Optional, of your self or your house)</div>
                               </div>
                               <div className="col-8 offset-2 d-grid my-2">
                                 <button className={"btn btn-primary" + disableButton} type="submit">Sign Up</button>
@@ -225,19 +218,8 @@ function Register() {
                               </div>
                               <div className="col-12 mb-2">
                                 <label className="form-label">Estate Photo/Logo</label>
-                                <div>
-                                  {selectedImage && (
-                                    <div className="text-center my-2">
-                                      <Image
-                                          src={URL.createObjectURL(selectedImage)}
-                                          width={150}
-                                          alt="Selected" />
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                              <div className="col-12 my-2">
-                                <ImageUploadAndCrop setCroppedImage={setSelectedImage} />
+                                <ImageUploadAndCrop setCroppedImage={handleCroppedImage} ref={cropperRef} />
+                                <div className="form-text">(Optional)</div>
                               </div>
                               <div className="col-8 offset-2 d-grid my-2">
                                 <button className={"btn btn-primary" + disableButton} type="submit">Create Account</button>
