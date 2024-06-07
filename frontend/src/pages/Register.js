@@ -1,6 +1,6 @@
 import { IoAnalyticsSharp } from "react-icons/io5";
 import React, {useRef, useState} from 'react';
-import {Image, Toast, ToastContainer} from "react-bootstrap";
+import {Toast, ToastContainer} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import SweetAlertComponent  from "../utils/alert";
 import logo from "../components/i/logo.png";
