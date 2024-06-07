@@ -4,13 +4,13 @@
 
 // src/components/ImageUploadAndCrop.js
 
-import React, {useState, useCallback, useImperativeHandle, forwardRef} from 'react';
+import React, {forwardRef, useCallback, useImperativeHandle, useState} from 'react';
 import Cropper from 'react-easy-crop';
-import { useDropzone } from 'react-dropzone';
+import {useDropzone} from 'react-dropzone';
 import getCroppedImg from './cropImage'; // Helper function to crop the image
 import './ImageUploadAndCrop.css'; // Custom styles for the component
 
-const ImageUploadAndCrop = forwardRef(({setCroppedImage}, ref) => {
+const ImageUploadAndCrop = forwardRef((_, ref) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -38,13 +38,13 @@ const ImageUploadAndCrop = forwardRef(({setCroppedImage}, ref) => {
   const showCroppedImage = useCallback(async () => {
     try {
       if (imageSrc) {
-        const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels, shape);
-        setCroppedImage(croppedImage);
+        return await getCroppedImg(imageSrc, croppedAreaPixels, shape);
       }
     } catch (e) {
       console.error(e);
     }
-  }, [imageSrc, croppedAreaPixels, setCroppedImage]);
+    return null;
+  }, [imageSrc, croppedAreaPixels]);
 
   useImperativeHandle(ref, () => ({
     showCroppedImage,

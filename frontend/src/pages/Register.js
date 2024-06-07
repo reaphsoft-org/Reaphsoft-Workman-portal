@@ -20,7 +20,6 @@ export function generateRandomString() {
 }
 
 function Register() {
-  const [selectedImage, setSelectedImage] = useState(null);
   const [showToast, setShowToast] = useState({ message: "", show: false });
   const [disableButton, setDisableButton] = useState('');
   const [accountTypeValues, setAccountTypeValues] = useState({
@@ -33,23 +32,20 @@ function Register() {
     initializer.showAlert(type, text, page ,title);
   };
 
-  const handleCroppedImage = (croppedImage) => {
-    setSelectedImage(croppedImage);
-  };
-
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
+    let croppedImage = null;
     if (cropperRef.current){
-      await cropperRef.current.showCroppedImage();
+      croppedImage = await cropperRef.current.showCroppedImage();
     }
     setDisableButton(" disabled");
     const postData = new FormData();
     Object.keys(formData).forEach(key => {
       postData.append(key, formData[key]);
     });
-    if (selectedImage != null) {
-      const croppedImageFile = blobToFile(selectedImage, 'user_image.png');
+    if (croppedImage != null) {
+      const croppedImageFile = blobToFile(croppedImage, 'user_image.png');
       postData.append("photo", croppedImageFile);
     }
     try {
@@ -172,7 +168,7 @@ function Register() {
                               </div>
                               <div className="col-12 mb-2">
                                 <label className="form-label">Photo</label>
-                                <ImageUploadAndCrop setCroppedImage={handleCroppedImage} ref={cropperRef} />
+                                <ImageUploadAndCrop ref={cropperRef} />
                                 <div className="form-text">(Optional. Photo can be of your self or your house)</div>
                               </div>
                               <div className="col-8 offset-2 d-grid my-2">
@@ -219,7 +215,7 @@ function Register() {
                               </div>
                               <div className="col-12 mb-2">
                                 <label className="form-label">Estate Photo/Logo</label>
-                                <ImageUploadAndCrop setCroppedImage={handleCroppedImage} ref={cropperRef} />
+                                <ImageUploadAndCrop ref={cropperRef} />
                                 <div className="form-text">(Optional)</div>
                               </div>
                               <div className="col-8 offset-2 d-grid my-2">
