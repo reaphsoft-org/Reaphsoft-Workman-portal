@@ -2,7 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { logout } from '../utils/auth';
 import { useAuth } from './AuthContext';
-import {Button} from "react-bootstrap";
+import {Button, Image} from "react-bootstrap";
+import default_profile_image from './i/145857007_307ce493-b254-4b2d-8ba4-d12c080d6651.jpg'
+
 
 const Sidebar = ({user}) => {
     const userAuth = useAuth();
@@ -12,7 +14,11 @@ const Sidebar = ({user}) => {
                 <div className="candidate-info">
                     <div className="candidate-detail text-center">
                         <div className="canditate-des">
-                            <img alt={user.fullname} className="img-fluid" src={ user.photoURL !== '' ? "http://localhost:3001/" + user.photoURL : null} style={{width: '150px', height: '150px'}}/>
+                            <Image
+                                alt={user.fullname}
+                                width={200}
+                                src={ user.photoURL !== '' ? `http://localhost:3001/${user.photoURL}` : default_profile_image}
+                            />
                         </div>
                         <div className="candidate-title">
                             <h5 className="mb-2 text-dark">{user.fullname}</h5>
