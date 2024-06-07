@@ -227,16 +227,17 @@ function Register() {
                                 <label className="form-label">Estate Photo/Logo</label>
                                 <div>
                                   {selectedImage && (
-                                    <div className="text-center my-3">
-                                      <img src={URL.createObjectURL(selectedImage)} alt="Selected" />
+                                    <div className="text-center my-2">
+                                      <Image
+                                          src={URL.createObjectURL(selectedImage)}
+                                          width={150}
+                                          alt="Selected" />
                                     </div>
                                   )}
                                 </div>
-                                <input
-                                  type="file" id="imageInput" className="form-control"
-                                  accept="image/*"
-                                  onChange={handleImageChange}
-                                />
+                              </div>
+                              <div className="col-12 my-2">
+                                <ImageUploadAndCrop setCroppedImage={setSelectedImage} />
                               </div>
                               <div className="col-8 offset-2 d-grid my-2">
                                 <button className={"btn btn-primary" + disableButton} type="submit">Create Account</button>

@@ -42,17 +42,6 @@ const ImageUploadAndCrop = ({setCroppedImage}) => {
     }
   }, [imageSrc, setCroppedImage, shape]);
 
-  const showCroppedImage = useCallback(async () => {
-    try {
-      const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels, shape);
-      // todo continue, set the cropped image when size is also changed.
-      console.log('Cropped image:', croppedImage);
-      // You can do something with the cropped image (e.g., upload to server)
-    } catch (e) {
-      console.error(e);
-    }
-  }, [imageSrc, croppedAreaPixels, shape]);
-
   return (
     <div className="">
       <div {...getRootProps({ className: 'dropzone' })}>
