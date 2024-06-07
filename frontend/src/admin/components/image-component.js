@@ -3,22 +3,26 @@
 // github.com/kahlflekzy
 
 import {Button, Form, Image, InputGroup} from "react-bootstrap";
-import fp29332702_7495554 from "./fp29332702_7495554.jpg";
+import default_profile_image from '../../components/i/145857007_307ce493-b254-4b2d-8ba4-d12c080d6651.jpg'
 import React from "react";
 import {BACKEND_DOMAIN} from "../../utils/konstants";
 
 export function ImageComponent(selectedImage, user, setSelectedImage, setDisableSavePhoto, savePhoto, disableSavePhoto) {
+    const imageWidth = 200;
     return <div className="text-center my-3">
         {
             selectedImage === null ?
                 <>
                     <Image
-                        src={user.photoURL === '' ? fp29332702_7495554 : `${BACKEND_DOMAIN}/${user.photoURL}`}/>
+                        width={imageWidth}
+                        src={user.photoURL === '' ? default_profile_image : `${BACKEND_DOMAIN}/${user.photoURL}`}/>
                     <p className="mt-3">Current Photo: {user.photoURL === '' ? 'None' : user.photoURL}</p>
                 </>
                 :
                 <>
-                    <Image src={URL.createObjectURL(selectedImage)} alt="selected"/>
+                    <Image
+                        width={imageWidth}
+                        src={URL.createObjectURL(selectedImage)} alt="selected"/>
                     <p className="mt-3">Current Photo: {selectedImage.name}</p>
                 </>
         }
