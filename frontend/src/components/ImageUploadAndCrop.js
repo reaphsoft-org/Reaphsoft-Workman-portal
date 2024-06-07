@@ -9,14 +9,13 @@ import Cropper from 'react-easy-crop';
 import { useDropzone } from 'react-dropzone';
 import getCroppedImg from './cropImage'; // Helper function to crop the image
 import './ImageUploadAndCrop.css'; // Custom styles for the component
-import { Form  } from "react-bootstrap";
 
 const ImageUploadAndCrop = forwardRef(({setCroppedImage}, ref) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-  const [shape, setShape] = useState('rect'); // 'rect' or 'round'
+  const shape = 'round'; // 'rect' or 'round'
 
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -38,19 +37,21 @@ const ImageUploadAndCrop = forwardRef(({setCroppedImage}, ref) => {
 
   const showCroppedImage = useCallback(async () => {
     try {
-      const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels, shape);
-      setCroppedImage(croppedImage);
+      if (imageSrc) {
+        const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels, shape);
+        setCroppedImage(croppedImage);
+      }
     } catch (e) {
       console.error(e);
     }
-  }, [imageSrc, croppedAreaPixels, shape, setCroppedImage]);
+  }, [imageSrc, croppedAreaPixels, setCroppedImage]);
 
   useImperativeHandle(ref, () => ({
     showCroppedImage,
   }));
 
   return (
-    <div className="">
+    <div>
       <div {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} />
         {imageSrc ? (
@@ -71,12 +72,7 @@ const ImageUploadAndCrop = forwardRef(({setCroppedImage}, ref) => {
         )}
       </div>
       {imageSrc && (
-        <div className="d-flex flex-row my-1">
-          <Form.Select value={shape} onChange={(e) => {setShape(e.target.value)}}>
-            <option value="rect">Square</option>
-            <option value="round">Circle</option>
-          </Form.Select>
-        </div>
+        <div className="d-flex flex-row my-1"></div>
       )}
     </div>
   );

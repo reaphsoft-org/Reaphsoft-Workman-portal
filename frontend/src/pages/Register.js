@@ -42,7 +42,6 @@ function Register() {
     if (cropperRef.current){
       await cropperRef.current.showCroppedImage();
     }
-    return;
     setDisableButton(" disabled");
     const postData = new FormData();
     Object.keys(formData).forEach(key => {
@@ -172,7 +171,7 @@ function Register() {
                               <div className="col-12 mb-2">
                                 <label className="form-label">Photo</label>
                                 <ImageUploadAndCrop setCroppedImage={handleCroppedImage} ref={cropperRef} />
-                                <div className="form-text">(Optional, of your self or your house)</div>
+                                <div className="form-text">(Optional. Photo can be of your self or your house)</div>
                               </div>
                               <div className="col-8 offset-2 d-grid my-2">
                                 <button className={"btn btn-primary" + disableButton} type="submit">Sign Up</button>
