@@ -25,7 +25,8 @@ Please head to [backend](https://github.com/reaphsoft-org/Reaphsoft-Workman-port
 3. Run `npm install` when pulling new codes to ensure new packages are installed locally.
 
 ## Deployment
-1. For the frontend, install serve according to the React deployment recommendations `npm install --save serve`
-2. run `npm run build; serve -s build -l tcp://0.0.0.0:80` which builds and serves the file on windows.
-3. For the backend, run the command `npm run build; npm run start:prod`
-4. Commands should be run from the respective directories.
+1. For the frontend, install serve according to the [React deployment](https://facebook.github.io/create-react-app/docs/deployment) recommendations.
+2. TLDR for it is `npm install -g serve`.
+3. Then run `npm run build; serve -s build -l tcp://0.0.0.0:80` which builds and serves the file on windows.
+4. For the backend, run the command `npm run build; npm run start:prod`
+5. Commands should be run from the respective directories.
