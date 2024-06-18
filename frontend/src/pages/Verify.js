@@ -4,11 +4,10 @@
 
 import {useParams} from "react-router";
 import React, {useEffect} from "react";
-import {Link, Navigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import styles from "./login.module.css";
 import logo from "../components/i/logo.png";
-import {Button, Form, FormGroup, FormLabel, InputGroup, Spinner} from "react-bootstrap";
-import {IoEye, IoEyeOff} from "react-icons/io5";
+import {Spinner} from "react-bootstrap";
 
 export function Verify () {
     const { email } = useParams();
