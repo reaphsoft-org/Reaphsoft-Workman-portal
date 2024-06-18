@@ -32,6 +32,7 @@ import {ViewHouses} from "./admin/pages/view-houses";
 import {ViewWorkRequest} from "./admin/pages/view-work-request";
 import {ViewWorkman} from "./admin/pages/view-workman";
 import {ClientWorkRequest} from "./pages/client-work-request";
+import {Verify} from "./pages/Verify";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route path="/login/" element={<Login />} />
           <Route path="/register/" element={<Register />} />
           <Route path="/register/success/" element={<RegistrationSuccess />} />
+          <Route path="/verify/user/:email/:token/" element={<Verify />} />
           <Route path="/user/" element={<User content={Dashboard} />} />
           <Route path="/user/profile/" element={<User content={UserProfile} />} />
           <Route path="/user/update/" element={<User content={UpdateUser} />} />
