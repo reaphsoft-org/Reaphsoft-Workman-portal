@@ -4,8 +4,13 @@ import * as fs from 'fs';
 import { User } from '../entities/User';
 import { EstateManager } from '../entities/EstateManager';
 import { createPDF } from './createpdf';
+import * as nodemailer from 'nodemailer';
+import * as process from 'process';
+import Mail from 'nodemailer/lib/mailer';
+import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
-export class Email {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+class MailGun {
     private mailgun: Mailgun;
     private mg: IMailgunClient;
     private domain: string;
@@ -97,3 +102,79 @@ export class Email {
         }
     }
 }
+
+class NodeMailer {
+    private transporter: Mail<SMTPTransport.SentMessageInfo>;
+    private readonly host: string;
+
+    constructor() {
+        this.host = process.env.EMAIL_HOST_USER || '';
+        this.transporter = nodemailer.createTransport({
+            host: 'send.one.com',
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+                user: this.host,
+                pass: process.env.EMAIL_HOST_PASSWORD || '',
+            },
+        });
+    }
+
+    async sendTextMail(
+        recipient: string,
+        subject: string,
+        text: string,
+        html: string,
+    ) {
+        const data = {
+            from: `Reaphsoft Workmen <${this.host}>`,
+            to: [recipient],
+            subject: subject,
+            text: text,
+            html: html,
+        };
+        return await this.sendMail(data);
+    }
+
+    private async sendMail(data: MailgunMessageData) {
+        let response: string = 'sent';
+        this.transporter.sendMail(data, (error, info) => {
+            if (error) {
+                response = error.message;
+            } else {
+                response = info.response;
+            }
+        });
+        return response;
+    }
+
+    async sendTextMailWithAttachment(
+        recipient: string,
+        subject: string,
+        text: string,
+        html: string,
+        filePath: string,
+    ) {
+        const data: MailgunMessageData = {
+            from: `Reaphsoft Workmen <${this.host}>`,
+            to: [recipient],
+            subject: subject,
+            text: text,
+            html: html,
+        };
+        try {
+            const fileData = fs.readFileSync(filePath);
+            data.attachment = {
+                data: fileData,
+            };
+        } catch (e) {
+            // todo log failure
+            console.log(e);
+        }
+        return await this.sendMail(data);
+    }
+}
+
+const Email = NodeMailer;
+
+export default Email;

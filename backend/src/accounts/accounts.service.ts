@@ -2,10 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AppDataSource } from '../data-source';
 import { User } from '../entities/User';
-import * as fs from 'fs';
-import * as path from 'path';
-import { MEDIA_DIR } from '../app.module';
-import { Email } from '../utilities/mailman';
+import Email from '../utilities/mailman';
 import { UserDto } from './dto/user.dto';
 import { PasswordDto } from './dto/password.dto';
 import { PasswordDto as AdminPasswordDto } from '../admin/dto/password.dto';
@@ -32,21 +29,6 @@ export class AccountsService {
     async createIndividualAccount(createUserDto: CreateUserDto, file: any) {
         return this.createAccount(createUserDto, file, User.accountType);
     }
-
-    async savePhoto(
-        photo: Express.Multer.File,
-        filename: string,
-    ): Promise<string> {
-        const fullPath = path.join(MEDIA_DIR, filename);
-        let imgPath = path.join(this.uploadPath, filename);
-        fs.writeFile(fullPath, photo.buffer, (err) => {
-            if (err) {
-                imgPath = '';
-            }
-        });
-        return imgPath;
-    }
-
     async sendAgreement(user: User | EstateManager, filePath: string) {
         const email = new Email();
         const resp = await email.sendTextMailWithAttachment(
