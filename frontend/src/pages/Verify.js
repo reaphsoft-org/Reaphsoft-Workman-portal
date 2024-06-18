@@ -3,16 +3,46 @@
 // github.com/kahlflekzy
 
 import {useParams} from "react-router";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import styles from "./login.module.css";
 import logo from "../components/i/logo.png";
-import {Spinner} from "react-bootstrap";
+import {Button, Spinner} from "react-bootstrap";
+import {BACKEND_DOMAIN} from "../utils/konstants";
+import {showAlert} from "../utils/alert";
 
 export function Verify () {
     const { email } = useParams();
     const { token } = useParams();
-    useEffect(() => {}, []);
+    const [loading, setLoading] = useState(true);
+    const [success, setSuccess] = useState(false);
+    const [message, setMessage] = useState('Please reload the page.');
+    useEffect(() => {
+        fetch(`${BACKEND_DOMAIN}/verify/user/${email}/${token}/`,
+            {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'}
+            }
+            )
+            .then((res) => {
+                setLoading(false);
+                if (!res.ok){
+                    showAlert(3,
+                        `Got a bad response from the server. Please contact the administrators. <${res.statusText}>`,
+                        "Error");
+                    return;
+                }
+                return res.json();
+            })
+            .then((result) => {
+                setSuccess(result.status);
+                setMessage(result.resp);
+            })
+            .catch((reason) => {
+                setLoading(false);
+                showAlert(3, reason.message, "Error");
+            });
+    }, [email, token]);
     return (
         <>
             <div className="vh-100">
@@ -37,15 +67,37 @@ export function Verify () {
                         <div className="col-12 col-md-6 ms-auto">
                           <div className="login-2 submit-resume p-a30 seth">
                             <div>
-                                <h6 className="text-center">Please wait while we verify your account.</h6>
-                                <div className="my-5 d-flex justify-content-center">
-                                  <Spinner
-                                    as="span"
-                                    animation="border"
-                                    role="status"
-                                    aria-hidden="true"
-                                  />
-                                </div>
+                                { loading ?
+                                    <>
+                                        <h6 className="text-center">Please wait while we verify your account.</h6>
+                                        <div className="my-5 d-flex justify-content-center">
+                                        <Spinner
+                                            as="span"
+                                            animation="border"
+                                            role="status"
+                                            aria-hidden="true"
+                                        />
+                                    </div>
+                                    </>
+                                    :
+                                    <>
+                                    {
+                                        success ?
+                                            <>
+                                                <h6 className="text-center">We have successfully verified your account.</h6>
+                                                <p className="text-center">{message}</p>
+                                                <div className="d-grid">
+                                                    <Button href="/login/" variant="warning">Login</Button>
+                                                </div>
+                                            </>
+                                            :
+                                            <>
+                                                <h6 className="text-center">We were unable to verify your account.</h6>
+                                                <p className="text-center">{message}</p>
+                                            </>
+                                    }
+                                    </>
+                                }
                             </div>
                           </div>
                         </div>
