@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AppDataSource } from '../data-source';
 import { User } from '../entities/User';
-import Email from '../utilities/mailman';
+import Mailman from '../utilities/mailman';
 import { UserDto } from './dto/user.dto';
 import { PasswordDto } from './dto/password.dto';
 import { PasswordDto as AdminPasswordDto } from '../admin/dto/password.dto';
@@ -26,12 +26,12 @@ export class AccountsService {
     private readonly adminRepo = AppDataSource.getRepository(SuperUser);
     private readonly workmanRepo = AppDataSource.getRepository(Workman);
     private readonly passwordManager = new PasswordManager();
+    private readonly mailman = new Mailman();
     async createIndividualAccount(createUserDto: CreateUserDto, file: any) {
         return this.createAccount(createUserDto, file, User.accountType);
     }
     async sendAgreement(user: User | EstateManager, filePath: string) {
-        const email = new Email();
-        const resp = await email.sendTextMailWithAttachment(
+        const resp = await this.mailman.sendTextMailWithAttachment(
             user.email,
             'Reaphsoft Workmen Contractual Agreement',
             `Dear ${user.fullname},\n\nThank you for creating an account with us. Here is an official contractual agreement between us which is binding whenever you use our services.\n\nWarm Regards\nReaphsoft Workmen`,
@@ -308,6 +308,11 @@ export class AccountsService {
              * If successful, attempt to save photo
              * If unsuccessful, simply exit.
              * */
+            const verificationToken = new VerificationToken();
+            const token = verificationToken.generateRandomString();
+            // todo send the above token via email.
+            verificationToken.setToken(token);
+            object.verificationToken = verificationToken;
             if (type == User.accountType) await this.usersRepo.save(object);
             else await this.estateManagersRepo.save(object);
             await object.saveFile(
@@ -318,6 +323,12 @@ export class AccountsService {
                 if (type == User.accountType) await this.usersRepo.save(object);
                 else await this.estateManagersRepo.save(object);
             }
+
+            const resp: string = await this.mailman.sendVerificationCode(
+                token,
+                object,
+            );
+            console.log(resp);
         } catch (e) {
             if (
                 e.name === 'QueryFailedError' &&
@@ -336,8 +347,6 @@ export class AccountsService {
                 status: false,
             };
         }
-        // const email = new Email();
-        // await email.sendAccountCreateMail(object);
         return { resp: 'Account created successfully', status: true };
     }
 

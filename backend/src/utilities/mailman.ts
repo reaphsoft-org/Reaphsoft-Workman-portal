@@ -8,6 +8,10 @@ import * as nodemailer from 'nodemailer';
 import * as process from 'process';
 import Mail from 'nodemailer/lib/mailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { Workman } from '../entities/Workman';
+import * as handlebars from 'handlebars';
+import * as path from 'path';
+import { ASSETS_DIR } from '../app.module';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class MailGun {
@@ -173,8 +177,40 @@ class NodeMailer {
         }
         return await this.sendMail(data);
     }
+
+    async sendVerificationCode(
+        token: string,
+        user: User | EstateManager | Workman,
+    ) {
+        const verificationLink = '';
+        const templatePath = path.join(
+            ASSETS_DIR,
+            'email_templates',
+            'verify_template.hbs',
+        );
+        const source = fs.readFileSync(templatePath, 'utf-8').toString();
+        const template = handlebars.compile(source);
+        const context = {
+            name: user.fullname,
+            verificationLink: verificationLink,
+        };
+        const htmlToSend = template(context);
+        const data = {
+            from: `Reaphsoft Workmen <${this.host}>`,
+            to: [user.email],
+            subject: 'Reaphsoft Workman Account',
+            text: `Dear ${user.fullname}, 
+
+Thank you for creating an account with us. Please follow the link below to complete your sign up process.
+
+${verificationLink}
+`,
+            html: htmlToSend,
+        };
+        return await this.sendMail(data);
+    }
 }
 
-const Email = NodeMailer;
+const Mailman = NodeMailer;
 
-export default Email;
+export default Mailman;
