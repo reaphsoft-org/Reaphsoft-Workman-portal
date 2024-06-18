@@ -19,7 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "cross-env NODE_ENV=test JWT_SECRET=secret_key_for_testing_jest jest --detectOpenHandles --config ./test/jest-e2e.json",
     "loaddata": "node dist/loaddata test/services.json",
-    "create_superuser": "node dist/create_superuser"
+    "create_superuser": "node dist/create_superuser",
+    "sendtestemail": "node dist/sendtestemail"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

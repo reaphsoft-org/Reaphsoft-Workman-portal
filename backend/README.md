@@ -310,6 +310,18 @@ npm run create_superuser <email> <password> <firstname> <lastnam>
 npm install react-easy-crop react-dropzone
 ```
 
+## Email
+### Environment
+1. Set `EMAIL_HOST_USER` as your one.com username.
+2. Set `EMAIL_HOST_PASSWORD` as your one.com password.
+
+### Send Test Email
+run `npm build` or `nest build` then run 
+```
+npm run sendtestemail [recipient_email]
+```
+
+
 1. [Magic Number](https://www.ibm.com/support/pages/what-magic-number)
 
 ## Endpoints
