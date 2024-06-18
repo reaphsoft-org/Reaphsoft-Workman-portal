@@ -71,6 +71,8 @@ export class AccountsController {
         return await this.accountsService.getUser(email, type);
     }
 
+    @Get('verify/:email/:token/')
+    async verifyAccount() {}
     @UseGuards(AuthGuard)
     @Put('update/user/i/')
     async updateUser(

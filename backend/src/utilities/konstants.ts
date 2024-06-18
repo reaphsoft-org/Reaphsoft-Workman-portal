@@ -12,6 +12,8 @@ const DOMAIN =
 export const HOST_IP =
     process.env.HOSTING === 'local' ? 'localhost' : '0.0.0.0';
 export const FRONTEND_DOMAIN = `${DOMAIN}`;
+export const BACKEND_PORT = `3001`;
+export const BACKEND_DOMAIN = `${DOMAIN}:${BACKEND_PORT}`;
 export const BASE_MEDIA_DIR = 'media/u';
 export const MEDIA_DIR = path.join(__dirname, '..', '..', BASE_MEDIA_DIR);
 if (!fs.existsSync(MEDIA_DIR)) {

@@ -12,6 +12,7 @@ import { Workman } from '../entities/Workman';
 import * as handlebars from 'handlebars';
 import * as path from 'path';
 import { ASSETS_DIR } from '../app.module';
+import {BACKEND_DOMAIN, FRONTEND_DOMAIN} from "./konstants";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class MailGun {
@@ -182,7 +183,8 @@ class NodeMailer {
         token: string,
         user: User | EstateManager | Workman,
     ) {
-        const verificationLink = '';
+        //todo add verify user in frontend, link and view.
+        const verificationLink = `${FRONTEND_DOMAIN}/verify/user/${user.email}/${token}/`;
         const templatePath = path.join(
             ASSETS_DIR,
             'email_templates',
